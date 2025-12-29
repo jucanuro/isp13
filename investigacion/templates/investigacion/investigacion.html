@@ -1,0 +1,91 @@
+<style>
+    @keyframes float-aurora {
+        0% { transform: translate(0, 0) scale(1); }
+        33% { transform: translate(30px, -50px) scale(1.1); }
+        66% { transform: translate(-20px, 20px) scale(0.9); }
+        100% { transform: translate(0, 0) scale(1); }
+    }
+    .animate-aurora {
+        animation: float-aurora 15s ease-in-out infinite;
+    }
+    .animate-aurora-delayed {
+        animation: float-aurora 20s ease-in-out infinite reverse;
+    }
+</style>
+
+<section id="investigacion" class="py-12 px-6 bg-[#f4fcf9] relative overflow-hidden">
+    
+    <div class="absolute inset-0 pointer-events-none overflow-hidden">
+        <div class="animate-aurora absolute -top-20 -left-20 w-[600px] h-[600px] bg-emerald-200/30 rounded-full blur-[120px]"></div>
+        <div class="animate-aurora-delayed absolute top-1/4 -right-20 w-[500px] h-[500px] bg-white/80 rounded-full blur-[100px]"></div>
+        <div class="animate-aurora absolute bottom-0 left-1/3 w-[400px] h-[400px] bg-emerald-100/20 rounded-full blur-[80px]"></div>
+    </div>
+    
+    <div class="container mx-auto relative z-10">
+        
+        <div class="flex flex-col lg:flex-row lg:items-end justify-between mb-20 gap-10">
+            <div class="max-w-xl">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="w-10 h-[1px] bg-emerald-300"></span>
+                    <h2 class="text-[10px] font-black text-emerald-800/40 uppercase tracking-[0.6em]">Repositorio Científico</h2>
+                </div>
+                <h3 class="serif-font text-4xl lg:text-5xl font-light text-slate-900 tracking-tight leading-[1.1]">
+                    Investigación con <br>
+                    <span class="font-black italic text-emerald-900">Excelencia Académica</span>
+                </h3>
+            </div>
+
+            <div class="flex flex-col sm:flex-row items-center gap-3 bg-white/40 p-2 backdrop-blur-md rounded-[2rem] border border-white shadow-xl shadow-emerald-900/5">
+                <div class="relative group">
+                    <select class="appearance-none bg-transparent pl-6 pr-10 py-3 text-[11px] font-black  tracking-widest text-slate-600 cursor-pointer focus:outline-none">
+                        <option>Nuestra Institución</option>
+                        <option>Otras Redes</option>
+                    </select>
+                    <i class="fas fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-[10px] text-emerald-500"></i>
+                </div>
+                
+                <div class="h-8 w-px bg-emerald-100 hidden sm:block"></div>
+
+                <div class="relative w-full sm:w-64">
+                    <input type="text" placeholder="Buscar tesis..." 
+                           class="w-full bg-transparent py-3 pl-10 pr-4 text-[13px] text-slate-700 placeholder:text-slate-400 focus:outline-none">
+                    <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-emerald-400 text-xs"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            {% for t in tesis %}
+            <article class="group relative flex flex-col h-full bg-white/80 backdrop-blur-sm rounded-[2.5rem] p-10 transition-all duration-700 shadow-[0_10px_30px_rgba(0,0,0,0.02)] hover:shadow-[0_40px_80px_-15px_rgba(16,185,129,0.12)] border border-white hover:border-emerald-100">
+                
+                <div class="mb-10 flex items-center justify-between">
+                    <div class="w-14 h-14 rounded-2xl bg-[#f0f9f6] flex items-center justify-center group-hover:bg-emerald-600 transition-all duration-500 group-hover:rotate-6">
+                        <i class="fas fa-microscope text-emerald-600 group-hover:text-white text-xl"></i>
+                    </div>
+                    <span class="text-[8px] font-black text-slate-300 uppercase tracking-widest">Ref. 2025-{{ forloop.counter }}</span>
+                </div>
+
+                <div class="flex-grow">
+                    <h4 class="serif-font text-xl font-bold text-slate-800 leading-[1.4] mb-6 group-hover:text-emerald-900 transition-colors">
+                        {{ t.title|lower|capfirst }}
+                    </h4>
+                    <span class="inline-block text-[9px] font-black px-3 py-1 bg-emerald-50 text-emerald-600 rounded-full uppercase tracking-tighter italic">Publicación Oficial</span>
+                </div>
+                
+                <div class="mt-auto pt-8 border-t border-slate-50 flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-full bg-slate-900 flex items-center justify-center text-[11px] font-black text-white">
+                            {{ t.author|slice:":1" }}
+                        </div>
+                        <p class="text-[13px] font-bold text-slate-700 tracking-tight">{{ t.author }}</p>
+                    </div>
+                    
+                    <a href="{{ t.link }}" target="_blank" class="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 hover:bg-slate-900 hover:text-white transition-all shadow-sm">
+                        <i class="fas fa-arrow-right text-[10px]"></i>
+                    </a>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>

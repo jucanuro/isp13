@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<main class="py-20 bg-slate-50 min-h-screen">
+    <div class="container mx-auto max-w-4xl px-6">
+        <form action="{% if editando %}{% url 'investigacion:editar_tesis' tesis.id %}{% else %}{% url 'investigacion:registrar_tesis' %}{% endif %}" 
+              method="POST" enctype="multipart/form-data" 
+              class="bg-white rounded-[40px] shadow-2xl overflow-hidden border border-slate-100">
+            {% csrf_token %}
+            
+            <div class="bg-slate-900 p-10 text-white relative overflow-hidden">
+                <div class="relative z-10">
+                    <h2 class="text-3xl font-black italic serif-font">
+                        {% if editando %}Actualizar Investigación{% else %}Registro de Tesis{% endif %}
+                    </h2>
+                    <p class="text-slate-400 mt-2">
+                        {% if editando %}ID de Sistema: #00{{ tesis.id }}{% else %}Módulo de Autoarchivo - Guía ALICIA 2.0{% endif %}
+                    </p>
+                </div>
+                <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-500/20 rounded-full -mr-10 -mt-10 blur-3xl"></div>
+            </div>
+
+            <div class="p-10 space-y-8">
+                <div class="group">
+                    <label class="text-xs font-black uppercase tracking-widest text-slate-400 mb-2 block group-focus-within:text-emerald-500 transition-colors">Título de la Investigación</label>
+                    <input type="text" name="titulo" required value="{{ tesis.titulo|default:'' }}"
+                        class="w-full bg-slate-50 border-2 border-slate-100 p-4 rounded-2xl focus:border-emerald-500 focus:bg-white outline-none transition-all text-slate-700 font-medium">
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <label class="text-xs font-black uppercase tracking-widest text-slate-400 mb-2 block">Nombre del Autor</label>
+                        <input type="text" name="autor" required value="{{ tesis.autor|default:'' }}"
+                            class="w-full bg-slate-50 border-2 border-slate-100 p-4 rounded-2xl focus:border-emerald-500 focus:bg-white outline-none transition-all">
+                    </div>
+                    <div>
+                        <label class="text-xs font-black uppercase tracking-widest text-slate-400 mb-2 block">Asesor / Tutor</label>
+                        <input type="text" name="asesor" required value="{{ tesis.asesor|default:'' }}"
+                            class="w-full bg-slate-50 border-2 border-slate-100 p-4 rounded-2xl focus:border-emerald-500 focus:bg-white outline-none transition-all">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="text-xs font-black uppercase tracking-widest text-slate-400 mb-2 block">Resumen (Abstract)</label>
+                    <textarea name="resumen" rows="4" required
+                        class="w-full bg-slate-50 border-2 border-slate-100 p-4 rounded-2xl focus:border-emerald-500 focus:bg-white outline-none transition-all resize-none">{{ tesis.resumen|default:'' }}</textarea>
+                </div>
+
+                <div>
+                    <label class="text-xs font-black uppercase tracking-widest text-slate-400 mb-2 block">Documento PDF (Texto Completo)</label>
+                    <div id="drop-area" class="relative border-4 border-dashed border-slate-100 rounded-[30px] p-10 text-center hover:border-emerald-400 hover:bg-emerald-50/30 transition-all cursor-pointer group">
+                        <input type="file" name="archivo_pdf" id="file-input" accept=".pdf" {% if not editando %}required{% endif %}
+                            class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                        
+                        <div id="file-preview" class="space-y-4">
+                            {% if editando and tesis.archivo_pdf %}
+                                <i class="fas fa-file-circle-check text-5xl text-emerald-500"></i>
+                                <p class="text-emerald-700 font-bold">Archivo actual: {{ tesis.archivo_pdf.name|truncatechars:30 }}</p>
+                                <p class="text-[10px] text-slate-400 italic">Sube uno nuevo solo si deseas reemplazarlo</p>
+                            {% else %}
+                                <i class="fas fa-file-pdf text-5xl text-slate-200 group-hover:text-emerald-500 transition-colors"></i>
+                                <p class="text-slate-500 font-medium">Click para seleccionar o arrastra el archivo</p>
+                                <p class="text-[10px] text-slate-400 italic">Máximo 50MB - Formato PDF/A sugerido</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" 
+                    class="w-full bg-emerald-600 text-white font-black py-5 rounded-2xl hover:bg-slate-900 transition-all shadow-xl shadow-emerald-200 hover:shadow-slate-200 flex items-center justify-center gap-3 group">
+                    <span>{% if editando %}GUARDAR CAMBIOS ACTUALIZADOS{% else %}REGISTRAR INVESTIGACIÓN{% endif %}</span>
+                    <i class="fas {% if editando %}fa-save{% else %}fa-arrow-right{% endif %} group-hover:translate-x-1 transition-transform"></i>
+                </button>
+                
+                <div class="text-center">
+                    <a href="{% url 'investigacion:lista_tesis' %}" class="text-xs font-bold text-slate-400 hover:text-red-500 transition-colors uppercase tracking-widest">Cancelar y volver</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</main>
+
+<script>
+    const fileInput = document.getElementById('file-input');
+    const filePreview = document.getElementById('file-preview');
+
+    fileInput.addEventListener('change', function() {
+        if(this.files.length > 0) {
+            const fileName = this.files[0].name;
+            filePreview.innerHTML = `
+                <i class="fas fa-check-circle text-5xl text-emerald-500 animate-bounce"></i>
+                <p class="text-emerald-700 font-bold">${fileName}</p>
+                <p class="text-xs text-slate-400">Archivo listo para subir</p>
+                <button type="button" onclick="window.location.reload()" class="text-[10px] bg-slate-100 px-3 py-1 rounded-full text-slate-500 mt-2">Cambiar selección</button>
+            `;
+        }
+    });
+</script>
+{% endblock %}

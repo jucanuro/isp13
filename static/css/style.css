@@ -1,0 +1,100 @@
+/* Tipografías y Fuentes Especiales */
+.serif-font { font-family: 'Playfair Display', serif; }
+
+/* Efectos de Cristal (Glassmorphism) */
+.glass { 
+    background: rgba(255, 255, 255, 0.7); 
+    backdrop-filter: blur(12px); 
+    -webkit-backdrop-filter: blur(12px); 
+}
+
+.dark-glass { 
+    background: rgba(15, 23, 42, 0.8); 
+    backdrop-filter: blur(12px); 
+}
+
+/* Gradientes de Texto */
+.text-gradient { 
+    background: linear-gradient(to right, #047857, #10b981, #FBB03B); 
+    -webkit-background-clip: text; 
+    -webkit-text-fill-color: transparent; 
+}
+
+/* Lógica de Menú Desplegable (MegaMenu) */
+.nav-item:hover .megamenu { 
+    opacity: 1; 
+    visibility: visible; 
+    transform: translateY(0); 
+}
+
+.megamenu { 
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1); 
+    transform: translateY(10px); 
+}
+
+/* Scrollbar Personalizada */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #f1f1f1; }
+::-webkit-scrollbar-thumb { background: #047857; border-radius: 10px; }
+
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+    100% { transform: translateY(0px); }
+}
+.animate-float {
+    animation: float 5s ease-in-out infinite;
+}
+@keyframes shimmer {
+    100% { transform: translateX(100%); }
+}
+.animate-shimmer {
+    animation: shimmer 1.5s infinite;
+}
+
+/* Modal Futurista */
+#pdf-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: rgba(2, 6, 23, 0.85); /* Fondo casi negro transparente */
+    backdrop-filter: blur(20px);
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+#pdf-modal.active {
+    display: flex;
+    animation: modalIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-content {
+    width: 100%;
+    max-width: 1000px;
+    height: 85vh;
+    background: #ffffff;
+    border-radius: 2rem;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 0 50px rgba(16, 185, 129, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.modal-header {
+    background: #0f172a;
+    padding: 1.5rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    items-center: center;
+    color: white;
+}
+
+@keyframes modalIn {
+    from { opacity: 0; transform: scale(0.9) translateY(20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+

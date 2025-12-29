@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}ISEP 13 de Julio | Excelencia Pedagógica{% endblock %}</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script src="{% static 'js/config.js' %}" defer></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="antialiased selection:bg-emerald-200 selection:text-emerald-900">
+
+    <div class="hidden lg:block bg-slate-900 py-2.5 px-12 overflow-hidden relative">
+        <div class="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_50%_120%,#047857,transparent)]"></div>
+        <div class="container mx-auto flex justify-between items-center relative z-10 text-[10px] font-bold tracking-[0.2em] uppercase text-slate-200">
+            <div class="flex items-center gap-6">
+                <span class="flex items-center gap-2 hidden">
+                    Ministerio de Educación
+                </span>
+                <span class="w-px h-3 bg-slate-700"></span>
+                <a href="https://www.transparencia.gob.pe/enlaces/pte_transparencia_enlaces.aspx?id_entidad=37929" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                class="flex items-center gap-2 text-white hover:text-[#10b981] font-black text-[10px] tracking-[0.2em] uppercase transition-all duration-300 group">
+                    
+                    <i class="fa-solid fa-gear text-[#10b981] group-hover:rotate-90 transition-transform duration-700 ease-in-out"></i>
+                    
+                    <span class="relative">
+                        Portal de Transparencia
+                        <span class="absolute bottom-[-4px] left-0 w-0 h-[1px] bg-[#10b981] transition-all duration-300 group-hover:w-full"></span>
+                    </span>
+
+                    <i class="fa-solid fa-arrow-up-right-from-square text-[8px] text-[#10b981]/50 group-hover:text-[#10b981] transition-colors"></i>
+                </a>
+                <a href="#" class="hover:text-emerald-400 transition hidden">Convocatorias CAS</a>
+            </div>
+            <div class="flex items-center gap-8">
+                <div class="flex gap-4 border-r border-slate-700 pr-8">
+                    <a href="#" class="hover:text-emerald-400">ALICIA</a>
+                    <a href="#" class="hover:text-emerald-400">CONCYTEC</a>
+                    <a href="#" class="hover:text-emerald-400">SUNEDU</a>
+                </div>
+                <div class="flex gap-4">
+                    <i class="fab fa-facebook-f cursor-pointer hover:text-white transition"></i>
+                    <i class="fab fa-linkedin-in cursor-pointer hover:text-white transition"></i>
+                    <i class="fab fa-youtube cursor-pointer hover:text-white transition"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include 'header.html' %}
+    {% block content %}{% endblock %}
+
+    {% include 'footer.html' %}
+
+</body>
+</html>

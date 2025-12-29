@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,700&display=swap');
+    .serif-font { font-family: 'Playfair Display', serif; }
+    
+    @keyframes scan {
+        0% { top: 0; opacity: 0; }
+        50% { opacity: 1; }
+        100% { top: 100%; opacity: 0; }
+    }
+    .animate-scan { animation: scan 2s infinite; }
+
+    @keyframes gold-pulse {
+        0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); }
+        70% { box-shadow: 0 0 0 10px rgba(245, 158, 11, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+    }
+    .pulse-gold { animation: gold-pulse 2s infinite; }
+
+    /* Estilo para el select personalizado */
+    .filter-select {
+        background: #1e293b; /* Fondo sólido más oscuro para contraste */
+        border: 2px solid rgba(16, 185, 129, 0.4); /* Borde más visible */
+        color: #ffffff !important; /* Texto Blanco Puro */
+        appearance: none;
+        padding-right: 3rem;
+        font-size: 12px; /* Un poco más grande para legibilidad */
+    }
+
+    /* Esto asegura que las letras se vean blancas incluso dentro de la lista desplegable */
+    .filter-select option {
+        background: #1e293b;
+        color: white;
+        padding: 10px;
+    }
+</style>
+
+<main class="py-12 bg-[#020617] min-h-screen text-white">
+    <div class="max-w-full mx-auto px-6 sm:px-12 lg:px-20">
+        
+        {% if messages %}
+        <div class="max-w-4xl mx-auto mb-10 space-y-3">
+            {% for message in messages %}
+            <div class="p-4 rounded-xl flex items-center gap-4 border animate-pulse {% if message.tags == 'error' %}bg-red-500/10 border-red-500/50 text-red-400{% else %}bg-emerald-500/10 border-emerald-500/50 text-emerald-400{% endif %}">
+                <i class="fas {% if message.tags == 'error' %}fa-circle-xmark{% else %}fa-circle-check{% endif %}"></i>
+                <p class="text-[10px] font-black tracking-[0.2em] uppercase">{{ message }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="flex flex-col lg:flex-row justify-between items-center mb-16 gap-8">
+            <div class="text-center md:text-left">
+                <h1 class="text-3xl md:text-4xl font-light italic serif-font tracking-tight">
+                    Centro de <span class="text-[#10b981] font-normal">Investigación</span>
+                </h1>
+                <div class="h-1 w-40 bg-gradient-to-r from-[#10b981] to-transparent mt-4 mx-auto md:mx-0"></div>
+            </div>
+            
+            <div class="flex flex-wrap items-center justify-center gap-4">
+                <form method="GET" action="{% url 'investigacion:lista_tesis' %}" class="relative group mt-4">
+                    <label class="absolute -top-6 left-0 text-[10px] font-black text-white tracking-[0.2em] uppercase opacity-80">
+                        Filtrar por Status
+                    </label>
+                    
+                    <select name="estado" onchange="this.form.submit()" 
+                            class="filter-select px-8 py-4 rounded-none font-black tracking-widest focus:outline-none focus:border-[#10b981] transition-all cursor-pointer uppercase text-white"
+                            style="clip-path: polygon(5% 0, 100% 0, 100% 70%, 95% 100%, 0 100%, 0% 30%);">
+                        <option value="todos" {% if estado_actual == 'todos' %}selected{% endif %}>[ MOSTRAR TODOS ]</option>
+                        <option value="pendiente" {% if estado_actual == 'pendiente' %}selected{% endif %}>[ TESIS PENDIENTES ]</option>
+                        <option value="validado" {% if estado_actual == 'validado' %}selected{% endif %}>[ TESIS VALIDADAS ]</option>
+                        <option value="enviado" {% if estado_actual == 'enviado' %}selected{% endif %}>[ TESIS ENVIADAS ]</option>
+                    </select>
+                    
+                    <i class="fas fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-[#10b981] pointer-events-none"></i>
+                </form>
+
+                <a href="{% url 'investigacion:registrar_tesis' %}" 
+                class="relative group inline-flex items-center px-10 py-5 overflow-hidden font-black text-white transition-all duration-300 bg-[#1e293b] rounded-none whitespace-nowrap shadow-[0_10px_30px_rgba(0,0,0,0.5)] border-r-4 border-[#10b981]"
+                style="clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0% 30%);">
+                    <span class="relative flex items-center gap-3 tracking-[0.2em] text-[11px]">
+                        <i class="fa-solid fa-atom text-[#10b981] text-lg group-hover:rotate-180 transition-all duration-700"></i>
+                        REGISTRAR TESIS
+                    </span>
+                </a>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for t in tesis_locales %}
+            <div class="relative group bg-[#064e3b] p-8 rounded-[2.5rem] border border-[#065f46] hover:border-[#10b981] transition-all duration-500 shadow-2xl flex flex-col justify-between min-h-[350px]">
+                
+                <div class="absolute top-0 left-10 right-10 h-[2px] bg-gradient-to-r from-transparent via-[#10b981] to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+
+                <div>
+                    <h3 class="text-2xl font-bold text-white leading-snug mb-6 group-hover:text-[#34d399] transition-colors">
+                        {{ t.titulo }}
+                    </h3>
+                    
+                    <div class="w-full h-px bg-white/10 mb-6"></div>
+
+                    <div class="space-y-1">
+                        <p class="text-[10px] uppercase tracking-[0.2em] text-[#34d399] font-black">Investigador</p>
+                        <p class="text-sm font-medium text-white/90 italic tracking-wide">{{ t.autor|upper }}</p>
+                    </div>
+                </div>
+
+                <div class="mt-8">
+                    <div class="flex justify-between items-center mb-6">
+                        <div class="flex flex-col gap-1">
+                            <span class="text-[9px] text-white/40 uppercase font-bold italic">{{ t.fecha_registro|date:"d M Y" }}</span>
+                            {% if t.estado == 'pendiente' %}
+                                <span class="text-[10px] text-amber-300 font-black tracking-tighter flex items-center gap-1">
+                                    <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span> PENDIENTE
+                                </span>
+                            {% elif t.estado == 'validado' %}
+                                <span class="text-[10px] text-[#34d399] font-black tracking-tighter flex items-center gap-1">
+                                    <span class="w-2 h-2 rounded-full bg-[#10b981]"></span> VALIDADO
+                                </span>
+                            {% else %}
+                                <span class="text-[10px] text-blue-400 font-black tracking-tighter flex items-center gap-1">
+                                    <i class="fas fa-cloud-check"></i> ENVIADO_ALICIA
+                                </span>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="flex flex-wrap items-center gap-2">
+                        <a href="{{ t.archivo_pdf.url }}" target="_blank" class="w-10 h-10 flex items-center justify-center bg-white/10 hover:bg-white text-[#10b981] rounded-xl transition-all border border-white/20"><i class="fas fa-file-pdf"></i></a>
+                        <a href="{% url 'investigacion:editar_tesis' t.id %}" class="w-10 h-10 flex items-center justify-center bg-blue-500/20 text-blue-300 rounded-xl transition-all border border-blue-400/30"><i class="fas fa-edit"></i></a>
+                        <a href="{% url 'investigacion:eliminar_tesis' t.id %}" onclick="return confirm('¿Eliminar?')" class="w-10 h-10 flex items-center justify-center bg-red-500/20 text-red-300 rounded-xl transition-all border border-red-400/30"><i class="fas fa-trash-alt"></i></a>
+                        
+                        <div class="ml-auto">
+                            {% if t.estado == 'pendiente' %}
+                                <a href="{% url 'investigacion:validar_tesis' t.id %}" 
+                                   class="relative overflow-hidden h-9 px-6 bg-[#10b981] text-black text-[10px] font-black tracking-widest hover:bg-white transition-all flex items-center justify-center rounded-lg group">
+                                    <div class="absolute top-0 left-0 w-full h-[2px] bg-white animate-scan opacity-70"></div>
+                                    VALIDAR
+                                </a>
+                            {% elif t.estado == 'validado' %}
+                                <a href="{% url 'investigacion:enviar_alicia' t.id %}" 
+                                   class="relative overflow-hidden h-9 px-4 bg-gradient-to-r from-amber-400 to-yellow-600 text-black text-[10px] font-black tracking-widest flex items-center justify-center rounded-lg shadow-lg pulse-gold">
+                                    <i class="fas fa-paper-plane mr-2"></i> ENVIAR_ALICIA
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-span-full py-20 text-center border-2 border-dashed border-white/5 rounded-[3rem]">
+                <p class="text-white/20 italic serif-font text-2xl">No se encontraron registros con este filtro.</p>
+                <a href="{% url 'investigacion:lista_tesis' %}" class="text-[#10b981] text-[10px] font-black tracking-widest underline mt-4 inline-block">MOSTRAR TODOS</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</main>
+{% endblock %}

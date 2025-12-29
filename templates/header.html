@@ -1,0 +1,556 @@
+<header class="sticky top-0 z-[100] glass border-b border-white/40 shadow-xl shadow-emerald-900/5 bg-white/80 backdrop-blur-md">
+    <div class="container mx-auto px-6 lg:px-4 py-4 flex justify-between items-center">
+        <div class="group flex items-center gap-5 cursor-pointer">
+            <div class="relative">
+                <div class="absolute -inset-1 bg-gradient-to-tr from-emerald-600 to-accent rounded-full blur opacity-25 group-hover:opacity-60 transition duration-500"></div>
+                <div class="relative w-14 h-14 bg-white rounded-full flex items-center justify-center p-2 shadow-inner ring-1 ring-emerald-50">
+                    <i class="fas fa-graduation-cap text-3xl text-emerald-700"></i>
+                </div>
+            </div>
+            <div>
+                <h1 class="text-xl lg:text-2xl font-extrabold text-slate-900 leading-none tracking-tight">ISEP <span class="text-emerald-700 italic">13 DE JULIO</span></h1>
+                <p class="text-[8px] font-black text-slate-400 tracking-[0.5em] uppercase mt-1">San Pablo • Calidad que Trasciende</p>
+            </div>
+        </div>
+
+        <nav class="hidden xl:flex items-center gap-2">
+            <a href="{% url 'home' %}" class="px-5 py-2 text-[11px] font-extrabold uppercase tracking-widest text-emerald-800 relative after:absolute after:bottom-0 after:left-5 after:right-5 after:h-0.5 after:bg-emerald-600">Inicio</a>
+            
+            <div class="nav-item relative group px-5 py-2">
+                <button class="text-[11px] font-extrabold uppercase tracking-widest text-slate-600 hover:text-emerald-700 flex items-center gap-1.5 transition">
+                    Nosotros <i class="fas fa-chevron-down text-[8px] opacity-50 group-hover:rotate-180 transition-transform duration-300"></i>
+                </button>
+                <div class="megamenu invisible opacity-0 absolute top-full left-0 w-80 pt-6 transition-all duration-300 group-hover:visible group-hover:opacity-100">
+                    <div class="bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-emerald-100 p-6">
+                        <ul class="space-y-1">
+                            <li>
+                                <button id="btn-mision-vision" class="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-emerald-50 text-slate-600 hover:text-emerald-800 transition font-semibold text-xs">
+                                    <i class="fas fa-bullseye opacity-40 text-emerald-600"></i> Misión y Visión
+                                </button>
+                            </li>
+                            <li>
+                                <button id="btn-historia" class="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-emerald-50 text-slate-600 hover:text-emerald-800 transition font-semibold text-xs">
+                                    <i class="fas fa-history opacity-40 text-emerald-600"></i> Nuestra Historia
+                                </button>
+                            </li>
+                            <li>
+                                <button id="btn-personal" class="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-emerald-50 text-slate-600 hover:text-emerald-800 transition font-semibold text-xs">
+                                    <i class="fas fa-sitemap opacity-40 text-emerald-600"></i> Personal Directivo
+                                </button>
+                            </li>
+                            <li class="pt-4 mt-4 border-t border-slate-100 italic text-[10px] text-emerald-600/60">"Formando el futuro de San Pablo"</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-item relative group px-5 py-2">
+                <a href="#carreras" class="text-[11px] font-extrabold uppercase tracking-widest text-slate-600 hover:text-emerald-700 flex items-center gap-1.5 transition cursor-pointer">
+                    Académico <i class="fas fa-chevron-down text-[8px] opacity-50 group-hover:rotate-180 transition-transform duration-300"></i>
+                </a>
+
+                <div class="megamenu invisible opacity-0 absolute top-full left-0 lg:left-[-150px] w-[800px] max-w-[95vw] pt-6 transition-all duration-300 group-hover:visible group-hover:opacity-100">
+                    <div class="bg-white/95 backdrop-blur-xl rounded-[2.5rem] shadow-2xl border border-emerald-100 p-10 grid grid-cols-3 gap-10">
+                        <div class="space-y-4">
+                            <h4 class="text-[10px] font-black uppercase tracking-[0.2em] text-emerald-600">Educación Básica</h4>
+                            <div class="grid gap-2">
+                                <a href="#carreras" class="group/link flex items-center justify-between p-3 bg-slate-50 rounded-xl hover:bg-emerald-600 transition duration-300">
+                                    <span class="text-[11px] font-bold text-slate-700 group-hover/link:text-white">Educación Inicial</span>
+                                    <i class="fas fa-arrow-right text-[10px] opacity-0 group-hover/link:opacity-100 group-hover/link:text-white transition-all -translate-x-2 group-hover/link:translate-x-0"></i>
+                                </a>
+                                <a href="#carreras" class="group/link flex items-center justify-between p-3 bg-slate-50 rounded-xl hover:bg-emerald-600 transition duration-300">
+                                    <span class="text-[11px] font-bold text-slate-700 group-hover/link:text-white">Educación Primaria</span>
+                                    <i class="fas fa-arrow-right text-[10px] opacity-0 group-hover/link:opacity-100 group-hover/link:text-white transition-all -translate-x-2 group-hover/link:translate-x-0"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="space-y-4">
+                            <h4 class="text-[10px] font-black uppercase tracking-[0.2em] text-blue-600">Nivel Secundaria</h4>
+                            <div class="grid gap-2">
+                                <a href="#carreras" class="group/link flex items-center justify-between p-3 bg-slate-50 rounded-xl hover:bg-blue-600 transition duration-300">
+                                    <span class="text-[11px] font-bold text-slate-700 group-hover/link:text-white">Ciencias Sociales</span>
+                                    <i class="fas fa-chevron-right text-[9px] opacity-30 group-hover/link:opacity-100 group-hover/link:text-white"></i>
+                                </a>
+                                <a href="#carreras" class="group/link flex items-center justify-between p-3 bg-slate-50 rounded-xl hover:bg-blue-600 transition duration-300">
+                                    <span class="text-[11px] font-bold text-slate-700 group-hover/link:text-white">Comunicación</span>
+                                    <i class="fas fa-chevron-right text-[9px] opacity-30 group-hover/link:opacity-100 group-hover/link:text-white"></i>
+                                </a>
+                                <a href="#carreras" class="group/link flex items-center justify-between p-3 bg-slate-50 rounded-xl hover:bg-blue-600 transition duration-300">
+                                    <span class="text-[11px] font-bold text-slate-700 group-hover/link:text-white">Ciencia y Tec.</span>
+                                    <i class="fas fa-chevron-right text-[9px] opacity-30 group-hover/link:opacity-100 group-hover/link:text-white"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="space-y-4">
+                            <h4 class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Plataformas</h4>
+                            <div class="grid gap-4">
+                                <div class="p-5 border border-emerald-100 rounded-3xl bg-emerald-50/30 group/box transition-all hover:bg-white hover:shadow-xl hover:shadow-emerald-900/5">
+                                    <div class="flex items-center gap-3 mb-3">
+                                        <i class="fas fa-swatchbook text-emerald-600"></i>
+                                        <p class="text-[10px] font-black text-emerald-900 uppercase">Biblioteca</p>
+                                    </div>
+                                    <button class="w-full py-2.5 bg-slate-900 text-white rounded-xl text-[9px] font-black uppercase tracking-widest hover:bg-emerald-600 transition-all">Ingresar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+           <div class="nav-item relative group px-5 py-2">
+                <a href="#investigacion" class="text-[11px] font-extrabold uppercase tracking-widest text-slate-600 hover:text-emerald-700 flex items-center gap-1.5 transition">
+                    Investigación <i class="fas fa-chevron-down text-[8px] opacity-50 group-hover:rotate-180 transition-transform duration-300"></i>
+                </a>
+                
+                <div class="megamenu invisible opacity-0 absolute top-full right-0 w-80 pt-6 transition-all duration-300 group-hover:visible group-hover:opacity-100">
+                    <div class="bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-emerald-100 p-6">
+                        
+                        <div class="flex items-center gap-4 mb-6 pb-6 border-b border-slate-100">
+                            <img src="https://alicia.concytec.gob.pe/vufind/themes/alicia/images/logo_alicia_v2.png" 
+                                class="h-6 grayscale hover:grayscale-0 transition-all duration-500" alt="Alicia">
+                            <span class="text-[9px] font-black text-emerald-600 uppercase tracking-tighter">Red Nacional</span>
+                        </div>
+
+                        <ul class="space-y-1">
+                            <li>
+                                <a href="#investigacion" class="flex items-center gap-3 p-3 rounded-xl hover:bg-emerald-50 text-slate-600 hover:text-emerald-800 transition-all duration-300 group/link">
+                                    <i class="fas fa-bullseye opacity-40 group-hover/link:text-emerald-600"></i>
+                                    <span class="text-xs font-bold">Repositorio de Tesis</span>
+                                    <i class="fas fa-external-link-alt text-[8px] ml-auto opacity-30"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'investigacion:lista_tesis' %}" class="flex items-center gap-3 p-3 rounded-xl hover:bg-emerald-50 text-slate-600 hover:text-emerald-800 transition-all duration-300 group/link">
+                                    <i class="fas fa-newspaper opacity-40 group-hover/link:text-emerald-600"></i>
+                                    <span class="text-xs font-bold">Administración de Tesis</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="flex items-center gap-3 p-3 rounded-xl hover:bg-emerald-50 text-slate-600 hover:text-emerald-800 transition-all duration-300 group/link">
+                                    <i class="fas fa-flask opacity-40 group-hover/link:text-emerald-600"></i>
+                                    <span class="text-xs font-bold">Líneas de Investigación</span>
+                                </a>
+                            </li>
+                        </ul>
+
+                        <div class="mt-4 pt-4 border-t border-slate-100 italic text-[10px] text-emerald-600/60">
+                            Impulsando el conocimiento científico
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-item relative group px-5 py-2">
+                <button class="text-[11px] font-extrabold uppercase tracking-widest text-slate-600 hover:text-emerald-700 flex items-center gap-1.5 transition">
+                    Gestión <i class="fas fa-chevron-down text-[8px] opacity-50 group-hover:rotate-180 transition-transform duration-300"></i>
+                </button>
+                
+                <div class="megamenu invisible opacity-0 absolute top-full right-0 w-[350px] pt-6 transition-all duration-300 group-hover:visible group-hover:opacity-100">
+                    <div class="bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-emerald-100 p-5">
+                        <h4 class="text-[9px] font-black uppercase tracking-[0.2em] text-emerald-900/40 mb-4 px-3">Documentos Institucionales</h4>
+                        
+                        <div class="grid gap-2">
+                            <a href="#" data-pdf="reglamento" class="pdf-link flex items-center gap-4 p-3 rounded-xl hover:bg-emerald-50 transition-all duration-300 group/item">
+                                <div class="w-10 h-10 rounded-lg bg-emerald-100 flex items-center justify-center group-hover/item:bg-emerald-500 transition-colors">
+                                    <i class="fas fa-file-shield text-emerald-700 group-hover/item:text-white text-sm"></i>
+                                </div>
+                                <div>
+                                    <p class="text-[11px] font-bold text-slate-700 group-hover/item:text-emerald-900 leading-none">Reglamento Institucional</p>
+                                    <p class="text-[9px] text-slate-400 mt-1.5">Vigencia 2023 - 2027</p>
+                                </div>
+                                <i class="fas fa-chevron-right text-[8px] ml-auto opacity-0 group-hover/item:opacity-100 group-hover/item:translate-x-1 transition-all text-emerald-500"></i>
+                            </a>
+
+                            <a href="#" data-pdf="pci" class="pdf-link flex items-center gap-4 p-3 rounded-xl hover:bg-emerald-50 transition-all duration-300 group/item">
+                                <div class="w-10 h-10 rounded-lg bg-emerald-100 flex items-center justify-center group-hover/item:bg-emerald-500 transition-colors">
+                                    <i class="fas fa-book-open text-emerald-700 group-hover/item:text-white text-sm"></i>
+                                </div>
+                                <div>
+                                    <p class="text-[11px] font-bold text-slate-700 group-hover/item:text-emerald-900 leading-none">Proyecto Curricular (PCI)</p>
+                                    <p class="text-[9px] text-slate-400 mt-1.5">Planificación Pedagógica</p>
+                                </div>
+                                <i class="fas fa-chevron-right text-[8px] ml-auto opacity-0 group-hover/item:opacity-100 group-hover/item:translate-x-1 transition-all text-emerald-500"></i>
+                            </a>
+
+                            <a href="#" data-pdf="manual" class="pdf-link flex items-center gap-4 p-3 rounded-xl hover:bg-emerald-50 transition-all duration-300 group/item">
+                                <div class="w-10 h-10 rounded-lg bg-emerald-100 flex items-center justify-center group-hover/item:bg-emerald-500 transition-colors">
+                                    <i class="fas fa-gears text-emerald-700 group-hover/item:text-white text-sm"></i>
+                                </div>
+                                <div>
+                                    <p class="text-[11px] font-bold text-slate-700 group-hover/item:text-emerald-900 leading-none">Manual de Procesos</p>
+                                    <p class="text-[9px] text-slate-400 mt-1.5">Gestión Institucional</p>
+                                </div>
+                                <i class="fas fa-chevron-right text-[8px] ml-auto opacity-0 group-hover/item:opacity-100 group-hover/item:translate-x-1 transition-all text-emerald-500"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ml-6 relative">
+                <button class="relative px-8 py-3.5 bg-emerald-600 text-white rounded-full text-[10px] font-black uppercase tracking-widest overflow-hidden group shadow-lg shadow-emerald-900/20 active:scale-95 transition-all">
+                    <span class="relative z-10">Admisión 2026</span>
+                    <div class="absolute inset-0 bg-emerald-800 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                </button>
+            </div>
+        </nav>
+
+        <button class="xl:hidden w-10 h-10 flex items-center justify-center text-emerald-800">
+            <i class="fas fa-bars text-2xl"></i>
+        </button>
+    </div>
+</header>
+
+<div id="modal-mision" class="fixed inset-0 z-[110] invisible opacity-0 transition-all duration-500 flex items-center justify-center p-4">
+    <div class="absolute inset-0 bg-slate-500/20 backdrop-blur-md" onclick="closeMisionModal()"></div>
+    
+    <div class="relative bg-white w-full max-w-4xl rounded-[3rem] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.15)] overflow-hidden transform scale-95 transition-all duration-500 border border-white">
+        
+        <button onclick="closeMisionModal()" class="absolute top-8 right-8 w-12 h-12 flex items-center justify-center rounded-2xl bg-slate-50 text-slate-400 hover:bg-emerald-500 hover:text-white hover:rotate-90 transition-all z-20 shadow-sm border border-slate-100">
+            <i class="fas fa-times"></i>
+        </button>
+
+        <div class="grid md:grid-cols-2 relative">
+            <div class="hidden md:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1px] h-3/4 bg-gradient-to-b from-transparent via-slate-100 to-transparent"></div>
+
+            <div class="p-10 lg:p-16 relative group">
+                <div class="w-16 h-16 bg-emerald-50 rounded-[1.5rem] flex items-center justify-center mb-8 group-hover:bg-emerald-600 transition-colors duration-500 shadow-sm group-hover:shadow-emerald-200">
+                    <i class="fas fa-paper-plane text-emerald-600 group-hover:text-white text-2xl transition-colors"></i>
+                </div>
+                <h2 class="text-xs font-black text-emerald-600 uppercase tracking-[0.3em] mb-3">Nuestra</h2>
+                <h3 class="text-3xl font-black text-slate-800 leading-none mb-6 italic tracking-tighter">Misión</h3>
+                <p class="text-slate-500 leading-relaxed text-[15px] font-medium italic relative">
+                    <span class="text-4xl absolute -top-4 -left-2 opacity-10 font-serif">“</span>
+                    El IESPP <strong class="text-slate-800 font-bold border-b-2 border-emerald-200">“13 de Julio de 1882”</strong>, es una institución que brinda formación inicial docente a la comunidad educativa local, regional y nacional de manera transparente, inclusiva, intercultural, humanista y de calidad.
+                </p>
+            </div>
+
+            <div class="p-10 lg:p-16 bg-slate-50/50 group">
+                <div class="w-16 h-16 bg-slate-900 rounded-[1.5rem] flex items-center justify-center mb-8 shadow-lg shadow-slate-200 group-hover:scale-110 transition-transform">
+                    <i class="fas fa-eye text-white text-2xl"></i>
+                </div>
+                <h2 class="text-xs font-black text-slate-400 uppercase tracking-[0.3em] mb-3">Nuestra</h2>
+                <h3 class="text-3xl font-black text-slate-800 leading-none mb-6 italic tracking-tighter">Visión</h3>
+                <p class="text-slate-500 leading-relaxed text-[15px] font-medium">
+                    Aspiramos al <strong class="text-emerald-600 font-black px-2 py-0.5 bg-emerald-50 rounded">2027</strong>, ser una Institución Licenciada, líder nacional en educación superior pedagógica, competitiva, innovadora y democrática; comprometida en brindar una educación acorde a las exigencias de calidad.
+                </p>
+            </div>
+        </div>
+        
+        <div class="bg-white border-t border-slate-100 py-6 px-12 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+                <p class="text-[10px] text-slate-400 font-black uppercase tracking-[0.3em]">Formando el futuro de San Pablo</p>
+            </div>
+            
+            <div class="flex items-center gap-6">
+                <div class="h-8 w-[1px] bg-slate-100 hidden sm:block"></div>
+                <div class="flex items-center gap-4">
+                    <p class="text-[9px] text-slate-300 font-bold uppercase text-right leading-tight">Institución <br> Peruana</p>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Escudo_nacional_del_Per%C3%BA.svg/1200px-Escudo_nacional_del_Per%C3%BA.svg.png" 
+                         class="h-7 opacity-20 grayscale hover:opacity-100 hover:grayscale-0 transition-all cursor-help" alt="Perú">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modal-historia" class="fixed inset-0 z-[110] invisible opacity-0 transition-all duration-500 flex items-center justify-center p-4 lg:p-6">
+    <div class="absolute inset-0 bg-slate-950/60 backdrop-blur-md" onclick="closeHistoriaModal()"></div>
+    
+    <div class="modal-container relative bg-white w-full max-w-5xl h-[92vh] rounded-[2rem] shadow-2xl overflow-hidden flex flex-col transform scale-95 transition-all duration-500 border border-white/20">
+        
+        <div class="bg-white border-b border-slate-100 px-8 py-5 flex justify-between items-center shrink-0">
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 bg-emerald-50 rounded-2xl flex items-center justify-center">
+                    <i class="fas fa-history text-emerald-600 text-xl"></i>
+                </div>
+                <div>
+                    <h3 class="text-sm font-black text-slate-800 uppercase tracking-widest leading-none">Historia Institucional</h3>
+                    <p class="text-[10px] text-emerald-600 font-bold uppercase mt-1 tracking-tighter">IESPP “13 de Julio de 1882” San Pablo</p>
+                </div>
+            </div>
+            <button onclick="closeHistoriaModal()" class="w-10 h-10 flex items-center justify-center rounded-full bg-slate-50 text-slate-400 hover:bg-red-500 hover:text-white transition-all">
+                <i class="fas fa-times text-xs"></i>
+            </button>
+        </div>
+
+        <div class="flex-grow overflow-y-auto p-8 lg:p-12 bg-slate-50/30 custom-scrollbar text-slate-700">
+            <div class="max-w-4xl mx-auto space-y-10">
+                
+                <section class="relative pl-8 border-l-2 border-emerald-500/30">
+                    <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-emerald-600"></div>
+                    <h4 class="text-xs font-black text-emerald-700 uppercase tracking-widest mb-4">I. Creación y Etapa Tecnológica (1981 - 1988)</h4>
+                    <div class="prose prose-sm max-w-none leading-relaxed">
+                        <p>El Instituto de Educación Superior Pedagógica Público “13 de Julio de 1882” se encuentra ubicado en la ciudad, distrito y provincia de San Pablo, región Cajamarca. Luego de crearse la Provincia de San Pablo, el 11 de diciembre de 1981 según Ley Nº 23336, por gestión de un grupo de sampablinos se crea el <strong>Instituto Superior Tecnológico 13 de Julio, según R. M. No 231-84-ED de fecha 08 de marzo de 1984</strong> ofertando las Especialidades de Contabilidad, Producción Pecuaria y Producción Agrícola (que no funcionó); posteriormente se fusionan las dos últimas convirtiéndose en la especialidad de Agropecuaria; en el año 1985 se crea la especialidad de Enfermería Técnica.</p>
+                        <p class="mt-4">Dentro de los cinco años de funcionamiento del IST. 13 de Julio han egresado varias promociones en las diferentes especialidades que ofertó. Es necesario recalcar que los ex alumnos del IST se encuentran laborando en diversos lugares de nuestro país y del extranjero. La persona que dirigió esta institución educativa superior fue el profesor: <strong>Francisco Aníbal Castañeda Moncada</strong>.</p>
+                    </div>
+                </section>
+
+                <section class="relative pl-8 border-l-2 border-emerald-500/30">
+                    <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-emerald-600"></div>
+                    <h4 class="text-xs font-black text-emerald-700 uppercase tracking-widest mb-4">II. Conversión a Instituto Pedagógico</h4>
+                    <div class="prose prose-sm max-w-none leading-relaxed">
+                        <p>Por gestiones del Alcalde Provincial, de ese entonces, Dr. Adolfo Arribasplata Cabanillas, el <strong>12 de Julio de 1988 según el D. S. Nº. 011-88-ED</strong> se convierte el Instituto Superior Tecnológico a Instituto Superior Pedagógico 13 de Julio de 1882 autorizado a ofertar las carreras de Educación Primaria y Educación Secundaria diversificada en Agropecuaria, posteriormente se amplía el funcionamiento de Educación Inicial, Historia y Geografía, Lengua y Literatura, Biología y Química y Computación e Informática.</p>
+                        <p class="mt-4 italic bg-white p-4 rounded-xl border border-emerald-100 shadow-sm">
+                            Actualmente, en formación pedagógica contamos con las especialidades de Educación Primaria y en Educación Secundaria: Comunicación, Ciencias Sociales, Educación inicial, y Ciencia Tecnología y Ambiente.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="relative pl-8 border-l-2 border-emerald-500/30">
+                    <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-emerald-600"></div>
+                    <h4 class="text-xs font-black text-emerald-700 uppercase tracking-widest mb-4">III. Base Legal y Revalidaciones</h4>
+                    <div class="prose prose-sm max-w-none leading-relaxed space-y-4">
+                        <p>El Ministerio de Educación a través del <strong>D.S. Nº 017-2002</strong>, reinscribe al Instituto Superior Pedagógico 13 de Julio de 1882. Con <strong>Resolución Directoral 0044 - 2008 – ED</strong> de fecha 29 de febrero del 2008 se autoriza ofertar las carreras tecnológicas de Industrias Alimentarias, Enfermería Técnica y Computación e Informática, funcionando hasta el año 2018.</p>
+                        <p>Con <strong>Resolución Directoral N° 200-2016-MINEDU/VMGP/DIGEDD/DIFOID</strong>, se revalida las carreras profesionales de Comunicación, Ciencia Tecnología y Ambiente, Ciencias Sociales, Educación Primaria y Educación Inicial, la misma que ha sido renovada según <strong>Resolución Directoral N° 00083-2020-MINEDU/VMGP/DIGEDD/DIFOID</strong>.</p>
+                    </div>
+                </section>
+
+                <section class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-emerald-600 p-6 rounded-[2rem] text-white">
+                        <h4 class="text-[10px] font-black uppercase tracking-widest mb-4 opacity-80">Galería de Directores</h4>
+                        <p class="text-[11px] leading-relaxed font-medium">
+                            Lucio Alfonso Cabanillas Campos, Wilfredo Serafín Burgos Vargas, Nelson Absalón Soriano Palomino, Juana Rosa Burgos Castañeda, Perci Guinshon Azañedo Alcántara, Oscar Orlando Soriano Palomino, Ricardo Teodoro Rojas Dorregaray, Luis Adolfo Fernández Quiliche.
+                            <br><br>
+                            <span class="bg-white/20 px-3 py-1 rounded-full text-[10px]">Actualidad: Ricardo Teodoro Rojas Dorregaray</span>
+                        </p>
+                    </div>
+                    <div class="bg-slate-800 p-6 rounded-[2rem] text-slate-300">
+                        <h4 class="text-[10px] font-black uppercase tracking-widest mb-4 opacity-80">Presente Institucional</h4>
+                        <p class="text-[11px] leading-relaxed">
+                            Brindamos servicio educativo en las instalaciones de la I.E. JEC “San Pablo”, en virtud a la <strong>RD Regional Sectorial N° 3053-2024-GR-CAJ/DRE.CAJ (04-nov-2024)</strong>, albergando a 285 estudiantes de la provincia de San Pablo y regiones aledañas.
+                        </p>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+
+        <div class="bg-white border-t border-slate-100 px-10 py-4 flex justify-between items-center shrink-0">
+            <div class="flex gap-4 opacity-40 grayscale">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Escudo_nacional_del_Per%C3%BA.svg/1200px-Escudo_nacional_del_Per%C3%BA.svg.png" class="h-6" alt="Logo">
+            </div>
+            <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">D.S. N° 011-88-ED • Revalidado RD N° 000083-2020-MINEDU</p>
+        </div>
+    </div>
+</div>
+
+<div id="modal-personal" class="fixed inset-0 z-[110] invisible opacity-0 transition-all duration-500 flex items-center justify-center p-4">
+    <div class="absolute inset-0 bg-slate-950/70 backdrop-blur-md" onclick="closePersonalModal()"></div>
+    
+    <div class="modal-container relative bg-slate-50 w-full max-w-4xl h-[85vh] rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col transform scale-95 transition-all duration-500 border border-white/20">
+        
+        <div class="bg-white/80 backdrop-blur-md px-8 py-5 flex justify-between items-center shrink-0 border-b border-slate-100 relative z-10">
+            <div class="flex items-center gap-3">
+                <div class="w-1 h-8 bg-emerald-600 rounded-full"></div>
+                <div>
+                    <h3 class="text-lg font-black text-slate-800 uppercase tracking-tighter leading-none">Plana Directiva</h3>
+                    <p class="text-[9px] text-emerald-600 font-bold uppercase tracking-[0.2em] mt-1">Gestión Institucional</p>
+                </div>
+            </div>
+            <button onclick="closePersonalModal()" class="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-100 text-slate-400 hover:bg-red-500 hover:text-white transition-all group">
+                <i class="fas fa-times group-hover:rotate-90 transition-transform"></i>
+            </button>
+        </div>
+
+        <div class="flex-grow overflow-y-auto p-6 lg:p-2 custom-scrollbar bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:20px_20px]">
+            <div class="max-w-3xl mx-auto space-y-8">
+                
+                <div class="bg-white p-6 rounded-[2rem] border border-emerald-100 shadow-xl shadow-emerald-900/5 flex items-center gap-6 relative overflow-hidden group">
+                    <div class="absolute right-0 top-0 translate-x-1/4 -translate-y-1/4 w-32 h-32 bg-emerald-50 rounded-full opacity-50 group-hover:scale-110 transition-transform duration-700"></div>
+                    
+                    <div class="relative w-16 h-16 bg-emerald-600 rounded-2xl flex items-center justify-center text-white text-2xl shadow-lg shrink-0">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    
+                    <div class="relative">
+                        <span class="text-[8px] font-black bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded uppercase tracking-widest">Director General</span>
+                        <h4 class="text-xl font-black text-slate-800 leading-tight mt-1">Rojas Dorregaray, Ricardo Teodoro</h4>
+                        <div class="flex items-center gap-2 mt-1 text-slate-400">
+                            <i class="fas fa-certificate text-[10px]"></i>
+                            <p class="text-[10px] font-medium uppercase tracking-wider">Representante Legal IESPP</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-4">
+                    
+                    <div class="flex items-start gap-4 p-4 bg-white rounded-2xl border border-slate-100 hover:border-emerald-200 hover:shadow-md transition-all">
+                        <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                            <i class="fas fa-book-reader"></i>
+                        </div>
+                        <div>
+                            <p class="text-[8px] font-black text-slate-400 uppercase tracking-widest">Unidad Académica</p>
+                            <h6 class="text-xs font-bold text-slate-700">Azañedo Alcántara, Perci Guinshon</h6>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4 p-4 bg-white rounded-2xl border border-slate-100 hover:border-emerald-200 hover:shadow-md transition-all">
+                        <div class="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center shrink-0">
+                            <i class="fas fa-microscope"></i>
+                        </div>
+                        <div>
+                            <p class="text-[8px] font-black text-slate-400 uppercase tracking-widest">Unidad de Investigación</p>
+                            <h6 class="text-xs font-bold text-slate-700">Burgos Castañeda, Juana Rosa</h6>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4 p-4 bg-white rounded-2xl border border-slate-100 hover:border-emerald-200 hover:shadow-md transition-all">
+                        <div class="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center shrink-0">
+                            <i class="fas fa-heartbeat"></i>
+                        </div>
+                        <div>
+                            <p class="text-[8px] font-black text-slate-400 uppercase tracking-widest">Bienestar y Empleabilidad</p>
+                            <h6 class="text-xs font-bold text-slate-700">Castañeda Soriano, Rosa Liliana</h6>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4 p-4 bg-white rounded-2xl border border-slate-100 hover:border-emerald-200 hover:shadow-md transition-all">
+                        <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
+                            <i class="fas fa-sync-alt"></i>
+                        </div>
+                        <div>
+                            <p class="text-[8px] font-black text-slate-400 uppercase tracking-widest">Formación Continua</p>
+                            <h6 class="text-xs font-bold text-slate-700">Soriano Palomino, Oscar Orlando</h6>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4 p-4 bg-white rounded-2xl border border-slate-100 hover:border-emerald-200 hover:shadow-md transition-all">
+                        <div class="w-10 h-10 rounded-xl bg-slate-100 text-slate-600 flex items-center justify-center shrink-0">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                        </div>
+                        <div>
+                            <p class="text-[8px] font-black text-slate-400 uppercase tracking-widest">Administración</p>
+                            <h6 class="text-xs font-bold text-slate-700">Cáceres Díaz, Vicente Vitelio</h6>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4 p-4 bg-white rounded-2xl border border-slate-100 hover:border-emerald-200 hover:shadow-md transition-all">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+                            <i class="fas fa-child"></i>
+                        </div>
+                        <div>
+                            <p class="text-[8px] font-black text-slate-400 uppercase tracking-widest">Educación Inicial</p>
+                            <h6 class="text-xs font-bold text-slate-700">Eugenia Vásquez de Alegría</h6>
+                        </div>
+                    </div>
+
+                    <div class="md:col-span-2 flex items-start gap-4 p-4 bg-white rounded-2xl border border-slate-100 hover:border-emerald-200 hover:shadow-md transition-all group">
+                        <div class="w-10 h-10 rounded-xl bg-cyan-50 text-cyan-600 flex items-center justify-center shrink-0">
+                            <i class="fas fa-award"></i>
+                        </div>
+                        <div>
+                            <p class="text-[8px] font-black text-slate-400 uppercase tracking-widest">Área de Calidad</p>
+                            <h6 class="text-xs font-bold text-slate-700 group-hover:text-emerald-700 transition-colors">Terán Arce, Víctor Oswaldo</h6>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white border-t border-slate-100 py-3 px-10 flex justify-between items-center shrink-0">
+            <span class="text-[8px] font-bold text-slate-400 uppercase tracking-widest">IESPP 13 de Julio de 1882</span>
+            <div class="flex gap-2">
+                <div class="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
+                <div class="w-1.5 h-1.5 rounded-full bg-slate-200"></div>
+                <div class="w-1.5 h-1.5 rounded-full bg-slate-200"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Control Universal de Modales */
+    .modal-universal {
+        visibility: hidden;
+        opacity: 0;
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .modal-universal.active {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    .modal-universal.active .modal-container,
+    .modal-universal.active .transform {
+        transform: scale(1) !important;
+    }
+
+    /* Personalización de Scrollbar para los modales */
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #e2e8f0;
+        border-radius: 10px;
+        transition: background 0.3s;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: #10b981;
+    }
+
+    /* Prevenir saltos de escala al inicio */
+    .modal-container, .modal-universal .transform {
+        transform: scale(0.95);
+        transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+</style>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Mapeo de botones y sus respectivos modales
+        const modalConfig = [
+            { btn: 'btn-mision-vision', modal: 'modal-mision' },
+            { btn: 'btn-historia', modal: 'modal-historia' },
+            { btn: 'btn-personal', modal: 'modal-personal' }
+        ];
+
+        // Función universal para abrir modales
+        modalConfig.forEach(config => {
+            const button = document.getElementById(config.btn);
+            const modal = document.getElementById(config.modal);
+
+            if (button && modal) {
+                // Añadimos la clase base si no la tiene
+                modal.classList.add('modal-universal');
+                
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    modal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+            }
+        });
+
+        // Funciones de cierre Globales (disponibles para los onclick del HTML)
+        window.closeMisionModal = () => closeModal('modal-mision');
+        window.closeHistoriaModal = () => closeModal('modal-historia');
+        window.closePersonalModal = () => closeModal('modal-personal');
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('active');
+                // Solo habilitar scroll si no hay otros modales abiertos
+                const activeModals = document.querySelectorAll('.modal-universal.active');
+                if (activeModals.length === 0) {
+                    document.body.style.overflow = 'auto';
+                }
+            }
+        }
+
+        // Cerrar con Tecla Escape (Unificado)
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const activeModal = document.querySelector('.modal-universal.active');
+                if (activeModal) closeModal(activeModal.id);
+            }
+        });
+    });
+</script>
