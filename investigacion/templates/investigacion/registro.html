@@ -30,11 +30,19 @@
                 <div class="bg-white p-4 rounded-[3rem] border border-slate-100 shadow-xl shadow-slate-200/40">
                     
                     <div class="grid grid-cols-1 gap-10">
-                        <div class="group">
-                            <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-4 block group-focus-within:text-emerald-500 transition-colors">Título de la Investigación</label>
-                            <input name="titulo"
+                        <div class="group relative">
+                            <label class="text-[10px] font-black uppercase tracking-widest text-emerald-600 mb-2 block transition-colors">
+                                Título de la Investigación
+                            </label>
+                            
+                            <input type="text" 
+                                name="titulo"
+                                value="{{ tesis.titulo|default:'' }}"
                                 placeholder="Escriba el título completo de la tesis..."
-                                class="w-full bg-slate-50/50 border-b-2 border-slate-100 p-0 pb-4 rounded-lg focus:border-emerald-500 focus:bg-transparent outline-none transition-all text-sm px-2 text-slate-800 placeholder:text-slate-200 resize-none">{{ tesis.titulo|default:'' }}</input>
+                                class="w-full bg-slate-50/50 border-b-2 border-slate-100 p-2 pb-4 rounded-t-lg focus:border-emerald-500 focus:bg-transparent outline-none transition-all text-sm font-medium text-slate-800 placeholder:text-slate-200"
+                                required>
+                                
+                            <div class="absolute bottom-0 left-0 w-0 h-[2px] bg-emerald-500 group-focus-within:w-full transition-all duration-500"></div>
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
