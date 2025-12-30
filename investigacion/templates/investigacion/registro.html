@@ -2,79 +2,118 @@
 {% load static %}
 
 {% block content %}
-<main class="py-20 bg-slate-50 min-h-screen">
-    <div class="container mx-auto max-w-4xl px-6">
+<main class="py-8 bg-[#fcfdfd] min-h-screen">
+    <div class="max-w-7xl mx-auto px-6">
+        
+        <div class="mb-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+                <div class="flex items-center gap-2 mb-2">
+                    <div class="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]"></div>
+                    <span class="text-emerald-600 text-[10px] font-black uppercase tracking-[0.4em]">Protocolo ALICIA 2.0</span>
+                </div>
+                <h1 class="text-4xl serif-font tracking-tighter text-slate-900">
+                    {% if editando %}Actualizar <span class="italic font-light text-emerald-700">Manuscrito</span>{% else %}Nuevo <span class="italic font-light text-emerald-700">Registro Local</span>{% endif %}
+                </h1>
+            </div>
+            <a href="{% url 'investigacion:lista_tesis' %}" class="group flex items-center gap-3 px-5 py-2.5 rounded-xl bg-white border border-slate-100 text-slate-400 hover:text-rose-500 hover:border-rose-100 transition-all shadow-sm">
+                <i class="fa-solid fa-xmark text-xs group-hover:rotate-90 transition-transform"></i>
+                <span class="text-[10px] font-black uppercase tracking-widest">Cancelar</span>
+            </a>
+        </div>
+
         <form action="{% if editando %}{% url 'investigacion:editar_tesis' tesis.id %}{% else %}{% url 'investigacion:registrar_tesis' %}{% endif %}" 
               method="POST" enctype="multipart/form-data" 
-              class="bg-white rounded-[40px] shadow-2xl overflow-hidden border border-slate-100">
+              class="grid grid-cols-1 lg:grid-cols-12 gap-8">
             {% csrf_token %}
             
-            <div class="bg-slate-900 p-10 text-white relative overflow-hidden">
-                <div class="relative z-10">
-                    <h2 class="text-3xl font-black italic serif-font">
-                        {% if editando %}Actualizar Investigación{% else %}Registro de Tesis{% endif %}
-                    </h2>
-                    <p class="text-slate-400 mt-2">
-                        {% if editando %}ID de Sistema: #00{{ tesis.id }}{% else %}Módulo de Autoarchivo - Guía ALICIA 2.0{% endif %}
-                    </p>
+            <div class="lg:col-span-8 space-y-8">
+                <div class="bg-white p-4 rounded-[3rem] border border-slate-100 shadow-xl shadow-slate-200/40">
+                    
+                    <div class="grid grid-cols-1 gap-10">
+                        <div class="group">
+                            <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-4 block group-focus-within:text-emerald-500 transition-colors">Título de la Investigación</label>
+                            <input name="titulo"
+                                placeholder="Escriba el título completo de la tesis..."
+                                class="w-full bg-slate-50/50 border-b-2 border-slate-100 p-0 pb-4 rounded-lg focus:border-emerald-500 focus:bg-transparent outline-none transition-all text-sm px-2 text-slate-800 placeholder:text-slate-200 resize-none">{{ tesis.titulo|default:'' }}</input>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                            <div class="group">
+                                <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-3 block group-focus-within:text-emerald-500 transition-colors text-right md:text-left">Autor Principal</label>
+                                <input type="text" name="autor" required value="{{ tesis.autor|default:'' }}"
+                                    class="w-full bg-slate-50/80 border border-slate-100 px-6 py-4 rounded-2xl focus:border-emerald-500 focus:bg-white outline-none transition-all text-sm font-bold text-slate-700">
+                            </div>
+                            <div class="group">
+                                <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-3 block group-focus-within:text-emerald-500 transition-colors">Asesor Académico</label>
+                                <input type="text" name="asesor" required value="{{ tesis.asesor|default:'' }}"
+                                    class="w-full bg-slate-50/80 border border-slate-100 px-6 py-4 rounded-2xl focus:border-emerald-500 focus:bg-white outline-none transition-all text-sm font-bold text-slate-700">
+                            </div>
+                        </div>
+
+                        <div class="group">
+                            <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-3 block group-focus-within:text-emerald-500 transition-colors">Resumen / Abstract</label>
+                            <textarea name="resumen" required rows="10"
+                                class="w-full bg-slate-50/30 border border-slate-100 p-8 rounded-[2rem] focus:border-emerald-500 focus:bg-white outline-none transition-all text-sm leading-relaxed text-slate-600 placeholder:text-slate-300 resize-none"
+                                placeholder="Describa brevemente la metodología, objetivos y resultados...">{{ tesis.resumen|default:'' }}</textarea>
+                        </div>
+                    </div>
                 </div>
-                <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-500/20 rounded-full -mr-10 -mt-10 blur-3xl"></div>
             </div>
 
-            <div class="p-10 space-y-8">
-                <div class="group">
-                    <label class="text-xs font-black uppercase tracking-widest text-slate-400 mb-2 block group-focus-within:text-emerald-500 transition-colors">Título de la Investigación</label>
-                    <input type="text" name="titulo" required value="{{ tesis.titulo|default:'' }}"
-                        class="w-full bg-slate-50 border-2 border-slate-100 p-4 rounded-2xl focus:border-emerald-500 focus:bg-white outline-none transition-all text-slate-700 font-medium">
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div>
-                        <label class="text-xs font-black uppercase tracking-widest text-slate-400 mb-2 block">Nombre del Autor</label>
-                        <input type="text" name="autor" required value="{{ tesis.autor|default:'' }}"
-                            class="w-full bg-slate-50 border-2 border-slate-100 p-4 rounded-2xl focus:border-emerald-500 focus:bg-white outline-none transition-all">
-                    </div>
-                    <div>
-                        <label class="text-xs font-black uppercase tracking-widest text-slate-400 mb-2 block">Asesor / Tutor</label>
-                        <input type="text" name="asesor" required value="{{ tesis.asesor|default:'' }}"
-                            class="w-full bg-slate-50 border-2 border-slate-100 p-4 rounded-2xl focus:border-emerald-500 focus:bg-white outline-none transition-all">
-                    </div>
-                </div>
-
-                <div>
-                    <label class="text-xs font-black uppercase tracking-widest text-slate-400 mb-2 block">Resumen (Abstract)</label>
-                    <textarea name="resumen" rows="4" required
-                        class="w-full bg-slate-50 border-2 border-slate-100 p-4 rounded-2xl focus:border-emerald-500 focus:bg-white outline-none transition-all resize-none">{{ tesis.resumen|default:'' }}</textarea>
-                </div>
-
-                <div>
-                    <label class="text-xs font-black uppercase tracking-widest text-slate-400 mb-2 block">Documento PDF (Texto Completo)</label>
-                    <div id="drop-area" class="relative border-4 border-dashed border-slate-100 rounded-[30px] p-10 text-center hover:border-emerald-400 hover:bg-emerald-50/30 transition-all cursor-pointer group">
+            <div class="lg:col-span-4 space-y-6">
+                
+                <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-xl shadow-slate-200/40">
+                    <h3 class="text-[11px] font-black uppercase tracking-widest text-slate-800 mb-6 flex items-center gap-2">
+                        <i class="fa-solid fa-paperclip text-emerald-500"></i> Documentación
+                    </h3>
+                    
+                    <div class="relative group/file">
                         <input type="file" name="archivo_pdf" id="file-input" accept=".pdf" {% if not editando %}required{% endif %}
-                            class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
-                        
-                        <div id="file-preview" class="space-y-4">
-                            {% if editando and tesis.archivo_pdf %}
-                                <i class="fas fa-file-circle-check text-5xl text-emerald-500"></i>
-                                <p class="text-emerald-700 font-bold">Archivo actual: {{ tesis.archivo_pdf.name|truncatechars:30 }}</p>
-                                <p class="text-[10px] text-slate-400 italic">Sube uno nuevo solo si deseas reemplazarlo</p>
-                            {% else %}
-                                <i class="fas fa-file-pdf text-5xl text-slate-200 group-hover:text-emerald-500 transition-colors"></i>
-                                <p class="text-slate-500 font-medium">Click para seleccionar o arrastra el archivo</p>
-                                <p class="text-[10px] text-slate-400 italic">Máximo 50MB - Formato PDF/A sugerido</p>
-                            {% endif %}
+                            class="absolute inset-0 w-full h-full opacity-0 z-50 cursor-pointer">
+                        <div id="drop-area" class="border-2 border-dashed border-slate-100 rounded-[2rem] p-8 text-center group-hover/file:border-emerald-400 group-hover/file:bg-emerald-50/50 transition-all duration-500">
+                            <div id="file-preview">
+                                {% if editando and tesis.archivo_pdf %}
+                                    <div class="flex flex-col items-center">
+                                        <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center mb-3">
+                                            <i class="fa-solid fa-file-pdf text-xl"></i>
+                                        </div>
+                                        <p class="text-[10px] font-bold text-slate-600 truncate w-full px-4">{{ tesis.archivo_pdf.name }}</p>
+                                    </div>
+                                {% else %}
+                                    <div class="flex flex-col items-center">
+                                        <div class="w-12 h-12 bg-slate-50 text-slate-300 rounded-xl flex items-center justify-center mb-3 group-hover/file:scale-110 transition-transform">
+                                            <i class="fa-solid fa-cloud-arrow-up text-xl"></i>
+                                        </div>
+                                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Subir PDF</p>
+                                    </div>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <button type="submit" 
-                    class="w-full bg-emerald-600 text-white font-black py-5 rounded-2xl hover:bg-slate-900 transition-all shadow-xl shadow-emerald-200 hover:shadow-slate-200 flex items-center justify-center gap-3 group">
-                    <span>{% if editando %}GUARDAR CAMBIOS ACTUALIZADOS{% else %}REGISTRAR INVESTIGACIÓN{% endif %}</span>
-                    <i class="fas {% if editando %}fa-save{% else %}fa-arrow-right{% endif %} group-hover:translate-x-1 transition-transform"></i>
-                </button>
-                
-                <div class="text-center">
-                    <a href="{% url 'investigacion:lista_tesis' %}" class="text-xs font-bold text-slate-400 hover:text-red-500 transition-colors uppercase tracking-widest">Cancelar y volver</a>
+                <div class="bg-slate-900 p-8 rounded-[2.5rem] shadow-2xl shadow-slate-900/20 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-3xl -mr-16 -mt-16"></div>
+                    
+                    <div class="relative z-10 space-y-6">
+                        <div class="text-white/40 text-[9px] font-black uppercase tracking-[0.3em]">Finalizar Proceso</div>
+                        
+                        <button type="submit" 
+                            class="w-full bg-emerald-500 text-white font-black py-5 rounded-2xl hover:bg-white hover:text-slate-900 transition-all duration-500 shadow-lg shadow-emerald-500/20 flex items-center justify-center gap-3 group">
+                            <span class="tracking-[0.2em] text-[10px]">{% if editando %}GUARDAR CAMBIOS{% else %}PUBLICAR AHORA{% endif %}</span>
+                            <i class="fa-solid fa-rocket text-[10px] group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform"></i>
+                        </button>
+                        
+                        <div class="flex items-center gap-3 text-white/20">
+                            <div class="flex-grow h-px bg-white/10"></div>
+                            <i class="fa-solid fa-shield-halved text-[10px]"></i>
+                            <div class="flex-grow h-px bg-white/10"></div>
+                        </div>
+                        
+                        <p class="text-[9px] text-white/30 text-center leading-relaxed font-medium uppercase tracking-widest">
+                            Al publicar, el documento pasará a revisión para su validación técnica.
+                        </p>
+                    </div>
                 </div>
             </div>
         </form>
@@ -89,10 +128,13 @@
         if(this.files.length > 0) {
             const fileName = this.files[0].name;
             filePreview.innerHTML = `
-                <i class="fas fa-check-circle text-5xl text-emerald-500 animate-bounce"></i>
-                <p class="text-emerald-700 font-bold">${fileName}</p>
-                <p class="text-xs text-slate-400">Archivo listo para subir</p>
-                <button type="button" onclick="window.location.reload()" class="text-[10px] bg-slate-100 px-3 py-1 rounded-full text-slate-500 mt-2">Cambiar selección</button>
+                <div class="flex flex-col items-center animate-fadeIn">
+                    <div class="w-12 h-12 bg-emerald-500 text-white rounded-xl flex items-center justify-center mb-3 shadow-lg shadow-emerald-200">
+                        <i class="fa-solid fa-check text-xl"></i>
+                    </div>
+                    <p class="text-[10px] font-bold text-slate-800 truncate w-full px-4">${fileName}</p>
+                    <button type="button" onclick="window.location.reload()" class="mt-2 text-[8px] font-black text-emerald-600 uppercase">Cambiar</button>
+                </div>
             `;
         }
     });

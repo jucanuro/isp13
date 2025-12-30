@@ -30,9 +30,9 @@ tailwind.config = {
 document.addEventListener('DOMContentLoaded', () => {
     // RECUERDA: Asegúrate que los nombres coincidan exactamente con tu servidor (con o sin espacios)
     const pdfPaths = {
-        'reglamento': '/media/documentos/REGLAMENTO INTITUCIONAL_2023_2027.pdf',
-        'pci': '/media/documentos/PROYECTO CURRICULAR INSTITUCIONAL_2023_2027.pdf',
-        'manual': '/media/documentos/MANUAL DE PROCESOS INSTITUCIONALES 2023_2027.pdf'
+        'reglamento': '/media/documentos/REGLAMENTO_INTITUCIONAL_2023_2027.pdf',
+        'pci': '/media/documentos/PROYECTO_CURRICULAR_INSTITUCIONAL_2023_2027.pdf',
+        'manual': '/media/documentos/MANUAL_DE_PROCESOS_INSTITUCIONALES_2023_2027.pdf'
     };
 
     const modalHTML = `
