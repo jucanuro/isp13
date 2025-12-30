@@ -16,16 +16,16 @@
 </head>
 <body class="antialiased selection:bg-emerald-200 selection:text-emerald-900">
 
-    <div class="hidden lg:block bg-slate-950 py-2 px-12 overflow-hidden relative border-b border-emerald-900/30">
-        <div class="absolute inset-0 opacity-30 bg-[linear-gradient(90deg,transparent_0%,rgba(16,185,129,0.1)_50%,transparent_100%)] animate-shimmer"></div>
-        <div class="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_50%_120%,#059669,transparent)]"></div>
+    <div class="hidden lg:block bg-white py-2 px-12 overflow-hidden relative border-b border-slate-200">
+        <div class="absolute inset-0 opacity-10 bg-[linear-gradient(90deg,transparent_0%,rgba(16,185,129,0.2)_50%,transparent_100%)] animate-shimmer"></div>
+        <div class="absolute inset-0 opacity-5 bg-[radial-gradient(circle_at_50%_120%,#10b981,transparent)]"></div>
 
-        <div class="container mx-auto flex justify-between items-center relative z-10 text-[9px] font-black tracking-[0.25em] uppercase text-slate-400">
+        <div class="container mx-auto flex justify-between items-center relative z-10 text-[9px] font-black tracking-[0.25em] uppercase text-slate-500">
             
             <div class="flex items-center gap-8">
                 <a href="https://www.transparencia.gob.pe/enlaces/pte_transparencia_enlaces.aspx?id_entidad=37929" 
                 target="_blank" rel="noopener noreferrer"
-                class="flex items-center gap-3 text-slate-200 hover:text-emerald-400 transition-all duration-500 group">
+                class="flex items-center gap-3 text-slate-600 hover:text-emerald-600 transition-all duration-500 group">
                     <div class="relative">
                         <i class="fa-solid fa-gear text-emerald-500 group-hover:rotate-180 transition-transform duration-1000 ease-in-out"></i>
                         <span class="absolute -top-1 -right-1 flex h-1.5 w-1.5 rounded-full bg-emerald-400 animate-ping"></span>
@@ -33,12 +33,12 @@
                     <span class="relative">Portal de Transparencia</span>
                 </a>
 
-                <span class="w-px h-3 bg-slate-800"></span>
+                <span class="w-px h-3 bg-slate-300"></span>
 
-                <a href="#convocatorias" class="flex items-center gap-3 group text-white/90 hover:text-emerald-300 transition-colors">
-                    <span class="flex h-1.5 w-1.5 rounded-full bg-red-500 shadow-[0_0_8px_#ef4444]"></span>
+                <a href="#convocatorias" class="flex items-center gap-3 group text-slate-700 hover:text-emerald-600 transition-colors">
+                    <span class="flex h-1.5 w-1.5 rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.4)]"></span>
                     <span class="italic tracking-[0.1em]">Convocatorias CAS: </span>
-                    <span class="text-emerald-400 group-hover:underline decoration-emerald-500/50 underline-offset-4">
+                    <span class="text-emerald-600 group-hover:underline decoration-emerald-500/50 underline-offset-4">
                         {{ plazas_conteo|default:"0" }} Plazas Vigentes
                     </span>
                     <i class="fa-solid fa-chevron-right text-[7px] group-hover:translate-x-1 transition-transform"></i>
@@ -46,30 +46,35 @@
             </div>
 
             <div class="flex items-center gap-8">
-                <div class="flex gap-6 border-r border-slate-800 pr-8">
-                    <a href="#" class="hover:text-white transition-colors opacity-70 hover:opacity-100">ALICIA</a>
-                    <a href="#" class="hover:text-white transition-colors opacity-70 hover:opacity-100">CONCYTEC</a>
-                    <a href="#" class="hover:text-white transition-colors opacity-70 hover:opacity-100">SUNEDU</a>
+                <div class="flex gap-6 border-r border-slate-200 pr-8">
+                    <a href="#" class="text-slate-500 hover:text-emerald-600 transition-colors opacity-80 hover:opacity-100 font-bold">ALICIA</a>
+                    <a href="#" class="text-slate-500 hover:text-emerald-600 transition-colors opacity-80 hover:opacity-100 font-bold">CONCYTEC</a>
+                    <a href="#" class="text-slate-500 hover:text-emerald-600 transition-colors opacity-80 hover:opacity-100 font-bold">SUNEDU</a>
                 </div>
                 
                 <div class="flex gap-5 items-center">
                     <button onclick="document.getElementById('modalSoporte').classList.remove('hidden')" 
-                            class="flex items-center gap-2.5 bg-emerald-500/10 border border-emerald-500/30 px-4 py-1.5 rounded-full text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all duration-500 group shadow-[0_0_15px_rgba(16,185,129,0.1)]">
+                            class="flex items-center gap-2.5 bg-emerald-50 border border-emerald-200 px-4 py-1.5 rounded-full text-emerald-600 hover:bg-emerald-600 hover:text-white transition-all duration-500 group">
                         <i class="fa-solid fa-headset text-[10px] group-hover:rotate-12 transition-transform"></i>
                         <span class="text-[8px] font-black tracking-widest">Soporte 365</span>
                     </button>
 
-                    <div class="w-px h-3 bg-slate-800 mx-2"></div>
+                    <div class="w-px h-3 bg-slate-300 mx-2"></div>
 
                     <div class="flex gap-4">
-                        <a href="#" class="group">
-                            <i class="fab fa-facebook-f hover:text-white transition-all group-hover:-translate-y-0.5"></i>
+                        <a href="https://www.facebook.com/p/IESP-13-de-Julio-de-1882-100027317936086/?locale=es_LA" 
+                        target="_blank" rel="noopener noreferrer" class="group">
+                            <i class="fab fa-facebook-f text-slate-400 group-hover:text-emerald-600 transition-all duration-300 group-hover:-translate-y-0.5"></i>
                         </a>
-                        <a href="#" class="group">
-                            <i class="fab fa-linkedin-in hover:text-white transition-all group-hover:-translate-y-0.5"></i>
+                        
+                        <a href="https://www.instagram.com/iesp13dejuliode1882sp/" 
+                        target="_blank" rel="noopener noreferrer" class="group">
+                            <i class="fab fa-instagram text-slate-400 group-hover:text-emerald-600 transition-all duration-300 group-hover:-translate-y-0.5"></i>
                         </a>
-                        <a href="#" class="group">
-                            <i class="fab fa-youtube hover:text-white transition-all group-hover:-translate-y-0.5"></i>
+                        
+                        <a href="https://www.tiktok.com/@iesp13dejuliode1882" 
+                        target="_blank" rel="noopener noreferrer" class="group">
+                            <i class="fab fa-tiktok text-slate-400 group-hover:text-emerald-600 transition-all duration-300 group-hover:-translate-y-0.5"></i>
                         </a>
                     </div>
                 </div>

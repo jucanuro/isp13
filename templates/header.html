@@ -54,11 +54,11 @@
                         <div class="space-y-4">
                             <h4 class="text-[10px] font-black uppercase tracking-[0.2em] text-emerald-600">Educación Básica</h4>
                             <div class="grid gap-2">
-                                <a href="#carreras" class="group/link flex items-center justify-between p-3 bg-slate-50 rounded-xl hover:bg-emerald-600 transition duration-300">
+                                <a href="#" onclick="abrirModalPerfil(event)" class="group/link flex items-center justify-between p-3 bg-slate-50 rounded-xl hover:bg-emerald-600 transition duration-300">
                                     <span class="text-[11px] font-bold text-slate-700 group-hover/link:text-white">Educación Inicial</span>
                                     <i class="fas fa-arrow-right text-[10px] opacity-0 group-hover/link:opacity-100 group-hover/link:text-white transition-all -translate-x-2 group-hover/link:translate-x-0"></i>
                                 </a>
-                                <a href="#carreras" class="group/link flex items-center justify-between p-3 bg-slate-50 rounded-xl hover:bg-emerald-600 transition duration-300">
+                                <a href="#" onclick="abrirModalPrimaria(event)" class="group/link flex items-center justify-between p-3 bg-slate-50 rounded-xl hover:bg-emerald-600 transition duration-300">
                                     <span class="text-[11px] font-bold text-slate-700 group-hover/link:text-white">Educación Primaria</span>
                                     <i class="fas fa-arrow-right text-[10px] opacity-0 group-hover/link:opacity-100 group-hover/link:text-white transition-all -translate-x-2 group-hover/link:translate-x-0"></i>
                                 </a>
@@ -66,19 +66,23 @@
                         </div>
 
                         <div class="space-y-4">
-                            <h4 class="text-[10px] font-black uppercase tracking-[0.2em] text-blue-600">Nivel Secundaria</h4>
+                            <h4 onclick="abrirModalSecundaria(event)" 
+                                class="text-[10px] font-black uppercase tracking-[0.2em] text-blue-600 hover:text-emerald-600 cursor-pointer flex items-center gap-2 transition-colors group/title">
+                                Nivel Secundaria 
+                                <i class="fas fa-external-link-alt text-[8px] opacity-0 group-hover/title:opacity-100 transition-opacity"></i>
+                            </h4>
                             <div class="grid gap-2">
                                 <a href="#carreras" class="group/link flex items-center justify-between p-3 bg-slate-50 rounded-xl hover:bg-blue-600 transition duration-300">
                                     <span class="text-[11px] font-bold text-slate-700 group-hover/link:text-white">Ciencias Sociales</span>
-                                    <i class="fas fa-chevron-right text-[9px] opacity-30 group-hover/link:opacity-100 group-hover/link:text-white"></i>
+                                    <i class="hidden fas fa-chevron-right text-[9px] opacity-30 group-hover/link:opacity-100 group-hover/link:text-white"></i>
                                 </a>
                                 <a href="#carreras" class="group/link flex items-center justify-between p-3 bg-slate-50 rounded-xl hover:bg-blue-600 transition duration-300">
                                     <span class="text-[11px] font-bold text-slate-700 group-hover/link:text-white">Comunicación</span>
-                                    <i class="fas fa-chevron-right text-[9px] opacity-30 group-hover/link:opacity-100 group-hover/link:text-white"></i>
+                                    <i class="hidden fas fa-chevron-right text-[9px] opacity-30 group-hover/link:opacity-100 group-hover/link:text-white"></i>
                                 </a>
                                 <a href="#carreras" class="group/link flex items-center justify-between p-3 bg-slate-50 rounded-xl hover:bg-blue-600 transition duration-300">
                                     <span class="text-[11px] font-bold text-slate-700 group-hover/link:text-white">Ciencia y Tec.</span>
-                                    <i class="fas fa-chevron-right text-[9px] opacity-30 group-hover/link:opacity-100 group-hover/link:text-white"></i>
+                                    <i class="hidden fas fa-chevron-right text-[9px] opacity-30 group-hover/link:opacity-100 group-hover/link:text-white"></i>
                                 </a>
                             </div>
                         </div>
@@ -336,7 +340,6 @@
         </div>
     </div>
 </div>
-
 <div id="modal-personal" class="fixed inset-0 z-[110] invisible opacity-0 transition-all duration-500 flex items-center justify-center p-4">
     <div class="absolute inset-0 bg-slate-950/70 backdrop-blur-md" onclick="closePersonalModal()"></div>
     
@@ -461,7 +464,250 @@
         </div>
     </div>
 </div>
+<div id="modal-perfil-inicial" class="fixed inset-0 z-[150] hidden items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md animate-in fade-in duration-300">
+    <div class="bg-white w-full max-w-4xl max-h-[90vh] rounded-[3rem] shadow-2xl overflow-hidden flex flex-col animate-in zoom-in-95 duration-300">
+        
+        <div class="p-8 border-b border-slate-100 flex justify-between items-center bg-emerald-50/50">
+            <div>
+                <h3 class="text-emerald-900 font-black uppercase tracking-[0.3em] text-[12px] mb-1">Carrera Profesional</h3>
+                <p class="text-slate-500 font-medium text-xl serif-font italic">Educación Inicial: Competencias del Perfil de Egreso</p>
+            </div>
+            <button onclick="cerrarModalPerfil()" class="w-12 h-12 rounded-2xl bg-white shadow-sm border border-slate-200 flex items-center justify-center text-slate-400 hover:text-rose-500 transition-colors">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
 
+        <div class="p-8 overflow-y-auto custom-scrollbar bg-slate-50/30">
+            <div class="flex flex-col gap-4">
+                
+                <div class="p-6 rounded-[2rem] bg-white border border-slate-100 hover:border-emerald-200 hover:shadow-xl hover:shadow-emerald-900/5 transition-all flex gap-6 items-start group">
+                    <div class="bg-emerald-100 text-emerald-700 font-black text-xs p-3 rounded-2xl min-w-[110px] text-center uppercase tracking-tighter">Comp. 01</div>
+                    <p class="text-slate-700 text-[13px] leading-relaxed font-medium">Conoce y comprende las características de todos sus estudiantes y sus contextos, los contenidos disciplinares que enseña, los enfoques y procesos pedagógicos, con el propósito de promover capacidades de alto nivel y su formación integral.</p>
+                </div>
+
+                <div class="p-6 rounded-[2rem] bg-white border border-slate-100 hover:border-emerald-200 hover:shadow-xl hover:shadow-emerald-900/5 transition-all flex gap-6 items-start">
+                    <div class="bg-emerald-100 text-emerald-700 font-black text-xs p-3 rounded-2xl min-w-[110px] text-center uppercase tracking-tighter">Comp. 02</div>
+                    <p class="text-slate-700 text-[13px] leading-relaxed font-medium">Planifica la enseñanza de forma colegiada, lo que garantiza la coherencia entre los aprendizajes que quiere lograr en sus estudiantes, el proceso pedagógico, el uso de los recursos disponibles y la evaluación en una programación curricular en permanente revisión.</p>
+                </div>
+
+                <div class="p-6 rounded-[2rem] bg-white border border-slate-100 hover:border-emerald-200 hover:shadow-xl hover:shadow-emerald-900/5 transition-all flex gap-6 items-start">
+                    <div class="bg-emerald-100 text-emerald-700 font-black text-xs p-3 rounded-2xl min-w-[110px] text-center uppercase tracking-tighter">Comp. 03</div>
+                    <p class="text-slate-700 text-[13px] leading-relaxed font-medium">Crea un clima propicio para el aprendizaje, la convivencia democrática y la vivencia de la diversidad en todas sus expresiones con miras a formar ciudadanos críticos e interculturales.</p>
+                </div>
+
+                <div class="p-6 rounded-[2rem] bg-white border border-slate-100 hover:border-emerald-200 hover:shadow-xl hover:shadow-emerald-900/5 transition-all flex gap-6 items-start">
+                    <div class="bg-emerald-100 text-emerald-700 font-black text-xs p-3 rounded-2xl min-w-[110px] text-center uppercase tracking-tighter">Comp. 04</div>
+                    <p class="text-slate-700 text-[13px] leading-relaxed font-medium">Conduce el proceso de enseñanza con dominio de los contenidos disciplinares y el uso de estrategias y recursos pertinentes para que todos los estudiantes aprendan de manera reflexiva y crítica lo que concierne a la solución de problemas relacionados con sus experiencias, intereses y contextos culturales.</p>
+                </div>
+
+                <div class="p-6 rounded-[2rem] bg-white border border-slate-100 hover:border-emerald-200 hover:shadow-xl hover:shadow-emerald-900/5 transition-all flex gap-6 items-start">
+                    <div class="bg-emerald-100 text-emerald-700 font-black text-xs p-3 rounded-2xl min-w-[110px] text-center uppercase tracking-tighter">Comp. 05</div>
+                    <p class="text-slate-700 text-[13px] leading-relaxed font-medium">Evalúa permanentemente el aprendizaje de acuerdo con los objetivos institucionales previstos para tomar decisiones y retroalimentar a sus estudiantes y a la comunidad educativa, teniendo en cuenta las diferencias individuales y los diversos contextos culturales.</p>
+                </div>
+
+                <div class="p-6 rounded-[2rem] bg-white border border-slate-100 hover:border-emerald-200 hover:shadow-xl hover:shadow-emerald-900/5 transition-all flex gap-6 items-start">
+                    <div class="bg-emerald-100 text-emerald-700 font-black text-xs p-3 rounded-2xl min-w-[110px] text-center uppercase tracking-tighter">Comp. 06</div>
+                    <p class="text-slate-700 text-[13px] leading-relaxed font-medium">Participa activamente, con actitud democrática, crítica y colaborativa, en la gestión de la escuela, contribuyendo a la construcción y mejora continua del Proyecto Educativo Institucional para que genere aprendizajes de calidad.</p>
+                </div>
+
+                <div class="p-6 rounded-[2rem] bg-white border border-slate-100 hover:border-emerald-200 hover:shadow-xl hover:shadow-emerald-900/5 transition-all flex gap-6 items-start">
+                    <div class="bg-emerald-100 text-emerald-700 font-black text-xs p-3 rounded-2xl min-w-[110px] text-center uppercase tracking-tighter">Comp. 07</div>
+                    <p class="text-slate-700 text-[13px] leading-relaxed font-medium">Establece relaciones de respeto, colaboración y corresponsabilidad con las familias, la comunidad y otras instituciones del Estado y la sociedad civil. Aprovecha sus saberes y recursos en los procesos educativos y da cuenta de los resultados.</p>
+                </div>
+
+                <div class="p-6 rounded-[2rem] bg-white border border-slate-100 hover:border-emerald-200 hover:shadow-xl hover:shadow-emerald-900/5 transition-all flex gap-6 items-start">
+                    <div class="bg-emerald-100 text-emerald-700 font-black text-xs p-3 rounded-2xl min-w-[110px] text-center uppercase tracking-tighter">Comp. 08</div>
+                    <p class="text-slate-700 text-[13px] leading-relaxed font-medium">Reflexiona sobre su práctica y experiencia institucional y desarrolla procesos de aprendizaje continuo de modo individual y colectivo para construir y afirmar su identidad y responsabilidad profesional.</p>
+                </div>
+
+                <div class="p-6 rounded-[2rem] bg-white border border-slate-100 hover:border-emerald-200 hover:shadow-xl hover:shadow-emerald-900/5 transition-all flex gap-6 items-start">
+                    <div class="bg-emerald-100 text-emerald-700 font-black text-xs p-3 rounded-2xl min-w-[110px] text-center uppercase tracking-tighter">Comp. 09</div>
+                    <p class="text-slate-700 text-[13px] leading-relaxed font-medium">Ejerce su profesión desde una ética de respeto de los derechos fundamentales de las personas, demostrando honestidad, justicia, responsabilidad y compromiso con su función social.</p>
+                </div>
+
+                <div class="p-6 rounded-[2rem] bg-white border border-slate-100 hover:border-emerald-200 hover:shadow-xl hover:shadow-emerald-900/5 transition-all flex gap-6 items-start">
+                    <div class="bg-emerald-100 text-emerald-700 font-black text-xs p-3 rounded-2xl min-w-[110px] text-center uppercase tracking-tighter">Comp. 10</div>
+                    <p class="text-slate-700 text-[13px] leading-relaxed font-medium">Gestiona su desarrollo personal demostrando autoconocimiento y autorregulación de emociones, interactuando asertiva y empáticamente para desarrollar vínculos positivos y trabajar colaborativamente en contextos caracterizados por la diversidad.</p>
+                </div>
+
+                <div class="p-6 rounded-[2rem] bg-white border border-slate-100 hover:border-emerald-200 hover:shadow-xl hover:shadow-emerald-900/5 transition-all flex gap-6 items-start">
+                    <div class="bg-emerald-100 text-emerald-700 font-black text-xs p-3 rounded-2xl min-w-[110px] text-center uppercase tracking-tighter">Comp. 11</div>
+                    <p class="text-slate-700 text-[13px] leading-relaxed font-medium">Gestiona los entornos digitales y los aprovecha para su desarrollo profesional y práctica pedagógica, respondiendo a las necesidades e intereses de aprendizaje de los estudiantes.</p>
+                </div>
+
+                <div class="p-8 rounded-[2rem] bg-emerald-600 text-white shadow-xl shadow-emerald-200 flex gap-6 items-start transform hover:scale-[1.01] transition-transform">
+                    <div class="bg-white/20 text-white font-black text-xs p-3 rounded-2xl min-w-[110px] text-center uppercase tracking-tighter border border-white/30">Comp. 12</div>
+                    <p class="text-white text-[14px] leading-relaxed font-bold">Investiga aspectos críticos de la práctica docente utilizando diversos enfoques y metodologías para promover una cultura de investigación e innovación.</p>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="p-6 bg-slate-50 border-t border-slate-100 text-center flex items-center justify-center gap-4">
+             <div class="h-px w-10 bg-slate-200"></div>
+             <span class="text-[10px] text-slate-400 font-bold uppercase tracking-[0.3em]">IESPP "13 de Julio de 1882"</span>
+             <div class="h-px w-10 bg-slate-200"></div>
+        </div>
+    </div>
+</div>
+<div id="modal-perfil-primaria" class="fixed inset-0 z-[150] hidden items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md animate-in fade-in duration-300">
+    <div class="bg-white w-full max-w-4xl max-h-[90vh] rounded-[3rem] shadow-2xl overflow-hidden flex flex-col animate-in zoom-in-95 duration-300">
+        
+        <div class="p-8 border-b border-slate-100 flex justify-between items-center bg-emerald-50/50">
+            <div>
+                <h3 class="text-emerald-900 font-black uppercase tracking-[0.3em] text-[12px] mb-1">Carrera Profesional</h3>
+                <p class="text-slate-500 font-medium text-xl serif-font italic">Educación Primaria: Competencias del Perfil de Egreso</p>
+            </div>
+            <button onclick="cerrarModalPrimaria()" class="w-12 h-12 rounded-2xl bg-white shadow-sm border border-slate-200 flex items-center justify-center text-slate-400 hover:text-rose-500 transition-colors">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="p-8 overflow-y-auto custom-scrollbar bg-slate-50/30">
+            <div class="flex flex-col gap-4">
+                
+                <div class="p-6 rounded-[2rem] bg-white border border-slate-100 hover:border-emerald-200 hover:shadow-xl hover:shadow-emerald-900/5 transition-all flex gap-6 items-start group">
+                    <div class="bg-emerald-100 text-emerald-700 font-black text-xs p-3 rounded-2xl min-w-[110px] text-center uppercase tracking-tighter">Comp. 01</div>
+                    <p class="text-slate-700 text-[13px] leading-relaxed font-medium">Conoce y comprende las características de todos sus estudiantes y sus contextos, los contenidos disciplinares que enseña, los enfoques y procesos pedagógicos, con el propósito de promover capacidades de alto nivel y su formación integral.</p>
+                </div>
+
+                <div class="p-6 rounded-[2rem] bg-white border border-slate-100 hover:border-emerald-200 hover:shadow-xl hover:shadow-emerald-900/5 transition-all flex gap-6 items-start">
+                    <div class="bg-emerald-100 text-emerald-700 font-black text-xs p-3 rounded-2xl min-w-[110px] text-center uppercase tracking-tighter">Comp. 02</div>
+                    <p class="text-slate-700 text-[13px] leading-relaxed font-medium">Planifica la enseñanza de forma colegiada, lo que garantiza la coherencia entre los aprendizajes que quiere lograr en sus estudiantes, el proceso pedagógico, el uso de los recursos disponibles y la evaluación en una programación curricular en permanente revisión.</p>
+                </div>
+
+                <div class="p-6 rounded-[2rem] bg-white border border-slate-100 hover:border-emerald-200 hover:shadow-xl hover:shadow-emerald-900/5 transition-all flex gap-6 items-start">
+                    <div class="bg-emerald-100 text-emerald-700 font-black text-xs p-3 rounded-2xl min-w-[110px] text-center uppercase tracking-tighter">Comp. 03</div>
+                    <p class="text-slate-700 text-[13px] leading-relaxed font-medium">Crea un clima propicio para el aprendizaje, la convivencia democrática y la vivencia de la diversidad en todas sus expresiones con miras a formar ciudadanos críticos e interculturales.</p>
+                </div>
+
+                <div class="p-6 rounded-[2rem] bg-white border border-slate-100 hover:border-emerald-200 hover:shadow-xl hover:shadow-emerald-900/5 transition-all flex gap-6 items-start">
+                    <div class="bg-emerald-100 text-emerald-700 font-black text-xs p-3 rounded-2xl min-w-[110px] text-center uppercase tracking-tighter">Comp. 04</div>
+                    <p class="text-slate-700 text-[13px] leading-relaxed font-medium">Conduce el proceso de enseñanza con dominio de los contenidos disciplinares y el uso de estrategias y recursos pertinentes para que todos los estudiantes aprendan de manera reflexiva y crítica lo que concierne a la solución de problemas relacionados con sus experiencias, intereses y contextos culturales.</p>
+                </div>
+
+                <div class="p-6 rounded-[2rem] bg-white border border-slate-100 hover:border-emerald-200 hover:shadow-xl hover:shadow-emerald-900/5 transition-all flex gap-6 items-start">
+                    <div class="bg-emerald-100 text-emerald-700 font-black text-xs p-3 rounded-2xl min-w-[110px] text-center uppercase tracking-tighter">Comp. 05</div>
+                    <p class="text-slate-700 text-[13px] leading-relaxed font-medium">Evalúa permanentemente el aprendizaje de acuerdo con los objetivos institucionales previstos para tomar decisiones y retroalimentar a sus estudiantes y a la comunidad educativa, teniendo en cuenta las diferencias individuales y los diversos contextos culturales.</p>
+                </div>
+
+                <div class="p-6 rounded-[2rem] bg-white border border-slate-100 hover:border-emerald-200 hover:shadow-xl hover:shadow-emerald-900/5 transition-all flex gap-6 items-start">
+                    <div class="bg-emerald-100 text-emerald-700 font-black text-xs p-3 rounded-2xl min-w-[110px] text-center uppercase tracking-tighter">Comp. 06</div>
+                    <p class="text-slate-700 text-[13px] leading-relaxed font-medium">Participa activamente, con actitud democrática, crítica y colaborativa, en la gestión de la escuela, contribuyendo a la construcción y mejora continua del Proyecto Educativo Institucional para que genere aprendizajes de calidad.</p>
+                </div>
+
+                <div class="p-6 rounded-[2rem] bg-white border border-slate-100 hover:border-emerald-200 hover:shadow-xl hover:shadow-emerald-900/5 transition-all flex gap-6 items-start">
+                    <div class="bg-emerald-100 text-emerald-700 font-black text-xs p-3 rounded-2xl min-w-[110px] text-center uppercase tracking-tighter">Comp. 07</div>
+                    <p class="text-slate-700 text-[13px] leading-relaxed font-medium">Establece relaciones de respeto, colaboración y corresponsabilidad con las familias, la comunidad y otras instituciones del Estado y la sociedad civil. Aprovecha sus saberes y recursos en los procesos educativos y da cuenta de los resultados.</p>
+                </div>
+
+                <div class="p-6 rounded-[2rem] bg-white border border-slate-100 hover:border-emerald-200 hover:shadow-xl hover:shadow-emerald-900/5 transition-all flex gap-6 items-start">
+                    <div class="bg-emerald-100 text-emerald-700 font-black text-xs p-3 rounded-2xl min-w-[110px] text-center uppercase tracking-tighter">Comp. 08</div>
+                    <p class="text-slate-700 text-[13px] leading-relaxed font-medium">Reflexiona sobre su práctica y experiencia institucional y desarrolla procesos de aprendizaje continuo de modo individual y colectivo para construir y afirmar su identidad y responsabilidad profesional.</p>
+                </div>
+
+                <div class="p-6 rounded-[2rem] bg-white border border-slate-100 hover:border-emerald-200 hover:shadow-xl hover:shadow-emerald-900/5 transition-all flex gap-6 items-start">
+                    <div class="bg-emerald-100 text-emerald-700 font-black text-xs p-3 rounded-2xl min-w-[110px] text-center uppercase tracking-tighter">Comp. 09</div>
+                    <p class="text-slate-700 text-[13px] leading-relaxed font-medium">Ejerce su profesión desde una ética de respeto de los derechos fundamentales de las personas, demostrando honestidad, justicia, responsabilidad y compromiso con su función social.</p>
+                </div>
+
+                <div class="p-6 rounded-[2rem] bg-white border border-slate-100 hover:border-emerald-200 hover:shadow-xl hover:shadow-emerald-900/5 transition-all flex gap-6 items-start">
+                    <div class="bg-emerald-100 text-emerald-700 font-black text-xs p-3 rounded-2xl min-w-[110px] text-center uppercase tracking-tighter">Comp. 10</div>
+                    <p class="text-slate-700 text-[13px] leading-relaxed font-medium">Gestiona su desarrollo personal demostrando autoconocimiento y autorregulación de emociones, interactuando asertiva y empáticamente para desarrollar vínculos positivos y trabajar colaborativamente en contextos caracterizados por la diversidad.</p>
+                </div>
+
+                <div class="p-6 rounded-[2rem] bg-white border border-slate-100 hover:border-emerald-200 hover:shadow-xl hover:shadow-emerald-900/5 transition-all flex gap-6 items-start">
+                    <div class="bg-emerald-100 text-emerald-700 font-black text-xs p-3 rounded-2xl min-w-[110px] text-center uppercase tracking-tighter">Comp. 11</div>
+                    <p class="text-slate-700 text-[13px] leading-relaxed font-medium">Gestiona los entornos digitales y los aprovecha para su desarrollo profesional y práctica pedagógica, respondiendo a las necesidades e intereses de aprendizaje de los estudiantes y los contextos socioculturales.</p>
+                </div>
+
+                <div class="p-8 rounded-[2rem] bg-emerald-600 text-white shadow-xl shadow-emerald-200 flex gap-6 items-start transform hover:scale-[1.01] transition-transform">
+                    <div class="bg-white/20 text-white font-black text-xs p-3 rounded-2xl min-w-[110px] text-center uppercase tracking-tighter border border-white/30">Comp. 12</div>
+                    <p class="text-white text-[14px] leading-relaxed font-bold">Investiga aspectos críticos de la práctica docente utilizando diversos enfoques y metodologías para promover una cultura de investigación e innovación.</p>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="p-6 bg-slate-50 border-t border-slate-100 text-center flex items-center justify-center gap-4">
+             <span class="text-[10px] text-slate-400 font-bold uppercase tracking-[0.3em]">IESPP "13 de Julio de 1882"</span>
+        </div>
+    </div>
+</div>
+<div id="modal-perfil-secundaria" class="fixed inset-0 z-[150] hidden items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md animate-in fade-in duration-300">
+    <div class="bg-white w-full max-w-4xl max-h-[90vh] rounded-[3rem] shadow-2xl overflow-hidden flex flex-col animate-in zoom-in-95 duration-300">
+        
+        <div class="p-8 border-b border-slate-100 flex justify-between items-center bg-emerald-50/50">
+            <div>
+                <h3 class="text-emerald-900 font-black uppercase tracking-[0.3em] text-[12px] mb-1">Carrera Profesional</h3>
+                <p class="text-slate-500 font-medium text-xl serif-font italic">Educación Secundaria: Competencias del Perfil de Egreso</p>
+            </div>
+            <button onclick="cerrarModalSecundaria()" class="w-12 h-12 rounded-2xl bg-white shadow-sm border border-slate-200 flex items-center justify-center text-slate-400 hover:text-rose-500 transition-colors">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="p-8 overflow-y-auto custom-scrollbar bg-slate-50/30">
+            <div class="flex flex-col gap-4">
+                
+                <div class="p-6 rounded-[2rem] bg-white border border-slate-100 hover:border-emerald-200 hover:shadow-xl hover:shadow-emerald-900/5 transition-all flex gap-6 items-start group">
+                    <div class="bg-emerald-100 text-emerald-700 font-black text-xs p-3 rounded-2xl min-w-[110px] text-center uppercase tracking-tighter">Comp. 01</div>
+                    <p class="text-slate-700 text-[13px] leading-relaxed font-medium">Conoce y comprende las características de todos sus estudiantes y sus contextos, los contenidos disciplinares que enseña, los enfoques y procesos pedagógicos, con el propósito de promover capacidades de alto nivel y su formación integral.</p>
+                </div>
+
+                <div class="p-6 rounded-[2rem] bg-white border border-slate-100 hover:border-emerald-200 hover:shadow-xl hover:shadow-emerald-900/5 transition-all flex gap-6 items-start">
+                    <div class="bg-emerald-100 text-emerald-700 font-black text-xs p-3 rounded-2xl min-w-[110px] text-center uppercase tracking-tighter">Comp. 02</div>
+                    <p class="text-slate-700 text-[13px] leading-relaxed font-medium">Planifica la enseñanza de forma colegiada, lo que garantiza la coherencia entre los aprendizajes que quiere lograr en sus estudiantes, el proceso pedagógico, el uso de los recursos disponibles y la evaluación en una programación curricular en permanente revisión.</p>
+                </div>
+
+                <div class="p-6 rounded-[2rem] bg-white border border-slate-100 hover:border-emerald-200 hover:shadow-xl hover:shadow-emerald-900/5 transition-all flex gap-6 items-start">
+                    <div class="bg-emerald-100 text-emerald-700 font-black text-xs p-3 rounded-2xl min-w-[110px] text-center uppercase tracking-tighter">Comp. 03</div>
+                    <p class="text-slate-700 text-[13px] leading-relaxed font-medium">Crea un clima propicio para el aprendizaje, la convivencia democrática y la vivencia de la diversidad en todas sus expresiones con miras a formar ciudadanos críticos e interculturales.</p>
+                </div>
+
+                <div class="p-6 rounded-[2rem] bg-white border border-slate-100 hover:border-emerald-200 hover:shadow-xl hover:shadow-emerald-900/5 transition-all flex gap-6 items-start">
+                    <div class="bg-emerald-100 text-emerald-700 font-black text-xs p-3 rounded-2xl min-w-[110px] text-center uppercase tracking-tighter">Comp. 04</div>
+                    <p class="text-slate-700 text-[13px] leading-relaxed font-medium">Conduce el proceso de enseñanza con dominio de los contenidos disciplinares y el uso de estrategias y recursos pertinentes para que todos los estudiantes aprendan de manera reflexiva y crítica lo que concierne a la solución de problemas relacionados con sus experiencias, intereses y contextos culturales.</p>
+                </div>
+
+                <div class="p-6 rounded-[2rem] bg-white border border-slate-100 hover:border-emerald-200 hover:shadow-xl hover:shadow-emerald-900/5 transition-all flex gap-6 items-start">
+                    <div class="bg-emerald-100 text-emerald-700 font-black text-xs p-3 rounded-2xl min-w-[110px] text-center uppercase tracking-tighter">Comp. 05</div>
+                    <p class="text-slate-700 text-[13px] leading-relaxed font-medium">Evalúa permanentemente el aprendizaje de acuerdo con los objetivos institucionales previstos para tomar decisiones y retroalimentar a sus estudiantes y a la comunidad educativa, teniendo en cuenta las diferencias individuales y los diversos contextos culturales.</p>
+                </div>
+
+                <div class="p-6 rounded-[2rem] bg-white border border-slate-100 hover:border-emerald-200 hover:shadow-xl hover:shadow-emerald-900/5 transition-all flex gap-6 items-start">
+                    <div class="bg-emerald-100 text-emerald-700 font-black text-xs p-3 rounded-2xl min-w-[110px] text-center uppercase tracking-tighter">Comp. 06</div>
+                    <p class="text-slate-700 text-[13px] leading-relaxed font-medium">Participa activamente, con actitud democrática, crítica y colaborativa, en la gestión de la escuela, contribuyendo a la construcción y mejora continua del Proyecto Educativo Institucional para que genere aprendizajes de calidad.</p>
+                </div>
+
+                <div class="p-6 rounded-[2rem] bg-white border border-slate-100 hover:border-emerald-200 hover:shadow-xl hover:shadow-emerald-900/5 transition-all flex gap-6 items-start">
+                    <div class="bg-emerald-100 text-emerald-700 font-black text-xs p-3 rounded-2xl min-w-[110px] text-center uppercase tracking-tighter">Comp. 07</div>
+                    <p class="text-slate-700 text-[13px] leading-relaxed font-medium">Establece relaciones de respeto, colaboración y corresponsabilidad con las familias, la comunidad y otras instituciones del Estado y la sociedad civil. Aprovecha sus saberes y recursos en los procesos educativos y da cuenta de los resultados.</p>
+                </div>
+
+                <div class="p-6 rounded-[2rem] bg-white border border-slate-100 hover:border-emerald-200 hover:shadow-xl hover:shadow-emerald-900/5 transition-all flex gap-6 items-start">
+                    <div class="bg-emerald-100 text-emerald-700 font-black text-xs p-3 rounded-2xl min-w-[110px] text-center uppercase tracking-tighter">Comp. 08</div>
+                    <p class="text-slate-700 text-[13px] leading-relaxed font-medium">Reflexiona sobre su práctica y experiencia institucional y desarrolla procesos de aprendizaje continuo de modo individual y colectivo para construir y afirmar su identidad y responsabilidad profesional.</p>
+                </div>
+
+                <div class="p-6 rounded-[2rem] bg-white border border-slate-100 hover:border-emerald-200 hover:shadow-xl hover:shadow-emerald-900/5 transition-all flex gap-6 items-start">
+                    <div class="bg-emerald-100 text-emerald-700 font-black text-xs p-3 rounded-2xl min-w-[110px] text-center uppercase tracking-tighter">Comp. 09</div>
+                    <p class="text-slate-700 text-[13px] leading-relaxed font-medium">Ejerce su profesión desde una ética de respeto de los derechos fundamentales de las personas, demostrando honestidad, justicia, responsabilidad y compromiso con su función social.</p>
+                </div>
+
+                <div class="p-6 rounded-[2rem] bg-emerald-600 text-white shadow-xl shadow-emerald-200 flex gap-6 items-start transform hover:scale-[1.01] transition-transform">
+                    <div class="bg-white/20 text-white font-black text-xs p-3 rounded-2xl min-w-[110px] text-center uppercase tracking-tighter border border-white/30">Comp. 10</div>
+                    <p class="text-white text-[13px] leading-relaxed font-bold">Gestiona su desarrollo personal demostrando autoconocimiento y autorregulación de emociones, interactuando asertiva y empáticamente para desarrollar vínculos positivos y trabajar colaborativamente.</p>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="p-6 bg-slate-50 border-t border-slate-100 text-center flex items-center justify-center gap-4">
+             <span class="text-[10px] text-slate-400 font-bold uppercase tracking-[0.3em]">IESPP "13 de Julio de 1882"</span>
+        </div>
+    </div>
+</div>
 <style>
     /* Control Universal de Modales */
     .modal-universal {
@@ -504,53 +750,100 @@
 </style>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // Mapeo de botones y sus respectivos modales
-        const modalConfig = [
-            { btn: 'btn-mision-vision', modal: 'modal-mision' },
-            { btn: 'btn-historia', modal: 'modal-historia' },
-            { btn: 'btn-personal', modal: 'modal-personal' }
-        ];
+    /**
+     * CONFIGURACIÓN DE MODALES
+     * centralizamos todos los IDs para que el código sea escalable.
+     */
+    const modalConfig = [
+        { btn: 'btn-mision-vision', modal: 'modal-mision' },
+        { btn: 'btn-historia', modal: 'modal-historia' },
+        { btn: 'btn-personal', modal: 'modal-personal' }
+    ];
 
-        // Función universal para abrir modales
-        modalConfig.forEach(config => {
-            const button = document.getElementById(config.btn);
-            const modal = document.getElementById(config.modal);
+    // Inicializar modales basados en botones específicos
+    modalConfig.forEach(config => {
+        const button = document.getElementById(config.btn);
+        if (button) {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                openModal(config.modal);
+            });
+        }
+    });
 
-            if (button && modal) {
-                // Añadimos la clase base si no la tiene
-                modal.classList.add('modal-universal');
+    /**
+     * LÓGICA CORE: ABRIR Y CERRAR
+     */
+    window.openModal = function(modalId) {
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            // Aseguramos que sea visible antes de animar
+            modal.classList.remove('hidden');
+            // Agregamos clase para scannability y control
+            modal.classList.add('modal-universal'); 
+            
+            setTimeout(() => {
+                modal.classList.add('active', 'flex');
+                document.body.style.overflow = 'hidden';
+            }, 10);
+        }
+    };
+
+    window.closeModal = function(modalId) {
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.classList.remove('active');
+            
+            // Esperamos la transición CSS (300ms) para ocultar físicamente
+            setTimeout(() => {
+                modal.classList.remove('flex');
+                modal.classList.add('hidden');
                 
-                button.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    modal.classList.add('active');
-                    document.body.style.overflow = 'hidden';
-                });
-            }
-        });
-
-        // Funciones de cierre Globales (disponibles para los onclick del HTML)
-        window.closeMisionModal = () => closeModal('modal-mision');
-        window.closeHistoriaModal = () => closeModal('modal-historia');
-        window.closePersonalModal = () => closeModal('modal-personal');
-
-        function closeModal(modalId) {
-            const modal = document.getElementById(modalId);
-            if (modal) {
-                modal.classList.remove('active');
-                // Solo habilitar scroll si no hay otros modales abiertos
-                const activeModals = document.querySelectorAll('.modal-universal.active');
+                // Solo devolvemos el scroll si no hay otros modales abiertos
+                const activeModals = document.querySelectorAll('.active');
                 if (activeModals.length === 0) {
                     document.body.style.overflow = 'auto';
                 }
-            }
+            }, 300);
         }
+    };
 
-        // Cerrar con Tecla Escape (Unificado)
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                const activeModal = document.querySelector('.modal-universal.active');
-                if (activeModal) closeModal(activeModal.id);
-            }
-        });
+    /**
+     * MÉTODOS DE CIERRE GLOBAL (Teclado y Clic fuera)
+     */
+    
+    // Cerrar con Tecla Escape
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            const activeModal = document.querySelector('[id^="modal-"].active, .modal-universal.active');
+            if (activeModal) closeModal(activeModal.id);
+        }
     });
+
+    // Cerrar al hacer clic en el fondo (overlay)
+    window.addEventListener('click', (e) => {
+        // Si el clic es directamente en el contenedor del modal (el fondo oscuro)
+        if (e.target.matches('[id^="modal-"]')) {
+            closeModal(e.target.id);
+        }
+    });
+
+    /**
+     * ALIAS PARA COMPATIBILIDAD
+     * Mantengo estos nombres por si los usas en tus ONCLICK del HTML
+     */
+    window.abrirModalPerfil = (e) => { if(e) e.preventDefault(); openModal('modal-perfil-inicial'); };
+    window.cerrarModalPerfil = () => closeModal('modal-perfil-inicial');
+    
+    window.abrirModalPrimaria = (e) => { if(e) e.preventDefault(); openModal('modal-perfil-primaria'); };
+    window.cerrarModalPrimaria = () => closeModal('modal-perfil-primaria');
+    
+    window.abrirModalSecundaria = (e) => { if(e) e.preventDefault(); openModal('modal-perfil-secundaria'); };
+    window.cerrarModalSecundaria = () => closeModal('modal-perfil-secundaria');
+    
+    // Alias para modales institucionales
+    window.closeMisionModal = () => closeModal('modal-mision');
+    window.closeHistoriaModal = () => closeModal('modal-historia');
+    window.closePersonalModal = () => closeModal('modal-personal');
+});
 </script>
