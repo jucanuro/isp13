@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="py-20 bg-slate-50 min-h-screen flex items-center justify-center relative overflow-hidden">
+    <div class="absolute -top-24 -right-24 w-96 h-96 bg-emerald-100/50 rounded-full blur-3xl animate-pulse"></div>
+    <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-blue-100/50 rounded-full blur-3xl"></div>
+
+    <div class="container mx-auto px-6 relative z-10">
+        <div class="max-w-md mx-auto">
+            
+            <div class="bg-white/80 backdrop-blur-2xl rounded-[3rem] p-10 md:p-14 shadow-2xl border border-white relative overflow-hidden">
+                
+                <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-emerald-400 via-blue-500 to-emerald-400"></div>
+
+                <div class="text-center mb-10">
+                    <div class="inline-flex items-center justify-center w-20 h-20 bg-slate-900 rounded-[2rem] mb-6 shadow-xl shadow-slate-900/20 rotate-3 group hover:rotate-0 transition-transform duration-500">
+                        <i class="fas fa-fingerprint text-emerald-400 text-3xl"></i>
+                    </div>
+                    <h2 class="serif-font text-4xl font-black text-slate-900 leading-tight">
+                        Panel <span class="italic text-emerald-500 font-light">Privado</span>
+                    </h2>
+                    <p class="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 mt-3">Identificación Requerida</p>
+                </div>
+
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="mb-6 p-4 rounded-2xl {% if message.tags == 'error' %}bg-rose-50 text-rose-600{% else %}bg-emerald-50 text-emerald-600{% endif %} text-[11px] font-bold text-center border border-current/10 animate-shake">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                <form method="POST" class="space-y-5">
+                    {% csrf_token %}
+                    
+                    <div class="group">
+                        <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-5 mb-2 block group-focus-within:text-emerald-500 transition-colors">Usuario o Email</label>
+                        <div class="relative">
+                            <i class="fas fa-user absolute left-6 top-1/2 -translate-y-1/2 text-slate-300 text-xs"></i>
+                            <input type="text" name="username" placeholder="admin_isep" required
+                                   class="w-full bg-slate-50 border-2 border-transparent rounded-2xl py-4 pl-14 pr-6 focus:bg-white focus:border-emerald-100 focus:ring-4 focus:ring-emerald-500/5 transition-all outline-none text-slate-700 font-bold placeholder:text-slate-200">
+                        </div>
+                    </div>
+
+                    <div class="group">
+                        <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-5 mb-2 block group-focus-within:text-emerald-500 transition-colors">Contraseña</label>
+                        <div class="relative">
+                            <i class="fas fa-lock absolute left-6 top-1/2 -translate-y-1/2 text-slate-300 text-xs"></i>
+                            <input type="password" name="password" placeholder="••••••••" required
+                                   class="w-full bg-slate-50 border-2 border-transparent rounded-2xl py-4 pl-14 pr-6 focus:bg-white focus:border-emerald-100 focus:ring-4 focus:ring-emerald-500/5 transition-all outline-none text-slate-700 font-bold placeholder:text-slate-200">
+                        </div>
+                    </div>
+
+                    <button type="submit" 
+                            class="group relative w-full py-5 bg-slate-900 text-white rounded-2xl font-black uppercase tracking-[0.2em] text-[10px] overflow-hidden transition-all hover:shadow-2xl hover:shadow-slate-900/30 active:scale-95 mt-4">
+                        <span class="relative z-10 flex items-center justify-center gap-2">
+                            Iniciar Sesión <i class="fas fa-arrow-right text-[8px] group-hover:translate-x-1 transition-transform"></i>
+                        </span>
+                        <div class="absolute inset-0 bg-emerald-600 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                    </button>
+                </form>
+
+                <div class="mt-10 pt-8 border-t border-slate-50 flex justify-between items-center">
+                    <a href="/" class="text-[9px] font-black uppercase tracking-widest text-slate-300 hover:text-emerald-500 transition-all">
+                        <i class="fas fa-chevron-left mr-1"></i> Web ISEP
+                    </a>
+                    <span class="text-[9px] font-medium text-slate-200 uppercase tracking-tighter">v2.0 Admin System</span>
+                </div>
+            </div>
+            
+            <p class="text-center mt-8 text-slate-300 text-[10px] font-medium tracking-wide">
+                "La educación es el arma más poderosa para cambiar el mundo."
+            </p>
+        </div>
+    </div>
+</section>
+
+<style>
+    .serif-font { font-family: 'Playfair Display', serif; }
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-5px); }
+        75% { transform: translateX(5px); }
+    }
+    .animate-shake { animation: shake 0.4s ease-in-out; }
+</style>
+{% endblock %}

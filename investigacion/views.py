@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Tesis
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import HttpResponse
 from lxml import etree
 
+@login_required
 def registrar_tesis(request):
     if request.method == 'POST':
         titulo = request.POST.get('titulo')
@@ -25,6 +27,7 @@ def registrar_tesis(request):
             
     return render(request, 'investigacion/registro.html')
 
+@login_required
 def lista_tesis(request):
     estado_filtro = request.GET.get('estado')
     
@@ -38,6 +41,7 @@ def lista_tesis(request):
         'estado_actual': estado_filtro or 'todos'
     })
 
+@login_required
 def validar_tesis(request, tesis_id):
     tesis = get_object_or_404(Tesis, id=tesis_id)
     
@@ -57,7 +61,7 @@ def validar_tesis(request, tesis_id):
     messages.success(request, f"¡Éxito! La tesis '{tesis.titulo[:30]}' ha sido validada correctamente.")
     return redirect('investigacion:lista_tesis')
 
-
+@login_required
 def enviar_alicia(request, tesis_id):
     tesis = get_object_or_404(Tesis, id=tesis_id)
     
@@ -85,10 +89,6 @@ def enviar_alicia(request, tesis_id):
         messages.error(request, "Error en el servidor de base de datos institucional.")
 
     return redirect('investigacion:lista_tesis')
-
-from django.http import HttpResponse
-from django.shortcuts import get_object_or_404
-from lxml import etree
 
 def oai_repository(request, tesis_id):
     tesis = get_object_or_404(Tesis, id=tesis_id, estado='enviado')

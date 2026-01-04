@@ -1,4 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout  # <-- ESTA ES LA LÍNEA CLAVE
+from django.contrib import messages
 import requests
 from sickle import Sickle
 from requests.adapters import HTTPAdapter
@@ -62,3 +65,25 @@ def home(request):
         tesis_list = None 
 
     return render(request, 'index.html', {'tesis': tesis_list})
+
+
+def auth_view(request):
+    if request.method == 'POST':
+        u = request.POST.get('username')
+        p = request.POST.get('password')
+        
+        # Intentamos autenticar
+        user = authenticate(request, username=u, password=p)
+        
+        if user is not None:
+            login(request, user)
+            messages.success(request, f"Bienvenido de nuevo, {u}")
+            return redirect('blog:listar_publicaciones')
+        else:
+            messages.error(request, "Credenciales incorrectas. Inténtalo de nuevo.")
+            
+    return render(request, 'core/login.html')
+
+def logout_view(request):
+    logout(request)
+    return redirect('blog:listar_publicaciones')
