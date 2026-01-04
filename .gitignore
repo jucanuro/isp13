@@ -1,18 +1,17 @@
-# Django
-*.pyc
-__pycache__/
+# Bases de datos
+*.sqlite3
 db.sqlite3
-/media
-/staticfiles
 
 # Entornos virtuales
 venv/
 env/
 .venv/
 
-# Secretos
-.env
+# Python caché
+__pycache__/
+*.pyc
 
-# IDEs
-.vscode/
-.idea/
+# Archivos de sistema y logs
+*.log
+.DS_Store
+.env
