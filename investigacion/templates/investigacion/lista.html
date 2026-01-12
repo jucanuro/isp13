@@ -36,8 +36,8 @@
     }
     .search-input:focus {
         background: white;
-        border-color: #10b981;
-        box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.05);
+        border-color: #1e3a8a; /* Blue-900 */
+        box-shadow: 0 0 0 4px rgba(30, 58, 138, 0.05);
         outline: none;
     }
 </style>
@@ -48,19 +48,19 @@
         <div class="flex flex-col lg:flex-row justify-between items-center gap-6 mb-4 pb-8 border-b border-slate-200">
             <div class="flex flex-col">
                 <div class="flex items-center gap-3 mb-1">
-                    <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-                    <span class="text-emerald-600 text-[9px] font-black uppercase tracking-[0.4em]">Gestión Científica</span>
+                    <span class="w-2 h-2 rounded-full bg-blue-900"></span>
+                    <span class="text-blue-900 text-[9px] font-black uppercase tracking-[0.4em]">Gestión Científica</span>
                 </div>
                 <h1 class="text-3xl serif-font tracking-tight text-slate-900">
-                    Tesis <span class="italic font-light text-emerald-700">Locales</span>
+                    Tesis <span class="italic font-light text-blue-800">Locales</span>
                 </h1>
             </div>
 
             <div class="flex flex-wrap items-center justify-center lg:justify-end gap-3 w-full lg:w-auto">
                 <div class="relative group">
-                    <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-300 text-[10px] group-focus-within:text-emerald-500 transition-colors"></i>
+                    <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-300 text-[10px] group-focus-within:text-blue-900 transition-colors"></i>
                     <input type="text" placeholder="BUSCAR INVESTIGACIÓN..." 
-                        class="search-input w-full md:w-60 pl-10 pr-4 py-2.5 rounded-xl text-[9px] font-black tracking-widest uppercase border-slate-200 bg-slate-50/50 focus:ring-0 focus:border-emerald-500 transition-all outline-none">
+                        class="search-input w-full md:w-60 pl-10 pr-4 py-2.5 rounded-xl text-[9px] font-black tracking-widest uppercase border-slate-200 bg-slate-50/50 focus:ring-0 focus:border-blue-900 transition-all outline-none">
                 </div>
 
                 <form method="GET" action="{% url 'investigacion:lista_tesis' %}">
@@ -76,9 +76,9 @@
                 <div class="hidden md:block w-px h-8 bg-slate-100 mx-1"></div>
 
                 <a href="{% url 'investigacion:registrar_tesis' %}" 
-                    class="relative inline-flex items-center gap-3 px-7 py-3 bg-[#0f172a] text-white rounded-xl 
-                            hover:bg-emerald-600 hover:shadow-[0_10px_25px_-5px_rgba(16,185,129,0.4)] 
-                            transition-all duration-500 group overflow-hidden border border-slate-800 hover:border-emerald-500">
+                    class="relative inline-flex items-center gap-3 px-7 py-3 bg-[#1e3a8a] text-white rounded-xl 
+                            hover:bg-blue-800 hover:shadow-[0_10px_25px_-5px_rgba(30,58,138,0.4)] 
+                            transition-all duration-500 group overflow-hidden border border-blue-900 hover:border-blue-700">
                     <div class="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent opacity-50 group-hover:opacity-0 transition-opacity"></div>
                     <div class="relative flex items-center justify-center w-5 h-5 bg-white/10 rounded-lg group-hover:bg-white/20 transition-colors">
                         <i class="fa-solid fa-plus text-[10px] group-hover:rotate-180 transition-transform duration-700 ease-in-out"></i>
@@ -112,7 +112,7 @@
                                 <div class="flex flex-col gap-1.5">
                                     <span class="text-[11px] font-bold text-slate-800 leading-snug uppercase tracking-tight">{{ t.titulo }}</span>
                                     <div class="flex items-center gap-4">
-                                        <a href="{{ t.archivo_pdf.url }}" target="_blank" class="text-[8px] font-black text-emerald-500 hover:text-emerald-600 flex items-center gap-2 px-2 py-1 bg-emerald-50 rounded-lg transition-all">
+                                        <a href="{{ t.archivo_pdf.url }}" target="_blank" class="text-[8px] font-black text-blue-700 hover:text-blue-900 flex items-center gap-2 px-2 py-1 bg-blue-50 rounded-lg transition-all">
                                             <i class="fa-solid fa-file-pdf text-[10px]"></i> PDF MANUSCRITO
                                         </a>
                                         <span class="text-[8px] text-slate-300 font-bold uppercase tracking-widest">{{ t.fecha_registro|date:"d M Y" }}</span>
@@ -133,12 +133,12 @@
                                         <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span> Pendiente
                                     </span>
                                 {% elif t.estado == 'validado' %}
-                                    <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 text-emerald-600 text-[8px] font-black uppercase tracking-widest border border-emerald-100">
-                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Validado
+                                    <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 text-blue-700 text-[8px] font-black uppercase tracking-widest border border-blue-100">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span> Validado
                                     </span>
                                 {% else %}
-                                    <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 text-blue-600 text-[8px] font-black uppercase tracking-widest border border-blue-100">
-                                        <i class="fa-solid fa-certificate text-[10px]"></i> Publicado
+                                    <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900 text-white text-[8px] font-black uppercase tracking-widest border border-slate-900">
+                                        <i class="fa-solid fa-certificate text-[10px] text-amber-400"></i> Publicado
                                     </span>
                                 {% endif %}
                             </td>
@@ -150,9 +150,9 @@
                                     </div>
                                     <div class="w-40">
                                         {% if t.estado == 'pendiente' %}
-                                            <a href="{% url 'investigacion:validar_tesis' t.id %}" class="w-full h-10 flex items-center justify-center bg-emerald-600 text-white text-[9px] font-black uppercase tracking-[0.2em] rounded-xl hover:bg-slate-900 transition-all shadow-lg shadow-emerald-200/50">Validar Registro</a>
+                                            <a href="{% url 'investigacion:validar_tesis' t.id %}" class="w-full h-10 flex items-center justify-center bg-blue-900 text-white text-[9px] font-black uppercase tracking-[0.2em] rounded-xl hover:bg-slate-900 transition-all shadow-lg shadow-blue-200/50">Validar Registro</a>
                                         {% elif t.estado == 'validado' %}
-                                            <a href="{% url 'investigacion:enviar_alicia' t.id %}" class="w-full h-10 flex items-center justify-center bg-slate-200 text-slate-800 text-[9px] font-black uppercase tracking-[0.2em] rounded-xl hover:bg-slate-900 hover:text-white transition-all gap-2 border border-slate-300"><i class="fa-solid fa-paper-plane text-[9px]"></i> Publicar Alicia</a>
+                                            <a href="{% url 'investigacion:enviar_alicia' t.id %}" class="w-full h-10 flex items-center justify-center bg-slate-200 text-slate-800 text-[9px] font-black uppercase tracking-[0.2em] rounded-xl hover:bg-blue-900 hover:text-white transition-all gap-2 border border-slate-300"><i class="fa-solid fa-paper-plane text-[9px]"></i> Publicar Alicia</a>
                                         {% else %}
                                             <div class="w-full h-10 flex items-center justify-center bg-slate-50 text-slate-300 text-[8px] font-black uppercase tracking-widest rounded-xl border border-dashed border-slate-200"><i class="fa-solid fa-check-double mr-2"></i> Completado</div>
                                         {% endif %}
@@ -173,7 +173,7 @@
                 <div class="flex items-center gap-2">
                     {% if tesis_locales.has_previous %}
                         <a href="?page={{ tesis_locales.previous_page_number }}{% if estado_actual != 'todos' %}&estado={{ estado_actual }}{% endif %}" 
-                           class="w-10 h-10 flex items-center justify-center bg-white border border-slate-200 rounded-xl text-slate-400 hover:text-emerald-500 hover:border-emerald-500 transition-all shadow-sm">
+                           class="w-10 h-10 flex items-center justify-center bg-white border border-slate-200 rounded-xl text-slate-400 hover:text-blue-900 hover:border-blue-900 transition-all shadow-sm">
                             <i class="fa-solid fa-chevron-left text-[10px]"></i>
                         </a>
                     {% else %}
@@ -185,17 +185,17 @@
                     <div class="flex items-center gap-1 bg-white border border-slate-200 rounded-xl p-1 shadow-sm">
                         {% for num in tesis_locales.paginator.page_range %}
                             {% if tesis_locales.number == num %}
-                                <span class="w-8 h-8 flex items-center justify-center bg-emerald-500 text-white text-[10px] font-black rounded-lg shadow-lg shadow-emerald-200">{{ num }}</span>
+                                <span class="w-8 h-8 flex items-center justify-center bg-blue-900 text-white text-[10px] font-black rounded-lg shadow-lg shadow-blue-200">{{ num }}</span>
                             {% elif num > tesis_locales.number|add:'-3' and num < tesis_locales.number|add:'3' %}
                                 <a href="?page={{ num }}{% if estado_actual != 'todos' %}&estado={{ estado_actual }}{% endif %}" 
-                                   class="w-8 h-8 flex items-center justify-center text-slate-400 hover:text-emerald-500 text-[10px] font-bold rounded-lg transition-colors">{{ num }}</a>
+                                   class="w-8 h-8 flex items-center justify-center text-slate-400 hover:text-blue-900 text-[10px] font-bold rounded-lg transition-colors">{{ num }}</a>
                             {% endif %}
                         {% endfor %}
                     </div>
 
                     {% if tesis_locales.has_next %}
                         <a href="?page={{ tesis_locales.next_page_number }}{% if estado_actual != 'todos' %}&estado={{ estado_actual }}{% endif %}" 
-                           class="w-10 h-10 flex items-center justify-center bg-white border border-slate-200 rounded-xl text-slate-400 hover:text-emerald-500 hover:border-emerald-500 transition-all shadow-sm">
+                           class="w-10 h-10 flex items-center justify-center bg-white border border-slate-200 rounded-xl text-slate-400 hover:text-blue-900 hover:border-blue-900 transition-all shadow-sm">
                             <i class="fa-solid fa-chevron-right text-[10px]"></i>
                         </a>
                     {% else %}
@@ -208,6 +208,7 @@
         </div>
     </div>
 </main>
+
 {% if messages %}
     {% for message in messages %}
         {% if message.tags == 'error' %}
@@ -222,7 +223,7 @@
                 <div class="p-8 text-center">
                     <p class="text-slate-700 font-medium leading-relaxed italic serif-font text-lg">"{{ message }}"</p>
                     <button onclick="document.getElementById('modal-error').remove()" 
-                        class="w-full mt-8 bg-slate-900 text-white font-black py-4 rounded-xl hover:bg-rose-600 transition-all tracking-widest text-[10px] uppercase">
+                        class="w-full mt-8 bg-blue-900 text-white font-black py-4 rounded-xl hover:bg-rose-600 transition-all tracking-widest text-[10px] uppercase">
                         Corregir Registro
                     </button>
                 </div>
@@ -231,17 +232,17 @@
 
         {% elif message.tags == 'success' %}
         <div id="modal-success" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-[2px] animate-in fade-in duration-500">
-            <div class="bg-white w-full max-w-md rounded-[3rem] shadow-2xl overflow-hidden border border-emerald-100 animate-in zoom-in-95 duration-500 transition-all duration-700" id="success-card">
-                <div class="bg-emerald-50 p-10 text-center relative overflow-hidden">
-                    <div class="absolute top-0 right-0 w-24 h-24 bg-emerald-500/5 rounded-full -mr-12 -mt-12"></div>
+            <div class="bg-white w-full max-w-md rounded-[3rem] shadow-2xl overflow-hidden border border-blue-100 animate-in zoom-in-95 duration-500 transition-all duration-700" id="success-card">
+                <div class="bg-blue-50 p-10 text-center relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-blue-900/5 rounded-full -mr-12 -mt-12"></div>
                     
-                    <div class="relative w-20 h-20 bg-emerald-500 text-white rounded-3xl flex items-center justify-center mx-auto mb-4 shadow-xl shadow-emerald-200 ring-8 ring-white animate-bounce">
+                    <div class="relative w-20 h-20 bg-blue-900 text-white rounded-3xl flex items-center justify-center mx-auto mb-4 shadow-xl shadow-blue-200 ring-8 ring-white animate-bounce">
                         <i class="fa-solid fa-cloud-arrow-up text-3xl"></i>
                     </div>
-                    <h3 class="text-emerald-900 font-black uppercase tracking-[0.3em] text-[10px]">Depósito Exitoso</h3>
+                    <h3 class="text-blue-900 font-black uppercase tracking-[0.3em] text-[10px]">Depósito Exitoso</h3>
                 </div>
                 <div class="p-10 text-center">
-                    <p class="text-emerald-600 text-[10px] font-black uppercase tracking-[0.2em] mb-4">Registro en Repositorio Institucional</p>
+                    <p class="text-blue-900 text-[10px] font-black uppercase tracking-[0.2em] mb-4">Registro en Repositorio Institucional</p>
                     <p class="text-slate-700 font-medium leading-relaxed serif-font text-xl">
                         {{ message }}
                     </p>
@@ -250,7 +251,7 @@
                     </p>
                     
                     <div class="w-full h-1 bg-slate-100 mt-8 rounded-full overflow-hidden">
-                        <div id="progress-bar" class="h-full bg-emerald-500 transition-all duration-[4000ms] ease-linear w-full"></div>
+                        <div id="progress-bar" class="h-full bg-blue-900 transition-all duration-[4000ms] ease-linear w-full"></div>
                     </div>
                     <p class="mt-4 text-[8px] font-bold text-slate-300 uppercase tracking-widest">Sincronización en curso...</p>
                 </div>

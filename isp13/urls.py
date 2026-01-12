@@ -10,5 +10,6 @@ urlpatterns = [
     path('', include('investigacion.urls', namespace='investigacion')),
     # Cambia 'investigacion' por 'blog' para mantener consistencia
     path('blog/', include('blog.urls', namespace='blog')),
+    path('soporte/', include('soporte.urls', namespace='soporte'))
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

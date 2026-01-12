@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'inicio',
     'investigacion',
     'blog',
+    'soporte',
 ]
 
 MIDDLEWARE = [

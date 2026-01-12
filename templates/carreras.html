@@ -1,186 +1,264 @@
-<section id="carreras" class="pt-32 pb-24 bg-white relative overflow-hidden">
+<section id="carreras" class="pt-32 pb-56 bg-gradient-to-b from-blue-900 to-blue-950 relative overflow-hidden">
+    
     <div class="absolute top-0 left-0 w-full overflow-hidden line-height-0 rotate-180">
-        <svg class="relative block w-full h-[80px]" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-            <path d="M600,112.77C268.63,112.77,0,65.52,0,7.23V120H1200V7.23C1200,65.52,931.37,112.77,600,112.77Z" class="fill-slate-50/80"></path>
+        <svg class="relative block w-full h-[80px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M600,112.77C268.63,112.77,0,65.52,0,7.23V120H1200V7.23C1200,65.52,931.37,112.77,600,112.77Z" fill="#ffffff" fill-opacity="0.05"></path>
         </svg>
     </div>
 
     <div class="container mx-auto px-6 relative z-10">
         <div class="text-center max-w-3xl mx-auto mb-20">
-            <span class="text-[10px] font-black text-emerald-600 uppercase tracking-[0.5em] mb-4 block animate-fade-in">Oferta Académica Profesional</span>
-            <h3 class="serif-font text-5xl font-black text-slate-900 tracking-tighter">
-                Nuestras <span class="text-emerald-500 italic underline decoration-emerald-200 underline-offset-8">Carreras</span>
+            <span class="text-[10px] font-black text-amber-400 uppercase tracking-[0.5em] mb-4 block">Oferta Académica Profesional</span>
+            <h3 class="serif-font text-5xl font-black text-white tracking-tighter">
+                Nuestras <span class="text-amber-400 italic underline decoration-white/20 underline-offset-8">Carreras</span>
             </h3>
         </div>
 
         <div class="grid lg:grid-cols-3 gap-8">
-            <div onclick="abrirModalInfo('inicial')" class="group cursor-pointer flex flex-col bg-white rounded-[3rem] p-10 border border-slate-100 hover:border-emerald-200 hover:shadow-[0_40px_80px_-20px_rgba(16,185,129,0.15)] transition-all duration-500 h-full relative overflow-hidden">
-                <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-50 rounded-full -mr-16 -mt-16 opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
-                
-                <div class="w-16 h-16 bg-slate-50 rounded-2xl shadow-sm flex items-center justify-center mb-8 group-hover:bg-emerald-600 group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 relative z-10">
-                    <i class="fas fa-child text-2xl text-emerald-600 group-hover:text-white"></i>
+            <div onclick="abrirModalInfo('inicial')" class="group cursor-pointer flex flex-col bg-white rounded-[3rem] p-10 border border-white/10 hover:border-amber-400 hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.4)] transition-all duration-500 h-full relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-blue-50 rounded-full -mr-16 -mt-16 opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
+                <div class="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-blue-900 group-hover:scale-110 transition-all duration-500 relative z-10">
+                    <i class="fas fa-child text-2xl text-blue-900 group-hover:text-amber-400"></i>
                 </div>
-                
                 <h4 class="text-2xl font-black text-slate-800 mb-4 tracking-tighter relative z-10">Educación <br>Inicial</h4>
-                <p class="text-[13px] text-slate-500 font-medium leading-relaxed mb-8 relative z-10">Especialízate en el desarrollo integral de la primera infancia con enfoques pedagógicos modernos y lúdicos.</p>
-                
+                <p class="text-[13px] text-slate-500 font-medium leading-relaxed mb-8 relative z-10">Especialízate en el desarrollo integral de la primera infancia con enfoques pedagógicos modernos.</p>
                 <div class="mt-auto pt-8 border-t border-slate-100 flex items-center justify-between relative z-10">
-                    <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Duración: 5 Años</span>
-                    <button class="w-11 h-11 rounded-full bg-slate-900 text-white flex items-center justify-center group-hover:bg-emerald-500 group-hover:shadow-lg group-hover:shadow-emerald-200 transition-all duration-300">
+                    <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">5 Años</span>
+                    <button class="w-11 h-11 rounded-full bg-blue-900 text-white flex items-center justify-center group-hover:bg-amber-500 transition-all duration-300">
                         <i class="fas fa-search text-[11px]"></i>
                     </button>
                 </div>
             </div>
 
-            <div onclick="abrirModalInfo('primaria')" class="group cursor-pointer flex flex-col bg-white rounded-[3rem] p-10 border border-slate-100 hover:border-emerald-200 hover:shadow-[0_40px_80px_-20px_rgba(16,185,129,0.15)] transition-all duration-500 h-full relative overflow-hidden">
-                <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-50 rounded-full -mr-16 -mt-16 opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
-                
-                <div class="w-16 h-16 bg-slate-50 rounded-2xl shadow-sm flex items-center justify-center mb-8 group-hover:bg-emerald-600 group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 relative z-10">
-                    <i class="fas fa-pencil-alt text-2xl text-emerald-600 group-hover:text-white"></i>
+            <div onclick="abrirModalInfo('primaria')" class="group cursor-pointer flex flex-col bg-white rounded-[3rem] p-10 border border-white/10 hover:border-amber-400 hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.4)] transition-all duration-500 h-full relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-blue-50 rounded-full -mr-16 -mt-16 opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
+                <div class="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-blue-900 group-hover:scale-110 transition-all duration-500 relative z-10">
+                    <i class="fas fa-pencil-alt text-2xl text-blue-900 group-hover:text-amber-400"></i>
                 </div>
-                
                 <h4 class="text-2xl font-black text-slate-800 mb-4 tracking-tighter relative z-10">Educación <br>Primaria</h4>
-                <p class="text-[13px] text-slate-500 font-medium leading-relaxed mb-8 relative z-10">Lidera el aprendizaje fundamental construyendo las bases del pensamiento crítico y valores ciudadanos.</p>
-                
+                <p class="text-[13px] text-slate-500 font-medium leading-relaxed mb-8 relative z-10">Lidera el aprendizaje fundamental construyendo las bases del pensamiento crítico y valores.</p>
                 <div class="mt-auto pt-8 border-t border-slate-100 flex items-center justify-between relative z-10">
-                    <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Duración: 5 Años</span>
-                    <button class="w-11 h-11 rounded-full bg-slate-900 text-white flex items-center justify-center group-hover:bg-emerald-500 group-hover:shadow-lg group-hover:shadow-emerald-200 transition-all duration-300">
+                    <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">5 Años</span>
+                    <button class="w-11 h-11 rounded-full bg-blue-900 text-white flex items-center justify-center group-hover:bg-amber-500 transition-all duration-300">
                         <i class="fas fa-search text-[11px]"></i>
                     </button>
                 </div>
             </div>
 
-            <div onclick="abrirModalInfo('secundaria')" class="group cursor-pointer flex flex-col bg-white rounded-[3rem] p-10 border border-slate-100 hover:border-emerald-200 hover:shadow-[0_40px_80px_-20px_rgba(16,185,129,0.15)] transition-all duration-500 h-full relative overflow-hidden">
-                <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-50 rounded-full -mr-16 -mt-16 opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
-                
-                <div class="w-16 h-16 bg-slate-50 rounded-2xl shadow-sm flex items-center justify-center mb-8 group-hover:bg-emerald-600 group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 relative z-10">
-                    <i class="fas fa-graduation-cap text-2xl text-emerald-600 group-hover:text-white"></i>
+            <div onclick="abrirModalInfo('secundaria')" class="group cursor-pointer flex flex-col bg-white rounded-[3rem] p-10 border border-white/10 hover:border-amber-400 hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.4)] transition-all duration-500 h-full relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-blue-50 rounded-full -mr-16 -mt-16 opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
+                <div class="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-blue-900 group-hover:scale-110 transition-all duration-500 relative z-10">
+                    <i class="fas fa-graduation-cap text-2xl text-blue-900 group-hover:text-amber-400"></i>
                 </div>
-                
                 <h4 class="text-2xl font-black text-slate-800 mb-4 tracking-tighter relative z-10">Educación <br>Secundaria</h4>
-                
-                <div class="space-y-3 mb-8 relative z-10">
-                    <div class="flex items-center gap-2 text-[11px] font-bold text-slate-600 italic">
-                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Ciencias Sociales
-                    </div>
-                    <div class="flex items-center gap-2 text-[11px] font-bold text-slate-600 italic">
-                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Comunicación
-                    </div>
-                    <div class="flex items-center gap-2 text-[11px] font-bold text-slate-600 italic">
-                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Ciencia y Tecnología
-                    </div>
+                <div class="space-y-2 mb-8 relative z-10">
+                    <div class="text-[11px] font-bold text-slate-600 italic">● Ciencias Sociales</div>
+                    <div class="text-[11px] font-bold text-slate-600 italic">● Comunicación</div>
+                    <div class="text-[11px] font-bold text-slate-600 italic">● Ciencia y Tecnología</div>
                 </div>
-                
                 <div class="mt-auto pt-8 border-t border-slate-100 flex items-center justify-between relative z-10">
-                    <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Duración: 5 Años</span>
-                    <button class="w-11 h-11 rounded-full bg-slate-900 text-white flex items-center justify-center group-hover:bg-emerald-500 group-hover:shadow-lg group-hover:shadow-emerald-200 transition-all duration-300">
+                    <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">5 Años</span>
+                    <button class="w-11 h-11 rounded-full bg-blue-900 text-white flex items-center justify-center group-hover:bg-amber-500 transition-all duration-300">
                         <i class="fas fa-search text-[11px]"></i>
                     </button>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="absolute bottom-0 left-0 w-full overflow-hidden pointer-events-none">
+        <div class="absolute bottom-0 left-0 w-full h-32 bg-white/10" 
+             style="clip-path: polygon(0% 100%, 0% 20%, 5% 0%, 15% 20%, 25% 0%, 35% 20%, 45% 0%, 55% 20%, 65% 0%, 75% 20%, 85% 0%, 95% 20%, 100% 0%, 100% 100%);">
+        </div>
+        
+        <div class="absolute bottom-0 left-0 w-full h-20 bg-white/20" 
+             style="clip-path: polygon(0% 100%, 0% 30%, 10% 0%, 20% 30%, 30% 0%, 40% 30%, 50% 0%, 60% 30%, 70% 0%, 80% 30%, 90% 0%, 100% 30%, 100% 100%);">
+        </div>
+
+        <div class="relative w-full h-12 bg-[#f8fafc]" 
+             style="clip-path: polygon(0% 100%, 0% 50%, 25% 0%, 50% 50%, 75% 0%, 100% 50%, 100% 100%);">
         </div>
     </div>
 </section>
-
-<div id="modal-info-inicial" class="fixed inset-0 z-[150] hidden items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md animate-in fade-in duration-300">
-    <div class="bg-white w-full max-w-4xl max-h-[90vh] rounded-[3rem] shadow-2xl overflow-hidden flex flex-col animate-in zoom-in-95 duration-300">
-        <div class="p-8 border-b border-slate-100 flex justify-between items-center bg-emerald-50/50">
+<div id="modal-info-inicial" class="fixed inset-0 z-[150] hidden items-center justify-center p-4 bg-blue-950/60 backdrop-blur-md animate-in fade-in duration-300">
+    <div class="bg-white w-full max-w-4xl max-h-[90vh] rounded-[3rem] shadow-2xl overflow-hidden flex flex-col animate-in zoom-in-95 duration-300 border border-white/20">
+        
+        <div class="p-8 border-b border-slate-100 flex justify-between items-center bg-blue-50/50">
             <div>
-                <h3 class="text-emerald-900 font-black uppercase tracking-[0.3em] text-[12px] mb-1">Información Académica</h3>
+                <h3 class="text-blue-900 font-black uppercase tracking-[0.3em] text-[12px] mb-1">Información Académica</h3>
                 <p class="text-slate-500 font-medium text-xl serif-font italic">Educación Inicial</p>
             </div>
-            <button onclick="cerrarModalInfo('inicial')" class="w-12 h-12 rounded-2xl bg-white shadow-sm border border-slate-200 flex items-center justify-center text-slate-400 hover:text-rose-500 transition-colors">
+            <button onclick="cerrarModalInfo('inicial')" class="w-12 h-12 rounded-2xl bg-white shadow-sm border border-slate-200 flex items-center justify-center text-slate-400 hover:text-blue-900 hover:border-blue-200 transition-all hover:rotate-90">
                 <i class="fas fa-times"></i>
             </button>
         </div>
+
         <div class="p-8 overflow-y-auto custom-scrollbar">
             <div class="space-y-6">
-                <div class="bg-emerald-600 p-8 rounded-[2.5rem] text-white shadow-lg shadow-emerald-200">
-                    <h4 class="text-[10px] uppercase tracking-widest font-black mb-3 opacity-80">Misión del Programa (PCI)</h4>
-                    <p class="text-lg leading-relaxed font-medium">Formar docentes con identidad cultural y ética, capaces de conducir procesos de aprendizaje significativos en la primera infancia, promoviendo el bienestar integral del niño en contextos interculturales.</p>
+                
+                <div class="bg-blue-900 p-8 rounded-[2.5rem] text-white shadow-xl shadow-blue-900/20 relative overflow-hidden group">
+                    <div class="absolute -right-10 -top-10 w-40 h-40 bg-white/5 rounded-full group-hover:scale-150 transition-transform duration-700"></div>
+                    
+                    <h4 class="text-[10px] uppercase tracking-widest font-black mb-3 text-amber-400">Misión del Programa (PCI)</h4>
+                    <p class="text-lg lg:text-xl leading-relaxed font-medium relative z-10">
+                        Formar docentes con identidad cultural y ética, capaces de conducir procesos de aprendizaje significativos en la primera infancia, promoviendo el bienestar integral del niño en contextos interculturales.
+                    </p>
                 </div>
+
                 <div class="grid md:grid-cols-2 gap-4">
-                    <div class="p-6 rounded-[2rem] border border-slate-100 bg-slate-50">
-                        <h5 class="font-bold text-emerald-800 mb-2">Enfoque Pedagógico</h5>
-                        <p class="text-[13px] text-slate-600 italic">"El juego como estrategia fundamental de aprendizaje y desarrollo."</p>
+                    <div class="p-8 rounded-[2rem] border border-blue-50 bg-slate-50/50 hover:bg-white hover:shadow-md transition-all duration-300">
+                        <div class="w-10 h-10 bg-amber-100 rounded-xl flex items-center justify-center mb-4">
+                            <i class="fas fa-star text-amber-600"></i>
+                        </div>
+                        <h5 class="font-bold text-blue-900 mb-2">Enfoque Pedagógico</h5>
+                        <p class="text-[13px] text-slate-600 italic leading-relaxed">
+                            "El juego como estrategia fundamental de aprendizaje y desarrollo integral."
+                        </p>
                     </div>
-                    <div class="p-6 rounded-[2rem] border border-slate-100 bg-slate-50">
-                        <h5 class="font-bold text-emerald-800 mb-2">Objetivo FID</h5>
-                        <p class="text-[13px] text-slate-600">Desarrollar competencias profesionales que permitan atender las necesidades biopsicosociales de niños de 0 a 5 años.</p>
+
+                    <div class="p-8 rounded-[2rem] border border-blue-50 bg-slate-50/50 hover:bg-white hover:shadow-md transition-all duration-300">
+                        <div class="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center mb-4">
+                            <i class="fas fa-target-stroke text-blue-600"></i>
+                        </div>
+                        <h5 class="font-bold text-blue-900 mb-2">Objetivo FID</h5>
+                        <p class="text-[13px] text-slate-600 leading-relaxed">
+                            Desarrollar competencias profesionales que permitan atender las necesidades biopsicosociales de niños de 0 a 5 años.
+                        </p>
                     </div>
                 </div>
+
+                <div class="pt-4 border-t border-slate-100 flex items-center gap-4">
+                    <span class="flex-shrink-0 w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+                    <p class="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Acreditación en proceso de calidad educativa</p>
+                </div>
+
             </div>
         </div>
     </div>
 </div>
 
-<div id="modal-info-primaria" class="fixed inset-0 z-[150] hidden items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md animate-in fade-in duration-300">
-    <div class="bg-white w-full max-w-4xl max-h-[90vh] rounded-[3rem] shadow-2xl overflow-hidden flex flex-col animate-in zoom-in-95 duration-300">
-        <div class="p-8 border-b border-slate-100 flex justify-between items-center bg-emerald-50/50">
+<div id="modal-info-primaria" class="fixed inset-0 z-[150] hidden items-center justify-center p-4 bg-blue-950/60 backdrop-blur-md animate-in fade-in duration-300">
+    <div class="bg-white w-full max-w-4xl max-h-[90vh] rounded-[3rem] shadow-2xl overflow-hidden flex flex-col animate-in zoom-in-95 duration-300 border border-white/20">
+        
+        <div class="p-8 border-b border-slate-100 flex justify-between items-center bg-blue-50/50">
             <div>
-                <h3 class="text-emerald-900 font-black uppercase tracking-[0.3em] text-[12px] mb-1">Información Académica</h3>
+                <h3 class="text-blue-900 font-black uppercase tracking-[0.3em] text-[12px] mb-1">Información Académica</h3>
                 <p class="text-slate-500 font-medium text-xl serif-font italic">Educación Primaria</p>
             </div>
-            <button onclick="cerrarModalInfo('primaria')" class="w-12 h-12 rounded-2xl bg-white shadow-sm border border-slate-200 flex items-center justify-center text-slate-400 hover:text-rose-500 transition-colors">
+            <button onclick="cerrarModalInfo('primaria')" class="w-12 h-12 rounded-2xl bg-white shadow-sm border border-slate-200 flex items-center justify-center text-slate-400 hover:text-blue-900 hover:border-blue-200 transition-all hover:rotate-90">
                 <i class="fas fa-times"></i>
             </button>
         </div>
+
         <div class="p-8 overflow-y-auto custom-scrollbar">
             <div class="space-y-6">
-                <div class="bg-emerald-700 p-8 rounded-[2.5rem] text-white shadow-lg shadow-emerald-200">
-                    <h4 class="text-[10px] uppercase tracking-widest font-black mb-3 opacity-80">Misión del Programa (PCI)</h4>
-                    <p class="text-lg leading-relaxed font-medium">Formar profesionales de la educación primaria que lideren procesos innovadores, fomentando el desarrollo de competencias fundamentales y el compromiso con la transformación social regional.</p>
+                
+                <div class="bg-blue-900 p-8 rounded-[2.5rem] text-white shadow-xl shadow-blue-900/20 relative overflow-hidden group">
+                    <div class="absolute -right-10 -top-10 w-40 h-40 bg-white/5 rounded-full group-hover:scale-150 transition-transform duration-700"></div>
+                    
+                    <h4 class="text-[10px] uppercase tracking-widest font-black mb-3 text-amber-400">Misión del Programa (PCI)</h4>
+                    <p class="text-lg lg:text-xl leading-relaxed font-medium relative z-10">
+                        Formar profesionales de la educación primaria que lideren procesos innovadores, fomentando el desarrollo de competencias fundamentales y el compromiso con la transformación social regional.
+                    </p>
                 </div>
+
                 <div class="grid md:grid-cols-2 gap-4">
-                    <div class="p-6 rounded-[2rem] border border-slate-100 bg-slate-50">
-                        <h5 class="font-bold text-emerald-800 mb-2">Ejes Transversales</h5>
-                        <p class="text-[13px] text-slate-600">Investigación aplicada, interculturalidad y pensamiento lógico-matemático.</p>
+                    <div class="p-8 rounded-[2rem] border border-blue-50 bg-slate-50/50 hover:bg-white hover:shadow-md transition-all duration-300">
+                        <div class="w-10 h-10 bg-amber-100 rounded-xl flex items-center justify-center mb-4">
+                            <i class="fas fa-layer-group text-amber-600"></i>
+                        </div>
+                        <h5 class="font-bold text-blue-900 mb-2">Ejes Transversales</h5>
+                        <p class="text-[13px] text-slate-600 leading-relaxed italic">
+                            Investigación aplicada, interculturalidad y pensamiento lógico-matemático.
+                        </p>
                     </div>
-                    <div class="p-6 rounded-[2rem] border border-slate-100 bg-slate-50">
-                        <h5 class="font-bold text-emerald-800 mb-2">Propuesta Pedagógica</h5>
-                        <p class="text-[13px] text-slate-600">Aprendizaje basado en proyectos (ABP) y formación ética orientada al servicio de la comunidad.</p>
+
+                    <div class="p-8 rounded-[2rem] border border-blue-50 bg-slate-50/50 hover:bg-white hover:shadow-md transition-all duration-300">
+                        <div class="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center mb-4">
+                            <i class="fas fa-lightbulb text-blue-600"></i>
+                        </div>
+                        <h5 class="font-bold text-blue-900 mb-2">Propuesta Pedagógica</h5>
+                        <p class="text-[13px] text-slate-600 leading-relaxed">
+                            Aprendizaje basado en proyectos (ABP) y formación ética orientada al servicio de la comunidad.
+                        </p>
                     </div>
                 </div>
+
+                <div class="pt-4 border-t border-slate-100 flex items-center gap-4">
+                    <span class="flex-shrink-0 w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+                    <p class="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Excelencia académica garantizada</p>
+                </div>
+
             </div>
         </div>
     </div>
 </div>
 
-<div id="modal-info-secundaria" class="fixed inset-0 z-[150] hidden items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md animate-in fade-in duration-300">
-    <div class="bg-white w-full max-w-4xl max-h-[90vh] rounded-[3rem] shadow-2xl overflow-hidden flex flex-col animate-in zoom-in-95 duration-300">
-        <div class="p-8 border-b border-slate-100 flex justify-between items-center bg-emerald-50/50">
+<div id="modal-info-secundaria" class="fixed inset-0 z-[150] hidden items-center justify-center p-4 bg-blue-950/60 backdrop-blur-md animate-in fade-in duration-300">
+    <div class="bg-white w-full max-w-4xl max-h-[90vh] rounded-[3rem] shadow-2xl overflow-hidden flex flex-col animate-in zoom-in-95 duration-300 border border-white/20">
+        
+        <div class="p-8 border-b border-slate-100 flex justify-between items-center bg-blue-50/50">
             <div>
-                <h3 class="text-emerald-900 font-black uppercase tracking-[0.3em] text-[12px] mb-1">Información Académica</h3>
+                <h3 class="text-blue-900 font-black uppercase tracking-[0.3em] text-[12px] mb-1">Información Académica</h3>
                 <p class="text-slate-500 font-medium text-xl serif-font italic">Educación Secundaria</p>
             </div>
-            <button onclick="cerrarModalInfo('secundaria')" class="w-12 h-12 rounded-2xl bg-white shadow-sm border border-slate-200 flex items-center justify-center text-slate-400 hover:text-rose-500 transition-colors">
+            <button onclick="cerrarModalInfo('secundaria')" class="w-12 h-12 rounded-2xl bg-white shadow-sm border border-slate-200 flex items-center justify-center text-slate-400 hover:text-blue-900 hover:border-blue-200 transition-all hover:rotate-90">
                 <i class="fas fa-times"></i>
             </button>
         </div>
+
         <div class="p-8 overflow-y-auto custom-scrollbar">
-            <div class="space-y-6">
-                <div class="bg-slate-900 p-8 rounded-[2.5rem] text-white shadow-lg shadow-slate-300">
-                    <h4 class="text-[10px] uppercase tracking-widest font-black mb-3 opacity-60">Visión Formativa</h4>
-                    <p class="text-lg leading-relaxed font-medium">"Formamos especialistas con alto dominio disciplinar y pedagógico, capaces de inspirar el pensamiento crítico en adolescentes de nuestra región."</p>
+            <div class="space-y-8">
+                
+                <div class="bg-blue-900 p-8 rounded-[2.5rem] text-white shadow-xl shadow-blue-900/20 relative overflow-hidden group">
+                    <div class="absolute -right-10 -top-10 w-40 h-40 bg-white/5 rounded-full group-hover:scale-150 transition-transform duration-700"></div>
+                    
+                    <h4 class="text-[10px] uppercase tracking-widest font-black mb-3 text-amber-400">Visión Formativa</h4>
+                    <p class="text-lg lg:text-xl leading-relaxed font-medium relative z-10 italic">
+                        "Formamos especialistas con alto dominio disciplinar y pedagógico, capaces de inspirar el pensamiento crítico en adolescentes de nuestra región."
+                    </p>
                 </div>
                 
                 <div class="space-y-4">
-                    <h5 class="text-[10px] font-black uppercase text-emerald-600 tracking-widest">Especialidades Disponibles:</h5>
-                    <div class="grid md:grid-cols-3 gap-3">
-                        <div class="p-5 rounded-2xl bg-emerald-50 border border-emerald-100 text-center hover:bg-white transition-colors">
-                            <i class="fas fa-users text-emerald-600 mb-2"></i>
-                            <p class="font-bold text-emerald-900 text-[10px] uppercase tracking-tighter">Ciencias Sociales</p>
+                    <div class="flex items-center gap-3">
+                        <div class="h-[1px] flex-grow bg-slate-100"></div>
+                        <h5 class="text-[10px] font-black uppercase text-blue-900 tracking-widest">Especialidades Disponibles</h5>
+                        <div class="h-[1px] flex-grow bg-slate-100"></div>
+                    </div>
+
+                    <div class="grid md:grid-cols-3 gap-4">
+                        <div class="p-6 rounded-[2rem] bg-slate-50 border border-slate-100 text-center hover:bg-white hover:border-amber-400 hover:shadow-lg transition-all duration-300 group">
+                            <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center mb-3 mx-auto shadow-sm group-hover:bg-blue-900 transition-colors">
+                                <i class="fas fa-users text-blue-900 group-hover:text-amber-400"></i>
+                            </div>
+                            <p class="font-bold text-blue-900 text-[10px] uppercase tracking-widest">Ciencias <br> Sociales</p>
                         </div>
-                        <div class="p-5 rounded-2xl bg-emerald-50 border border-emerald-100 text-center hover:bg-white transition-colors">
-                            <i class="fas fa-language text-emerald-600 mb-2"></i>
-                            <p class="font-bold text-emerald-900 text-[10px] uppercase tracking-tighter">Comunicación</p>
+
+                        <div class="p-6 rounded-[2rem] bg-slate-50 border border-slate-100 text-center hover:bg-white hover:border-amber-400 hover:shadow-lg transition-all duration-300 group">
+                            <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center mb-3 mx-auto shadow-sm group-hover:bg-blue-900 transition-colors">
+                                <i class="fas fa-language text-blue-900 group-hover:text-amber-400"></i>
+                            </div>
+                            <p class="font-bold text-blue-900 text-[10px] uppercase tracking-widest">Comunicación</p>
                         </div>
-                        <div class="p-5 rounded-2xl bg-emerald-50 border border-emerald-100 text-center hover:bg-white transition-colors">
-                            <i class="fas fa-flask text-emerald-600 mb-2"></i>
-                            <p class="font-bold text-emerald-900 text-[10px] uppercase tracking-tighter">Ciencia y Tecnología</p>
+
+                        <div class="p-6 rounded-[2rem] bg-slate-50 border border-slate-100 text-center hover:bg-white hover:border-amber-400 hover:shadow-lg transition-all duration-300 group">
+                            <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center mb-3 mx-auto shadow-sm group-hover:bg-blue-900 transition-colors">
+                                <i class="fas fa-flask text-blue-900 group-hover:text-amber-400"></i>
+                            </div>
+                            <p class="font-bold text-blue-900 text-[10px] uppercase tracking-widest">Ciencia y <br> Tecnología</p>
                         </div>
                     </div>
                 </div>
+
+                <div class="pt-2 flex items-center justify-center gap-4">
+                    <div class="flex -space-x-2">
+                        <div class="w-8 h-8 rounded-full border-2 border-white bg-blue-100 flex items-center justify-center text-[10px] text-blue-900 font-bold">1</div>
+                        <div class="w-8 h-8 rounded-full border-2 border-white bg-blue-200 flex items-center justify-center text-[10px] text-blue-900 font-bold">2</div>
+                        <div class="w-8 h-8 rounded-full border-2 border-white bg-blue-300 flex items-center justify-center text-[10px] text-blue-900 font-bold">3</div>
+                    </div>
+                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">3 Áreas Académicas Especializadas</p>
+                </div>
+
             </div>
         </div>
     </div>

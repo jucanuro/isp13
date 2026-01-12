@@ -2,48 +2,48 @@
 
 {% block content %}
 <section class="py-24 bg-slate-50 min-h-screen flex items-center justify-center relative overflow-hidden">
-    <div class="absolute top-20 left-10 w-64 h-64 bg-emerald-100/50 rounded-full blur-3xl -z-10 animate-pulse"></div>
-    <div class="absolute bottom-10 right-10 w-96 h-96 bg-blue-50/50 rounded-full blur-3xl -z-10"></div>
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-emerald-100/30 rounded-full -z-10"></div>
+    <div class="absolute top-20 left-10 w-64 h-64 bg-blue-100/50 rounded-full blur-3xl -z-10 animate-pulse"></div>
+    <div class="absolute bottom-10 right-10 w-96 h-96 bg-slate-200/50 rounded-full blur-3xl -z-10"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-blue-100/30 rounded-full -z-10"></div>
 
     <div class="container mx-auto px-6 relative z-10">
         <div class="max-w-2xl mx-auto mb-8">
-            <a href="{% url 'blog:listar_publicaciones' %}" class="group inline-flex items-center gap-3 px-4 py-2 bg-white rounded-full text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-emerald-600 border border-slate-100 shadow-sm transition-all">
+            <a href="{% url 'blog:listar_publicaciones' %}" class="group inline-flex items-center gap-3 px-4 py-2 bg-white rounded-full text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-[#1e3a8a] border border-slate-100 shadow-sm transition-all">
                 <i class="fas fa-arrow-left transition-transform group-hover:-translate-x-1"></i> Volver al escritorio
             </a>
         </div>
 
-        <div class="max-w-2xl mx-auto bg-white/80 backdrop-blur-xl rounded-[3.5rem] p-10 md:p-16 shadow-2xl shadow-emerald-900/5 border border-white relative overflow-hidden">
+        <div class="max-w-2xl mx-auto bg-white/80 backdrop-blur-xl rounded-[3.5rem] p-10 md:p-16 shadow-2xl shadow-blue-900/5 border border-white relative overflow-hidden">
             
-            <div class="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-emerald-500/10 to-transparent rounded-bl-[6rem]"></div>
+            <div class="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-[#1e3a8a]/10 to-transparent rounded-bl-[6rem]"></div>
             
             <div class="mb-10 relative">
-                <div class="inline-block p-4 bg-emerald-50 rounded-3xl mb-6">
-                    <i class="fas fa-feather-pointed text-3xl text-emerald-600"></i>
+                <div class="inline-block p-4 bg-blue-50 rounded-3xl mb-6">
+                    <i class="fas fa-feather-pointed text-3xl text-[#1e3a8a]"></i>
                 </div>
                 <h2 class="serif-font text-4xl font-black text-slate-900 leading-tight">
                     Redactar <br>
-                    <span class="italic text-emerald-500 font-light">Nueva Entrada</span>
+                    <span class="italic text-[#1e3a8a] font-light">Nueva Entrada</span>
                 </h2>
-                <div class="w-12 h-1.5 bg-emerald-500 rounded-full mt-4"></div>
+                <div class="w-12 h-1.5 bg-[#1e3a8a] rounded-full mt-4"></div>
             </div>
             
             <form method="POST" class="space-y-8">
                 {% csrf_token %}
                 
                 <div class="group">
-                    <label class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 group-focus-within:text-emerald-600 block mb-3 transition-colors">Título del Artículo</label>
+                    <label class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 group-focus-within:text-[#1e3a8a] block mb-3 transition-colors">Título del Artículo</label>
                     <div class="relative">
                         <input type="text" name="titulo" placeholder="¿Cómo se llamará tu historia?" required 
-                               class="w-full bg-slate-50 border-2 border-transparent rounded-2xl py-4 px-6 focus:bg-white focus:border-emerald-100 focus:ring-4 focus:ring-emerald-500/5 transition-all placeholder:text-slate-300 text-slate-700 font-bold">
+                               class="w-full bg-slate-50 border-2 border-transparent rounded-2xl py-4 px-6 focus:bg-white focus:border-blue-100 focus:ring-4 focus:ring-blue-900/5 transition-all placeholder:text-slate-300 text-slate-700 font-bold">
                     </div>
                 </div>
 
                 <div class="group">
-                    <label class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 group-focus-within:text-emerald-600 block mb-3 transition-colors">Contenido del Post</label>
+                    <label class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 group-focus-within:text-[#1e3a8a] block mb-3 transition-colors">Contenido del Post</label>
                     <div class="relative">
                         <textarea name="contenido" rows="10" placeholder="Escribe con libertad aquí..." required 
-                                  class="w-full bg-slate-50 border-2 border-transparent rounded-[2rem] py-5 px-6 focus:bg-white focus:border-emerald-100 focus:ring-4 focus:ring-emerald-500/5 transition-all placeholder:text-slate-300 text-slate-600 leading-relaxed"></textarea>
+                                  class="w-full bg-slate-50 border-2 border-transparent rounded-[2rem] py-5 px-6 focus:bg-white focus:border-blue-100 focus:ring-4 focus:ring-blue-900/5 transition-all placeholder:text-slate-300 text-slate-600 leading-relaxed"></textarea>
                     </div>
                 </div>
 
@@ -55,11 +55,11 @@
                         <div class="absolute inset-0 bg-slate-800 translate-y-full group-hover:translate-y-0 transition-transform"></div>
                     </button>
 
-                    <button type="submit" name="accion" value="publicar" class="group relative py-5 bg-emerald-600 text-white rounded-2xl font-black uppercase tracking-[0.2em] text-[11px] overflow-hidden transition-all hover:shadow-xl hover:shadow-emerald-900/20 active:scale-95">
+                    <button type="submit" name="accion" value="publicar" class="group relative py-5 bg-[#1e3a8a] text-white rounded-2xl font-black uppercase tracking-[0.2em] text-[11px] overflow-hidden transition-all hover:shadow-xl hover:shadow-blue-900/20 active:scale-95">
                         <span class="relative z-10 flex items-center justify-center gap-2">
                             Publicar Ahora <i class="fas fa-paper-plane text-[10px] group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"></i>
                         </span>
-                        <div class="absolute inset-0 bg-emerald-700 translate-y-full group-hover:translate-y-0 transition-transform"></div>
+                        <div class="absolute inset-0 bg-blue-800 translate-y-full group-hover:translate-y-0 transition-transform"></div>
                     </button>
                 </div>
             </form>
@@ -68,7 +68,8 @@
 </section>
 
 <style>
-    /* Estilo para suavizar el scroll si el contenido es largo */
+    .serif-font { font-family: 'Playfair Display', serif; }
+    
     textarea::-webkit-scrollbar {
         width: 6px;
     }
