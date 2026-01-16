@@ -16,7 +16,7 @@
 </head>
 <body class="antialiased selection:bg-emerald-200 selection:text-emerald-900">
 
-<div class="block bg-blue-900 pt-3 pb-8 lg:pt-2.5 lg:pb-7 px-4 lg:px-12 overflow-hidden relative border-b border-amber-400" 
+<div id="topBarOriginal" class="block bg-blue-900 pt-3 pb-8 lg:pt-2.5 lg:pb-7 px-4 lg:px-12 overflow-hidden relative border-b border-amber-400 transition-all duration-500 z-[999]" 
      style="clip-path: ellipse(120% 100% at 50% 0%);">
     
     <div class="absolute inset-0 opacity-20 bg-[linear-gradient(90deg,transparent_0%,rgba(251,191,36,0.1)_50%,transparent_100%)] animate-shimmer"></div>
@@ -71,10 +71,61 @@
                     </a>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
+
+<div id="stickyVerticalBarLeft" class="fixed left-4 top-1/2 -translate-y-1/2 flex flex-col items-center gap-4 z-[10000] opacity-0 -translate-x-20 pointer-events-none transition-all duration-500 ease-out">
+    
+    <a href="{% url 'blog:listar_publicaciones' %}" class="w-12 h-12 bg-white rounded-2xl shadow-2xl flex items-center justify-center text-blue-900 hover:bg-blue-900 hover:text-white transition-all group relative">
+        <i class="fas fa-feather-pointed text-lg"></i>
+        <span class="absolute left-14 bg-blue-900 text-white text-[9px] font-black px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity uppercase tracking-widest shadow-xl pointer-events-none">Blog</span>
+    </a>
+
+    <button onclick="document.getElementById('modalSoporte').classList.remove('hidden')" 
+            class="w-12 h-12 bg-white rounded-2xl shadow-2xl flex items-center justify-center text-emerald-600 hover:bg-emerald-600 hover:text-white transition-all group relative border-2 border-emerald-50">
+        <i class="fa-solid fa-headset text-lg"></i>
+        <span class="absolute left-14 bg-emerald-600 text-white text-[9px] font-black px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity uppercase tracking-widest shadow-xl pointer-events-none text-nowrap">Asistencia</span>
+    </button>
+
+    <div class="flex flex-col gap-3 p-2 bg-blue-900/90 backdrop-blur-md rounded-full shadow-2xl border border-white/20">
+        <a href="#" class="w-8 h-8 flex items-center justify-center text-white/80 hover:text-amber-400 transition-colors">
+            <i class="fab fa-facebook-f text-sm"></i>
+        </a>
+        <a href="#" class="w-8 h-8 flex items-center justify-center text-white/80 hover:text-amber-400 transition-colors">
+            <i class="fab fa-instagram text-sm"></i>
+        </a>
+        <a href="#" class="w-8 h-8 flex items-center justify-center text-white/80 hover:text-amber-400 transition-colors">
+            <i class="fab fa-tiktok text-sm"></i>
+        </a>
+    </div>
+</div>
+
+<script>
+    window.addEventListener('scroll', function() {
+        const topBar = document.getElementById('topBarOriginal');
+        const verticalBar = document.getElementById('stickyVerticalBarLeft');
+        
+        // Umbral de activación (150px de scroll)
+        if (window.scrollY > 150) {
+            // Desvanecer barra superior
+            topBar.style.opacity = '0';
+            topBar.style.pointerEvents = 'none';
+            
+            // Mostrar panel izquierdo con entrada desde la izquierda
+            verticalBar.classList.remove('opacity-0', '-translate-x-20', 'pointer-events-none');
+            verticalBar.classList.add('opacity-100', 'translate-x-0', 'pointer-events-auto');
+        } else {
+            // Restaurar barra superior
+            topBar.style.opacity = '1';
+            topBar.style.pointerEvents = 'auto';
+            
+            // Ocultar panel izquierdo
+            verticalBar.classList.add('opacity-0', '-translate-x-20', 'pointer-events-none');
+            verticalBar.classList.remove('opacity-100', 'translate-x-0', 'pointer-events-auto');
+        }
+    });
+</script>
 
 <style>
     @keyframes shimmer {
