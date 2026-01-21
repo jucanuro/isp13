@@ -5,7 +5,6 @@
     @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,700&display=swap');
     .serif-font { font-family: 'Playfair Display', serif; }
 
-    /* Contenedor principal de la tabla con elevación mínima */
     .table-wrapper {
         background: white;
         border: 1px solid #f1f5f9;
@@ -13,7 +12,6 @@
         box-shadow: 0 4px 20px -5px rgba(0,0,0,0.03);
     }
 
-    /* Estilo de las cabeceras */
     th {
         text-transform: uppercase;
         font-size: 8.5px;
@@ -24,11 +22,9 @@
         background: #fcfcfd;
     }
 
-    /* Transición de filas */
     .table-row { transition: all 0.2s ease; border-bottom: 1px solid #f8fafc; }
     .table-row:hover { background-color: #fbfcfd; }
 
-    /* Input de búsqueda minimalista */
     .search-input {
         background: #f8fafc;
         border: 1px solid #e2e8f0;
@@ -36,7 +32,7 @@
     }
     .search-input:focus {
         background: white;
-        border-color: #1e3a8a; /* Blue-900 */
+        border-color: #1e3a8a;
         box-shadow: 0 0 0 4px rgba(30, 58, 138, 0.05);
         outline: none;
     }
@@ -49,27 +45,27 @@
             <div class="flex flex-col">
                 <div class="flex items-center gap-3 mb-1">
                     <span class="w-2 h-2 rounded-full bg-blue-900"></span>
-                    <span class="text-blue-900 text-[9px] font-black uppercase tracking-[0.4em]">Gestión Científica</span>
+                    <span class="text-blue-900 text-[9px] font-black uppercase tracking-[0.4em]">Repositorio IESP "13 de Julio de 1882"</span>
                 </div>
                 <h1 class="text-3xl serif-font tracking-tight text-slate-900">
-                    Tesis <span class="italic font-light text-blue-800">Locales</span>
+                    Tesis <span class="italic font-light text-blue-800">Científicas</span>
                 </h1>
             </div>
 
             <div class="flex flex-wrap items-center justify-center lg:justify-end gap-3 w-full lg:w-auto">
-                <div class="relative group">
-                    <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-300 text-[10px] group-focus-within:text-blue-900 transition-colors"></i>
-                    <input type="text" placeholder="BUSCAR INVESTIGACIÓN..." 
-                        class="search-input w-full md:w-60 pl-10 pr-4 py-2.5 rounded-xl text-[9px] font-black tracking-widest uppercase border-slate-200 bg-slate-50/50 focus:ring-0 focus:border-blue-900 transition-all outline-none">
-                </div>
+                <form method="GET" action="{% url 'investigacion:lista_tesis' %}" class="flex gap-2">
+                    <div class="relative group">
+                        <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-300 text-[10px] group-focus-within:text-blue-900 transition-colors"></i>
+                        <input type="text" name="q" placeholder="BUSCAR POR DNI O TÍTULO..." 
+                            class="search-input w-full md:w-60 pl-10 pr-4 py-2.5 rounded-xl text-[9px] font-black tracking-widest uppercase border-slate-200 bg-slate-50/50 focus:ring-0 focus:border-blue-900 transition-all outline-none">
+                    </div>
 
-                <form method="GET" action="{% url 'investigacion:lista_tesis' %}">
                     <select name="estado" onchange="this.form.submit()" 
                             class="bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-[9px] font-black uppercase tracking-widest text-slate-500 focus:ring-0 cursor-pointer hover:bg-slate-50 transition-all outline-none">
-                        <option value="todos" {% if estado_actual == 'todos' %}selected{% endif %}>Todos</option>
-                        <option value="pendiente" {% if estado_actual == 'pendiente' %}selected{% endif %}>Pendientes</option>
-                        <option value="validado" {% if estado_actual == 'validado' %}selected{% endif %}>Validadas</option>
-                        <option value="enviado" {% if estado_actual == 'enviado' %}selected{% endif %}>Publicadas</option>
+                        <option value="todos" {% if estado_actual == 'todos' %}selected{% endif %}>Todos los Estados</option>
+                        <option value="pendiente" {% if estado_actual == 'pendiente' %}selected{% endif %}>🔴 Pendientes</option>
+                        <option value="validado" {% if estado_actual == 'validado' %}selected{% endif %}>🔵 Validadas</option>
+                        <option value="publicado" {% if estado_actual == 'publicado' %}selected{% endif %}>🟢 Publicadas</option>
                     </select>
                 </form>
 
@@ -79,13 +75,10 @@
                     class="relative inline-flex items-center gap-3 px-7 py-3 bg-[#1e3a8a] text-white rounded-xl 
                             hover:bg-blue-800 hover:shadow-[0_10px_25px_-5px_rgba(30,58,138,0.4)] 
                             transition-all duration-500 group overflow-hidden border border-blue-900 hover:border-blue-700">
-                    <div class="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent opacity-50 group-hover:opacity-0 transition-opacity"></div>
                     <div class="relative flex items-center justify-center w-5 h-5 bg-white/10 rounded-lg group-hover:bg-white/20 transition-colors">
                         <i class="fa-solid fa-plus text-[10px] group-hover:rotate-180 transition-transform duration-700 ease-in-out"></i>
                     </div>
-                    <span class="relative font-black tracking-[0.25em] text-[10px] uppercase">
-                        Registrar <span class="hidden md:inline">Tesis</span>
-                    </span>
+                    <span class="relative font-black tracking-[0.25em] text-[10px] uppercase">Registrar Tesis</span>
                 </a>
             </div>
         </div>
@@ -95,11 +88,11 @@
                 <table class="w-full text-left border-collapse">
                     <thead>
                         <tr class="bg-slate-50/50">
-                            <th class="py-5 px-8 text-center w-24 text-[10px] font-black text-slate-400 uppercase tracking-widest">ID</th>
-                            <th class="py-5 px-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Información de Investigación</th>
-                            <th class="py-5 px-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Autoría</th>
-                            <th class="py-5 px-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">Estado</th>
-                            <th class="py-5 px-8 text-right text-[10px] font-black text-slate-400 uppercase tracking-widest">Gestión Final</th>
+                            <th class="py-5 px-8 text-center w-24">ID</th>
+                            <th class="py-5 px-6">Detalles de la Investigación</th>
+                            <th class="py-5 px-6">Autoría y Grado Pedagógico</th>
+                            <th class="py-5 px-6">Estado ALICIA 2.0</th>
+                            <th class="py-5 px-8 text-right">Acciones de Flujo</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-100">
@@ -111,26 +104,32 @@
                             <td class="px-6 py-6 max-w-md">
                                 <div class="flex flex-col gap-1.5">
                                     <span class="text-[11px] font-bold text-slate-800 leading-snug uppercase tracking-tight">{{ t.titulo }}</span>
-                                    <div class="flex items-center gap-4">
+                                    <div class="flex items-center gap-3">
+                                        {% if t.archivo_pdf %}
                                         <a href="{{ t.archivo_pdf.url }}" target="_blank" class="text-[8px] font-black text-blue-700 hover:text-blue-900 flex items-center gap-2 px-2 py-1 bg-blue-50 rounded-lg transition-all">
-                                            <i class="fa-solid fa-file-pdf text-[10px]"></i> PDF MANUSCRITO
+                                            <i class="fa-solid fa-file-pdf"></i> VER PDF
                                         </a>
-                                        <span class="text-[8px] text-slate-300 font-bold uppercase tracking-widest">{{ t.fecha_registro|date:"d M Y" }}</span>
+                                        {% endif %}
+                                        <span class="text-[8px] px-2 py-1 bg-slate-100 rounded-lg text-slate-500 font-bold uppercase tracking-widest">OCDE: {{ t.ocde_codigo }}</span>
                                     </div>
                                 </div>
                             </td>
                             <td class="px-6 py-6">
-                                <div class="flex items-center gap-2">
-                                    <div class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center">
-                                        <i class="fa-solid fa-user-tie text-[10px] text-slate-400"></i>
+                                <div class="flex flex-col gap-1">
+                                    <div class="flex items-center gap-2">
+                                        <i class="fa-solid fa-user text-[10px] text-slate-400"></i>
+                                        <span class="text-[10px] font-bold text-slate-600 uppercase">{{ t.autor }}</span>
                                     </div>
-                                    <span class="text-[10px] font-bold text-slate-600 uppercase tracking-tighter">{{ t.autor }}</span>
+                                    <span class="text-[9px] font-medium text-slate-400 ml-5 italic">DNI: {{ t.autor_dni }}</span>
+                                    <span class="text-[8px] font-black text-blue-900 uppercase tracking-tighter mt-1 px-2 py-0.5 border border-blue-100 rounded w-max bg-blue-50/30">
+                                        {{ t.get_tipo_tesis_display }}
+                                    </span>
                                 </div>
                             </td>
                             <td class="px-6 py-6">
                                 {% if t.estado == 'pendiente' %}
                                     <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-50 text-amber-600 text-[8px] font-black uppercase tracking-widest border border-amber-100">
-                                        <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span> Pendiente
+                                        <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span> Por Validar
                                     </span>
                                 {% elif t.estado == 'validado' %}
                                     <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 text-blue-700 text-[8px] font-black uppercase tracking-widest border border-blue-100">
@@ -146,133 +145,43 @@
                                 <div class="flex items-center justify-end gap-3">
                                     <div class="flex items-center gap-1.5 border-r border-slate-100 pr-3">
                                         <a href="{% url 'investigacion:editar_tesis' t.id %}" class="w-8 h-8 flex items-center justify-center bg-indigo-50 text-indigo-500 rounded-lg hover:bg-indigo-500 hover:text-white transition-all"><i class="fa-solid fa-pen-to-square text-[10px]"></i></a>
-                                        <a href="{% url 'investigacion:eliminar_tesis' t.id %}" onclick="return confirm('¿Eliminar?')" class="w-8 h-8 flex items-center justify-center bg-rose-50 text-rose-500 rounded-lg hover:bg-rose-500 hover:text-white transition-all"><i class="fa-solid fa-trash-can text-[10px]"></i></a>
+                                        
+                                        {% if t.estado == 'publicado' %}
+                                            <a href="{% url 'investigacion:oai_repository' t.id %}" target="_blank" class="w-8 h-8 flex items-center justify-center bg-emerald-50 text-emerald-600 rounded-lg hover:bg-emerald-600 hover:text-white transition-all" title="Ver XML OAI-PMH">
+                                                <i class="fa-solid fa-code text-[10px]"></i>
+                                            </a>
+                                        {% endif %}
+                                        
+                                        <a href="{% url 'investigacion:eliminar_tesis' t.id %}" onclick="return confirm('¿Seguro que desea eliminar este registro?')" class="w-8 h-8 flex items-center justify-center bg-red-50 text-red-500 rounded-lg hover:bg-red-500 hover:text-white transition-all"><i class="fa-solid fa-trash text-[10px]"></i></a>
                                     </div>
-                                    <div class="w-40">
+                                    <div class="w-44">
                                         {% if t.estado == 'pendiente' %}
-                                            <a href="{% url 'investigacion:validar_tesis' t.id %}" class="w-full h-10 flex items-center justify-center bg-blue-900 text-white text-[9px] font-black uppercase tracking-[0.2em] rounded-xl hover:bg-slate-900 transition-all shadow-lg shadow-blue-200/50">Validar Registro</a>
+                                            <a href="{% url 'investigacion:validar_tesis' t.id %}" class="w-full h-10 flex items-center justify-center bg-blue-900 text-white text-[9px] font-black uppercase tracking-[0.2em] rounded-xl hover:bg-slate-900 transition-all shadow-lg shadow-blue-200/50">Ejecutar Validación</a>
                                         {% elif t.estado == 'validado' %}
-                                            <a href="{% url 'investigacion:enviar_alicia' t.id %}" class="w-full h-10 flex items-center justify-center bg-slate-200 text-slate-800 text-[9px] font-black uppercase tracking-[0.2em] rounded-xl hover:bg-blue-900 hover:text-white transition-all gap-2 border border-slate-300"><i class="fa-solid fa-paper-plane text-[9px]"></i> Publicar Alicia</a>
+                                            <a href="{% url 'investigacion:enviar_alicia' t.id %}" class="w-full h-10 flex items-center justify-center bg-amber-500 text-white text-[9px] font-black uppercase tracking-[0.2em] rounded-xl hover:bg-slate-900 transition-all gap-2 shadow-lg shadow-amber-100">
+                                                <i class="fa-solid fa-upload"></i> Publicar en Alicia
+                                            </a>
                                         {% else %}
-                                            <div class="w-full h-10 flex items-center justify-center bg-slate-50 text-slate-300 text-[8px] font-black uppercase tracking-widest rounded-xl border border-dashed border-slate-200"><i class="fa-solid fa-check-double mr-2"></i> Completado</div>
+                                            <div class="w-full h-10 flex items-center justify-center bg-slate-50 text-slate-400 text-[8px] font-black uppercase tracking-widest rounded-xl border border-dashed border-slate-200 cursor-default">
+                                                <i class="fa-solid fa-check-double mr-2 text-emerald-500"></i> Depósito Finalizado
+                                            </div>
                                         {% endif %}
                                     </div>
                                 </div>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="py-20 text-center">
+                                <i class="fa-solid fa-folder-open text-4xl text-slate-100 mb-4 block"></i>
+                                <p class="text-slate-400 text-[10px] font-black uppercase tracking-widest">No se encontraron investigaciones registradas</p>
                             </td>
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
-
-            <div class="bg-slate-50/50 px-8 py-5 border-t border-slate-100 flex flex-col sm:flex-row justify-between items-center gap-4">
-                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">
-                    Mostrando <span class="text-slate-900">{{ tesis_locales.start_index }}</span> - <span class="text-slate-900">{{ tesis_locales.end_index }}</span> de {{ tesis_locales.paginator.count }} resultados
-                </span>
-
-                <div class="flex items-center gap-2">
-                    {% if tesis_locales.has_previous %}
-                        <a href="?page={{ tesis_locales.previous_page_number }}{% if estado_actual != 'todos' %}&estado={{ estado_actual }}{% endif %}" 
-                           class="w-10 h-10 flex items-center justify-center bg-white border border-slate-200 rounded-xl text-slate-400 hover:text-blue-900 hover:border-blue-900 transition-all shadow-sm">
-                            <i class="fa-solid fa-chevron-left text-[10px]"></i>
-                        </a>
-                    {% else %}
-                        <div class="w-10 h-10 flex items-center justify-center bg-slate-50 border border-slate-100 rounded-xl text-slate-200 cursor-not-allowed">
-                            <i class="fa-solid fa-chevron-left text-[10px]"></i>
-                        </div>
-                    {% endif %}
-
-                    <div class="flex items-center gap-1 bg-white border border-slate-200 rounded-xl p-1 shadow-sm">
-                        {% for num in tesis_locales.paginator.page_range %}
-                            {% if tesis_locales.number == num %}
-                                <span class="w-8 h-8 flex items-center justify-center bg-blue-900 text-white text-[10px] font-black rounded-lg shadow-lg shadow-blue-200">{{ num }}</span>
-                            {% elif num > tesis_locales.number|add:'-3' and num < tesis_locales.number|add:'3' %}
-                                <a href="?page={{ num }}{% if estado_actual != 'todos' %}&estado={{ estado_actual }}{% endif %}" 
-                                   class="w-8 h-8 flex items-center justify-center text-slate-400 hover:text-blue-900 text-[10px] font-bold rounded-lg transition-colors">{{ num }}</a>
-                            {% endif %}
-                        {% endfor %}
-                    </div>
-
-                    {% if tesis_locales.has_next %}
-                        <a href="?page={{ tesis_locales.next_page_number }}{% if estado_actual != 'todos' %}&estado={{ estado_actual }}{% endif %}" 
-                           class="w-10 h-10 flex items-center justify-center bg-white border border-slate-200 rounded-xl text-slate-400 hover:text-blue-900 hover:border-blue-900 transition-all shadow-sm">
-                            <i class="fa-solid fa-chevron-right text-[10px]"></i>
-                        </a>
-                    {% else %}
-                        <div class="w-10 h-10 flex items-center justify-center bg-slate-50 border border-slate-100 rounded-xl text-slate-200 cursor-not-allowed">
-                            <i class="fa-solid fa-chevron-right text-[10px]"></i>
-                        </div>
-                    {% endif %}
-                </div>
-            </div>
         </div>
     </div>
 </main>
-
-{% if messages %}
-    {% for message in messages %}
-        {% if message.tags == 'error' %}
-        <div id="modal-error" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300">
-            <div class="bg-white w-full max-w-md rounded-[2.5rem] shadow-2xl overflow-hidden border border-rose-100 animate-in zoom-in-95 duration-300">
-                <div class="bg-rose-50 p-8 text-center">
-                    <div class="w-16 h-16 bg-rose-500 text-white rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-rose-200 ring-4 ring-white">
-                        <i class="fa-solid fa-triangle-exclamation text-2xl"></i>
-                    </div>
-                    <h3 class="text-rose-900 font-black uppercase tracking-widest text-[11px]">Fallo de Validación</h3>
-                </div>
-                <div class="p-8 text-center">
-                    <p class="text-slate-700 font-medium leading-relaxed italic serif-font text-lg">"{{ message }}"</p>
-                    <button onclick="document.getElementById('modal-error').remove()" 
-                        class="w-full mt-8 bg-blue-900 text-white font-black py-4 rounded-xl hover:bg-rose-600 transition-all tracking-widest text-[10px] uppercase">
-                        Corregir Registro
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        {% elif message.tags == 'success' %}
-        <div id="modal-success" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-[2px] animate-in fade-in duration-500">
-            <div class="bg-white w-full max-w-md rounded-[3rem] shadow-2xl overflow-hidden border border-blue-100 animate-in zoom-in-95 duration-500 transition-all duration-700" id="success-card">
-                <div class="bg-blue-50 p-10 text-center relative overflow-hidden">
-                    <div class="absolute top-0 right-0 w-24 h-24 bg-blue-900/5 rounded-full -mr-12 -mt-12"></div>
-                    
-                    <div class="relative w-20 h-20 bg-blue-900 text-white rounded-3xl flex items-center justify-center mx-auto mb-4 shadow-xl shadow-blue-200 ring-8 ring-white animate-bounce">
-                        <i class="fa-solid fa-cloud-arrow-up text-3xl"></i>
-                    </div>
-                    <h3 class="text-blue-900 font-black uppercase tracking-[0.3em] text-[10px]">Depósito Exitoso</h3>
-                </div>
-                <div class="p-10 text-center">
-                    <p class="text-blue-900 text-[10px] font-black uppercase tracking-[0.2em] mb-4">Registro en Repositorio Institucional</p>
-                    <p class="text-slate-700 font-medium leading-relaxed serif-font text-xl">
-                        {{ message }}
-                    </p>
-                    <p class="mt-4 text-[11px] text-slate-400 font-medium leading-relaxed px-4">
-                        El manuscrito ha sido indexado y está disponible para la recolección automática del nodo **ALICIA - CONCYTEC**.
-                    </p>
-                    
-                    <div class="w-full h-1 bg-slate-100 mt-8 rounded-full overflow-hidden">
-                        <div id="progress-bar" class="h-full bg-blue-900 transition-all duration-[4000ms] ease-linear w-full"></div>
-                    </div>
-                    <p class="mt-4 text-[8px] font-bold text-slate-300 uppercase tracking-widest">Sincronización en curso...</p>
-                </div>
-            </div>
-        </div>
-
-        <script>
-            setTimeout(() => {
-                const progressBar = document.getElementById('progress-bar');
-                if(progressBar) progressBar.style.width = '0%';
-                
-                const modal = document.getElementById('modal-success');
-                if(modal) {
-                    setTimeout(() => {
-                        modal.classList.add('opacity-0', 'scale-95', 'blur-sm');
-                        setTimeout(() => modal.remove(), 800);
-                    }, 4000); 
-                }
-            }, 100);
-        </script>
-        {% endif %}
-    {% endfor %}
-{% endif %}
 {% endblock %}
