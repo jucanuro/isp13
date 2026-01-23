@@ -7,7 +7,6 @@
     <title>{% block title %}ISEP 13 de Julio | Excelencia Pedagógica{% endblock %}</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
-    
     <script src="{% static 'js/config.js' %}" defer></script>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -16,6 +15,7 @@
 </head>
 <body class="antialiased selection:bg-emerald-200 selection:text-emerald-900">
 
+{% block topbar %}
 <div id="topBarOriginal" class="block bg-blue-900 pt-3 pb-8 lg:pt-2.5 lg:pb-7 px-4 lg:px-12 overflow-hidden relative border-b border-amber-400 transition-all duration-500 z-[999]" 
      style="clip-path: ellipse(120% 100% at 50% 0%);">
     
@@ -74,9 +74,10 @@
         </div>
     </div>
 </div>
+{% endblock topbar %}
 
+{% block verticalbar %}
 <div id="stickyVerticalBarLeft" class="fixed left-4 top-1/2 -translate-y-1/2 flex flex-col items-center gap-4 z-[10000] opacity-0 -translate-x-20 pointer-events-none transition-all duration-500 ease-out">
-    
     <a href="{% url 'blog:listar_publicaciones' %}" class="w-12 h-12 bg-white rounded-2xl shadow-2xl flex items-center justify-center text-blue-900 hover:bg-blue-900 hover:text-white transition-all group relative">
         <i class="fas fa-feather-pointed text-lg"></i>
         <span class="absolute left-14 bg-blue-900 text-white text-[9px] font-black px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity uppercase tracking-widest shadow-xl pointer-events-none">Blog</span>
@@ -100,27 +101,21 @@
         </a>
     </div>
 </div>
+{% endblock verticalbar %}
 
 <script>
     window.addEventListener('scroll', function() {
         const topBar = document.getElementById('topBarOriginal');
         const verticalBar = document.getElementById('stickyVerticalBarLeft');
-        
-        // Umbral de activación (150px de scroll)
+        if (!topBar || !verticalBar) return; // Evita errores si los bloques se eliminan
         if (window.scrollY > 150) {
-            // Desvanecer barra superior
             topBar.style.opacity = '0';
             topBar.style.pointerEvents = 'none';
-            
-            // Mostrar panel izquierdo con entrada desde la izquierda
             verticalBar.classList.remove('opacity-0', '-translate-x-20', 'pointer-events-none');
             verticalBar.classList.add('opacity-100', 'translate-x-0', 'pointer-events-auto');
         } else {
-            // Restaurar barra superior
             topBar.style.opacity = '1';
             topBar.style.pointerEvents = 'auto';
-            
-            // Ocultar panel izquierdo
             verticalBar.classList.add('opacity-0', '-translate-x-20', 'pointer-events-none');
             verticalBar.classList.remove('opacity-100', 'translate-x-0', 'pointer-events-auto');
         }
@@ -136,11 +131,10 @@
         animation: shimmer 8s infinite linear;
     }
 </style>
+
 <div id="modalSoporte" class="hidden fixed inset-0 z-[9999] flex items-center justify-center p-4">
     <div class="absolute inset-0 bg-slate-950/80 backdrop-blur-md transition-opacity" onclick="document.getElementById('modalSoporte').classList.add('hidden')"></div>
-    
     <div class="relative bg-white w-full max-w-xl rounded-[2.5rem] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.8)] overflow-hidden animate-in fade-in zoom-in duration-300">
-        
         <div class="bg-slate-50 p-8 border-b border-slate-100 relative">
             <div class="flex items-center gap-4 mb-2">
                 <div class="w-10 h-10 bg-emerald-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-emerald-600/20">
@@ -208,48 +202,49 @@
         </form>
     </div>
 </div>
-    {% include 'header.html' %}
+
+    {% block header %}
+        {% include 'header.html' %}
+    {% endblock header %}
+
     {% block content %}{% endblock %}
 
-    {% include 'footer.html' %}
+    {% block footer %}
+        {% include 'footer.html' %}
+    {% endblock footer %}
+
 <script>
     document.getElementById('formAsistenciaSoporte').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const btn = document.getElementById('btnSubmitSoporte');
-    const formData = new FormData(this);
-    
-    // Feedback visual
-    btn.disabled = true;
-    btn.innerHTML = 'Enviando... <i class="fa-solid fa-spinner animate-spin ml-2"></i>';
+        e.preventDefault();
+        const btn = document.getElementById('btnSubmitSoporte');
+        const formData = new FormData(this);
+        btn.disabled = true;
+        btn.innerHTML = 'Enviando... <i class="fa-solid fa-spinner animate-spin ml-2"></i>';
 
-    fetch("{% url 'soporte:asistencia_identidad' %}", {
-        method: "POST",
-        body: formData,
-        headers: {
-            "X-Requested-With": "XMLHttpRequest" // Importante para que la vista reconozca que es AJAX
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.status === 'ok') {
-            // Éxito
-            alert("¡Solicitud recibida correctamente!");
-            document.getElementById('modalSoporte').classList.add('hidden');
-            this.reset();
-        } else {
-            alert("Error: " + data.message);
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert("Ocurrió un error al enviar la solicitud.");
-    })
-    .finally(() => {
-        btn.disabled = false;
-        btn.innerHTML = 'Procesar Solicitud <i class="fa-solid fa-paper-plane text-[10px] group-hover:translate-x-2 transition-transform"></i>';
+        fetch("{% url 'soporte:asistencia_identidad' %}", {
+            method: "POST",
+            body: formData,
+            headers: { "X-Requested-With": "XMLHttpRequest" }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'ok') {
+                alert("¡Solicitud recibida correctamente!");
+                document.getElementById('modalSoporte').classList.add('hidden');
+                this.reset();
+            } else {
+                alert("Error: " + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert("Ocurrió un error al enviar la solicitud.");
+        })
+        .finally(() => {
+            btn.disabled = false;
+            btn.innerHTML = 'Procesar Solicitud <i class="fa-solid fa-paper-plane text-[10px] group-hover:translate-x-2 transition-transform"></i>';
+        });
     });
-});
 </script>
 </body>
 </html>

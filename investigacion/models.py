@@ -1,17 +1,35 @@
 from django.db import models
-from django.db import models
+
+class Autor(models.Model):
+    nombre_completo = models.CharField(max_length=255, verbose_name="Nombre Completo (dc.creator)")
+    dni = models.CharField(max_length=15, unique=True)
+    orcid = models.URLField(blank=True, null=True, help_text="ID de investigador")
+
+    def __str__(self):
+        return self.nombre_completo
+
+    class Meta:
+        verbose_name = "Autor"
+        verbose_name_plural = "Autores"
+
+class Asesor(models.Model):
+    nombre_completo = models.CharField(max_length=255, verbose_name="Nombre Completo (dc.contributor.advisor)")
+    dni = models.CharField(max_length=15, unique=True, blank=True, null=True)
+
+    def __str__(self):
+        return self.nombre_completo
+
+    class Meta:
+        verbose_name = "Asesor"
+        verbose_name_plural = "Asesores"
 
 class Tesis(models.Model):
-    # --- METADATOS PRINCIPALES (Obligatorios Guía ALICIA) ---
     titulo = models.CharField(max_length=500, verbose_name="Título de la Investigación (dc.title)")
-    autor = models.CharField(max_length=255, verbose_name="Autor (dc.creator)")
-    autor_dni = models.CharField(max_length=15, help_text="Requerido para RENATI / SUNEDU")
-    autor_orcid = models.URLField(blank=True, null=True, help_text="Opcional: ID de investigador")
+    autores = models.ManyToManyField(Autor, verbose_name="Autores (dc.creator)")
+    asesores = models.ManyToManyField(Asesor, verbose_name="Asesores (dc.contributor.advisor)")
     
-    asesor = models.CharField(max_length=255, verbose_name="Asesor (dc.contributor.advisor)")
     resumen = models.TextField(verbose_name="Resumen (dc.description.abstract)")
     
-
     TIPO_GRADO = [
         ('info:eu-repo/semantics/bachelorThesis', 'Tesis de Grado de Bachiller'),
         ('info:eu-repo/semantics/bachelorThesis_TITULO', 'Tesis para Título Profesional'),
@@ -26,11 +44,9 @@ class Tesis(models.Model):
         verbose_name="Tipo de Documento (dc.type)"
     )
     
-    # --- TAXONOMÍA OCDE (Seguridad de Nulos para evitar IntegrityError) ---
     ocde_codigo = models.CharField(max_length=20, blank=True, null=True, help_text="Ej: 5.03.01")
     ocde_nombre = models.CharField(max_length=200, blank=True, null=True, help_text="Nombre del área OCDE")
 
-    # --- DATOS OFICIALES DEL INSTITUTO (Fijos para Interoperabilidad) ---
     institucion_nombre = models.CharField(
         max_length=255, 
         default='INSTITUTO DE EDUCACIÓN SUPERIOR PEDAGÓGICO "13 DE JULIO DE 1882"',
@@ -39,8 +55,11 @@ class Tesis(models.Model):
     institucion_ruc = models.CharField(max_length=11, default='20202096582')
     institucion_pais = models.CharField(max_length=2, default='PE')
     
-    # --- GESTIÓN DE ARCHIVOS Y FECHAS ---
-    archivo_pdf = models.FileField(upload_to='tesis_pdfs/', verbose_name="Documento PDF")
+    # --- GESTIÓN DE LOS TRES ARCHIVOS REQUERIDOS ---
+    archivo_pdf = models.FileField(upload_to='tesis_pdfs/', verbose_name="1. Documento PDF (Tesis)")
+    constancia_originalidad = models.FileField(upload_to='constancias/', verbose_name="2. Constancia de Originalidad", null=True, blank=True)
+    reporte_turnitin = models.FileField(upload_to='turnitin/', verbose_name="3. Reporte Turnitin", null=True, blank=True)
+    
     fecha_registro = models.DateTimeField(auto_now_add=True)
     fecha_publicacion = models.DateField(null=True, blank=True, help_text="Fecha de sustentación o emisión del título")
     
@@ -65,7 +84,9 @@ class Tesis(models.Model):
     )
 
     def __str__(self):
-        return f"{self.autor} - {self.titulo[:50]}"
+        # Muestra el primer autor en el listado
+        autor_principal = self.autores.first()
+        return f"{autor_principal if autor_principal else 'S/A'} - {self.titulo[:50]}"
 
     class Meta:
         verbose_name = "Investigación"

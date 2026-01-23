@@ -1,87 +1,126 @@
 {% extends "base.html" %}
 {% load static %}
+
+{% block topbar %}{% endblock %}
+{% block verticalbar %}{% endblock %}
+{% block header %}{% endblock %}
+{% block footer %}{% endblock %}
+
 {% block content %}
-<section class="py-2 bg-[#f8fafc] min-h-screen flex items-center justify-center relative overflow-hidden">
-    <div class="absolute -top-24 -right-24 w-96 h-96 bg-blue-100/40 rounded-full blur-3xl animate-pulse"></div>
-    <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-amber-50/50 rounded-full blur-3xl"></div>
-    <div class="absolute inset-0 opacity-[0.03] pointer-events-none" style="background-image: radial-gradient(#1e3a8a 0.5px, transparent 0.5px); background-size: 32px 32px;"></div>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
 
-    <div class="container mx-auto px-6 relative z-10">
-        <div class="max-w-md mx-auto">
+<section class="min-h-screen w-full flex items-center justify-center bg-[#f4f7f9] relative overflow-hidden px-4 py-6">
+    
+    <div class="absolute inset-0 z-0 pointer-events-none">
+        <div class="absolute inset-0 opacity-[0.05]" 
+             style="background-image: radial-gradient(#1e3a8a 0.8px, transparent 0.8px); background-size: 30px 30px;"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-blue-900/5 rounded-full"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-blue-900/5 rounded-full"></div>
+    </div>
+
+    <div class="w-full max-w-[420px] relative z-10 animate-fadeIn">
+        
+        <div class="bg-white rounded-[2rem] shadow-[0_25px_70px_rgba(0,0,0,0.07)] border border-slate-200/60 relative overflow-hidden">
             
-            <div class="bg-white/90 backdrop-blur-2xl rounded-[3rem] p-10 md:p-14 shadow-2xl border border-blue-50 relative overflow-hidden">
-                
-                <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-900 via-amber-400 to-blue-900"></div>
+            <div class="h-1.5 w-full bg-gradient-to-r from-[#1e3a8a] via-amber-400 to-[#1e3a8a]"></div>
 
-                <div class="text-center mb-10">
-                    <div class="inline-flex items-center justify-center w-20 h-20 bg-blue-900 rounded-[2rem] mb-6 shadow-xl shadow-blue-900/20 rotate-3 group hover:rotate-0 transition-transform duration-500">
-                        <i class="fas fa-fingerprint text-amber-400 text-3xl"></i>
+            <div class="p-8 md:p-10">
+                <div class="text-center mb-8">
+                    <div class="relative inline-flex mb-4">
+                        <div class="w-16 h-16 bg-[#f8fafc] flex items-center justify-center rounded-full shadow-inner border border-slate-100">
+                            <i class="fas fa-graduation-cap text-[#1e3a8a] text-2xl"></i>
+                        </div>
+                        <div class="absolute -left-8 top-2 w-10 h-10 bg-white shadow-lg rounded-lg flex items-center justify-center border border-slate-50">
+                            <i class="fas fa-lock text-[#1e3a8a] text-[10px]"></i>
+                        </div>
                     </div>
-                    <h2 class="serif-font text-4xl font-black text-slate-900 leading-tight">
-                        Panel <span class="italic text-blue-900 font-light">Privado</span>
+                    
+                    <h2 class="font-cinzel text-3xl font-black text-[#1e3a8a] tracking-tight uppercase leading-none">
+                        Portal<br><span class="text-[#1e3a8a]/80 font-bold">Privado</span>
                     </h2>
-                    <p class="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 mt-3">Identificación IESPP 13J</p>
+                    
+                    <p class="font-montserrat text-[9px] font-bold uppercase tracking-[0.3em] text-slate-400 mt-4 flex items-center justify-center gap-2">
+                        <span class="h-[1px] w-4 bg-slate-200"></span>
+                        Autenticación SGC
+                        <span class="h-[1px] w-4 bg-slate-200"></span>
+                    </p>
                 </div>
 
                 {% if messages %}
-                    {% for message in messages %}
-                        <div class="mb-6 p-4 rounded-2xl {% if message.tags == 'error' %}bg-rose-50 text-rose-600 border-rose-100{% else %}bg-blue-50 text-blue-700 border-blue-100{% endif %} text-[11px] font-bold text-center border animate-shake">
-                            {{ message }}
-                        </div>
-                    {% endfor %}
+                    <div class="mb-6 space-y-2">
+                        {% for message in messages %}
+                            <div class="p-3 rounded-xl {% if message.tags == 'error' %}bg-rose-50 text-rose-600 border-rose-100{% else %}bg-blue-50 text-blue-700 border-blue-100{% endif %} text-[10px] font-bold text-center border animate-shake">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
                 {% endif %}
 
-                <form method="POST" class="space-y-5">
+                <form method="POST" class="space-y-4">
                     {% csrf_token %}
                     
                     <div class="group">
-                        <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-5 mb-2 block group-focus-within:text-blue-900 transition-colors">Usuario o Email</label>
                         <div class="relative">
-                            <i class="fas fa-user absolute left-6 top-1/2 -translate-y-1/2 text-slate-300 text-xs"></i>
-                            <input type="text" name="username" placeholder="admin_isep" required
-                                   class="w-full bg-slate-50 border-2 border-transparent rounded-2xl py-4 pl-14 pr-6 focus:bg-white focus:border-blue-100 focus:ring-4 focus:ring-blue-900/5 transition-all outline-none text-slate-700 font-bold placeholder:text-slate-200">
+                            <div class="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
+                                <i class="fas fa-user-circle text-slate-300 group-focus-within:text-[#1e3a8a] transition-colors"></i>
+                            </div>
+                            <input type="text" name="username" placeholder="Usuario o Email" required
+                                   class="w-full font-montserrat bg-slate-50/50 border border-slate-200 rounded-xl py-3.5 pl-12 pr-4 focus:bg-white focus:border-[#1e3a8a] focus:ring-4 focus:ring-blue-900/5 transition-all outline-none text-slate-700 text-sm placeholder:text-slate-400">
                         </div>
                     </div>
 
                     <div class="group">
-                        <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-5 mb-2 block group-focus-within:text-blue-900 transition-colors">Contraseña</label>
                         <div class="relative">
-                            <i class="fas fa-lock absolute left-6 top-1/2 -translate-y-1/2 text-slate-300 text-xs"></i>
-                            <input type="password" name="password" placeholder="••••••••" required
-                                   class="w-full bg-slate-50 border-2 border-transparent rounded-2xl py-4 pl-14 pr-6 focus:bg-white focus:border-blue-100 focus:ring-4 focus:ring-blue-900/5 transition-all outline-none text-slate-700 font-bold placeholder:text-slate-200">
+                            <div class="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
+                                <i class="fas fa-key text-slate-300 group-focus-within:text-[#1e3a8a] transition-colors"></i>
+                            </div>
+                            <input type="password" name="password" placeholder="Contraseña" required
+                                   class="w-full font-montserrat bg-slate-50/50 border border-slate-200 rounded-xl py-3.5 pl-12 pr-4 focus:bg-white focus:border-[#1e3a8a] focus:ring-4 focus:ring-blue-900/5 transition-all outline-none text-slate-700 text-sm placeholder:text-slate-400">
                         </div>
                     </div>
 
                     <button type="submit" 
-                            class="group relative w-full py-5 bg-blue-900 text-white rounded-2xl font-black uppercase tracking-[0.2em] text-[10px] overflow-hidden transition-all hover:shadow-2xl hover:shadow-blue-900/30 active:scale-95 mt-4">
-                        <span class="relative z-10 flex items-center justify-center gap-2">
-                            Entrar al Sistema <i class="fas fa-shield-alt text-[8px] group-hover:scale-110 transition-transform"></i>
-                        </span>
-                        <div class="absolute inset-0 bg-amber-500 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                            class="group relative w-full py-4 bg-[#1e3a8a] text-white rounded-full font-montserrat font-bold uppercase tracking-[0.2em] text-[11px] overflow-hidden transition-all shadow-lg hover:shadow-[#1e3a8a]/30 active:scale-[0.98] mt-2 flex items-center justify-center gap-3">
+                        <span>Entrar al Sistema</span>
+                        <i class="fas fa-chevron-right text-[9px] group-hover:translate-x-1 transition-transform"></i>
                     </button>
                 </form>
 
-                <div class="mt-10 pt-8 border-t border-slate-50 flex justify-between items-center">
-                    <a href="/" class="text-[9px] font-black uppercase tracking-widest text-slate-300 hover:text-blue-900 transition-all">
-                        <i class="fas fa-chevron-left mr-1"></i> Volver a la Web
+                <div class="mt-8 pt-6 border-t border-slate-100 flex items-center justify-between">
+                    <a href="{% url 'home' %}" class="font-montserrat text-[10px] font-bold text-slate-400 hover:text-[#1e3a8a] transition-all flex items-center gap-2">
+                        <i class="fas fa-arrow-left"></i> Volver a Inicio
                     </a>
-                    <span class="text-[9px] font-medium text-slate-200 uppercase tracking-tighter">Admin System v2.0</span>
+                    <div class="flex items-center gap-1.5 opacity-40">
+                        <div class="w-1 h-1 bg-slate-900 rounded-full"></div>
+                        <span class="font-montserrat text-[8px] font-bold text-slate-900 uppercase">Secure Access</span>
+                    </div>
                 </div>
             </div>
-            
-            <p class="text-center mt-8 text-slate-400 text-[10px] font-medium tracking-wide italic">
-                "Excelencia en formación inicial docente"
+        </div>
+
+        <div class="mt-6 text-center">
+            <p class="font-cinzel text-slate-400 text-[9px] font-bold tracking-[0.2em] uppercase">
+                IESPP "13 de Julio de 1882"
             </p>
         </div>
     </div>
 </section>
 
 <style>
-    .serif-font { font-family: 'Playfair Display', serif; }
+    /* Clases de fuente específicas */
+    .font-cinzel { font-family: 'Cinzel', serif; }
+    .font-montserrat { font-family: 'Montserrat', sans-serif; }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fadeIn { animation: fadeIn 0.6s ease-out forwards; }
+
     @keyframes shake {
         0%, 100% { transform: translateX(0); }
-        25% { transform: translateX(-5px); }
-        75% { transform: translateX(5px); }
+        25% { transform: translateX(-4px); }
+        75% { transform: translateX(4px); }
     }
     .animate-shake { animation: shake 0.4s ease-in-out; }
 </style>

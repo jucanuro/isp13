@@ -1,173 +1,414 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block topbar %}{% endblock %}
+{% block verticalbar %}{% endblock %}
+{% block header %}{% endblock %}
+{% block footer %}{% endblock %}
+
 {% block content %}
-<main class="py-8 bg-[#fcfdfd] min-h-screen">
-    <div class="max-w-7xl mx-auto px-6">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+<style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; }
+    .font-cinzel { font-family: 'Cinzel', serif; }
+    
+    .input-futuristic {
+        background: #f1f5f9;
+        border-radius: 12px;
+        border: 1px solid #e2e8f0;
+        transition: all 0.3s ease;
+    }
+    .input-futuristic:focus {
+        background: white;
+        border-color: #1e3a8a;
+        box-shadow: 0 4px 12px rgba(30, 58, 138, 0.05);
+        outline: none;
+    }
+
+    .person-chip {
+        animation: slideIn 0.3s ease-out;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+    }
+
+    @keyframes slideIn { 
+        from { opacity: 0; transform: translateY(10px); } 
+        to { opacity: 1; transform: translateY(0); } 
+    }
+    
+    .btn-disabled {
+        opacity: 0.4;
+        cursor: not-allowed !important;
+        pointer-events: none;
+        filter: grayscale(1);
+    }
+</style>
+
+<main class="py-10 bg-[#f8fafc] min-h-screen">
+    <div class="max-w-[1600px] mx-auto px-8">
         
-        <div class="mb-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div class="mb-10 flex flex-col md:flex-row md:items-center justify-between gap-6 border-l-4 border-blue-600 pl-6">
             <div>
-                <div class="flex items-center gap-2 mb-2">
-                    <div class="w-2 h-2 rounded-full bg-[#1e3a8a] shadow-[0_0_10px_rgba(30,58,138,0.5)]"></div>
-                    <span class="text-[#1e3a8a] text-[10px] font-black uppercase tracking-[0.4em]">Protocolo de Registro IESP "13 de Julio"</span>
+                <div class="flex items-center gap-3 mb-1">
+                    <span class="text-blue-600 text-[9px] font-black uppercase tracking-[0.5em]">Sistema de resgistro de tesis</span>
                 </div>
-                <h1 class="text-4xl serif-font tracking-tighter text-slate-900">
-                    {% if editando %}Actualizar <span class="italic font-light text-[#1e3a8a]">Investigación</span>{% else %}Nuevo <span class="italic font-light text-[#1e3a8a]">Depósito Local</span>{% endif %}
+                <h1 class="text-4xl font-cinzel font-black tracking-tighter text-slate-900">
+                    {% if editando %}MODIFICAR <span class="text-blue-600 italic font-light">REGISTRO</span>{% else %}NUEVA <span class="text-blue-600 italic font-light">TESIS</span>{% endif %}
                 </h1>
+                <p class="text-[10px] text-slate-400 font-bold tracking-widest uppercase mt-1">SGC - IESP "13 DE JULIO DE 1882"</p>
             </div>
-            <a href="{% url 'investigacion:lista_tesis' %}" class="group flex items-center gap-3 px-5 py-2.5 rounded-xl bg-white border border-slate-100 text-slate-400 hover:text-rose-500 hover:border-rose-100 transition-all shadow-sm">
-                <i class="fa-solid fa-xmark text-xs group-hover:rotate-90 transition-transform"></i>
-                <span class="text-[10px] font-black uppercase tracking-widest">Cancelar</span>
+            
+            <a href="{% url 'investigacion:lista_tesis' %}" class="group flex items-center gap-3 px-6 py-3 rounded-xl bg-white border border-slate-200 text-slate-500 hover:bg-slate-900 hover:text-white transition-all shadow-sm">
+                <i class="fa-solid fa-arrow-left text-[10px] group-hover:-translate-x-1 transition-transform"></i>
+                <span class="text-[10px] font-black uppercase tracking-widest">Retornar al Panel</span>
             </a>
         </div>
 
-        <form action="{% if editando %}{% url 'investigacion:editar_tesis' tesis.id %}{% else %}{% url 'investigacion:registrar_tesis' %}{% endif %}" 
+        <form id="mainForm" action="{% if editando %}{% url 'investigacion:editar_tesis' tesis.id %}{% else %}{% url 'investigacion:registrar_tesis' %}{% endif %}" 
               method="POST" enctype="multipart/form-data" 
-              class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+              class="grid grid-cols-1 lg:grid-cols-12 gap-4">
             {% csrf_token %}
             
-            <div class="lg:col-span-8 space-y-8">
-                <div class="bg-white p-10 rounded-[3rem] border border-slate-100 shadow-xl shadow-slate-200/40">
+            <input type="hidden" name="tesis_id_hidden" id="tesis_id_hidden" value="{{ tesis.id|default:'' }}">
+
+            <div class="lg:col-span-6 space-y-6">
+                <div class="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-xl shadow-slate-200/30">
+                    <h2 class="text-[11px] font-black text-blue-900 uppercase tracking-widest mb-8 border-b border-slate-50 pb-4">01. Cuerpo de la Investigación</h2>
                     
-                    <div class="grid grid-cols-1 gap-10">
-                        <div class="group relative">
-                            <label class="text-[10px] font-black uppercase tracking-widest text-[#1e3a8a] mb-2 block">Título de la Tesis / Trabajo de Suficiencia</label>
-                            <input type="text" name="titulo" value="{{ tesis.titulo|default:'' }}" placeholder="Escriba el título tal cual aparece en la portada..." class="w-full bg-slate-50/50 border-b-2 border-slate-100 p-2 pb-4 rounded-t-lg focus:border-[#1e3a8a] focus:bg-transparent outline-none transition-all text-sm font-medium text-slate-800" required>
-                            <div class="absolute bottom-0 left-0 w-0 h-[2px] bg-[#1e3a8a] group-focus-within:w-full transition-all duration-500"></div>
+                    <div class="space-y-6">
+                        <div class="group">
+                            <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 mb-2 block">Título de la Obra</label>
+                            <textarea id="tesis_titulo_input" name="titulo" rows="3" 
+                                      oninput="verificarYCrearTesis()"
+                                      class="input-futuristic w-full px-5 py-4 text-[11px] font-extrabold text-slate-800 uppercase leading-snug resize-none" 
+                                      required placeholder="ESCRIBA EL TÍTULO PARA ACTIVAR PARTICIPANTES...">{{ tesis.titulo|default:'' }}</textarea>
+                            <p id="msg-titulo" class="text-[8px] mt-1 text-blue-500 font-bold italic">
+                                {% if tesis.id %}✓ Registro sincronizado correctamente.{% else %}* Ingrese el título para activar el registro de personas.{% endif %}
+                            </p>
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div class="group">
-                                <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-3 block">Autor (Apellidos y Nombres)</label>
-                                <input type="text" name="autor" required value="{{ tesis.autor|default:'' }}" class="w-full bg-slate-50/80 border border-slate-100 px-6 py-4 rounded-2xl focus:border-[#1e3a8a] focus:bg-white outline-none transition-all text-sm font-bold text-slate-700">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="text-[9px] font-black text-slate-500 uppercase mb-2 block tracking-tighter">Tipo de Trabajo</label>
+                                <select name="tipo_tesis" class="input-futuristic w-full px-3 py-3 text-[10px] font-bold text-slate-700">
+                                    {% for code, name in tipos_grado %}
+                                        <option value="{{ code }}" {% if tesis.tipo_tesis == code %}selected{% endif %}>{{ name }}</option>
+                                    {% endfor %}
+                                </select>
                             </div>
-                            <div class="group">
-                                <label class="text-[10px] font-black uppercase tracking-widest text-[#1e3a8a] mb-3 block">DNI del Autor (Requerido RENATI)</label>
-                                <input type="text" name="autor_dni" required maxlength="8" value="{{ tesis.autor_dni|default:'' }}" placeholder="8 dígitos" class="w-full bg-blue-50/30 border border-blue-100 px-6 py-4 rounded-2xl focus:border-[#1e3a8a] focus:bg-white outline-none transition-all text-sm font-bold text-slate-700">
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div class="group">
-                                <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-3 block">Asesor Principal</label>
-                                <input type="text" name="asesor" required value="{{ tesis.asesor|default:'' }}" class="w-full bg-slate-50/80 border border-slate-100 px-6 py-4 rounded-2xl focus:border-[#1e3a8a] focus:bg-white outline-none transition-all text-sm font-bold text-slate-700">
-                            </div>
-                            <div class="group">
-                                <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-3 block">Código ORCID (Opcional)</label>
-                                <input type="text" name="autor_orcid" value="{{ tesis.autor_orcid|default:'' }}" placeholder="0000-0000-0000-0000" class="w-full bg-slate-50/80 border border-slate-100 px-6 py-4 rounded-2xl focus:border-[#1e3a8a] focus:bg-white outline-none transition-all text-sm font-bold text-slate-700">
-                            </div>
-                        </div>
-
-                        <div class="bg-slate-50/50 p-8 rounded-[2rem] border border-dashed border-slate-200 space-y-6">
-                            <h3 class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-4 flex items-center gap-2">
-                                <i class="fa-solid fa-server"></i> Clasificación para Recolector Nacional
-                            </h3>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <label class="text-[9px] font-black text-slate-500 uppercase mb-2 block">Tipo de Trabajo (Grado)</label>
-                                    <select name="tipo_tesis" class="w-full bg-white border border-slate-200 px-4 py-3 rounded-xl text-xs font-bold text-slate-700 outline-none focus:border-[#1e3a8a]">
-                                        {% for code, name in tipos_grado %}
-                                            <option value="{{ code }}" {% if tesis.tipo_tesis == code %}selected{% endif %}>{{ name }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                                <div>
-                                    <label class="text-[9px] font-black text-slate-500 uppercase mb-2 block">Código OCDE (Área de Conocimiento)</label>
-                                    <input type="text" name="ocde_codigo" value="{{ tesis.ocde_codigo|default:'' }}" placeholder="Ej: 5.03.01 (Educación)" class="w-full bg-white border border-slate-200 px-4 py-3 rounded-xl text-xs font-bold text-slate-700 outline-none focus:border-[#1e3a8a]">
-                                    <input type="hidden" name="ocde_nombre" id="ocde_nombre_hidden" value="{{ tesis.ocde_nombre|default:'' }}">
-                                </div>
-                            </div>
-                            
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-slate-200/50">
-                                <div>
-                                    <label class="text-[9px] font-black text-slate-500 uppercase mb-2 block">Fecha de Sustentación</label>
-                                    <input type="date" name="fecha_publicacion" value="{{ tesis.fecha_publicacion|date:'Y-m-d' }}" class="w-full bg-white border border-slate-200 px-4 py-3 rounded-xl text-xs font-bold text-slate-700 outline-none focus:border-[#1e3a8a]" required>
-                                </div>
-                                <div>
-                                    <label class="text-[9px] font-black text-slate-500 uppercase mb-2 block">Derechos de Acceso</label>
-                                    <select name="derechos_acceso" class="w-full bg-white border border-slate-200 px-4 py-3 rounded-xl text-xs font-bold text-slate-700 outline-none focus:border-[#1e3a8a]">
-                                        <option value="info:eu-repo/semantics/openAccess" selected>Acceso Abierto (Recomendado)</option>
-                                        <option value="info:eu-repo/semantics/closedAccess">Acceso Cerrado</option>
-                                        <option value="info:eu-repo/semantics/restrictedAccess">Acceso Restringido</option>
-                                    </select>
-                                </div>
+                            <div>
+                                <label class="text-[9px] font-black text-slate-500 uppercase mb-2 block tracking-tighter">Código OCDE</label>
+                                <input type="text" name="ocde_codigo" value="{{ tesis.ocde_codigo|default:'' }}" placeholder="Ej: 5.03.01" class="input-futuristic w-full px-3 py-3 text-[10px] font-bold text-slate-700">
                             </div>
                         </div>
 
                         <div class="group">
-                            <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-3 block">Resumen Académico (Mín. 50 caracteres)</label>
-                            <textarea name="resumen" required rows="6" class="w-full bg-slate-50/30 border border-slate-100 p-8 rounded-[2rem] focus:border-[#1e3a8a] focus:bg-white outline-none transition-all text-sm leading-relaxed text-slate-600 resize-none" placeholder="Escriba aquí el resumen o abstract de la investigación...">{{ tesis.resumen|default:'' }}</textarea>
+                            <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 mb-2 block">Resumen / Abstract</label>
+                            <textarea name="resumen" required rows="6" class="input-futuristic w-full px-5 py-4 text-xs leading-relaxed text-slate-600 resize-none">{{ tesis.resumen|default:'' }}</textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-2 space-y-6">
+                <div class="bg-white p-6 rounded-[2rem] border border-slate-100 shadow-xl shadow-slate-200/30">
+                    <h2 class="text-[11px] font-black text-blue-900 uppercase tracking-widest mb-6 border-b border-slate-50 pb-4">02. Metadatos</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="text-[9px] font-black text-slate-400 uppercase mb-2 block tracking-tighter">Fecha Sustentación</label>
+                            <input type="date" name="fecha_publicacion" value="{{ tesis.fecha_publicacion|date:'Y-m-d' }}" class="input-futuristic w-full px-4 py-2.5 text-[10px] font-bold text-slate-700" required>
+                        </div>
+                        <div>
+                            <label class="text-[9px] font-black text-slate-400 uppercase mb-2 block tracking-tighter">Privacidad</label>
+                            <select name="derechos_acceso" class="input-futuristic w-full px-4 py-2.5 text-[10px] font-bold text-slate-700">
+                                <option value="info:eu-repo/semantics/openAccess" {% if tesis.derechos_acceso == "info:eu-repo/semantics/openAccess" %}selected{% endif %}>Acceso Abierto</option>
+                                <option value="info:eu-repo/semantics/closedAccess" {% if tesis.derechos_acceso == "info:eu-repo/semantics/closedAccess" %}selected{% endif %}>Acceso Cerrado</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-[2rem] border border-slate-100 shadow-xl shadow-slate-200/30 space-y-4">
+                    <h2 class="text-[10px] font-black text-slate-800 uppercase tracking-widest border-b pb-2">Documentación PDF</h2>
+                    
+                    <div class="relative group/file h-12 border-2 border-dashed {% if tesis.archivo_pdf %}border-blue-500 bg-blue-50/50{% else %}border-slate-200{% endif %} rounded-2xl flex items-center px-4 hover:border-blue-500 transition-all overflow-hidden">
+                        <input type="file" name="archivo_pdf" accept=".pdf" class="absolute inset-0 w-full h-full opacity-0 z-50 cursor-pointer" onchange="updateFileLabel(this, 'label-pdf')">
+                        <i class="fa-solid fa-file-pdf {% if tesis.archivo_pdf %}text-blue-500{% else %}text-slate-300{% endif %} mr-3"></i>
+                        <div class="flex flex-col">
+                            <span id="label-pdf" class="text-[8px] font-black text-slate-500 uppercase truncate">
+                                {% if tesis.archivo_pdf %}ARCHIVO CARGADO ✓{% else %}ARCHIVO TESIS{% endif %}
+                            </span>
+                            {% if tesis.archivo_pdf %}
+                            <a href="{{ tesis.archivo_pdf.url }}" target="_blank" class="text-[7px] text-blue-600 font-bold uppercase hover:underline z-[60]">Ver actual</a>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="relative group/file h-12 border-2 border-dashed {% if tesis.constancia_originalidad %}border-emerald-500 bg-emerald-50/50{% else %}border-slate-200{% endif %} rounded-2xl flex items-center px-4 hover:border-emerald-500 transition-all overflow-hidden">
+                        <input type="file" name="constancia_originalidad" accept=".pdf" class="absolute inset-0 w-full h-full opacity-0 z-50 cursor-pointer" onchange="updateFileLabel(this, 'label-ori')">
+                        <i class="fa-solid fa-certificate {% if tesis.constancia_originalidad %}text-emerald-500{% else %}text-slate-300{% endif %} mr-3"></i>
+                        <div class="flex flex-col">
+                            <span id="label-ori" class="text-[8px] font-black text-slate-500 uppercase truncate">
+                                {% if tesis.constancia_originalidad %}CONSTANCIA OK ✓{% else %}ORIGINALIDAD{% endif %}
+                            </span>
+                            {% if tesis.constancia_originalidad %}
+                            <a href="{{ tesis.constancia_originalidad.url }}" target="_blank" class="text-[7px] text-emerald-600 font-bold uppercase hover:underline z-[60]">Ver actual</a>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="relative group/file h-12 border-2 border-dashed {% if tesis.reporte_turnitin %}border-rose-500 bg-rose-50/50{% else %}border-slate-200{% endif %} rounded-2xl flex items-center px-4 hover:border-rose-500 transition-all overflow-hidden">
+                        <input type="file" name="reporte_turnitin" accept=".pdf" class="absolute inset-0 w-full h-full opacity-0 z-50 cursor-pointer" onchange="updateFileLabel(this, 'label-tur')">
+                        <i class="fa-solid fa-fingerprint {% if tesis.reporte_turnitin %}text-rose-500{% else %}text-slate-300{% endif %} mr-3"></i>
+                        <div class="flex flex-col">
+                            <span id="label-tur" class="text-[8px] font-black text-slate-500 uppercase truncate">
+                                {% if tesis.reporte_turnitin %}REPORTE OK ✓{% else %}TURNITIN{% endif %}
+                            </span>
+                            {% if tesis.reporte_turnitin %}
+                            <a href="{{ tesis.reporte_turnitin.url }}" target="_blank" class="text-[7px] text-rose-600 font-bold uppercase hover:underline z-[60]">Ver actual</a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="lg:col-span-4 space-y-6">
-                <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-xl shadow-slate-200/40">
-                    <h3 class="text-[11px] font-black uppercase tracking-widest text-slate-800 mb-6 flex items-center gap-2">
-                        <i class="fa-solid fa-file-pdf text-[#1e3a8a]"></i> Archivo Maestro PDF
-                    </h3>
-                    <div class="relative group/file">
-                        <input type="file" name="archivo_pdf" id="file-input" accept=".pdf" {% if not editando %}required{% endif %} class="absolute inset-0 w-full h-full opacity-0 z-50 cursor-pointer">
-                        <div id="drop-area" class="border-2 border-dashed border-slate-100 rounded-[2rem] p-8 text-center group-hover/file:border-[#1e3a8a] group-hover/file:bg-blue-50/30 transition-all duration-500">
-                            <div id="file-preview">
-                                {% if editando and tesis.archivo_pdf %}
-                                    <div class="flex flex-col items-center">
-                                        <div class="w-12 h-12 bg-blue-100 text-[#1e3a8a] rounded-xl flex items-center justify-center mb-3">
-                                            <i class="fa-solid fa-file-pdf text-xl"></i>
-                                        </div>
-                                        <p class="text-[9px] font-bold text-slate-600 truncate w-full px-4">{{ tesis.archivo_pdf.name }}</p>
-                                        <p class="text-[8px] mt-2 text-slate-400 uppercase">Click para reemplazar</p>
+                <div class="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-xl shadow-slate-200/30 relative overflow-hidden">
+                    <h2 class="text-[11px] font-black text-blue-900 uppercase tracking-widest mb-8 border-b border-slate-50 pb-4 flex justify-between items-center">
+                        03. Participantes
+                        <div class="flex gap-2">
+                            <button type="button" id="btn-add-autor" onclick="openModal('autor')" 
+                                    class="bg-blue-600 text-white px-3 py-1.5 rounded-lg text-[9px] hover:bg-blue-700 transition-colors {% if not tesis.id %}btn-disabled{% endif %}">+ Autor</button>
+                            <button type="button" id="btn-add-asesor" onclick="openModal('asesor')" 
+                                    class="bg-slate-800 text-white px-3 py-1.5 rounded-lg text-[9px] hover:bg-black transition-colors {% if not tesis.id %}btn-disabled{% endif %}">+ Asesor</button>
+                        </div>
+                    </h2>
+                    
+                    <div class="space-y-6">
+                        <div class="group">
+                            <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 mb-2 block">Autores Registrados</label>
+                            <div id="lista-autores" class="space-y-3">
+                                {% for autor in autores_actuales %}
+                                <div id="autor-{{ autor.id }}" class="person-chip flex items-center justify-between p-3 rounded-xl border border-blue-50 bg-blue-50/20">
+                                    <div class="flex flex-col">
+                                        <span class="text-[10px] font-bold text-slate-800 uppercase">{{ autor.nombre_completo }}</span>
+                                        <span class="text-[9px] text-blue-600 font-bold">DNI: {{ autor.dni }}</span>
                                     </div>
-                                {% else %}
-                                    <div class="flex flex-col items-center">
-                                        <div class="w-12 h-12 bg-slate-50 text-slate-300 rounded-xl flex items-center justify-center mb-3">
-                                            <i class="fa-solid fa-cloud-arrow-up text-xl"></i>
-                                        </div>
-                                        <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Cargar Tesis PDF</p>
-                                        <p class="text-[8px] mt-2 text-slate-300 uppercase">Máximo 50MB</p>
-                                    </div>
-                                {% endif %}
+                                    <button type="button" onclick="eliminarPersona('autor', {{ autor.id }})" class="text-rose-500 px-2 hover:bg-rose-50 rounded-lg">×</button>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <div class="group border-t border-slate-50 pt-4">
+                            <label class="text-[9px] font-black uppercase tracking-widest text-slate-400 mb-2 block">Asesores Asignados</label>
+                            <div id="lista-asesores" class="space-y-3">
+                                {% for asesor in asesores_actuales %}
+                                <div id="asesor-{{ asesor.id }}" class="person-chip flex items-center justify-between p-3 rounded-xl bg-slate-50/50 border border-slate-100">
+                                    <span class="text-[10px] font-bold text-slate-800 uppercase">{{ asesor.nombre_completo }}</span>
+                                    <button type="button" onclick="eliminarPersona('asesor', {{ asesor.id }})" class="text-rose-500 px-2 hover:bg-rose-50 rounded-lg">×</button>
+                                </div>
+                                {% endfor %}
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="bg-[#1e3a8a] p-8 rounded-[2.5rem] shadow-2xl shadow-blue-900/20 relative overflow-hidden">
-                    <div class="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-3xl -mr-16 -mt-16"></div>
-                    <div class="relative z-10 space-y-6">
-                        <button type="submit" class="w-full bg-white text-[#1e3a8a] font-black py-5 rounded-2xl hover:bg-amber-400 hover:text-blue-950 transition-all duration-500 shadow-lg flex items-center justify-center gap-3 group">
-                            <span class="tracking-[0.2em] text-[10px]">{% if editando %}GUARDAR CAMBIOS{% else %}ENVIAR A VALIDACIÓN{% endif %}</span>
-                            <i class="fa-solid fa-paper-plane text-[10px] group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"></i>
-                        </button>
-                        <p class="text-[9px] text-white/40 text-center leading-relaxed font-medium uppercase tracking-widest">
-                            IESP "13 de Julio de 1882" <br> Sistema de Gestión Científica
-                        </p>
-                    </div>
+                <div class="fixed bottom-8 right-8 z-[100] group">
+                    <div class="bg-slate-900/90 backdrop-blur-md rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.3)] border border-white/10 overflow-hidden relative">
+                        
+                        <div class="absolute inset-0 bg-gradient-to-tr from-blue-600/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                            <button type="submit" 
+                                    class="relative z-10 min-w-[200px] bg-blue-600 text-white font-black py-4 px-8 rounded-xl hover:bg-white hover:text-slate-900 transition-all duration-500 shadow-lg flex items-center justify-center gap-3 active:scale-95">
+                                
+                                <span class="tracking-[0.2em] text-[10px]">
+                                    {% if editando %}ACTUALIZAR DATOS{% else %}FINALIZAR REGISTRO{% endif %}
+                                </span>
+                                
+                                <i class="fa-solid fa-shield-check text-[10px] group-hover:rotate-[360deg] transition-transform duration-700"></i>
+                            </button>
+                        </div>
                 </div>
             </div>
         </form>
     </div>
 </main>
 
-<script>
-    const fileInput = document.getElementById('file-input');
-    const filePreview = document.getElementById('file-preview');
+<div id="modalPersona" class="hidden fixed inset-0 bg-slate-900/80 backdrop-blur-md z-[100] flex items-center justify-center p-4">
+    <div class="bg-white rounded-[2.5rem] w-full max-w-md p-10 shadow-2xl">
+        <h3 id="modalTitle" class="font-cinzel font-black text-2xl text-slate-900 mb-2 uppercase">Nuevo Autor</h3>
+        <p class="text-[9px] text-slate-400 font-bold uppercase tracking-widest mb-8">IESP 13 de Julio - Registro Técnico</p>
+        
+        <div class="space-y-5">
+            <div>
+                <label class="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-2 block">Nombre Completo</label>
+                <input type="text" id="modal_nombre" class="input-futuristic w-full px-5 py-4 text-sm font-bold text-slate-700">
+            </div>
+            <div id="dni_container">
+                <label class="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-2 block">DNI (8 Dígitos)</label>
+                <input type="text" id="modal_dni" maxlength="8" class="input-futuristic w-full px-5 py-4 text-sm font-bold text-slate-700 bg-blue-50/50">
+            </div>
+            
+            <div class="flex gap-4 mt-10">
+                <button type="button" onclick="closeModal()" class="flex-1 py-4 text-[10px] font-black uppercase text-slate-400">Cancelar</button>
+                <button type="button" id="btnConfirmarPersona" onclick="confirmarAgregado()" class="flex-1 bg-blue-600 text-white rounded-2xl py-4 text-[10px] font-black uppercase shadow-xl hover:bg-blue-700">Confirmar</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-    fileInput.addEventListener('change', function() {
-        if(this.files.length > 0) {
-            const fileName = this.files[0].name;
-            const fileSize = (this.files[0].size / 1024 / 1024).toFixed(2);
-            filePreview.innerHTML = `
-                <div class="flex flex-col items-center animate-fadeIn">
-                    <div class="w-12 h-12 bg-emerald-500 text-white rounded-xl flex items-center justify-center mb-3 shadow-lg shadow-emerald-200">
-                        <i class="fa-solid fa-check text-xl"></i>
-                    </div>
-                    <p class="text-[10px] font-bold text-slate-800 truncate w-full px-4">${fileName}</p>
-                    <p class="text-[9px] text-emerald-600 font-bold mt-1">${fileSize} MB - LISTO</p>
-                    <button type="button" onclick="window.location.reload()" class="mt-4 text-[8px] font-black text-rose-500 uppercase tracking-tighter">Cambiar Archivo</button>
+<script>
+    let currentMode = 'autor';
+    let tesisIdGlobal = document.getElementById('tesis_id_hidden').value;
+    let debounceTimer;
+
+    async function verificarYCrearTesis() {
+        const tituloInput = document.getElementById('tesis_titulo_input');
+        const titulo = tituloInput.value.trim();
+        const msgElement = document.getElementById('msg-titulo');
+        
+        if (titulo.length > 5) {
+            document.getElementById('btn-add-autor').classList.remove('btn-disabled');
+            document.getElementById('btn-add-asesor').classList.remove('btn-disabled');
+        }
+
+        if (titulo.length < 10) return;
+
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(async () => {
+            let formData = new FormData();
+            formData.append('titulo', titulo);
+            formData.append('ajax', 'true');
+            formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+            
+            if (tesisIdGlobal) {
+                formData.append('tesis_id_hidden', tesisIdGlobal);
+            }
+
+            try {
+                const response = await fetch("{% url 'investigacion:registrar_tesis' %}", {
+                    method: 'POST',
+                    body: formData,
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                });
+
+                const data = await response.json();
+                if (data.status === 'success') {
+                    tesisIdGlobal = data.id;
+                    document.getElementById('tesis_id_hidden').value = data.id;
+                    
+                    msgElement.innerText = "✓ Sincronizado en tiempo real.";
+                    msgElement.className = "text-[9px] font-bold mt-2 text-emerald-500 transition-all";
+                }
+            } catch (error) {
+                console.error("Error en AJAX:", error);
+            }
+        }, 1000);
+    }
+
+    function openModal(mode) {
+        if (!tesisIdGlobal) {
+            alert("Debe ingresar un título primero.");
+            return;
+        }
+        currentMode = mode;
+        document.getElementById('modalTitle').innerText = mode === 'autor' ? 'NUEVO AUTOR' : 'NUEVO ASESOR';
+        document.getElementById('dni_container').style.display = mode === 'autor' ? 'block' : 'none';
+        const modal = document.getElementById('modalPersona');
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+    }
+
+    function closeModal() {
+        const modal = document.getElementById('modalPersona');
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        document.getElementById('modal_nombre').value = '';
+        document.getElementById('modal_dni').value = '';
+    }
+
+    async function confirmarAgregado() {
+        const nombre = document.getElementById('modal_nombre').value.trim();
+        const dni = document.getElementById('modal_dni').value.trim();
+        
+        if (!nombre) return;
+        
+        const btn = document.getElementById('btnConfirmarPersona');
+        btn.disabled = true;
+
+        let formData = new FormData();
+        formData.append('nombre', nombre);
+        formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+        if (currentMode === 'autor') formData.append('dni', dni);
+
+        let url = currentMode === 'autor' 
+            ? "{% url 'investigacion:agregar_autor_ajax' 0 %}".replace('0', tesisIdGlobal)
+            : "{% url 'investigacion:agregar_asesor_ajax' 0 %}".replace('0', tesisIdGlobal);
+
+        try {
+            const response = await fetch(url, { method: 'POST', body: formData });
+            const data = await response.json();
+            if (data.status === 'success') {
+                renderizarChip(data, currentMode);
+                closeModal();
+            } else {
+                alert(data.message || 'Error al agregar');
+            }
+        } catch (error) {
+            alert('Error de conexión');
+        } finally {
+            btn.disabled = false;
+        }
+    }
+
+    function renderizarChip(data, modo) {
+        const container = document.getElementById(modo === 'autor' ? 'lista-autores' : 'lista-asesores');
+        const chipId = `${modo}-${data.id}`;
+        const html = `
+            <div id="${chipId}" class="person-chip flex items-center justify-between p-3 rounded-xl border ${modo === 'autor' ? 'border-blue-100 bg-blue-50/30' : 'bg-slate-50 border-slate-200'}">
+                <div class="flex flex-col">
+                    <span class="text-[10px] font-black text-slate-800 uppercase">${data.nombre}</span>
+                    ${modo === 'autor' ? `<span class="text-[9px] text-blue-600 font-bold">DNI: ${data.dni}</span>` : ''}
                 </div>
-            `;
+                <button type="button" onclick="eliminarPersona('${modo}', ${data.id})" class="text-rose-500 hover:bg-rose-50 px-2 rounded-lg">×</button>
+            </div>
+        `;
+        container.insertAdjacentHTML('beforeend', html);
+    }
+
+    async function eliminarPersona(tipo, id) {
+        if (!confirm('¿Eliminar participante?')) return;
+        let formData = new FormData();
+        formData.append('tipo', tipo);
+        formData.append('persona_id', id);
+        formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+
+        const url = "{% url 'investigacion:eliminar_relacion_ajax' 0 %}".replace('0', tesisIdGlobal);
+        try {
+            await fetch(url, { method: 'POST', body: formData });
+            document.getElementById(`${tipo}-${id}`).remove();
+        } catch (e) { console.error(e); }
+    }
+
+    function updateFileLabel(input, labelId) {
+        const label = document.getElementById(labelId);
+        if(input.files[0]) {
+            // Cambiar color a azul fuerte para indicar "Pendiente de guardar"
+            label.innerHTML = `<span class="text-blue-700 font-black">NUEVO: ${input.files[0].name.substring(0,15)}...</span>`;
+            input.parentElement.classList.remove('border-slate-200', 'bg-blue-50/50', 'bg-emerald-50/30', 'bg-rose-50/30');
+            input.parentElement.classList.add('border-blue-600', 'bg-blue-100/50');
+            
+            // Si hay un link de "Ver actual", lo ocultamos para no confundir
+            const currentLink = input.parentElement.querySelector('a');
+            if(currentLink) currentLink.style.display = 'none';
+        }
+    }
+
+    document.getElementById('mainForm').addEventListener('submit', function(e) {
+        const hiddenId = document.getElementById('tesis_id_hidden').value;
+        if (!hiddenId) {
+            e.preventDefault();
+            alert("Error: No se ha detectado el ID del registro. Escriba el título correctamente para sincronizar.");
         }
     });
 </script>

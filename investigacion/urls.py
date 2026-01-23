@@ -12,5 +12,9 @@ urlpatterns = [
     path('editar/<int:tesis_id>/', views.editar_tesis, name='editar_tesis'),
     path('eliminar/<int:tesis_id>/', views.eliminar_tesis, name='eliminar_tesis'),
     
+    path('tesis/<int:tesis_id>/agregar-autor/', views.agregar_autor_ajax, name='agregar_autor_ajax'),
+    path('tesis/<int:tesis_id>/agregar-asesor/', views.agregar_asesor_ajax, name='agregar_asesor_ajax'),
+    path('tesis/<int:tesis_id>/eliminar-relacion/', views.eliminar_relacion_ajax, name='eliminar_relacion_ajax'),
+    
     path('investigacion/oai/<int:tesis_id>/', views.oai_repository, name='oai_repository'),
 ]

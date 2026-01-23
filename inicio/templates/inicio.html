@@ -1,63 +1,48 @@
-<section id="inicio" class="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-[#0f172a]">
-    
-    <div class="absolute inset-0 z-0">
-        <div id="carousel-container" class="relative w-full h-full">
-            <div class="carousel-img active" style="background-image: url('https://images.unsplash.com/photo-1523050335392-93851179ae22?q=80&w=2070'); opacity: 1; z-index: 10;"></div>
+{% load static %}
+<div id="modal-noticias" class="fixed inset-0 z-[9999] hidden items-center justify-center p-4 bg-blue-950/80 backdrop-blur-xl">
+    <div id="modal-content" class="relative bg-blue-900 w-full max-w-3xl h-[90vh] rounded-[2.5rem] lg:rounded-[3rem] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col border border-white/10 transform transition-all scale-95 opacity-0 duration-500">
+        
+        <div class="bg-white/5 backdrop-blur-md px-8 py-5 flex justify-between items-center shrink-0 border-b border-white/10 relative z-10">
+            <div class="flex items-center gap-4">
+                <div class="w-10 h-10 bg-amber-400 rounded-xl flex items-center justify-center shadow-lg shadow-amber-400/20">
+                    <i class="fas fa-bullhorn text-blue-900 text-lg"></i>
+                </div>
+                <div>
+                    <h3 class="text-lg font-black text-white uppercase tracking-tighter leading-none">Comunicado Oficial</h3>
+                    <p class="text-[9px] text-amber-400 font-bold uppercase tracking-[0.2em] mt-1">Gestión Institucional 2026</p>
+                </div>
+            </div>
+            <button onclick="closeNewsModal()" class="w-10 h-10 flex items-center justify-center rounded-xl bg-white/10 text-white hover:bg-red-500 transition-all group border border-white/10">
+                <i class="fas fa-times group-hover:rotate-90 transition-transform text-sm"></i>
+            </button>
         </div>
-        
-        <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-blue-900/60 z-10"></div>
-        <div class="absolute inset-0 z-20 opacity-30 mix-blend-overlay bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
-        
-        <div class="light-beam-1 z-30"></div>
-        <div class="light-beam-2 z-30"></div>
-    </div>
 
-    <div class="fixed right-0 top-1/2 -translate-y-1/2 z-[100] flex flex-col gap-3 p-4">
-        <a href="#" class="group flex items-center justify-end gap-4 transition-all duration-500">
-            <span class="opacity-0 group-hover:opacity-100 translate-x-4 group-hover:translate-x-0 transition-all bg-blue-900 text-white text-[10px] font-black uppercase tracking-widest py-2 px-4 rounded-lg shadow-xl">Repositorio</span>
-            <div class="w-14 h-14 flex items-center justify-center bg-white/90 backdrop-blur-md shadow-xl rounded-2xl text-amber-500 border border-white/20 hover:bg-amber-500 hover:text-white transition-all duration-300 transform group-hover:scale-110">
-                <i class="fas fa-database text-xl"></i>
-            </div>
-        </a>
-        <a href="#" class="group flex items-center justify-end gap-4 transition-all duration-500">
-            <span class="opacity-0 group-hover:opacity-100 translate-x-4 group-hover:translate-x-0 transition-all bg-blue-900 text-white text-[10px] font-black uppercase tracking-widest py-2 px-4 rounded-lg shadow-xl">Plataforma EVA</span>
-            <div class="w-14 h-14 flex items-center justify-center bg-white/90 backdrop-blur-md shadow-xl rounded-2xl text-blue-600 border border-white/20 hover:bg-blue-600 hover:text-white transition-all duration-300 transform group-hover:scale-110">
-                <i class="fas fa-graduation-cap text-xl"></i>
-            </div>
-        </a>
-        <a href="#" class="group flex items-center justify-end gap-4 transition-all duration-500">
-            <span class="opacity-0 group-hover:opacity-100 translate-x-4 group-hover:translate-x-0 transition-all bg-blue-900 text-white text-[10px] font-black uppercase tracking-widest py-2 px-4 rounded-lg shadow-xl">Biblioteca</span>
-            <div class="w-14 h-14 flex items-center justify-center bg-white/90 backdrop-blur-md shadow-xl rounded-2xl text-emerald-600 border border-white/20 hover:bg-emerald-600 hover:text-white transition-all duration-300 transform group-hover:scale-110">
-                <i class="fas fa-book-reader text-xl"></i>
-            </div>
-        </a>
-    </div>
-
-    <div id="modal-noticias" class="fixed inset-0 z-[200] hidden items-center justify-center p-4 bg-black/80 backdrop-blur-lg">
-        <div class="bg-white w-full max-w-4xl rounded-[3rem] overflow-hidden shadow-2xl flex flex-col md:flex-row transform transition-all scale-95 opacity-0 duration-500" id="modal-content">
-            <div class="md:w-[45%] h-64 md:h-auto overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=1000" class="w-full h-full object-cover">
-            </div>
-            <div class="md:w-[55%] p-10 md:p-14 relative bg-white flex flex-col justify-center">
-                <button onclick="closeNewsModal()" class="absolute top-8 right-8 text-slate-400 hover:text-red-500 transition-colors">
-                    <i class="fas fa-times text-2xl"></i>
-                </button>
-                <span class="text-blue-600 font-black uppercase text-[11px] tracking-widest mb-2 block">Comunicado 2026</span>
-                <h2 class="serif-font text-4xl font-black text-slate-900 mb-6 leading-tight">Proceso de <span class="italic text-blue-800">Admisión Tranter</span></h2>
-                <p class="text-slate-500 mb-8">Te damos la bienvenida a nuestra plataforma. Revisa las vacantes disponibles para este nuevo ciclo académico.</p>
-                <button onclick="closeNewsModal()" class="w-full py-5 bg-blue-900 text-white font-black uppercase text-[10px] tracking-widest rounded-2xl hover:bg-amber-500 transition-all shadow-lg">Continuar al Sitio</button>
+        <div class="flex-grow bg-slate-900 overflow-y-auto custom-scrollbar relative">
+            <div class="w-full h-full flex items-start justify-center">
+                <img src="{% static 'img/publicidad.jpeg' %}" 
+                    class="w-full h-full object-contain" 
+                    alt="Publicidad">
             </div>
         </div>
-    </div>
 
-    <div class="absolute bottom-0 left-0 w-full line-height-0 z-40">
-        <svg class="relative block w-full h-[60px] lg:h-[110px]" viewBox="0 0 1200 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0,0 C300,120 900,120 1200,0 L1200,120 L0,120 Z" fill="#f8fafc"></path>
-        </svg>
+        <div class="bg-white py-4 px-8 flex justify-between items-center shrink-0 border-t border-slate-100">
+            <div class="flex items-center gap-3">
+                <div class="flex gap-1.5">
+                    <div class="w-2 h-2 rounded-full bg-blue-900"></div>
+                    <div class="w-2 h-2 rounded-full bg-amber-400"></div>
+                    <div class="w-2 h-2 rounded-full bg-blue-900"></div>
+                </div>
+                <span class="text-[10px] font-black text-slate-800 uppercase tracking-widest">Información Importante</span>
+            </div>
+            
+            <button onclick="closeNewsModal()" class="px-8 py-2.5 bg-blue-900 text-white text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-amber-500 transition-all shadow-lg active:scale-95">
+                Cerrar Anuncio
+            </button>
+        </div>
     </div>
-</section>
-
+</div>
 <style>
+    /* 1. Configuración del Carrusel */
     .carousel-img {
         position: absolute;
         inset: 0;
@@ -73,10 +58,16 @@
         transform: scale(1);
         z-index: 10;
     }
+
+    /* 2. Animación de Haces de Luz */
     .light-beam-1, .light-beam-2 {
-        position: absolute; width: 200%; height: 200px;
+        position: absolute; 
+        width: 200%; 
+        height: 200px;
         background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
-        transform: rotate(-45deg); top: -50%; left: -50%;
+        transform: rotate(-45deg); 
+        top: -50%; 
+        left: -50%;
         animation: beam 15s infinite linear;
     }
     .light-beam-2 { animation-delay: 7s; }
@@ -84,23 +75,112 @@
         0% { transform: rotate(-45deg) translateY(-500px); }
         100% { transform: rotate(-45deg) translateY(1500px); }
     }
-    .serif-font { font-family: 'Playfair Display', serif; }
+
+    /* 3. CORTE TIPO DIPLOMA (Pestaña Trapezoidal Profesional) */
+    /* Este diseño corta la base del carrusel en forma de trapecio hacia afuera */
+    .diploma-cut-base {
+        clip-path: polygon(0 0, 100% 0, 100% 85%, 55% 85%, 53% 95%, 47% 95%, 45% 85%, 0 85%);
+    }
+
+    /* 4. Formas Elegantes Decorativas */
+    .elegant-shape {
+        position: absolute;
+        background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255,255,255,0.1);
+        z-index: 35;
+    }
+
+    /* 5. Scrollbar Moderno para el Modal */
+    .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.1); }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: rgba(251, 191, 36, 0.4);
+        border-radius: 10px;
+    }
 </style>
 
+<section id="inicio" class="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-[#f8fafc]">
+    
+    <div class="absolute inset-0 z-0 diploma-cut-base shadow-2xl overflow-hidden bg-[#0f172a]">
+        <div id="carousel-container" class="relative w-full h-full">
+            <div class="carousel-img active" style="background-image: url('https://images.unsplash.com/photo-1523050335392-93851179ae22?q=80&w=2070'); opacity: 1; z-index: 10;"></div>
+        </div>
+        
+        <div class="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-blue-900/80 z-10"></div>
+        <div class="absolute inset-0 z-20 opacity-20 mix-blend-overlay bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
+        
+        <div class="light-beam-1 z-30"></div>
+        <div class="light-beam-2 z-30"></div>
+    </div>
+
+    <div class="absolute inset-0 z-40 pointer-events-none">
+        <div class="absolute bottom-[5%] left-1/2 -translate-x-1/2 w-[10%] h-[10%] bg-amber-500 shadow-lg" 
+             style="clip-path: polygon(15% 0, 85% 0, 100% 100%, 0 100%);">
+             <div class="w-full h-full bg-gradient-to-t from-black/20 to-transparent"></div>
+        </div>
+    </div>
+
+    <div class="elegant-shape w-72 h-72 rounded-full -top-20 -left-20 opacity-30"></div>
+    <div class="elegant-shape w-96 h-96 rotate-45 -top-40 -right-20 opacity-10 rounded-[4rem]"></div>
+
+    <div class="fixed right-0 top-1/2 -translate-y-1/2 z-[100] flex flex-col gap-3 p-4">
+        <a href="{% url 'investigacion:lista_tesis' %}" class="group flex items-center justify-end gap-4">
+            <span class="opacity-0 group-hover:opacity-100 translate-x-4 group-hover:translate-x-0 transition-all bg-blue-900 text-white text-[10px] font-black uppercase tracking-widest py-2 px-4 rounded-lg">Repositorio</span>
+            <div class="w-14 h-14 flex items-center justify-center bg-white shadow-xl rounded-2xl text-amber-500 border border-slate-100 hover:bg-amber-500 hover:text-white transition-all transform group-hover:scale-110">
+                <i class="fas fa-database text-xl"></i>
+            </div>
+        </a>
+        <a href="#" class="group flex items-center justify-end gap-4">
+            <span class="opacity-0 group-hover:opacity-100 translate-x-4 group-hover:translate-x-0 transition-all bg-blue-900 text-white text-[10px] font-black uppercase tracking-widest py-2 px-4 rounded-lg">Plataforma EVA</span>
+            <div class="w-14 h-14 flex items-center justify-center bg-white shadow-xl rounded-2xl text-blue-600 border border-slate-100 hover:bg-blue-600 hover:text-white transition-all transform group-hover:scale-110">
+                <i class="fas fa-graduation-cap text-xl"></i>
+            </div>
+        </a>
+    </div>
+
+    <div id="modal-noticias" class="fixed inset-0 z-[9999] hidden items-center justify-center p-4 bg-blue-950/80 backdrop-blur-xl">
+        <div id="modal-content" class="relative bg-blue-900 w-full max-w-3xl h-[85vh] rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col border border-white/10 transform transition-all scale-95 opacity-0 duration-500">
+            <div class="bg-white/5 px-8 py-5 flex justify-between items-center shrink-0 border-b border-white/10">
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 bg-amber-400 rounded-xl flex items-center justify-center shadow-lg">
+                        <i class="fas fa-bullhorn text-blue-900"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-black text-white uppercase tracking-tighter">Comunicado Oficial</h3>
+                        <p class="text-[9px] text-amber-400 font-bold uppercase tracking-widest mt-1">IESPP 13 DE JULIO</p>
+                    </div>
+                </div>
+                <button onclick="closeNewsModal()" class="w-10 h-10 flex items-center justify-center rounded-xl bg-white/10 text-white hover:bg-red-500 transition-all">
+                    <i class="fas fa-times text-sm"></i>
+                </button>
+            </div>
+
+            <div class="flex-grow bg-slate-900 overflow-y-auto custom-scrollbar">
+                <img src="{% static 'img/publicidad.jpeg' %}" class="w-full h-auto" alt="Publicidad">
+            </div>
+
+            <div class="bg-white py-4 px-8 flex justify-between items-center shrink-0">
+                <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Información 2026</span>
+                <button onclick="closeNewsModal()" class="px-8 py-2.5 bg-blue-900 text-white text-[10px] font-black uppercase rounded-xl hover:bg-amber-500 transition-all">
+                    Entendido
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
 <script>
-    // 1. CONFIGURACIÓN: 6 Imágenes (1 por defecto + 5 adicionales)
     const images = [
-        'https://images.unsplash.com/photo-1523050335392-93851179ae22?q=80&w=2070', // Default (Campus)
-        'https://images.unsplash.com/photo-1541339907198-e08756ebafe1?q=80&w=2070', // 2
-        'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2071', // 3
-        'https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=2070', // 4
-        'https://images.unsplash.com/photo-1498243639159-00cd3e0ca9ec?q=80&w=2070', // 5
-        'https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=2070'  // 6
+        'https://images.unsplash.com/photo-1523050335392-93851179ae22?q=80&w=2070',
+        'https://images.unsplash.com/photo-1541339907198-e08756ebafe1?q=80&w=2070',
+        'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2071',
+        'https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=2070',
+        'https://images.unsplash.com/photo-1498243639159-00cd3e0ca9ec?q=80&w=2070',
+        'https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=2070'
     ];
 
     const container = document.getElementById('carousel-container');
-    
-    // Inyectar las otras 5 imágenes (la primera ya está en el HTML)
     for(let i = 1; i < images.length; i++) {
         const img = document.createElement('div');
         img.className = 'carousel-img';
@@ -116,23 +196,23 @@
         currentStep = (currentStep + 1) % slides.length;
         slides[currentStep].classList.add('active');
     }
-
     setInterval(nextSlide, 5000);
 
-    // 2. MODAL: SIEMPRE AL RECARGAR
-    window.onload = function() {
+    // Modal al cargar
+    window.addEventListener('DOMContentLoaded', () => {
         const modal = document.getElementById('modal-noticias');
         const content = document.getElementById('modal-content');
-        
         modal.classList.replace('hidden', 'flex');
-        
         setTimeout(() => {
             content.classList.remove('scale-95', 'opacity-0');
             content.classList.add('scale-100', 'opacity-100');
-        }, 150);
-    };
+        }, 300);
+    });
 
     function closeNewsModal() {
-        document.getElementById('modal-noticias').classList.replace('flex', 'hidden');
+        const modal = document.getElementById('modal-noticias');
+        const content = document.getElementById('modal-content');
+        content.classList.add('scale-95', 'opacity-0');
+        setTimeout(() => { modal.classList.replace('flex', 'hidden'); }, 400);
     }
 </script>

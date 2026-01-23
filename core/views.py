@@ -1,6 +1,5 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth import authenticate, login, logout  # <-- ESTA ES LA LÍNEA CLAVE
 from django.contrib import messages
 import requests
 from sickle import Sickle
@@ -12,11 +11,9 @@ import io
 
 def home(request):
     tesis_list = []
-    # Cambiamos a la UNI, que es más estable para OAI-PMH externo
     url = 'https://repositorio.uni.edu.pe/oai/request'
     params = {'verb': 'ListRecords', 'metadataPrefix': 'oai_dc'}
     
-    # Headers de un navegador real de Windows para que no nos redirija a HTML
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
         'Accept': 'application/xml, text/xml, */*'
@@ -25,7 +22,6 @@ def home(request):
     try:
         response = requests.get(url, params=params, headers=headers, verify=False, timeout=20)
         
-        # Si el contenido empieza con '<!', es que nos envió HTML y no XML
         if response.status_code == 200 and not response.content.strip().startswith(b'<!'):
             parser = etree.XMLParser(recover=True, remove_blank_text=True)
             xml_data = etree.fromstring(response.content, parser=parser)
@@ -40,7 +36,6 @@ def home(request):
             for i, record in enumerate(records):
                 if i >= 6: break
                 
-                # Usamos local-name() para ignorar problemas de prefijos
                 title = record.xpath('.//*[local-name()="title"]/text()')
                 creator = record.xpath('.//*[local-name()="creator"]/text()')
                 identifier = record.xpath('.//*[local-name()="identifier"]/text()')
@@ -72,13 +67,12 @@ def auth_view(request):
         u = request.POST.get('username')
         p = request.POST.get('password')
         
-        # Intentamos autenticar
         user = authenticate(request, username=u, password=p)
         
         if user is not None:
             login(request, user)
             messages.success(request, f"Bienvenido de nuevo, {u}")
-            return redirect('blog:listar_publicaciones')
+            return redirect('investigacion:lista_tesis')
         else:
             messages.error(request, "Credenciales incorrectas. Inténtalo de nuevo.")
             
@@ -86,4 +80,11 @@ def auth_view(request):
 
 def logout_view(request):
     logout(request)
-    return redirect('blog:listar_publicaciones')
+    return redirect('investigacion:lista_tesis')
+
+def modal_content(request, modal_id):
+    """
+    Carga dinámicamente archivos HTML desde la carpeta templates/modals/
+    """
+    template_name = f'modals/{modal_id}.html'
+    return render(request, template_name)

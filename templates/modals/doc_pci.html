@@ -1,0 +1,51 @@
+<div class="relative bg-blue-900 w-full max-w-5xl h-[92vh] rounded-[2.5rem] lg:rounded-[3rem] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.6)] overflow-hidden flex flex-col border border-white/10 animate-in fade-in zoom-in duration-300">
+    
+    <div class="bg-white/5 backdrop-blur-md px-8 py-6 flex justify-between items-center shrink-0 border-b border-white/10 relative z-10">
+        <div class="flex items-center gap-4">
+            <div class="w-12 h-12 bg-amber-400 rounded-2xl flex items-center justify-center shadow-lg shadow-amber-400/20">
+                <i class="fas fa-map-signs text-blue-900 text-xl"></i>
+            </div>
+            <div>
+                <h3 class="text-xl font-black text-white uppercase tracking-tighter leading-none">Proyecto Curricular Institucional (PCI)</h3>
+                <p class="text-[9px] text-amber-400 font-bold uppercase tracking-[0.2em] mt-1">Instrumento de Gestión Pedagógica 2023 - 2027</p>
+            </div>
+        </div>
+        <button onclick="closeDynamicModal()" class="w-11 h-11 flex items-center justify-center rounded-2xl bg-white/10 text-white hover:bg-amber-400 hover:text-blue-900 transition-all group border border-white/10">
+            <i class="fas fa-times group-hover:rotate-90 transition-transform text-sm"></i>
+        </button>
+    </div>
+
+    <div class="flex-grow bg-slate-900/50 relative">
+        <div class="absolute inset-0 flex flex-col items-center justify-center -z-10">
+            <div class="w-10 h-10 border-4 border-amber-400/20 border-t-amber-400 rounded-full animate-spin"></div>
+            <p class="text-white/30 text-[10px] uppercase font-black tracking-widest mt-4">Cargando PCI...</p>
+        </div>
+        
+        <iframe 
+            src="/media/documentos/PROYECTO_CURRICULAR_INSTITUCIONAL_2023_2027.pdf" 
+            class="w-full h-full border-none shadow-inner"
+            title="Proyecto Curricular Institucional">
+        </iframe>
+    </div>
+
+    <div class="bg-white py-5 px-10 flex justify-between items-center shrink-0">
+        <div class="flex items-center gap-3">
+            <div class="flex gap-1.5">
+                <div class="w-2 h-2 rounded-full bg-blue-900"></div>
+                <div class="w-2 h-2 rounded-full bg-amber-400"></div>
+                <div class="w-2 h-2 rounded-full bg-blue-900"></div>
+            </div>
+            <span class="text-[10px] font-black text-slate-800 uppercase tracking-widest">Documento Técnico Pedagógico Oficial</span>
+        </div>
+        
+        <div class="flex items-center gap-6">
+             <a href="/media/documentos/PROYECTO_CURRICULAR_INSTITUCIONAL_2023_2027.pdf" download="PCI_INSTITUCIONAL_2023_2027.pdf" class="hidden md:flex items-center gap-2 text-[10px] font-black text-blue-600 border border-blue-100 px-4 py-2 rounded-xl hover:bg-blue-50 transition-colors uppercase">
+                <i class="fas fa-download"></i>
+                Descargar PCI
+             </a>
+             <div class="h-8 w-[1px] bg-slate-100 hidden sm:block"></div>
+             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Escudo_nacional_del_Per%C3%BA.svg/1200px-Escudo_nacional_del_Per%C3%BA.svg.png" 
+                  class="h-8 w-auto" alt="Perú">
+        </div>
+    </div>
+</div>

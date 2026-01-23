@@ -1,0 +1,103 @@
+<div class="relative bg-blue-900 w-full max-w-5xl h-[92vh] rounded-[2.5rem] lg:rounded-[3rem] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.6)] overflow-hidden flex flex-col border border-white/10 animate-in fade-in zoom-in duration-300">
+    
+    <div class="bg-white/5 backdrop-blur-md px-8 py-6 flex justify-between items-center shrink-0 border-b border-white/10 relative z-10">
+        <div class="flex items-center gap-4">
+            <div class="w-12 h-12 bg-amber-400 rounded-2xl flex items-center justify-center shadow-lg shadow-amber-400/20">
+                <i class="fas fa-child text-blue-900 text-xl"></i>
+            </div>
+            <div>
+                <h3 class="text-xl font-black text-white uppercase tracking-tighter leading-none">Educación Inicial</h3>
+                <p class="text-[9px] text-amber-400 font-bold uppercase tracking-[0.2em] mt-1">Competencias del Perfil de Egreso</p>
+            </div>
+        </div>
+        <button onclick="closeDynamicModal()" class="w-11 h-11 flex items-center justify-center rounded-2xl bg-white/10 text-white hover:bg-amber-400 hover:text-blue-900 transition-all group border border-white/10">
+            <i class="fas fa-times group-hover:rotate-90 transition-transform text-sm"></i>
+        </button>
+    </div>
+
+    <div class="flex-grow overflow-y-auto custom-scrollbar p-6 lg:p-10 bg-[radial-gradient(rgba(255,255,255,0.03)_1px,transparent_1px)] [background-size:32px_32px]">
+        <div class="flex flex-col gap-4 max-w-4xl mx-auto">
+            
+            <div class="p-6 rounded-[2rem] bg-blue-950/40 border border-white/5 hover:border-amber-400/30 hover:bg-blue-950/60 transition-all flex flex-col md:flex-row gap-6 items-start group">
+                <div class="bg-amber-400 text-blue-900 font-black text-[10px] py-2 px-4 rounded-xl min-w-[100px] text-center uppercase tracking-widest shadow-lg shadow-amber-400/10">Comp. 01</div>
+                <p class="text-blue-50/90 text-[14px] leading-relaxed font-medium">Conoce y comprende las características de todos sus estudiantes y sus contextos, los contenidos disciplinares que enseña, los enfoques y procesos pedagógicos, con el propósito de promover capacidades de alto nivel y su formación integral.</p>
+            </div>
+
+            <div class="p-6 rounded-[2rem] bg-blue-950/40 border border-white/5 hover:border-amber-400/30 hover:bg-blue-950/60 transition-all flex flex-col md:flex-row gap-6 items-start group">
+                <div class="bg-amber-400 text-blue-900 font-black text-[10px] py-2 px-4 rounded-xl min-w-[100px] text-center uppercase tracking-widest shadow-lg shadow-amber-400/10">Comp. 02</div>
+                <p class="text-blue-50/90 text-[14px] leading-relaxed font-medium">Planifica la enseñanza de forma colegiada, lo que garantiza la coherencia entre los aprendizajes que quiere lograr en sus estudiantes, el proceso pedagógico, el uso de los recursos disponibles y la evaluación en una programación curricular en permanente revisión.</p>
+            </div>
+
+            <div class="p-6 rounded-[2rem] bg-blue-950/40 border border-white/5 hover:border-amber-400/30 hover:bg-blue-950/60 transition-all flex flex-col md:flex-row gap-6 items-start group">
+                <div class="bg-amber-400 text-blue-900 font-black text-[10px] py-2 px-4 rounded-xl min-w-[100px] text-center uppercase tracking-widest shadow-lg shadow-amber-400/10">Comp. 03</div>
+                <p class="text-blue-50/90 text-[14px] leading-relaxed font-medium">Crea un clima propicio para el aprendizaje, la convivencia democrática y la vivencia de la diversidad en todas sus expresiones con miras a formar ciudadanos críticos e interculturales.</p>
+            </div>
+
+            <div class="p-6 rounded-[2rem] bg-blue-950/40 border border-white/5 hover:border-amber-400/30 hover:bg-blue-950/60 transition-all flex flex-col md:flex-row gap-6 items-start group">
+                <div class="bg-amber-400 text-blue-900 font-black text-[10px] py-2 px-4 rounded-xl min-w-[100px] text-center uppercase tracking-widest shadow-lg shadow-amber-400/10">Comp. 04</div>
+                <p class="text-blue-50/90 text-[14px] leading-relaxed font-medium">Conduce el proceso de enseñanza con dominio de los contenidos disciplinares y el uso de estrategias y recursos pertinentes para que todos los estudiantes aprendan de manera reflexiva y crítica lo que concierne a la solución de problemas relacionados con sus experiencias, intereses y contextos culturales.</p>
+            </div>
+
+            <div class="p-6 rounded-[2rem] bg-blue-950/40 border border-white/5 hover:border-amber-400/30 hover:bg-blue-950/60 transition-all flex flex-col md:flex-row gap-6 items-start group">
+                <div class="bg-amber-400 text-blue-900 font-black text-[10px] py-2 px-4 rounded-xl min-w-[100px] text-center uppercase tracking-widest shadow-lg shadow-amber-400/10">Comp. 05</div>
+                <p class="text-blue-50/90 text-[14px] leading-relaxed font-medium">Evalúa permanentemente el aprendizaje de acuerdo con los objetivos institucionales previstos para tomar decisiones y retroalimentar a sus estudiantes y a la comunidad educativa, teniendo en cuenta las diferencias individuales y los diversos contextos culturales.</p>
+            </div>
+
+            <div class="p-6 rounded-[2rem] bg-blue-950/40 border border-white/5 hover:border-amber-400/30 hover:bg-blue-950/60 transition-all flex flex-col md:flex-row gap-6 items-start group">
+                <div class="bg-amber-400 text-blue-900 font-black text-[10px] py-2 px-4 rounded-xl min-w-[100px] text-center uppercase tracking-widest shadow-lg shadow-amber-400/10">Comp. 06</div>
+                <p class="text-blue-50/90 text-[14px] leading-relaxed font-medium">Participa activamente, con actitud democrática, crítica y colaborativa, en la gestión de la escuela, contribuyendo a la construcción y mejora continua del Proyecto Educativo Institucional para que genere aprendizajes de calidad.</p>
+            </div>
+
+            <div class="p-6 rounded-[2rem] bg-blue-950/40 border border-white/5 hover:border-amber-400/30 hover:bg-blue-950/60 transition-all flex flex-col md:flex-row gap-6 items-start group">
+                <div class="bg-amber-400 text-blue-900 font-black text-[10px] py-2 px-4 rounded-xl min-w-[100px] text-center uppercase tracking-widest shadow-lg shadow-amber-400/10">Comp. 07</div>
+                <p class="text-blue-50/90 text-[14px] leading-relaxed font-medium">Establece relaciones de respeto, colaboración y corresponsabilidad con las familias, la comunidad y otras instituciones del Estado y la sociedad civil. Aprovecha sus saberes y recursos en los procesos educativos y da cuenta de los resultados.</p>
+            </div>
+
+            <div class="p-6 rounded-[2rem] bg-blue-950/40 border border-white/5 hover:border-amber-400/30 hover:bg-blue-950/60 transition-all flex flex-col md:flex-row gap-6 items-start group">
+                <div class="bg-amber-400 text-blue-900 font-black text-[10px] py-2 px-4 rounded-xl min-w-[100px] text-center uppercase tracking-widest shadow-lg shadow-amber-400/10">Comp. 08</div>
+                <p class="text-blue-50/90 text-[14px] leading-relaxed font-medium">Reflexiona sobre su práctica y experiencia institucional y desarrolla procesos de aprendizaje continuo de modo individual y colectivo para construir y afirmar su identidad y responsabilidad profesional.</p>
+            </div>
+
+            <div class="p-6 rounded-[2rem] bg-blue-950/40 border border-white/5 hover:border-amber-400/30 hover:bg-blue-950/60 transition-all flex flex-col md:flex-row gap-6 items-start group">
+                <div class="bg-amber-400 text-blue-900 font-black text-[10px] py-2 px-4 rounded-xl min-w-[100px] text-center uppercase tracking-widest shadow-lg shadow-amber-400/10">Comp. 09</div>
+                <p class="text-blue-50/90 text-[14px] leading-relaxed font-medium">Ejerce su profesión desde una ética de respeto de los derechos fundamentales de las personas, demostrando honestidad, justicia, responsabilidad y compromiso con su función social.</p>
+            </div>
+
+            <div class="p-6 rounded-[2rem] bg-blue-950/40 border border-white/5 hover:border-amber-400/30 hover:bg-blue-950/60 transition-all flex flex-col md:flex-row gap-6 items-start group">
+                <div class="bg-amber-400 text-blue-900 font-black text-[10px] py-2 px-4 rounded-xl min-w-[100px] text-center uppercase tracking-widest shadow-lg shadow-amber-400/10">Comp. 10</div>
+                <p class="text-blue-50/90 text-[14px] leading-relaxed font-medium">Gestiona su desarrollo personal demostrando autoconocimiento y autorregulación de emociones, interactuando asertiva y empáticamente para desarrollar vínculos positivos y trabajar colaborativamente en contextos caracterizados por la diversidad.</p>
+            </div>
+
+            <div class="p-6 rounded-[2rem] bg-blue-950/40 border border-white/5 hover:border-amber-400/30 hover:bg-blue-950/60 transition-all flex flex-col md:flex-row gap-6 items-start group">
+                <div class="bg-amber-400 text-blue-900 font-black text-[10px] py-2 px-4 rounded-xl min-w-[100px] text-center uppercase tracking-widest shadow-lg shadow-amber-400/10">Comp. 11</div>
+                <p class="text-blue-50/90 text-[14px] leading-relaxed font-medium">Gestiona los entornos digitales y los aprovecha para su desarrollo profesional y práctica pedagógica, respondiendo a las necesidades e intereses de aprendizaje de los estudiantes.</p>
+            </div>
+
+            <div class="p-8 rounded-[2.5rem] bg-gradient-to-br from-amber-400 to-amber-500 text-blue-950 shadow-xl shadow-amber-400/20 flex flex-col md:flex-row gap-6 items-start transform hover:scale-[1.01] transition-transform group">
+                <div class="bg-blue-900 text-white font-black text-[10px] py-2 px-4 rounded-xl min-w-[100px] text-center uppercase tracking-widest border border-white/10">Comp. 12</div>
+                <p class="text-blue-950 text-[15px] leading-relaxed font-black">Investiga aspectos críticos de la práctica docente utilizando diversos enfoques y metodologías para promover una cultura de investigación e innovación.</p>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="bg-white py-5 px-10 flex justify-between items-center shrink-0">
+        <div class="flex items-center gap-3">
+            <div class="flex gap-1.5">
+                <div class="w-2 h-2 rounded-full bg-blue-900"></div>
+                <div class="w-2 h-2 rounded-full bg-amber-400"></div>
+                <div class="w-2 h-2 rounded-full bg-blue-900"></div>
+            </div>
+            <span class="text-[10px] font-black text-slate-800 uppercase tracking-widest italic">Formación Docente de Calidad</span>
+        </div>
+        
+        <div class="flex items-center gap-6">
+             <div class="text-right hidden sm:block border-r border-slate-100 pr-4">
+                <p class="text-[9px] text-slate-400 font-bold uppercase leading-tight">Perfil del</p>
+                <p class="text-[10px] text-slate-900 font-black uppercase leading-tight">Egresado</p>
+             </div>
+             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Escudo_nacional_del_Per%C3%BA.svg/1200px-Escudo_nacional_del_Per%C3%BA.svg.png" 
+                  class="h-8 w-auto" alt="Perú">
+        </div>
+    </div>
+</div>

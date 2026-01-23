@@ -1,81 +1,113 @@
 {% extends 'base.html' %}
 
+{% block header %}{% endblock %}
+{% block nav %}{% endblock %}
+{% block footer %}{% endblock %}
+
 {% block content %}
-<section class="py-24 bg-slate-50 min-h-screen flex items-center justify-center relative overflow-hidden">
-    <div class="absolute top-20 left-10 w-64 h-64 bg-blue-100/50 rounded-full blur-3xl -z-10 animate-pulse"></div>
-    <div class="absolute bottom-10 right-10 w-96 h-96 bg-slate-200/50 rounded-full blur-3xl -z-10"></div>
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-blue-100/30 rounded-full -z-10"></div>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,900;1,700&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
 
-    <div class="container mx-auto px-6 relative z-10">
-        <div class="max-w-2xl mx-auto mb-8">
-            <a href="{% url 'blog:listar_publicaciones' %}" class="group inline-flex items-center gap-3 px-4 py-2 bg-white rounded-full text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-[#1e3a8a] border border-slate-100 shadow-sm transition-all">
-                <i class="fas fa-arrow-left transition-transform group-hover:-translate-x-1"></i> Volver al escritorio
-            </a>
-        </div>
+<section class="min-h-screen bg-[#f1f5f9] flex items-center justify-center py-10 font-jakarta px-4">
+    <div class="fixed inset-0 -z-10 overflow-hidden">
+        <div class="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] bg-blue-200/30 rounded-full blur-[120px]"></div>
+        <div class="absolute -bottom-[10%] -right-[10%] w-[40%] h-[40%] bg-slate-300/40 rounded-full blur-[120px]"></div>
+    </div>
 
-        <div class="max-w-2xl mx-auto bg-white/80 backdrop-blur-xl rounded-[3.5rem] p-10 md:p-16 shadow-2xl shadow-blue-900/5 border border-white relative overflow-hidden">
-            
-            <div class="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-[#1e3a8a]/10 to-transparent rounded-bl-[6rem]"></div>
-            
-            <div class="mb-10 relative">
-                <div class="inline-block p-4 bg-blue-50 rounded-3xl mb-6">
-                    <i class="fas fa-feather-pointed text-3xl text-[#1e3a8a]"></i>
-                </div>
-                <h2 class="serif-font text-4xl font-black text-slate-900 leading-tight">
-                    Redactar <br>
-                    <span class="italic text-[#1e3a8a] font-light">Nueva Entrada</span>
+    <div class="w-full max-w-7xl">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8 px-2">
+            <div class="flex items-center gap-6">
+                <a href="{% url 'blog:listar_publicaciones' %}" 
+                   class="group flex items-center gap-3 px-5 py-3 bg-white text-slate-700 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-blue-300 transition-all duration-300">
+                    <div class="w-8 h-8 rounded-xl bg-slate-900 text-white flex items-center justify-center group-hover:bg-blue-600 transition-colors">
+                        <i class="fas fa-arrow-left text-[10px]"></i>
+                    </div>
+                    <span class="text-[11px] font-extrabold uppercase tracking-widest">Panel de Control</span>
+                </a>
+                
+                <div class="h-10 w-[1px] bg-slate-300 hidden md:block"></div>
+
+                <h2 class="text-3xl font-black text-slate-900 tracking-tight leading-none">
+                    Redactar <span class="text-blue-600 italic font-medium">Post</span>
                 </h2>
-                <div class="w-12 h-1.5 bg-[#1e3a8a] rounded-full mt-4"></div>
             </div>
             
-            <form method="POST" class="space-y-8">
-                {% csrf_token %}
-                
-                <div class="group">
-                    <label class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 group-focus-within:text-[#1e3a8a] block mb-3 transition-colors">Título del Artículo</label>
-                    <div class="relative">
-                        <input type="text" name="titulo" placeholder="¿Cómo se llamará tu historia?" required 
-                               class="w-full bg-slate-50 border-2 border-transparent rounded-2xl py-4 px-6 focus:bg-white focus:border-blue-100 focus:ring-4 focus:ring-blue-900/5 transition-all placeholder:text-slate-300 text-slate-700 font-bold">
-                    </div>
-                </div>
-
-                <div class="group">
-                    <label class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 group-focus-within:text-[#1e3a8a] block mb-3 transition-colors">Contenido del Post</label>
-                    <div class="relative">
-                        <textarea name="contenido" rows="10" placeholder="Escribe con libertad aquí..." required 
-                                  class="w-full bg-slate-50 border-2 border-transparent rounded-[2rem] py-5 px-6 focus:bg-white focus:border-blue-100 focus:ring-4 focus:ring-blue-900/5 transition-all placeholder:text-slate-300 text-slate-600 leading-relaxed"></textarea>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
-                    <button type="submit" name="accion" value="guardar" class="group relative py-5 bg-slate-900 text-white rounded-2xl font-black uppercase tracking-[0.2em] text-[11px] overflow-hidden transition-all hover:shadow-xl hover:shadow-slate-900/20 active:scale-95">
-                        <span class="relative z-10 flex items-center justify-center gap-2">
-                             <i class="fas fa-save opacity-50"></i> Guardar Borrador
-                        </span>
-                        <div class="absolute inset-0 bg-slate-800 translate-y-full group-hover:translate-y-0 transition-transform"></div>
-                    </button>
-
-                    <button type="submit" name="accion" value="publicar" class="group relative py-5 bg-[#1e3a8a] text-white rounded-2xl font-black uppercase tracking-[0.2em] text-[11px] overflow-hidden transition-all hover:shadow-xl hover:shadow-blue-900/20 active:scale-95">
-                        <span class="relative z-10 flex items-center justify-center gap-2">
-                            Publicar Ahora <i class="fas fa-paper-plane text-[10px] group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"></i>
-                        </span>
-                        <div class="absolute inset-0 bg-blue-800 translate-y-full group-hover:translate-y-0 transition-transform"></div>
-                    </button>
-                </div>
-            </form>
+            <div class="flex items-center gap-3">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Editor en vivo activo</span>
+            </div>
         </div>
+
+        <form method="POST">
+            {% csrf_token %}
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+                
+                <div class="lg:col-span-7 xl:col-span-7">
+                    <div class="bg-white rounded-[2.5rem] border border-white shadow-[0_20px_50px_rgba(0,0,0,0.04)] p-8 h-full flex flex-col">
+                        <div class="flex items-center justify-between mb-6">
+                            <div class="flex items-center gap-3">
+                                <div class="w-2 h-6 bg-blue-600 rounded-full"></div>
+                                <label class="text-[11px] font-black uppercase tracking-[0.2em] text-slate-900">Contenido Editorial</label>
+                            </div>
+                            <span class="text-[10px] font-bold text-slate-300 uppercase tracking-widest">Formato: Texto Enriquecido</span>
+                        </div>
+                        
+                        <textarea name="contenido" rows="6" placeholder="Comienza a escribir tu narrativa profesional..." required 
+                                  class="flex-1 w-full bg-slate-50 border-2 border-transparent rounded-[1.5rem] p-6 focus:bg-white focus:border-blue-100 focus:ring-0 transition-all outline-none text-slate-700 text-sm  leading-relaxed font-medium custom-scroll resize-none shadow-inner"></textarea>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-5 xl:col-span-5 flex flex-col gap-4">
+                    
+                    <div class="bg-white rounded-[2.5rem] border border-white shadow-[0_20px_50px_rgba(0,0,0,0.04)] p-8">
+                        <label class="text-[9px] font-black uppercase tracking-[0.2em] text-slate-900 block mb-4">Título del Artículo</label>
+                        <input type="text" name="titulo" placeholder="Ingresa un título impactante..." required 
+                               class="w-full bg-slate-50 border-2 border-transparent rounded-xl py-4 px-6 focus:bg-white focus:border-blue-100 transition-all outline-none text-slate-800 font-bold text-sm shadow-inner">
+                    </div>
+
+                    <div class="bg-slate-900 rounded-[2.5rem] p-8 shadow-2xl relative overflow-hidden flex-1 flex flex-col justify-center">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-blue-600/10 rounded-full blur-3xl"></div>
+                        
+                        <div class="relative z-10 space-y-2">
+                            <h3 class="text-white font-bold text-sm mb-6 flex items-center gap-2">
+                                <i class="fas fa-layer-group text-blue-500"></i> Gestión de Publicación
+                            </h3>
+                            
+                            <button type="submit" name="accion" value="publicar" 
+                                    class="w-full py-5 bg-blue-600 text-white rounded-2xl font-black uppercase tracking-[0.2em] text-[11px] flex items-center justify-center gap-3 hover:bg-white hover:text-slate-900 transition-all duration-500 group shadow-lg shadow-blue-900/40">
+                                <span>Publicar Ahora</span>
+                                <i class="fas fa-paper-plane text-[10px] group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"></i>
+                            </button>
+
+                            <button type="submit" name="accion" value="guardar" 
+                                    class="w-full py-5 bg-white/5 border border-white/10 text-white rounded-2xl font-black uppercase tracking-[0.2em] text-[11px] flex items-center justify-center gap-3 hover:bg-white/20 transition-all">
+                                <i class="fas fa-file-invoice text-[10px] text-blue-400"></i> Guardar Borrador
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="bg-blue-600/5 border border-blue-100 rounded-3xl p-6">
+                        <p class="text-[10px] text-blue-800 font-bold leading-relaxed uppercase tracking-widest text-center">
+                            Asegúrate de revisar la ortografía antes de enviar a publicación oficial.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </form>
     </div>
 </section>
 
 <style>
-    .serif-font { font-family: 'Playfair Display', serif; }
+    .font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif; }
     
-    textarea::-webkit-scrollbar {
-        width: 6px;
-    }
-    textarea::-webkit-scrollbar-thumb {
-        background-color: #e2e8f0;
-        border-radius: 10px;
+    .custom-scroll::-webkit-scrollbar { width: 6px; }
+    .custom-scroll::-webkit-scrollbar-track { background: transparent; }
+    .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+    .custom-scroll::-webkit-scrollbar-thumb:hover { background: #3b82f6; }
+
+    /* Ajuste de altura para que se vea proporcional en laptops */
+    @media (min-height: 800px) {
+        textarea { min-height: 450px; }
     }
 </style>
 {% endblock %}

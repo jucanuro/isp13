@@ -27,10 +27,12 @@ SECRET_KEY = 'django-insecure-zu31%6*y-jccvq7^pftvtd%^e3&cn4cyo9l7k0s+g!j^z_91=*
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS=['localhost', '127.0.0.1', '.ngrok-free.app','.ngrok-free.dev','mavis-aphorismic-unexcessively.ngrok-free.dev']
 
 # Application definition
-
+CSRF_TRUSTED_ORIGINS = [
+    'https://mavis-aphorismic-unexcessively.ngrok-free.dev',
+]
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',

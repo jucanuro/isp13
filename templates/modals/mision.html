@@ -1,0 +1,52 @@
+<div class="relative bg-blue-900 w-full rounded-[2.5rem] lg:rounded-[3.5rem] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.6)] overflow-hidden border border-blue-700/50 animate-in fade-in zoom-in duration-300">
+    
+    <button onclick="closeDynamicModal()" class="absolute top-6 right-6 lg:top-10 lg:right-10 w-12 h-12 flex items-center justify-center rounded-2xl bg-white/10 text-white/80 hover:bg-amber-500 hover:text-white hover:rotate-90 transition-all z-20 backdrop-blur-xl border border-white/10">
+        <i class="fas fa-times text-xl"></i>
+    </button>
+
+    <div class="grid md:grid-cols-2 relative">
+        <div class="hidden md:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1px] h-2/3 bg-gradient-to-b from-transparent via-white/20 to-transparent"></div>
+
+        <div class="p-10 lg:p-16 relative group">
+            <div class="w-16 h-16 bg-amber-400 rounded-2xl flex items-center justify-center mb-8 shadow-xl shadow-amber-900/30 group-hover:scale-110 transition-transform duration-500">
+                <i class="fas fa-paper-plane text-blue-900 text-2xl"></i>
+            </div>
+            <h2 class="text-[10px] font-black text-amber-400 uppercase tracking-[0.4em] mb-3">Nuestra</h2>
+            <h3 class="text-4xl font-black text-white leading-none mb-6 italic tracking-tighter">Misión</h3>
+            <p class="text-blue-50/90 leading-relaxed text-[15px] font-medium italic relative">
+                <span class="text-5xl absolute -top-6 -left-3 opacity-20 font-serif text-amber-400">“</span>
+                El IESPP <strong class="text-white font-bold border-b-2 border-amber-400/50">“13 de Julio de 1882”</strong>, es una institución que brinda formación inicial docente a la comunidad educativa local, regional y nacional de manera transparente, inclusiva, intercultural, humanista y de calidad.
+            </p>
+        </div>
+
+        <div class="p-10 lg:p-16 bg-blue-950/40 group">
+            <div class="w-16 h-16 bg-white/10 rounded-2xl border border-white/10 flex items-center justify-center mb-8 group-hover:bg-amber-500 transition-colors duration-500">
+                <i class="fas fa-eye text-white text-2xl group-hover:text-blue-900"></i>
+            </div>
+            <h2 class="text-[10px] font-black text-blue-300 uppercase tracking-[0.4em] mb-3">Nuestra</h2>
+            <h3 class="text-4xl font-black text-white leading-none mb-6 italic tracking-tighter">Visión</h3>
+            <p class="text-blue-50/90 leading-relaxed text-[15px] font-medium">
+                Aspiramos al <strong class="text-blue-900 font-black px-2 py-0.5 bg-amber-400 rounded shadow-sm">2027</strong>, ser una Institución Licenciada, líder nacional en educación superior pedagógica, competitiva, innovadora y democrática; comprometida en brindar una educación acorde a las exigencias de calidad.
+            </p>
+        </div>
+    </div>
+    
+    <div class="bg-white py-8 px-12 flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div class="flex items-center gap-3">
+            <div class="w-2.5 h-2.5 rounded-full bg-blue-600 animate-pulse"></div>
+            <p class="text-[11px] text-slate-500 font-black uppercase tracking-[0.25em]">Excelencia Académica en San Pablo</p>
+        </div>
+        
+        <div class="flex items-center gap-6">
+            <div class="h-10 w-[1px] bg-slate-100 hidden sm:block"></div>
+            <div class="flex items-center gap-4 opacity-80 hover:opacity-100 transition-opacity">
+                <div class="text-right">
+                    <p class="text-[9px] text-slate-400 font-bold uppercase leading-tight">Sello de</p>
+                    <p class="text-[10px] text-slate-700 font-black uppercase leading-tight tracking-tighter">Calidad</p>
+                </div>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Escudo_nacional_del_Per%C3%BA.svg/1200px-Escudo_nacional_del_Per%C3%BA.svg.png" 
+                     class="h-9" alt="Escudo Perú">
+            </div>
+        </div>
+    </div>
+</div>

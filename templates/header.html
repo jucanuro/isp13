@@ -1,4 +1,5 @@
 {% load static %}
+<link rel="stylesheet" href="{% static 'css/header.css' %}">
 <header class="sticky top-0 z-[100] bg-slate-50/95 backdrop-blur-xl border-b border-blue-100 shadow-lg overflow-visible">
     <div class="absolute inset-0 pointer-events-none opacity-60 overflow-hidden">
         <div class="absolute -top-10 -left-10 w-40 h-40 bg-blue-100 rotate-45 blur-3xl rounded-full"></div>
@@ -88,7 +89,7 @@
                         
                         <ul class="relative space-y-1.5">
                             <li>
-                                <button id="btn-mision-vision" class="group/item w-full flex items-center gap-4 p-3 rounded-2xl transition-all duration-300 hover:bg-blue-600 hover:shadow-lg hover:shadow-blue-500/30 text-left">
+                                <button onclick="openDynamicModal('mision')" class="group/item w-full flex items-center gap-4 p-3 rounded-2xl transition-all duration-300 hover:bg-blue-600 hover:shadow-lg hover:shadow-blue-500/30 text-left">
                                     <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-xl bg-slate-50 group-hover/item:bg-white/20 transition-colors border border-blue-100">
                                         <i class="fas fa-crosshairs text-blue-600 group-hover/item:text-white text-sm"></i>
                                     </div>
@@ -96,7 +97,7 @@
                                 </button>
                             </li>
                             <li>
-                                <button id="btn-historia" class="group/item w-full flex items-center gap-4 p-3 rounded-2xl transition-all duration-300 hover:bg-blue-600 hover:shadow-lg hover:shadow-blue-500/30 text-left">
+                                <button onclick="openDynamicModal('historia')" class="group/item w-full flex items-center gap-4 p-3 rounded-2xl transition-all duration-300 hover:bg-blue-600 hover:shadow-lg hover:shadow-blue-500/30 text-left">
                                     <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-xl bg-slate-50 group-hover/item:bg-white/20 transition-colors border border-blue-100">
                                         <i class="fas fa-landmark text-blue-600 group-hover/item:text-white text-sm"></i>
                                     </div>
@@ -104,7 +105,7 @@
                                 </button>
                             </li>
                             <li>
-                                <button id="btn-organigrama" class="group/item w-full flex items-center gap-4 p-3 rounded-2xl transition-all duration-300 hover:bg-blue-600 hover:shadow-lg hover:shadow-blue-500/30 text-left">
+                                <button onclick="openDynamicModal('organigrama')" class="group/item w-full flex items-center gap-4 p-3 rounded-2xl transition-all duration-300 hover:bg-blue-600 hover:shadow-lg hover:shadow-blue-500/30 text-left">
                                     <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-xl bg-slate-50 group-hover/item:bg-white/20 transition-colors border border-blue-100">
                                         <i class="fas fa-project-diagram text-blue-600 group-hover/item:text-white text-sm"></i>
                                     </div>
@@ -112,7 +113,7 @@
                                 </button>
                             </li>
                             <li>
-                                <button id="btn-directorio" class="group/item w-full flex items-center gap-4 p-3 rounded-2xl transition-all duration-300 hover:bg-blue-600 hover:shadow-lg hover:shadow-blue-500/30 text-left">
+                                <button onclick="openDynamicModal('personal')" class="group/item w-full flex items-center gap-4 p-3 rounded-2xl transition-all duration-300 hover:bg-blue-600 hover:shadow-lg hover:shadow-blue-500/30 text-left">
                                     <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-xl bg-slate-50 group-hover/item:bg-white/20 transition-colors border border-blue-100">
                                         <i class="fas fa-users-gear text-blue-600 group-hover/item:text-white text-sm"></i>
                                     </div>
@@ -120,7 +121,7 @@
                                 </button>
                             </li>
                             <li>
-                                <button id="btn-docentes" class="group/item w-full flex items-center gap-4 p-3 rounded-2xl transition-all duration-300 hover:bg-blue-600 hover:shadow-lg hover:shadow-blue-500/30 text-left">
+                                <button onclick="openDynamicModal('docentes')" class="group/item w-full flex items-center gap-4 p-3 rounded-2xl transition-all duration-300 hover:bg-blue-600 hover:shadow-lg hover:shadow-blue-500/30 text-left">
                                     <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-xl bg-slate-50 group-hover/item:bg-white/20 transition-colors border border-blue-100">
                                         <i class="fas fa-user-tie text-blue-600 group-hover/item:text-white text-sm"></i>
                                     </div>
@@ -136,179 +137,289 @@
             </div>
 
             <div class="nav-item relative group px-3 py-2">
-                <a href="#carreras" class="text-[11px] font-black uppercase tracking-widest text-slate-600 hover:text-blue-800 flex items-center gap-2 transition cursor-pointer">
+                <button class="text-[11px] font-black uppercase tracking-widest text-slate-600 hover:text-blue-800 flex items-center gap-2 transition-all">
                     Gestión Académica <i class="fas fa-chevron-down text-[9px] opacity-50 group-hover:rotate-180 transition-transform duration-300"></i>
-                </a>
-                <div class="megamenu invisible opacity-0 absolute top-full right-0 w-[550px] pt-4 transition-all duration-300 group-hover:visible group-hover:opacity-100 z-[110]">
-                    <div class="bg-white rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-blue-50 p-6 grid grid-cols-2 gap-5 ring-1 ring-black/5">
-                        <div class="space-y-3">
-                            <h4 class="text-[9px] font-black uppercase tracking-[0.15em] text-amber-600 border-b border-blue-50 pb-2 flex items-center gap-2">
-                                <i class="fas fa-graduation-cap text-blue-600"></i> Programas de Estudio
-                            </h4>
-                            <div class="grid gap-1">
-                                <a href="#" onclick="abrirModalPerfil(event)" class="group/link flex items-center justify-between p-2.5 bg-slate-50 rounded-xl hover:bg-blue-600 transition duration-300 border border-blue-100">
-                                    <span class="text-[8px] font-black uppercase text-slate-700 group-hover/link:text-white tracking-tight">Educación Inicial</span>
-                                    <i class="fas fa-arrow-right text-[8px] opacity-0 group-hover/link:opacity-100 group-hover/link:text-white transition-all"></i>
-                                </a>
-                                <a href="#" onclick="abrirModalPrimaria(event)" class="group/link flex items-center justify-between p-2.5 bg-slate-50 rounded-xl hover:bg-blue-600 transition duration-300 border border-blue-100">
-                                    <span class="text-[8px] font-black uppercase text-slate-700 group-hover/link:text-white tracking-tight">Educación Primaria</span>
-                                    <i class="fas fa-arrow-right text-[8px] opacity-0 group-hover/link:opacity-100 group-hover/link:text-white transition-all"></i>
-                                </a>
-                                <a href="#" onclick="abrirModalSecundaria(event)" class="group/link flex items-center justify-between p-2.5 bg-slate-50 rounded-xl hover:bg-blue-600 transition duration-300 border border-blue-100">
-                                    <div class="flex flex-col">
-                                        <span class="text-[8px] font-black uppercase text-slate-700 group-hover/link:text-white tracking-tight">Educación Secundaria</span>
-                                        <span class="text-[7px] font-medium lowercase text-blue-500 group-hover/link:text-blue-100">CC.SS y Comunicación</span>
-                                    </div>
-                                    <i class="fas fa-external-link-alt text-[8px] opacity-30 group-hover/link:opacity-100 group-hover/link:text-white transition-all"></i>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="space-y-3">
-                            <h4 class="text-[9px] font-black uppercase tracking-[0.15em] text-amber-600 border-b border-blue-50 pb-2 flex items-center gap-2">
-                                <i class="fas fa-sync-alt text-blue-600"></i> Gestión Académica
-                            </h4>
-                            <div class="space-y-0.5">
-                                <a href="#" class="flex items-center gap-2.5 p-1.5 rounded-lg text-slate-600 hover:text-blue-700 hover:bg-blue-50 transition-all font-bold text-[8px] uppercase tracking-wide">
-                                    <i class="fas fa-file-signature opacity-40 w-4"></i> Proceso de Matrícula
-                                </a>
-                                <a href="#" class="flex items-center gap-2.5 p-1.5 rounded-lg text-slate-600 hover:text-blue-700 hover:bg-blue-50 transition-all font-bold text-[8px] uppercase tracking-wide">
-                                    <i class="fas fa-calendar-day opacity-40 w-4"></i> Horario de Clases
-                                </a>
-                                <a href="#" class="flex items-center gap-2.5 p-1.5 rounded-lg text-slate-600 hover:text-blue-700 hover:bg-blue-50 transition-all font-bold text-[8px] uppercase tracking-wide">
-                                    <i class="fas fa-user-clock opacity-40 w-4"></i> Horario de Docentes
-                                </a>
-                                <a href="#" class="flex items-center gap-2.5 p-1.5 rounded-lg text-slate-600 hover:text-blue-700 hover:bg-blue-50 transition-all font-bold text-[8px] uppercase tracking-wide">
-                                    <i class="fas fa-book opacity-40 w-4"></i> Plan Curricular
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="nav-item relative group px-3 py-2">
-                <a href="#unidades" class="text-[11px] font-black uppercase tracking-widest text-slate-600 hover:text-blue-800 flex items-center gap-2 transition cursor-pointer">
-                    Unidades <i class="fas fa-chevron-down text-[9px] opacity-50 group-hover:rotate-180 transition-transform duration-300"></i>
-                </a>
-                <div class="megamenu invisible opacity-0 absolute top-full right-0 w-72 pt-4 transition-all duration-300 group-hover:visible group-hover:opacity-100 z-[110]">
-                    <div class="bg-white rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-blue-50 p-4 ring-1 ring-black/5">
-                        <div class="flex flex-col gap-1.5">
-                            <div class="relative group/sub">
-                                <button class="w-full flex items-center justify-between p-3 rounded-xl bg-slate-50 text-slate-700 hover:bg-blue-600 hover:text-white transition-all font-black text-[9px] uppercase tracking-wider text-left border border-blue-100">
-                                    <span class="flex items-center gap-2">
-                                        <i class="fas fa-microscope opacity-60"></i> U. Académica
-                                    </span>
-                                    <i class="fas fa-chevron-right text-[8px]"></i>
-                                </button>
-                                <div class="invisible opacity-0 absolute left-[-100%] top-0 w-full pr-2 transition-all duration-300 group-hover/sub:visible group-hover/sub:opacity-100">
-                                    <div class="bg-white rounded-xl shadow-xl border border-blue-50 p-2 space-y-1 ring-1 ring-black/5">
-                                        <a href="#" class="flex items-center gap-2 p-2 rounded-lg hover:bg-blue-600 text-slate-600 hover:text-white transition text-[8px] font-bold uppercase">Funciones</a>
-                                        <a href="#" class="flex items-center gap-2 p-2 rounded-lg hover:bg-blue-600 text-slate-600 hover:text-white transition text-[8px] font-bold uppercase">Dependencias</a>
-                                        <a href="#" class="flex items-center gap-2 p-2 rounded-lg hover:bg-blue-600 text-slate-600 hover:text-white transition text-[8px] font-bold uppercase">Jefes</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="relative group/sub">
-                                <button class="w-full flex items-center justify-between p-3 rounded-xl bg-slate-50 text-slate-700 hover:bg-blue-600 hover:text-white transition-all font-black text-[9px] uppercase tracking-wider text-left border border-blue-100">
-                                    <span class="flex items-center gap-2">
-                                        <i class="fas fa-microscope opacity-60"></i> U. Investigación
-                                    </span>
-                                    <i class="fas fa-chevron-right text-[8px]"></i>
-                                </button>
-                                <div class="invisible opacity-0 absolute left-[-100%] top-0 w-full pr-2 transition-all duration-300 group-hover/sub:visible group-hover/sub:opacity-100">
-                                    <div class="bg-white rounded-xl shadow-xl border border-blue-50 p-2 space-y-1 ring-1 ring-black/5">
-                                        <a href="#investigacion" class="flex items-center gap-2 p-2 rounded-lg hover:bg-blue-600 text-slate-600 hover:text-white transition text-[8px] font-bold uppercase">Funciones</a>
-                                        <a href="#investigacion" class="flex items-center gap-2 p-2 rounded-lg hover:bg-blue-600 text-slate-600 hover:text-white transition text-[8px] font-bold uppercase">Lineas de investigación</a>
-                                        <a href="#investigacion" class="flex items-center gap-2 p-2 rounded-lg hover:bg-blue-600 text-slate-600 hover:text-white transition text-[8px] font-bold uppercase">Reglamento de investigación</a>
-                                        <a href="#investigacion" class="flex items-center gap-2 p-2 rounded-lg hover:bg-blue-600 text-slate-600 hover:text-white transition text-[8px] font-bold uppercase">Guías de investigación</a>
-                                        <a href="#investigacion" class="flex items-center gap-2 p-2 rounded-lg hover:bg-blue-600 text-slate-600 hover:text-white transition text-[8px] font-bold uppercase">Actividades y eventos</a>
-                                        <a href="#investigacion" class="flex items-center gap-2 p-2 rounded-lg hover:bg-blue-600 text-slate-600 hover:text-white transition text-[8px] font-bold uppercase">Recursos</a>
-                                        <a href="{% url 'investigacion:lista_tesis' %}" class="flex items-center gap-2 p-2 rounded-lg hover:bg-blue-600 text-slate-600 hover:text-white transition text-[8px] font-bold uppercase">Gestión de Tesis</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="relative group/sub">
-                                <button class="w-full flex items-center justify-between p-3 rounded-xl bg-slate-50 text-slate-700 hover:bg-blue-600 hover:text-white transition-all font-black text-[9px] uppercase tracking-wider text-left border border-blue-100">
-                                    <span class="flex items-center gap-2">
-                                        <i class="fas fa-chalkboard-teacher opacity-60"></i> U. Formación Continua
-                                    </span>
-                                    <i class="fas fa-chevron-right text-[8px]"></i>
-                                </button>
-                                <div class="invisible opacity-0 absolute left-[-100%] top-0 w-full pr-2 transition-all duration-300 group-hover/sub:visible group-hover/sub:opacity-100">
-                                    <div class="bg-white rounded-xl shadow-xl border border-blue-50 p-2 space-y-1 ring-1 ring-black/5">
-                                        <a href="#" class="flex items-center gap-2 p-2 rounded-lg hover:bg-blue-600 text-slate-600 hover:text-white transition text-[8px] font-bold uppercase">Funciones</a>
-                                        <a href="#" class="flex items-center gap-2 p-2 rounded-lg hover:bg-blue-600 text-slate-600 hover:text-white transition text-[8px] font-bold uppercase">Jefe de unidades</a>
-                                        <a href="#" class="flex items-center gap-2 p-2 rounded-lg hover:bg-blue-600 text-slate-600 hover:text-white transition text-[8px] font-bold uppercase">Cursos, talleres, Programas</a>
-                                        <a href="#" class="flex items-center gap-2 p-2 rounded-lg hover:bg-blue-600 text-slate-600 hover:text-white transition text-[8px] font-bold uppercase">Conferencias, seminarios</a>
-                                        <a href="#" class="flex items-center gap-2 p-2 rounded-lg hover:bg-blue-600 text-slate-600 hover:text-white transition text-[8px] font-bold uppercase">Programas MINEDU</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="relative group/sub">
-                                <button class="w-full flex items-center justify-between p-3 rounded-xl bg-slate-50 text-slate-700 hover:bg-blue-600 hover:text-white transition-all font-black text-[9px] uppercase tracking-wider text-left border border-blue-100">
-                                    <span class="flex items-center gap-2">
-                                        <i class="fas fa-hand-holding-heart opacity-60"></i> U. Bienestar y Empleabilidad
-                                    </span>
-                                    <i class="fas fa-chevron-right text-[8px]"></i>
-                                </button>
-                                <div class="invisible opacity-0 absolute left-[-100%] top-0 w-full pr-2 transition-all duration-300 group-hover/sub:visible group-hover/sub:opacity-100">
-                                    <div class="bg-white rounded-xl shadow-xl border border-blue-50 p-2 space-y-1 ring-1 ring-black/5">
-                                        <a href="#" class="flex items-center gap-2 p-2 rounded-lg hover:bg-blue-600 text-slate-600 hover:text-white transition text-[8px] font-bold uppercase">Funciones</a>
-                                        <a href="#" class="flex items-center gap-2 p-2 rounded-lg hover:bg-blue-600 text-slate-600 hover:text-white transition text-[8px] font-bold uppercase">Jefe</a>
-                                        <a href="#" class="flex items-center gap-2 p-2 rounded-lg hover:bg-blue-600 text-slate-600 hover:text-white transition text-[8px] font-bold uppercase">Servicios</a>
-                                        <a href="#" class="flex items-center gap-2 p-2 rounded-lg hover:bg-blue-600 text-slate-600 hover:text-white transition text-[8px] font-bold uppercase">Actividades</a>
-                                        <a href="#" class="flex items-center gap-2 p-2 rounded-lg hover:bg-blue-600 text-slate-600 hover:text-white transition text-[8px] font-bold uppercase">Seguimiento a egresados</a>
-                                        <a href="#" class="flex items-center gap-2 p-2 rounded-lg hover:bg-blue-600 text-slate-600 hover:text-white transition text-[8px] font-bold uppercase">Bolsa de trabajo</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> 
-                        <div class="mt-4 pt-3 border-t border-blue-50">
-                            <p class="text-[8px] text-center text-blue-500 font-bold uppercase tracking-[0.2em]">Estructura Orgánica</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="nav-item relative group px-3 py-2">
-                <button class="text-[11px] font-black uppercase tracking-widest text-slate-600 hover:text-blue-800 flex items-center gap-2 transition-all duration-300">
-                    Documentos De Gestión <i class="fas fa-chevron-down text-[9px] opacity-50 group-hover:rotate-180 transition-all duration-300"></i>
                 </button>
-                <div class="megamenu invisible opacity-0 absolute top-full right-0 w-[300px] pt-4 transition-all duration-300 group-hover:visible group-hover:opacity-100 z-[110]">
-                    <div class="bg-white rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-blue-50 p-4 ring-1 ring-black/5">
-                        <h4 class="text-[8px] font-black uppercase tracking-[0.2em] text-blue-600 mb-3 px-3 border-l-2 border-amber-500">Documentos Institucionales</h4>
-                        <div class="grid gap-1">
-                            <a href="#" class="flex items-center gap-3 p-2 rounded-xl hover:bg-blue-50 transition-all border border-transparent hover:border-blue-100">
-                                <div class="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center border border-blue-200">
-                                    <i class="fas fa-file-shield text-blue-600 text-xs"></i>
+
+                <div class="megamenu invisible opacity-0 absolute top-full right-0 w-[580px] pt-5 transition-all duration-500 ease-out group-hover:visible group-hover:opacity-100 group-hover:translate-y-1 z-[110]">
+                    <div class="relative overflow-hidden bg-white rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-blue-50 p-6 ring-1 ring-black/5">
+                        <div class="absolute -top-10 -right-10 w-32 h-32 bg-blue-50 blur-3xl rounded-full"></div>
+                        
+                        <div class="relative grid grid-cols-2 gap-6">
+                            <div class="space-y-3">
+                                <h4 class="text-[9px] font-black uppercase tracking-[0.15em] text-amber-600 border-b border-blue-50 pb-2 flex items-center gap-2">
+                                    <i class="fas fa-graduation-cap text-blue-600"></i> Programas de Estudio
+                                </h4>
+                                <div class="space-y-1.5">
+                                    <button onclick="openDynamicModal('perfil_inicial')" class="group/item w-full flex items-center gap-4 p-3 rounded-2xl transition-all duration-300 hover:bg-blue-600 hover:shadow-lg hover:shadow-blue-500/30 text-left">
+                                        <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-xl bg-slate-50 group-hover/item:bg-white/20 transition-colors border border-blue-100">
+                                            <i class="fas fa-child text-blue-600 group-hover/item:text-white text-xs"></i>
+                                        </div>
+                                        <span class="font-black text-[11px] uppercase tracking-tight text-slate-700 group-hover/item:text-white">Educación Inicial</span>
+                                    </button>
+
+                                    <button onclick="openDynamicModal('perfil_primaria')" class="group/item w-full flex items-center gap-4 p-3 rounded-2xl transition-all duration-300 hover:bg-blue-600 hover:shadow-lg hover:shadow-blue-500/30 text-left">
+                                        <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-xl bg-slate-50 group-hover/item:bg-white/20 transition-colors border border-blue-100">
+                                            <i class="fas fa-book-reader text-blue-600 group-hover/item:text-white text-xs"></i>
+                                        </div>
+                                        <span class="font-black text-[11px] uppercase tracking-tight text-slate-700 group-hover/item:text-white">Educación Primaria</span>
+                                    </button>
+
+                                    <button onclick="openDynamicModal('perfil_secundaria')" class="group/item w-full flex items-center gap-4 p-3 rounded-2xl transition-all duration-300 hover:bg-blue-600 hover:shadow-lg hover:shadow-blue-500/30 text-left">
+                                        <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-xl bg-slate-50 group-hover/item:bg-white/20 transition-colors border border-blue-100">
+                                            <i class="fas fa-microscope text-blue-600 group-hover/item:text-white text-xs"></i>
+                                        </div>
+                                        <div class="flex flex-col">
+                                            <span class="font-black text-[11px] uppercase tracking-tight text-slate-700 group-hover/item:text-white leading-tight">Secundaria</span>
+                                            <span class="text-[8px] font-bold lowercase text-blue-500 group-hover/item:text-blue-100">CC.SS y Comunicación</span>
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="space-y-3">
+                                <h4 class="text-[9px] font-black uppercase tracking-[0.15em] text-amber-600 border-b border-blue-50 pb-2 flex items-center gap-2">
+                                    <i class="fas fa-sync-alt text-blue-600"></i> Gestión Académica
+                                </h4>
+                                <ul class="space-y-1.5">
+                                    <li>
+                                        <button onclick="openDynamicModal('matricula')" class="group/item w-full flex items-center gap-4 p-3 rounded-2xl transition-all duration-300 hover:bg-blue-600 hover:shadow-lg hover:shadow-blue-500/30 text-left">
+                                            <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-xl bg-slate-50 group-hover/item:bg-white/20 transition-colors border border-blue-100">
+                                                <i class="fas fa-file-signature text-blue-600 group-hover/item:text-white text-sm"></i>
+                                            </div>
+                                            <span class="font-black text-[11px] uppercase tracking-[0.1em] text-slate-700 group-hover/item:text-white">Matrícula</span>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button onclick="openDynamicModal('horario-clases')" class="group/item w-full flex items-center gap-4 p-3 rounded-2xl transition-all duration-300 hover:bg-blue-600 hover:shadow-lg hover:shadow-blue-500/30 text-left">
+                                            <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-xl bg-slate-50 group-hover/item:bg-white/20 transition-colors border border-blue-100">
+                                                <i class="fas fa-calendar-day text-blue-600 group-hover/item:text-white text-sm"></i>
+                                            </div>
+                                            <span class="font-black text-[11px] uppercase tracking-[0.1em] text-slate-700 group-hover/item:text-white">Horario Clases</span>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button onclick="openDynamicModal('horario-docentes')" class="group/item w-full flex items-center gap-4 p-3 rounded-2xl transition-all duration-300 hover:bg-blue-600 hover:shadow-lg hover:shadow-blue-500/30 text-left">
+                                            <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-xl bg-slate-50 group-hover/item:bg-white/20 transition-colors border border-blue-100">
+                                                <i class="fas fa-user-clock text-blue-600 group-hover/item:text-white text-sm"></i>
+                                            </div>
+                                            <span class="font-black text-[11px] uppercase tracking-[0.1em] text-slate-700 group-hover/item:text-white">Horario Docentes</span>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button onclick="openDynamicModal('plan-curricular')" class="group/item w-full flex items-center gap-4 p-3 rounded-2xl transition-all duration-300 hover:bg-blue-600 hover:shadow-lg hover:shadow-blue-500/30 text-left">
+                                            <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-xl bg-slate-50 group-hover/item:bg-white/20 transition-colors border border-blue-100">
+                                                <i class="fas fa-book text-blue-600 group-hover/item:text-white text-sm"></i>
+                                            </div>
+                                            <span class="font-black text-[11px] uppercase tracking-[0.1em] text-slate-700 group-hover/item:text-white">Plan Curricular</span>
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 pt-3 border-t border-blue-50 flex justify-center">
+                            <div class="h-1 w-16 bg-amber-400 rounded-full opacity-50 shadow-sm"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-item relative group px-3 py-2">
+                <button class="text-[11px] font-black uppercase tracking-widest text-slate-600 hover:text-blue-800 flex items-center gap-2 transition-all">
+                    Unidades <i class="fas fa-chevron-down text-[9px] opacity-50 group-hover:rotate-180 transition-transform duration-300"></i>
+                </button>
+
+                <div class="megamenu invisible opacity-0 absolute top-full right-0 w-[920px] pt-5 transition-all duration-500 ease-out group-hover:visible group-hover:opacity-100 group-hover:translate-y-1 z-[110]">
+                    <div class="relative overflow-hidden bg-white rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-blue-50 p-8 ring-1 ring-black/5">
+                        <div class="absolute -top-10 -right-10 w-32 h-32 bg-blue-50 blur-3xl rounded-full"></div>
+                        
+                        <div class="relative grid grid-cols-3 gap-x-10 gap-y-8">
+                            
+                            <div class="space-y-8">
+                                <div class="space-y-3">
+                                    <h4 class="text-[9px] font-black uppercase tracking-[0.15em] text-amber-600 border-b border-blue-50 pb-2 flex items-center gap-2">
+                                        <i class="fas fa-university text-blue-600"></i> U. Académica
+                                    </h4>
+                                    <div class="space-y-1">
+                                        <button onclick="openDynamicModal('u_academica_funciones')" class="group/item w-full flex items-center gap-3 p-2 rounded-xl transition-all duration-300 hover:bg-blue-600 text-left">
+                                            <div class="flex-shrink-0 w-7 h-7 flex items-center justify-center rounded-lg bg-slate-50 group-hover/item:bg-white/20 border border-blue-50">
+                                                <i class="fas fa-file-alt text-blue-600 group-hover/item:text-white text-[9px]"></i>
+                                            </div>
+                                            <span class="font-black text-[10px] uppercase text-slate-700 group-hover/item:text-white">Funciones</span>
+                                        </button>
+                                        <button onclick="openDynamicModal('u_academica_dependencias')" class="group/item w-full flex items-center gap-3 p-2 rounded-xl transition-all duration-300 hover:bg-blue-600 text-left">
+                                            <div class="flex-shrink-0 w-7 h-7 flex items-center justify-center rounded-lg bg-slate-50 group-hover/item:bg-white/20 border border-blue-50">
+                                                <i class="fas fa-sitemap text-blue-600 group-hover/item:text-white text-[9px]"></i>
+                                            </div>
+                                            <span class="font-black text-[10px] uppercase text-slate-700 group-hover/item:text-white">Dependencias</span>
+                                        </button>
+                                        <button onclick="openDynamicModal('u_academica_jefes')" class="group/item w-full flex items-center gap-3 p-2 rounded-xl transition-all duration-300 hover:bg-blue-600 text-left">
+                                            <div class="flex-shrink-0 w-7 h-7 flex items-center justify-center rounded-lg bg-slate-50 group-hover/item:bg-white/20 border border-blue-50">
+                                                <i class="fas fa-user-tie text-blue-600 group-hover/item:text-white text-[9px]"></i>
+                                            </div>
+                                            <span class="font-black text-[10px] uppercase text-slate-700 group-hover/item:text-white">Jefes</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="space-y-3">
+                                    <h4 class="text-[9px] font-black uppercase tracking-[0.15em] text-amber-600 border-b border-blue-50 pb-2 flex items-center gap-2">
+                                        <i class="fas fa-chalkboard-teacher text-blue-600"></i> U. Formación Continua
+                                    </h4>
+                                    <div class="space-y-1">
+                                        <button onclick="openDynamicModal('u_formacion_funciones')" class="group/item w-full flex items-center gap-3 p-2 rounded-xl transition-all hover:bg-blue-600 text-left">
+                                            <span class="font-black text-[10px] uppercase text-slate-700 group-hover/item:text-white">Funciones</span>
+                                        </button>
+                                        <button onclick="openDynamicModal('u_formacion_jefe')" class="group/item w-full flex items-center gap-3 p-2 rounded-xl transition-all hover:bg-blue-600 text-left">
+                                            <span class="font-black text-[10px] uppercase text-slate-700 group-hover/item:text-white">Jefe de Unidades</span>
+                                        </button>
+                                        <button onclick="openDynamicModal('u_formacion_cursos')" class="group/item w-full flex items-center gap-3 p-2 rounded-xl transition-all hover:bg-blue-600 text-left">
+                                            <span class="font-black text-[10px] uppercase text-slate-700 group-hover/item:text-white">Cursos, Talleres y Programas</span>
+                                        </button>
+                                        <button onclick="openDynamicModal('u_formacion_conferencias')" class="group/item w-full flex items-center gap-3 p-2 rounded-xl transition-all hover:bg-blue-600 text-left">
+                                            <span class="font-black text-[10px] uppercase text-slate-700 group-hover/item:text-white">Conferencias, Seminarios</span>
+                                        </button>
+                                        <button onclick="openDynamicModal('u_formacion_minedu')" class="group/item w-full flex items-center gap-3 p-2 rounded-xl transition-all hover:bg-blue-600 text-left">
+                                            <span class="font-black text-[10px] uppercase text-slate-700 group-hover/item:text-white">Programas MINEDU</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="space-y-3">
+                                <h4 class="text-[9px] font-black uppercase tracking-[0.15em] text-amber-600 border-b border-blue-50 pb-2 flex items-center gap-2">
+                                    <i class="fas fa-microscope text-blue-600"></i> U. Investigación
+                                </h4>
+                                <div class="space-y-1">
+                                    <button onclick="openDynamicModal('u_inv_funciones')" class="group/item w-full flex items-center gap-3 p-2 rounded-xl transition-all hover:bg-blue-600 text-left">
+                                        <span class="font-black text-[10px] uppercase text-slate-700 group-hover/item:text-white">Funciones</span>
+                                    </button>
+                                    <button onclick="openDynamicModal('u_inv_lineas')" class="group/item w-full flex items-center gap-3 p-2 rounded-xl transition-all hover:bg-blue-600 text-left">
+                                        <span class="font-black text-[10px] uppercase text-slate-700 group-hover/item:text-white">Líneas de Investigación</span>
+                                    </button>
+                                    <button onclick="openDynamicModal('u_inv_reglamento')" class="group/item w-full flex items-center gap-3 p-2 rounded-xl transition-all hover:bg-blue-600 text-left">
+                                        <span class="font-black text-[10px] uppercase text-slate-700 group-hover/item:text-white">Reglamento de Investigación</span>
+                                    </button>
+                                    <button onclick="openDynamicModal('u_inv_guias')" class="group/item w-full flex items-center gap-3 p-2 rounded-xl transition-all hover:bg-blue-600 text-left">
+                                        <span class="font-black text-[10px] uppercase text-slate-700 group-hover/item:text-white">Guías de Investigación</span>
+                                    </button>
+                                    <button onclick="openDynamicModal('u_inv_actividades')" class="group/item w-full flex items-center gap-3 p-2 rounded-xl transition-all hover:bg-blue-600 text-left">
+                                        <span class="font-black text-[10px] uppercase text-slate-700 group-hover/item:text-white">Actividades y Eventos</span>
+                                    </button>
+                                    <button onclick="openDynamicModal('u_inv_recursos')" class="group/item w-full flex items-center gap-3 p-2 rounded-xl transition-all hover:bg-blue-600 text-left">
+                                        <span class="font-black text-[10px] uppercase text-slate-700 group-hover/item:text-white">Recursos</span>
+                                    </button>
+                                    <a href="{% url 'investigacion:lista_tesis' %}">
+                                         <button class="mt-4 w-full flex items-center justify-center gap-2 py-3 rounded-2xl bg-amber-400 hover:bg-blue-600 transition-all duration-300 shadow-lg shadow-amber-100 group/btn">
+                                            <i class="fas fa-graduation-cap text-blue-900 group-hover/btn:text-white text-[12px]"></i>
+                                            <span class="font-black text-[11px] uppercase tracking-widest text-blue-900 group-hover/btn:text-white">Gestión de Tesis</span>
+                                        </button>
+                                    </a>
+                                   
+                                </div>
+                            </div>
+
+                            <div class="space-y-3">
+                                <h4 class="text-[9px] font-black uppercase tracking-[0.15em] text-amber-600 border-b border-blue-50 pb-2 flex items-center gap-2">
+                                    <i class="fas fa-hand-holding-heart text-blue-600"></i> Bienestar y Empleabilidad
+                                </h4>
+                                <div class="space-y-1">
+                                    <button onclick="openDynamicModal('u_bienestar_funciones')" class="group/item w-full flex items-center gap-3 p-2.5 rounded-xl transition-all duration-300 hover:bg-blue-600 text-left">
+                                        <div class="flex-shrink-0 w-7 h-7 flex items-center justify-center rounded-lg bg-slate-50 group-hover/item:bg-white/20 border border-blue-50">
+                                            <i class="fas fa-cog text-blue-600 group-hover/item:text-white text-[9px]"></i>
+                                        </div>
+                                        <span class="font-black text-[10px] uppercase text-slate-700 group-hover/item:text-white">Funciones</span>
+                                    </button>
+                                    <button onclick="openDynamicModal('u_bienestar_jefe')" class="group/item w-full flex items-center gap-3 p-2.5 rounded-xl transition-all duration-300 hover:bg-blue-600 text-left">
+                                        <div class="flex-shrink-0 w-7 h-7 flex items-center justify-center rounded-lg bg-slate-50 group-hover/item:bg-white/20 border border-blue-50">
+                                            <i class="fas fa-user text-blue-600 group-hover/item:text-white text-[9px]"></i>
+                                        </div>
+                                        <span class="font-black text-[10px] uppercase text-slate-700 group-hover/item:text-white">Jefe</span>
+                                    </button>
+                                    <button onclick="openDynamicModal('u_bienestar_servicios')" class="group/item w-full flex items-center gap-3 p-2.5 rounded-xl transition-all duration-300 hover:bg-blue-600 text-left">
+                                        <div class="flex-shrink-0 w-7 h-7 flex items-center justify-center rounded-lg bg-slate-50 group-hover/item:bg-white/20 border border-blue-50">
+                                            <i class="fas fa-concierge-bell text-blue-600 group-hover/item:text-white text-[9px]"></i>
+                                        </div>
+                                        <span class="font-black text-[10px] uppercase text-slate-700 group-hover/item:text-white">Servicios</span>
+                                    </button>
+                                    <button onclick="openDynamicModal('u_bienestar_actividades')" class="group/item w-full flex items-center gap-3 p-2.5 rounded-xl transition-all duration-300 hover:bg-blue-600 text-left">
+                                        <div class="flex-shrink-0 w-7 h-7 flex items-center justify-center rounded-lg bg-slate-50 group-hover/item:bg-white/20 border border-blue-50">
+                                            <i class="fas fa-calendar-check text-blue-600 group-hover/item:text-white text-[9px]"></i>
+                                        </div>
+                                        <span class="font-black text-[10px] uppercase text-slate-700 group-hover/item:text-white">Actividades</span>
+                                    </button>
+                                    <button onclick="openDynamicModal('u_bienestar_egresados')" class="group/item w-full flex items-center gap-3 p-2.5 rounded-xl transition-all duration-300 hover:bg-blue-600 text-left">
+                                        <div class="flex-shrink-0 w-7 h-7 flex items-center justify-center rounded-lg bg-slate-50 group-hover/item:bg-white/20 border border-blue-50">
+                                            <i class="fas fa-user-graduate text-blue-600 group-hover/item:text-white text-[9px]"></i>
+                                        </div>
+                                        <span class="font-black text-[10px] uppercase text-slate-700 group-hover/item:text-white">Seguimiento Egresados</span>
+                                    </button>
+                                    <button onclick="openDynamicModal('u_bienestar_bolsa')" class="group/item w-full flex items-center gap-3 p-2.5 rounded-xl transition-all duration-300 hover:bg-blue-600 text-left">
+                                        <div class="flex-shrink-0 w-7 h-7 flex items-center justify-center rounded-lg bg-slate-50 group-hover/item:bg-white/20 border border-blue-50">
+                                            <i class="fas fa-briefcase text-blue-600 group-hover/item:text-white text-[9px]"></i>
+                                        </div>
+                                        <span class="font-black text-[10px] uppercase text-slate-700 group-hover/item:text-white">Bolsa de Trabajo</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="mt-8 pt-5 border-t border-blue-50 flex items-center justify-between">
+                            <span class="text-[8px] font-black text-blue-400 uppercase tracking-[0.2em]">Estructura Orgánica Institucional</span>
+                            <div class="flex gap-1.5">
+                                <div class="h-1 w-4 bg-blue-100 rounded-full"></div>
+                                <div class="h-1 w-10 bg-amber-400 rounded-full"></div>
+                                <div class="h-1 w-4 bg-blue-100 rounded-full"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-item relative group px-3 py-2">
+                <button class="text-[11px] font-black uppercase tracking-widest text-slate-600 hover:text-blue-800 flex items-center gap-2 transition-all">
+                    Documentos De Gestión <i class="fas fa-chevron-down text-[9px] opacity-50 group-hover:rotate-180 transition-transform duration-300"></i>
+                </button>
+
+                <div class="megamenu invisible opacity-0 absolute top-full right-0 w-[400px] pt-5 transition-all duration-500 ease-out group-hover:visible group-hover:opacity-100 group-hover:translate-y-1 z-[110]">
+                    <div class="relative overflow-hidden bg-white rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-blue-50 p-7 ring-1 ring-black/5">
+                        
+                        <h4 class="text-[9px] font-black uppercase tracking-[0.2em] text-amber-500 mb-6 flex items-center gap-2">
+                            <span class="w-1 h-3 bg-amber-500 rounded-full"></span> Documentos Institucionales
+                        </h4>
+
+                        <div class="space-y-3">
+                            <button onclick="openDynamicModal('doc_reglamento')" class="group/doc w-full flex items-center gap-4 p-3 rounded-2xl transition-all hover:bg-slate-50 border border-transparent hover:border-blue-50 text-left">
+                                <div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center group-hover/doc:bg-blue-600 transition-colors">
+                                    <i class="fas fa-file-contract text-blue-600 group-hover/doc:text-white text-sm"></i>
                                 </div>
                                 <div>
-                                    <p class="text-[9px] font-bold text-slate-800">Reglamento Institucional</p>
-                                    <p class="text-[7px] text-slate-400 font-medium">Vigencia 2023 - 2027</p>
+                                    <p class="text-[10px] font-black text-slate-800 uppercase tracking-tight">Reglamento Institucional</p>
+                                    <p class="text-[8px] text-slate-400 font-bold uppercase">Vigencia 2023 - 2027</p>
                                 </div>
-                            </a>
-                            <a href="#" class="flex items-center gap-3 p-2 rounded-xl hover:bg-blue-50 transition-all border border-transparent hover:border-blue-100">
-                                <div class="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center border border-blue-200">
-                                    <i class="fas fa-book-open text-blue-600 text-xs"></i>
-                                </div>
-                                <div>
-                                    <p class="text-[9px] font-bold text-slate-800">Proyecto Curricular (PCI)</p>
-                                    <p class="text-[7px] text-slate-400 font-medium">Planificación Pedagógica</p>
-                                </div>
-                            </a>
-                            <a href="#" class="flex items-center gap-3 p-2 rounded-xl hover:bg-blue-50 transition-all border border-transparent hover:border-blue-100">
-                                <div class="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center border border-blue-200">
-                                    <i class="fas fa-gears text-blue-600 text-xs"></i>
+                            </button>
+
+                            <button onclick="openDynamicModal('doc_pci')" class="group/doc w-full flex items-center gap-4 p-3 rounded-2xl transition-all hover:bg-slate-50 border border-transparent hover:border-blue-50 text-left">
+                                <div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center group-hover/doc:bg-blue-600 transition-colors">
+                                    <i class="fas fa-book-open text-blue-600 group-hover/doc:text-white text-sm"></i>
                                 </div>
                                 <div>
-                                    <p class="text-[9px] font-bold text-slate-800">Manual de Procesos</p>
-                                    <p class="text-[7px] text-slate-400 font-medium">Gestión Institucional</p>
+                                    <p class="text-[10px] font-black text-slate-800 uppercase tracking-tight">Proyecto Curricular (PCI)</p>
+                                    <p class="text-[8px] text-slate-400 font-bold uppercase">Planificación Pedagógica</p>
                                 </div>
-                            </a>
+                            </button>
+
+                            <button onclick="openDynamicModal('doc_mapro')" class="group/doc w-full flex items-center gap-4 p-3 rounded-2xl transition-all hover:bg-slate-50 border border-transparent hover:border-blue-50 text-left">
+                                <div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center group-hover/doc:bg-blue-600 transition-colors">
+                                    <i class="fas fa-cog text-blue-600 group-hover/doc:text-white text-sm"></i>
+                                </div>
+                                <div>
+                                    <p class="text-[10px] font-black text-slate-800 uppercase tracking-tight">Manual de Procesos</p>
+                                    <p class="text-[8px] text-slate-400 font-bold uppercase">Gestión Institucional</p>
+                                </div>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -331,894 +442,17 @@
             </div>
         </button>
     </div>
-    <div id="mobile-menu-overlay" class="fixed inset-0 z-[200] invisible h-[100dvh] w-full overflow-hidden">
-    
-        <div id="mobile-menu-backdrop" 
-            class="absolute inset-0 bg-blue-950/60 backdrop-blur-md opacity-0 transition-opacity duration-500">
-        </div>
-        
-        <div id="mobile-menu-panel" 
-            class="absolute top-0 right-0 w-[88%] sm:w-[80%] max-w-[400px] h-full bg-slate-50 shadow-[-20px_0_60px_rgba(0,0,0,0.3)] translate-x-full transition-transform duration-500 cubic-bezier(0.16, 1, 0.3, 1) flex flex-col">
-            
-            <div class="p-6 flex justify-between items-center bg-white border-b border-slate-100 sticky top-0 z-30">
-                <div class="flex items-center gap-3">
-                    <div class="w-1 h-8 bg-blue-600 rounded-full"></div>
-                    <div class="flex flex-col">
-                        <span class="text-[9px] font-black text-blue-600 uppercase tracking-[0.3em] leading-none mb-1">Explorar</span>
-                        <span class="text-blue-950 font-black uppercase tracking-widest text-xs">Menú Principal</span>
-                    </div>
-                </div>
-                <button id="btn-mobile-close" 
-                        class="w-11 h-11 flex items-center justify-center rounded-2xl bg-slate-100 text-slate-500 hover:text-red-500 transition-all active:scale-90 shadow-inner">
-                    <i class="fas fa-times text-lg"></i>
-                </button>
-            </div>
 
-            <div class="flex-1 overflow-y-auto overflow-x-hidden space-y-8 p-6 bg-slate-50/50">
-                
-                <a href="{% url 'home' %}" class="group relative flex items-center justify-between p-5 rounded-[2rem] bg-white shadow-sm border border-slate-100 active:scale-[0.97] transition-all">
-                    <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 rounded-2xl bg-blue-600 flex items-center justify-center text-white shadow-lg shadow-blue-200 group-hover:rotate-12 transition-transform">
-                            <i class="fas fa-home text-lg"></i>
-                        </div>
-                        <span class="text-blue-900 font-black uppercase text-xs tracking-widest">Inicio</span>
-                    </div>
-                    <i class="fas fa-chevron-right text-[10px] text-slate-300"></i>
-                </a>
-
-                <section>
-                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4 px-2">Institución</p>
-                    <div class="grid grid-cols-2 gap-3">
-                        <button id="btn-mision-vision-mob" class="flex flex-col gap-3 p-5 rounded-[1.5rem] bg-white border border-slate-100 hover:border-blue-200 transition-all text-left group">
-                            <div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-all">
-                                <i class="fas fa-bullseye"></i>
-                            </div>
-                            <span class="text-slate-700 font-black text-[10px] uppercase leading-tight">Misión & Visión</span>
-                        </button>
-                        
-                        <button id="btn-historia-mob" class="flex flex-col gap-3 p-5 rounded-[1.5rem] bg-white border border-slate-100 hover:border-blue-200 transition-all text-left group">
-                            <div class="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600 group-hover:bg-amber-600 group-hover:text-white transition-all">
-                                <i class="fas fa-history"></i>
-                            </div>
-                            <span class="text-slate-700 font-black text-[10px] uppercase leading-tight">Nuestra Historia</span>
-                        </button>
-
-                        <button id="btn-organigrama-mob" class="flex flex-col gap-3 p-5 rounded-[1.5rem] bg-white border border-slate-100 hover:border-blue-200 transition-all text-left group">
-                            <div class="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-all">
-                                <i class="fas fa-sitemap"></i>
-                            </div>
-                            <span class="text-slate-700 font-black text-[10px] uppercase leading-tight">Organigrama</span>
-                        </button>
-
-                        <button id="btn-docentes-mob" class="flex flex-col gap-3 p-5 rounded-[1.5rem] bg-white border border-slate-100 hover:border-blue-200 transition-all text-left group">
-                            <div class="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white transition-all">
-                                <i class="fas fa-user-graduate"></i>
-                            </div>
-                            <span class="text-slate-700 font-black text-[10px] uppercase leading-tight">Docentes</span>
-                        </button>
-                    </div>
-                </section>
-
-                <section class="relative p-6 rounded-[2.5rem] bg-slate-900 shadow-2xl overflow-hidden">
-                    <div class="absolute -top-10 -right-10 w-32 h-32 bg-blue-500/20 rounded-full blur-3xl"></div>
-                    
-                    <p class="relative z-10 text-[9px] font-black text-blue-400 uppercase tracking-[0.3em] mb-4 flex items-center gap-2">
-                        <i class="fas fa-graduation-cap"></i> Gestión Académica
-                    </p>
-                    
-                    <div class="relative z-10 space-y-2">
-                        <div class="bg-white/5 rounded-2xl p-1 border border-white/10">
-                            <button onclick="abrirModalPerfil(event)" class="w-full flex justify-between items-center p-4 text-[10px] font-black uppercase text-white hover:text-blue-400 transition-colors">
-                                <span>Ed. Inicial</span> <i class="fas fa-arrow-right text-[8px] opacity-40"></i>
-                            </button>
-                            <button onclick="abrirModalPrimaria(event)" class="w-full flex justify-between items-center p-4 text-[10px] font-black uppercase text-white hover:text-blue-400 transition-colors border-t border-white/5">
-                                <span>Ed. Primaria</span> <i class="fas fa-arrow-right text-[8px] opacity-40"></i>
-                            </button>
-                            <button onclick="abrirModalSecundaria(event)" class="w-full flex justify-between items-center p-4 text-[10px] font-black uppercase text-white hover:text-blue-400 transition-colors border-t border-white/5">
-                                <div class="text-left">
-                                    <p>Ed. Secundaria</p>
-                                    <p class="text-[7px] font-medium text-slate-400 lowercase">CC.SS y Comunicación</p>
-                                </div>
-                                <i class="fas fa-arrow-right text-[8px] opacity-40"></i>
-                            </button>
-                        </div>
-                        
-                        <div class="grid grid-cols-3 gap-2 pt-2">
-                            <a href="#" class="flex flex-col items-center gap-2 py-3 rounded-xl bg-white/5 text-[8px] font-bold text-slate-300 uppercase"><i class="fas fa-file-signature text-xs text-blue-400"></i> Matrícula</a>
-                            <a href="#" class="flex flex-col items-center gap-2 py-3 rounded-xl bg-white/5 text-[8px] font-bold text-slate-300 uppercase"><i class="fas fa-calendar-day text-xs text-blue-400"></i> Horarios</a>
-                            <a href="#" class="flex flex-col items-center gap-2 py-3 rounded-xl bg-white/5 text-[8px] font-bold text-slate-300 uppercase"><i class="fas fa-book text-xs text-blue-400"></i> Plan</a>
-                        </div>
-                    </div>
-                </section>
-
-                <section class="space-y-2">
-                    <p class="text-[10px] font-black text-amber-600 uppercase tracking-[0.2em] mb-4 px-2">Unidades Orgánicas</p>
-                    
-                    <details class="group bg-white rounded-2xl border border-slate-100 overflow-hidden transition-all shadow-sm">
-                        <summary class="list-none flex justify-between items-center p-4 font-black text-[10px] uppercase text-slate-700 cursor-pointer">
-                            <span class="flex items-center gap-3"><i class="fas fa-microscope text-blue-800 opacity-60"></i> U. Investigación</span>
-                            <div class="w-6 h-6 rounded-full bg-slate-50 flex items-center justify-center group-open:rotate-180 transition-transform">
-                                <i class="fas fa-chevron-down text-[8px]"></i>
-                            </div>
-                        </summary>
-                        <div class="px-6 pb-4 space-y-3 border-t border-slate-50 pt-3">
-                            <a href="#investigacion" class="flex items-center gap-2 text-[10px] font-bold text-slate-500 uppercase"><span class="w-1 h-1 rounded-full bg-blue-400"></span> Repositorio</a>
-                            <a href="{% url 'investigacion:lista_tesis' %}" class="flex items-center gap-2 text-[10px] font-bold text-slate-500 uppercase"><span class="w-1 h-1 rounded-full bg-blue-400"></span> Gestión de Tesis</a>
-                        </div>
-                    </details>
-
-                    <details class="group bg-white rounded-2xl border border-slate-100 overflow-hidden transition-all shadow-sm">
-                        <summary class="list-none flex justify-between items-center p-4 font-black text-[10px] uppercase text-slate-700 cursor-pointer">
-                            <span class="flex items-center gap-3"><i class="fas fa-chalkboard-teacher text-blue-800 opacity-60"></i> U. Formación</span>
-                            <div class="w-6 h-6 rounded-full bg-slate-50 flex items-center justify-center group-open:rotate-180 transition-transform">
-                                <i class="fas fa-chevron-down text-[8px]"></i>
-                            </div>
-                        </summary>
-                        <div class="px-6 pb-4 space-y-3 border-t border-slate-50 pt-3">
-                            <a href="#" class="flex items-center gap-2 text-[10px] font-bold text-slate-500 uppercase"><span class="w-1 h-1 rounded-full bg-blue-400"></span> Cursos y Talleres</a>
-                        </div>
-                    </details>
-                </section>
-
-                <section class="space-y-4 pb-10">
-                    <div class="p-5 rounded-[2rem] bg-white border-2 border-dashed border-slate-200">
-                        <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-4 text-center italic">Documentación PDF</p>
-                        <div class="flex flex-col gap-3">
-                            <a href="#" class="flex items-center gap-3 p-3 rounded-xl bg-red-50 text-red-700 font-bold text-[10px] uppercase">
-                                <i class="fas fa-file-pdf"></i> Reglamento Institucional
-                            </a>
-                        </div>
-                    </div>
-
-                    <a href="https://www.transparencia.gob.pe" target="_blank" class="block group">
-                        <div class="bg-white border border-slate-200 rounded-[2rem] p-4 flex items-center justify-center gap-4 group-active:scale-95 transition-all shadow-md">
-                            <img src="{% static 'img/portal.png' %}" alt="Portal" class="h-10 w-auto">
-                            <span class="text-[10px] font-black uppercase text-blue-900 leading-tight">Portal de<br>Transparencia</span>
-                        </div>
-                    </a>
-                </section>
-            </div>
-
-            <div class="p-6 bg-white border-t border-slate-100">
-                <p class="text-[8px] text-center text-slate-400 font-black uppercase tracking-[0.3em]">© 2026 Calidad Educativa IESPP</p>
-            </div>
-        </div>
-    </div>
+    {% include 'header-mobile.html' %}
 </header>
-<div id="modal-mision" class="fixed inset-0 z-[110] invisible opacity-0 transition-all duration-500 flex items-center justify-center p-4">
-    <div class="absolute inset-0 bg-blue-950/60 backdrop-blur-md" onclick="closeMisionModal()"></div>
+<div id="dynamic-modal-container" 
+     class="fixed inset-0 z-[999] hidden flex items-center justify-center p-4 lg:p-10">
     
-    <div class="relative bg-blue-900 w-full max-w-4xl rounded-[3rem] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.5)] overflow-hidden transform scale-95 transition-all duration-500 border border-blue-800">
-        
-        <button onclick="closeMisionModal()" class="absolute top-8 right-8 w-11 h-11 flex items-center justify-center rounded-2xl bg-white/10 text-white/80 hover:bg-amber-500 hover:text-white hover:rotate-90 transition-all z-20 backdrop-blur-xl border border-white/10">
-            <i class="fas fa-times"></i>
-        </button>
-
-        <div class="grid md:grid-cols-2 relative">
-            <div class="hidden md:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1px] h-2/3 bg-gradient-to-b from-transparent via-white/10 to-transparent"></div>
-
-            <div class="p-10 lg:p-16 relative group">
-                <div class="w-16 h-16 bg-amber-400 rounded-[1.5rem] flex items-center justify-center mb-8 shadow-lg shadow-amber-900/20 group-hover:scale-110 transition-transform duration-500">
-                    <i class="fas fa-paper-plane text-blue-900 text-2xl"></i>
-                </div>
-                <h2 class="text-xs font-black text-amber-400 uppercase tracking-[0.3em] mb-3">Nuestra</h2>
-                <h3 class="text-3xl font-black text-white leading-none mb-6 italic tracking-tighter">Misión</h3>
-                <p class="text-blue-100/80 leading-relaxed text-[15px] font-medium italic relative">
-                    <span class="text-4xl absolute -top-4 -left-2 opacity-20 font-serif text-amber-400">“</span>
-                    El IESPP <strong class="text-white font-bold border-b-2 border-amber-400/50">“13 de Julio de 1882”</strong>, es una institución que brinda formación inicial docente a la comunidad educativa local, regional y nacional de manera transparente, inclusiva, intercultural, humanista y de calidad.
-                </p>
-            </div>
-
-            <div class="p-10 lg:p-16 bg-blue-950/30 group">
-                <div class="w-16 h-16 bg-white/10 rounded-[1.5rem] border border-white/10 flex items-center justify-center mb-8 group-hover:bg-amber-500 transition-colors duration-500">
-                    <i class="fas fa-eye text-white text-2xl group-hover:text-blue-900"></i>
-                </div>
-                <h2 class="text-xs font-black text-blue-300 uppercase tracking-[0.3em] mb-3">Nuestra</h2>
-                <h3 class="text-3xl font-black text-white leading-none mb-6 italic tracking-tighter">Visión</h3>
-                <p class="text-blue-100/80 leading-relaxed text-[15px] font-medium">
-                    Aspiramos al <strong class="text-blue-900 font-black px-2 py-0.5 bg-amber-400 rounded shadow-sm">2027</strong>, ser una Institución Licenciada, líder nacional en educación superior pedagógica, competitiva, innovadora y democrática; comprometida en brindar una educación acorde a las exigencias de calidad.
-                </p>
-            </div>
+    <div class="absolute inset-0 bg-slate-950/80 backdrop-blur-md" 
+         onclick="closeDynamicModal()"></div>
+    
+    <div id="dynamic-modal-content" 
+         class="relative z-[1000] w-full max-w-4xl flex justify-center items-center">
         </div>
-        
-        <div class="bg-white py-6 px-12 flex flex-col sm:flex-row justify-between items-center gap-4">
-            <div class="flex items-center gap-3">
-                <div class="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></div>
-                <p class="text-[10px] text-slate-500 font-black uppercase tracking-[0.2em]">Excelencia Académica en San Pablo</p>
-            </div>
-            
-            <div class="flex items-center gap-6">
-                <div class="h-8 w-[1px] bg-slate-100 hidden sm:block"></div>
-                <div class="flex items-center gap-4 opacity-70 hover:opacity-100 transition-opacity">
-                    <p class="text-[9px] text-slate-400 font-bold uppercase text-right leading-tight">Sello de <br> Calidad</p>
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Escudo_nacional_del_Per%C3%BA.svg/1200px-Escudo_nacional_del_Per%C3%BA.svg.png" 
-                         class="h-7 grayscale" alt="Perú">
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
-<div id="modal-historia" class="fixed inset-0 z-[110] invisible opacity-0 transition-all duration-500 flex items-center justify-center p-4 lg:p-6">
-    <div class="absolute inset-0 bg-blue-950/60 backdrop-blur-xl" onclick="closeHistoriaModal()"></div>
-    
-    <div class="modal-container relative bg-blue-900 w-full max-w-5xl h-[92vh] rounded-[3rem] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.5)] overflow-hidden flex flex-col transform scale-95 transition-all duration-500 border border-white/10">
-        
-        <div class="bg-white/5 border-b border-white/10 px-8 py-5 flex justify-between items-center shrink-0 backdrop-blur-md">
-            <div class="flex items-center gap-4">
-                <div class="w-12 h-12 bg-amber-400 rounded-2xl flex items-center justify-center shadow-lg shadow-amber-400/20">
-                    <i class="fas fa-history text-blue-900 text-xl"></i>
-                </div>
-                <div>
-                    <h3 class="text-sm font-black text-white uppercase tracking-widest leading-none">Historia Institucional</h3>
-                    <p class="text-[10px] text-amber-400 font-bold uppercase mt-1 tracking-tighter">IESPP “13 de Julio de 1882” San Pablo</p>
-                </div>
-            </div>
-            <button onclick="closeHistoriaModal()" class="w-10 h-10 flex items-center justify-center rounded-xl bg-white/10 text-white hover:bg-amber-400 hover:text-blue-900 transition-all border border-white/10">
-                <i class="fas fa-times text-xs"></i>
-            </button>
-        </div>
-
-        <div class="flex-grow overflow-y-auto p-8 lg:p-12 custom-scrollbar text-blue-50/90">
-            <div class="max-w-4xl mx-auto space-y-12">
-                
-                <section class="relative pl-10 border-l-2 border-amber-400/30">
-                    <div class="absolute -left-[11px] top-0 w-5 h-5 rounded-full bg-amber-400 border-4 border-blue-900 shadow-lg"></div>
-                    <h4 class="text-xs font-black text-amber-400 uppercase tracking-widest mb-4">I. Creación y Etapa Tecnológica (1981 - 1988)</h4>
-                    <div class="prose prose-invert prose-sm max-w-none leading-relaxed">
-                        <p>Ubicado en la histórica ciudad de San Pablo, región Cajamarca. Tras la creación de la provincia el 11 de diciembre de 1981, se gesta la creación del <strong class="text-white border-b border-amber-400/30">Instituto Superior Tecnológico 13 de Julio, según R.M. No 231-84-ED</strong>.</p>
-                        <p class="mt-4">Bajo la dirección del Prof. <strong class="text-white italic">Francisco Aníbal Castañeda Moncada</strong>, la institución formó promociones exitosas en Contabilidad, Producción Pecuaria y Enfermería Técnica, marcando el inicio de la excelencia educativa en la región.</p>
-                    </div>
-                </section>
-
-                <section class="relative pl-10 border-l-2 border-amber-400/30">
-                    <div class="absolute -left-[11px] top-0 w-5 h-5 rounded-full bg-amber-400 border-4 border-blue-900 shadow-lg"></div>
-                    <h4 class="text-xs font-black text-amber-400 uppercase tracking-widest mb-4">II. Conversión a Instituto Pedagógico</h4>
-                    <div class="prose prose-invert prose-sm max-w-none leading-relaxed">
-                        <p>El <strong>12 de Julio de 1988 según el D.S. Nº 011-88-ED</strong>, se marca un hito: la conversión a Instituto Superior Pedagógico. Este cambio permitió ampliar la oferta a carreras fundamentales como Educación Primaria, Secundaria, Inicial y Computación.</p>
-                        <div class="mt-6 italic bg-blue-950/50 p-6 rounded-2xl border border-white/5 shadow-inner">
-                            <p class="text-blue-200">Actualmente, lideramos la formación docente en las especialidades de Educación Primaria, Inicial, y Secundaria en las menciones de Comunicación, Ciencias Sociales, y Ciencia Tecnología y Ambiente.</p>
-                        </div>
-                    </div>
-                </section>
-
-                <section class="relative pl-10 border-l-2 border-amber-400/30">
-                    <div class="absolute -left-[11px] top-0 w-5 h-5 rounded-full bg-amber-400 border-4 border-blue-900 shadow-lg"></div>
-                    <h4 class="text-xs font-black text-amber-400 uppercase tracking-widest mb-4">III. Base Legal y Revalidaciones</h4>
-                    <div class="space-y-4 text-[14px]">
-                        <p>Reinscrito bajo el <strong class="text-white">D.S. Nº 017-2002</strong> y revalidado mediante la <strong class="text-white">RD N° 00083-2020-MINEDU</strong>, garantizando que nuestra formación cumple con los más altos estándares de calidad exigidos por el Ministerio de Educación.</p>
-                    </div>
-                </section>
-
-                <section class="grid md:grid-cols-2 gap-6 pb-6">
-                    <div class="bg-gradient-to-br from-amber-400 to-amber-500 p-8 rounded-[2.5rem] text-blue-950 shadow-xl shadow-amber-400/10">
-                        <h4 class="text-[10px] font-black uppercase tracking-widest mb-4 opacity-70">Galería de Directores</h4>
-                        <p class="text-xs leading-relaxed font-bold">
-                            Una línea de líderes comprometidos, desde Lucio Cabanillas hasta la actual gestión de <span class="bg-blue-950 text-white px-2 py-0.5 rounded">Ricardo Teodoro Rojas Dorregaray</span>, han forjado el prestigio de nuestra casa de estudios.
-                        </p>
-                    </div>
-                    <div class="bg-blue-950/80 p-8 rounded-[2.5rem] text-blue-100 border border-white/5">
-                        <h4 class="text-[10px] font-black uppercase tracking-widest mb-4 opacity-50">Presente Institucional</h4>
-                        <p class="text-xs leading-relaxed">
-                            Hoy albergamos a <span class="text-white font-black text-sm">285 estudiantes</span>, operando en las modernas instalaciones de la I.E. JEC “San Pablo” bajo la RD Sectorial N° 3053-2024-GR-CAJ.
-                        </p>
-                    </div>
-                </section>
-
-            </div>
-        </div>
-
-        <div class="bg-white py-5 px-10 flex flex-col sm:flex-row justify-between items-center gap-4 shrink-0">
-            <div class="flex items-center gap-3">
-                <div class="w-2.5 h-2.5 rounded-full bg-blue-600 animate-pulse"></div>
-                <p class="text-[9px] text-slate-400 font-black uppercase tracking-[0.2em]">D.S. N° 011-88-ED • Licenciamiento en proceso</p>
-            </div>
-            
-            <div class="flex items-center gap-6">
-                <div class="h-8 w-[1px] bg-slate-100 hidden sm:block"></div>
-                <div class="flex items-center gap-4 group/peru">
-                    <div class="text-right">
-                        <p class="text-[9px] text-slate-400 font-bold uppercase leading-tight">Estado</p>
-                        <p class="text-[10px] text-slate-900 font-black uppercase leading-tight">Peruano</p>
-                    </div>
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Escudo_nacional_del_Per%C3%BA.svg/1200px-Escudo_nacional_del_Per%C3%BA.svg.png" 
-                         class="h-9 w-auto drop-shadow-md group-hover:scale-110 transition-transform duration-300" 
-                         alt="Escudo Perú">
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div id="modal-personal" class="fixed inset-0 z-[110] invisible opacity-0 transition-all duration-500 flex items-center justify-center p-4">
-    <div class="absolute inset-0 bg-blue-950/60 backdrop-blur-xl" onclick="closePersonalModal()"></div>
-    
-    <div class="modal-container relative bg-blue-900 w-full max-w-4xl h-[85vh] rounded-[3rem] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.5)] overflow-hidden flex flex-col transform scale-95 transition-all duration-500 border border-white/10">
-        
-        <div class="bg-white/5 backdrop-blur-md px-8 py-6 flex justify-between items-center shrink-0 border-b border-white/10 relative z-10">
-            <div class="flex items-center gap-4">
-                <div class="w-1.5 h-8 bg-amber-400 rounded-full shadow-[0_0_15px_rgba(251,191,36,0.5)]"></div>
-                <div>
-                    <h3 class="text-xl font-black text-white uppercase tracking-tighter leading-none">Plana Directiva</h3>
-                    <p class="text-[9px] text-amber-400 font-bold uppercase tracking-[0.2em] mt-1">Gestión Institucional 2024 - 2025</p>
-                </div>
-            </div>
-            <button onclick="closePersonalModal()" class="w-11 h-11 flex items-center justify-center rounded-2xl bg-white/10 text-white hover:bg-amber-400 hover:text-blue-900 transition-all group border border-white/10">
-                <i class="fas fa-times group-hover:rotate-90 transition-transform"></i>
-            </button>
-        </div>
-
-        <div class="flex-grow overflow-y-auto p-8 lg:p-10 custom-scrollbar bg-[radial-gradient(rgba(255,255,255,0.05)_1px,transparent_1px)] [background-size:30px_30px]">
-            <div class="max-w-7xl mx-auto space-y-8">
-                
-                <div class="bg-gradient-to-r from-blue-800 to-blue-950 p-8 rounded-[2.5rem] border border-white/10 shadow-2xl flex flex-col md:flex-row items-center gap-8 relative overflow-hidden group">
-                    <div class="absolute right-0 top-0 translate-x-1/4 -translate-y-1/4 w-40 h-40 bg-amber-400 rounded-full opacity-10 group-hover:opacity-20 transition-opacity duration-700 blur-3xl"></div>
-                    
-                    <div class="relative w-24 h-24 bg-amber-400 rounded-[2rem] flex items-center justify-center text-blue-900 text-4xl shadow-xl shadow-amber-400/20 shrink-0 transform group-hover:scale-105 transition-transform duration-500">
-                        <i class="fas fa-user-tie"></i>
-                    </div>
-                    
-                    <div class="relative text-center md:text-left">
-                        <span class="text-[9px] font-black bg-amber-400 text-blue-900 px-3 py-1 rounded-full uppercase tracking-widest shadow-sm">Director General</span>
-                        <h4 class="text-2xl font-black text-white leading-tight mt-3">Rojas Dorregaray, Ricardo Teodoro</h4>
-                        <div class="flex items-center justify-center md:justify-start gap-2 mt-2 text-blue-300">
-                            <i class="fas fa-certificate text-amber-400 text-[10px]"></i>
-                            <p class="text-xs font-medium uppercase tracking-wider">Representante Legal IESPP</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="grid md:grid-cols-2 gap-4">
-                    
-                    <div class="flex items-center gap-4 p-5 bg-white/5 rounded-[1.5rem] border border-white/5 hover:bg-white/10 hover:border-amber-400/30 transition-all group">
-                        <div class="w-12 h-12 rounded-2xl bg-blue-800 text-amber-400 flex items-center justify-center shrink-0 shadow-lg group-hover:bg-amber-400 group-hover:text-blue-900 transition-colors">
-                            <i class="fas fa-book-reader"></i>
-                        </div>
-                        <div>
-                            <p class="text-[9px] font-black text-blue-300 uppercase tracking-widest">Unidad Académica</p>
-                            <h6 class="text-sm font-bold text-white mt-0.5">Azañedo Alcántara, Perci Guinshon</h6>
-                        </div>
-                    </div>
-
-                    <div class="flex items-center gap-4 p-5 bg-white/5 rounded-[1.5rem] border border-white/5 hover:bg-white/10 hover:border-amber-400/30 transition-all group">
-                        <div class="w-12 h-12 rounded-2xl bg-blue-800 text-amber-400 flex items-center justify-center shrink-0 shadow-lg group-hover:bg-amber-400 group-hover:text-blue-900 transition-colors">
-                            <i class="fas fa-microscope"></i>
-                        </div>
-                        <div>
-                            <p class="text-[9px] font-black text-blue-300 uppercase tracking-widest">Unidad de Investigación</p>
-                            <h6 class="text-sm font-bold text-white mt-0.5">Burgos Castañeda, Juana Rosa</h6>
-                        </div>
-                    </div>
-
-                    <div class="flex items-center gap-4 p-5 bg-white/5 rounded-[1.5rem] border border-white/5 hover:bg-white/10 hover:border-amber-400/30 transition-all group">
-                        <div class="w-12 h-12 rounded-2xl bg-blue-800 text-amber-400 flex items-center justify-center shrink-0 shadow-lg group-hover:bg-amber-400 group-hover:text-blue-900 transition-colors">
-                            <i class="fas fa-heartbeat"></i>
-                        </div>
-                        <div>
-                            <p class="text-[9px] font-black text-blue-300 uppercase tracking-widest">Bienestar y Empleabilidad</p>
-                            <h6 class="text-sm font-bold text-white mt-0.5">Castañeda Soriano, Rosa Liliana</h6>
-                        </div>
-                    </div>
-
-                    <div class="flex items-center gap-4 p-5 bg-white/5 rounded-[1.5rem] border border-white/5 hover:bg-white/10 hover:border-amber-400/30 transition-all group">
-                        <div class="w-12 h-12 rounded-2xl bg-blue-800 text-amber-400 flex items-center justify-center shrink-0 shadow-lg group-hover:bg-amber-400 group-hover:text-blue-900 transition-colors">
-                            <i class="fas fa-sync-alt"></i>
-                        </div>
-                        <div>
-                            <p class="text-[9px] font-black text-blue-300 uppercase tracking-widest">Formación Continua</p>
-                            <h6 class="text-sm font-bold text-white mt-0.5">Soriano Palomino, Oscar Orlando</h6>
-                        </div>
-                    </div>
-
-                    <div class="flex items-center gap-4 p-5 bg-white/5 rounded-[1.5rem] border border-white/5 hover:bg-white/10 hover:border-amber-400/30 transition-all group">
-                        <div class="w-12 h-12 rounded-2xl bg-blue-800 text-amber-400 flex items-center justify-center shrink-0 shadow-lg group-hover:bg-amber-400 group-hover:text-blue-900 transition-colors">
-                            <i class="fas fa-file-invoice-dollar"></i>
-                        </div>
-                        <div>
-                            <p class="text-[9px] font-black text-blue-300 uppercase tracking-widest">Administración</p>
-                            <h6 class="text-sm font-bold text-white mt-0.5">Cáceres Díaz, Vicente Vitelio</h6>
-                        </div>
-                    </div>
-
-                    <div class="flex items-center gap-4 p-5 bg-white/5 rounded-[1.5rem] border border-white/5 hover:bg-white/10 hover:border-amber-400/30 transition-all group">
-                        <div class="w-12 h-12 rounded-2xl bg-blue-800 text-amber-400 flex items-center justify-center shrink-0 shadow-lg group-hover:bg-amber-400 group-hover:text-blue-900 transition-colors">
-                            <i class="fas fa-child"></i>
-                        </div>
-                        <div>
-                            <p class="text-[9px] font-black text-blue-300 uppercase tracking-widest">Educación Inicial</p>
-                            <h6 class="text-sm font-bold text-white mt-0.5">Eugenia Vásquez de Alegría</h6>
-                        </div>
-                    </div>
-
-                    <div class="md:col-span-2 flex items-center gap-4 p-5 bg-blue-950/50 rounded-[1.5rem] border border-amber-400/20 hover:border-amber-400 transition-all group">
-                        <div class="w-12 h-12 rounded-2xl bg-amber-400 text-blue-900 flex items-center justify-center shrink-0 shadow-lg">
-                            <i class="fas fa-award"></i>
-                        </div>
-                        <div>
-                            <p class="text-[9px] font-black text-amber-400 uppercase tracking-widest">Área de Calidad</p>
-                            <h6 class="text-base font-black text-white group-hover:text-amber-400 transition-colors">Terán Arce, Víctor Oswaldo</h6>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-        <div class="bg-white py-5 px-10 flex justify-between items-center shrink-0">
-            <div class="flex items-center gap-3">
-                <div class="flex gap-1.5">
-                    <div class="w-2 h-2 rounded-full bg-blue-900"></div>
-                    <div class="w-2 h-2 rounded-full bg-amber-400"></div>
-                    <div class="w-2 h-2 rounded-full bg-blue-900"></div>
-                </div>
-                <span class="text-[10px] font-black text-slate-800 uppercase tracking-widest">IESPP 13 de Julio de 1882</span>
-            </div>
-            
-            <div class="flex items-center gap-4">
-                 <p class="text-[9px] text-slate-400 font-bold uppercase text-right leading-tight">San Pablo <br> Cajamarca</p>
-                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Escudo_nacional_del_Per%C3%BA.svg/1200px-Escudo_nacional_del_Per%C3%BA.svg.png" 
-                      class="h-8 w-auto drop-shadow-sm" alt="Perú">
-            </div>
-        </div>
-    </div>
-</div>
-<div id="modal-perfil-inicial" class="fixed inset-0 z-[150] hidden items-center justify-center p-4 bg-blue-950/60 backdrop-blur-xl animate-in fade-in duration-300">
-    
-    <div class="bg-blue-900 w-full max-w-4xl max-h-[90vh] rounded-[3rem] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.5)] overflow-hidden flex flex-col animate-in zoom-in-95 duration-300 border border-white/10">
-        
-        <div class="p-8 border-b border-white/10 flex justify-between items-center bg-white/5 backdrop-blur-md">
-            <div>
-                <h3 class="text-amber-400 font-black uppercase tracking-[0.3em] text-[11px] mb-1">Carrera Profesional</h3>
-                <p class="text-white font-medium text-xl italic tracking-tight">Educación Inicial: <span class="text-blue-200">Competencias del Perfil de Egreso</span></p>
-            </div>
-            <button onclick="cerrarModalPerfil()" class="w-12 h-12 rounded-2xl bg-white/10 text-white border border-white/20 flex items-center justify-center hover:bg-amber-400 hover:text-blue-900 transition-all duration-300">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-
-        <div class="p-8 overflow-y-auto custom-scrollbar bg-[radial-gradient(rgba(255,255,255,0.05)_1px,transparent_1px)] [background-size:24px_24px]">
-            <div class="flex flex-col gap-4">
-                
-                <div class="p-6 rounded-[2rem] bg-blue-950/40 border border-white/5 hover:border-amber-400/50 hover:bg-blue-950/60 transition-all flex flex-col md:flex-row gap-6 items-start group">
-                    <div class="bg-amber-400 text-blue-900 font-black text-[10px] py-2 px-4 rounded-xl min-w-[110px] text-center uppercase tracking-widest shadow-lg shadow-amber-400/10">Comp. 01</div>
-                    <p class="text-blue-50/90 text-[14px] leading-relaxed font-medium">Conoce y comprende las características de todos sus estudiantes y sus contextos, los contenidos disciplinares que enseña, los enfoques y procesos pedagógicos, con el propósito de promover capacidades de alto nivel y su formación integral.</p>
-                </div>
-
-                <div class="p-6 rounded-[2rem] bg-blue-950/40 border border-white/5 hover:border-amber-400/50 hover:bg-blue-950/60 transition-all flex flex-col md:flex-row gap-6 items-start group">
-                    <div class="bg-amber-400 text-blue-900 font-black text-[10px] py-2 px-4 rounded-xl min-w-[110px] text-center uppercase tracking-widest shadow-lg shadow-amber-400/10">Comp. 02</div>
-                    <p class="text-blue-50/90 text-[14px] leading-relaxed font-medium">Planifica la enseñanza de forma colegiada, lo que garantiza la coherencia entre los aprendizajes que quiere lograr en sus estudiantes, el proceso pedagógico, el uso de los recursos disponibles y la evaluación en una programación curricular en permanente revisión.</p>
-                </div>
-
-                <div class="p-6 rounded-[2rem] bg-blue-950/40 border border-white/5 hover:border-amber-400/50 hover:bg-blue-950/60 transition-all flex flex-col md:flex-row gap-6 items-start group">
-                    <div class="bg-amber-400 text-blue-900 font-black text-[10px] py-2 px-4 rounded-xl min-w-[110px] text-center uppercase tracking-widest shadow-lg shadow-amber-400/10">Comp. 03</div>
-                    <p class="text-blue-50/90 text-[14px] leading-relaxed font-medium">Crea un clima propicio para el aprendizaje, la convivencia democrática y la vivencia de la diversidad en todas sus expresiones con miras a formar ciudadanos críticos e interculturales.</p>
-                </div>
-
-                <div class="p-6 rounded-[2rem] bg-blue-950/40 border border-white/5 hover:border-amber-400/50 hover:bg-blue-950/60 transition-all flex flex-col md:flex-row gap-6 items-start group">
-                    <div class="bg-amber-400 text-blue-900 font-black text-[10px] py-2 px-4 rounded-xl min-w-[110px] text-center uppercase tracking-widest shadow-lg shadow-amber-400/10">Comp. 04</div>
-                    <p class="text-blue-50/90 text-[14px] leading-relaxed font-medium">Conduce el proceso de enseñanza con dominio de los contenidos disciplinares y el uso de estrategias y recursos pertinentes para que todos los estudiantes aprendan de manera reflexiva y crítica lo que concierne a la solución de problemas relacionados con sus experiencias, intereses y contextos culturales.</p>
-                </div>
-
-                <div class="p-6 rounded-[2rem] bg-blue-950/40 border border-white/5 hover:border-amber-400/50 hover:bg-blue-950/60 transition-all flex flex-col md:flex-row gap-6 items-start group">
-                    <div class="bg-amber-400 text-blue-900 font-black text-[10px] py-2 px-4 rounded-xl min-w-[110px] text-center uppercase tracking-widest shadow-lg shadow-amber-400/10">Comp. 05</div>
-                    <p class="text-blue-50/90 text-[14px] leading-relaxed font-medium">Evalúa permanentemente el aprendizaje de acuerdo con los objetivos institucionales previstos para tomar decisiones y retroalimentar a sus estudiantes y a la comunidad educativa, teniendo en cuenta las diferencias individuales y los diversos contextos culturales.</p>
-                </div>
-
-                <div class="p-6 rounded-[2rem] bg-blue-950/40 border border-white/5 hover:border-amber-400/50 hover:bg-blue-950/60 transition-all flex flex-col md:flex-row gap-6 items-start group">
-                    <div class="bg-amber-400 text-blue-900 font-black text-[10px] py-2 px-4 rounded-xl min-w-[110px] text-center uppercase tracking-widest shadow-lg shadow-amber-400/10">Comp. 06</div>
-                    <p class="text-blue-50/90 text-[14px] leading-relaxed font-medium">Participa activamente, con actitud democrática, crítica y colaborativa, en la gestión de la escuela, contribuyendo a la construcción y mejora continua del Proyecto Educativo Institucional para que genere aprendizajes de calidad.</p>
-                </div>
-
-                <div class="p-6 rounded-[2rem] bg-blue-950/40 border border-white/5 hover:border-amber-400/50 hover:bg-blue-950/60 transition-all flex flex-col md:flex-row gap-6 items-start group">
-                    <div class="bg-amber-400 text-blue-900 font-black text-[10px] py-2 px-4 rounded-xl min-w-[110px] text-center uppercase tracking-widest shadow-lg shadow-amber-400/10">Comp. 07</div>
-                    <p class="text-blue-50/90 text-[14px] leading-relaxed font-medium">Establece relaciones de respeto, colaboración y corresponsabilidad con las familias, la comunidad y otras instituciones del Estado y la sociedad civil. Aprovecha sus saberes y recursos en los procesos educativos y da cuenta de los resultados.</p>
-                </div>
-
-                <div class="p-6 rounded-[2rem] bg-blue-950/40 border border-white/5 hover:border-amber-400/50 hover:bg-blue-950/60 transition-all flex flex-col md:flex-row gap-6 items-start group">
-                    <div class="bg-amber-400 text-blue-900 font-black text-[10px] py-2 px-4 rounded-xl min-w-[110px] text-center uppercase tracking-widest shadow-lg shadow-amber-400/10">Comp. 08</div>
-                    <p class="text-blue-50/90 text-[14px] leading-relaxed font-medium">Reflexiona sobre su práctica y experiencia institucional y desarrolla procesos de aprendizaje continuo de modo individual y colectivo para construir y afirmar su identidad y responsabilidad profesional.</p>
-                </div>
-
-                <div class="p-6 rounded-[2rem] bg-blue-950/40 border border-white/5 hover:border-amber-400/50 hover:bg-blue-950/60 transition-all flex flex-col md:flex-row gap-6 items-start group">
-                    <div class="bg-amber-400 text-blue-900 font-black text-[10px] py-2 px-4 rounded-xl min-w-[110px] text-center uppercase tracking-widest shadow-lg shadow-amber-400/10">Comp. 09</div>
-                    <p class="text-blue-50/90 text-[14px] leading-relaxed font-medium">Ejerce su profesión desde una ética de respeto de los derechos fundamentales de las personas, demostrando honestidad, justicia, responsabilidad y compromiso con su función social.</p>
-                </div>
-
-                <div class="p-6 rounded-[2rem] bg-blue-950/40 border border-white/5 hover:border-amber-400/50 hover:bg-blue-950/60 transition-all flex flex-col md:flex-row gap-6 items-start group">
-                    <div class="bg-amber-400 text-blue-900 font-black text-[10px] py-2 px-4 rounded-xl min-w-[110px] text-center uppercase tracking-widest shadow-lg shadow-amber-400/10">Comp. 10</div>
-                    <p class="text-blue-50/90 text-[14px] leading-relaxed font-medium">Gestiona su desarrollo personal demostrando autoconocimiento y autorregulación de emociones, interactuando asertiva y empáticamente para desarrollar vínculos positivos y trabajar colaborativamente en contextos caracterizados por la diversidad.</p>
-                </div>
-
-                <div class="p-6 rounded-[2rem] bg-blue-950/40 border border-white/5 hover:border-amber-400/50 hover:bg-blue-950/60 transition-all flex flex-col md:flex-row gap-6 items-start group">
-                    <div class="bg-amber-400 text-blue-900 font-black text-[10px] py-2 px-4 rounded-xl min-w-[110px] text-center uppercase tracking-widest shadow-lg shadow-amber-400/10">Comp. 11</div>
-                    <p class="text-blue-50/90 text-[14px] leading-relaxed font-medium">Gestiona los entornos digitales y los aprovecha para su desarrollo profesional y práctica pedagógica, respondiendo a las necesidades e intereses de aprendizaje de los estudiantes.</p>
-                </div>
-
-                <div class="p-8 rounded-[2.5rem] bg-gradient-to-br from-amber-400 to-amber-500 text-blue-950 shadow-xl shadow-amber-400/20 flex flex-col md:flex-row gap-6 items-start transform hover:scale-[1.01] transition-transform group">
-                    <div class="bg-blue-900 text-white font-black text-[10px] py-2 px-4 rounded-xl min-w-[110px] text-center uppercase tracking-widest border border-white/10">Comp. 12</div>
-                    <p class="text-blue-950 text-[15px] leading-relaxed font-black">Investiga aspectos críticos de la práctica docente utilizando diversos enfoques y metodologías para promover una cultura de investigación e innovación.</p>
-                </div>
-
-            </div>
-        </div>
-
-        <div class="p-6 bg-white border-t border-slate-100 flex flex-col sm:flex-row justify-between items-center gap-4">
-            <div class="flex items-center gap-3">
-                <div class="w-2.5 h-2.5 rounded-full bg-blue-600 animate-pulse"></div>
-                <p class="text-[10px] text-slate-500 font-black uppercase tracking-[0.3em]">IESPP "13 de Julio de 1882"</p>
-            </div>
-            
-            <div class="flex items-center gap-4">
-                 <div class="text-right">
-                    <p class="text-[9px] text-slate-400 font-bold uppercase leading-tight">Perfil del</p>
-                    <p class="text-[10px] text-slate-900 font-black uppercase leading-tight">Egresado</p>
-                 </div>
-                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Escudo_nacional_del_Per%C3%BA.svg/1200px-Escudo_nacional_del_Per%C3%BA.svg.png" 
-                      class="h-8 w-auto drop-shadow-sm" alt="Perú">
-            </div>
-        </div>
-    </div>
-</div>
-<div id="modal-perfil-primaria" class="fixed inset-0 z-[150] hidden items-center justify-center p-4 bg-blue-950/60 backdrop-blur-xl animate-in fade-in duration-300">
-    
-    <div class="bg-blue-900 w-full max-w-4xl max-h-[90vh] rounded-[3rem] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.5)] overflow-hidden flex flex-col animate-in zoom-in-95 duration-300 border border-white/10">
-        
-        <div class="p-8 border-b border-white/10 flex justify-between items-center bg-white/5 backdrop-blur-md">
-            <div>
-                <h3 class="text-amber-400 font-black uppercase tracking-[0.3em] text-[11px] mb-1">Carrera Profesional</h3>
-                <p class="text-white font-medium text-xl italic tracking-tight">Educación Primaria: <span class="text-blue-200">Competencias del Perfil de Egreso</span></p>
-            </div>
-            <button onclick="cerrarModalPrimaria()" class="w-12 h-12 rounded-2xl bg-white/10 text-white border border-white/20 flex items-center justify-center hover:bg-amber-400 hover:text-blue-900 transition-all duration-300">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-
-        <div class="p-8 overflow-y-auto custom-scrollbar bg-[radial-gradient(rgba(255,255,255,0.05)_1px,transparent_1px)] [background-size:24px_24px]">
-            <div class="flex flex-col gap-4">
-                
-                <div class="p-6 rounded-[2rem] bg-blue-950/40 border border-white/5 hover:border-amber-400/50 hover:bg-blue-950/60 transition-all flex flex-col md:flex-row gap-6 items-start group">
-                    <div class="bg-amber-400 text-blue-900 font-black text-[10px] py-2 px-4 rounded-xl min-w-[110px] text-center uppercase tracking-widest shadow-lg shadow-amber-400/10">Comp. 01</div>
-                    <p class="text-blue-50/90 text-[14px] leading-relaxed font-medium">Conoce y comprende las características de todos sus estudiantes y sus contextos, los contenidos disciplinares que enseña, los enfoques y procesos pedagógicos, con el propósito de promover capacidades de alto nivel y su formación integral.</p>
-                </div>
-
-                <div class="p-6 rounded-[2rem] bg-blue-950/40 border border-white/5 hover:border-amber-400/50 hover:bg-blue-950/60 transition-all flex flex-col md:flex-row gap-6 items-start group">
-                    <div class="bg-amber-400 text-blue-900 font-black text-[10px] py-2 px-4 rounded-xl min-w-[110px] text-center uppercase tracking-widest shadow-lg shadow-amber-400/10">Comp. 02</div>
-                    <p class="text-blue-50/90 text-[14px] leading-relaxed font-medium">Planifica la enseñanza de forma colegiada, lo que garantiza la coherencia entre los aprendizajes que quiere lograr en sus estudiantes, el proceso pedagógico, el uso de los recursos disponibles y la evaluación en una programación curricular en permanente revisión.</p>
-                </div>
-
-                <div class="p-6 rounded-[2rem] bg-blue-950/40 border border-white/5 hover:border-amber-400/50 hover:bg-blue-950/60 transition-all flex flex-col md:flex-row gap-6 items-start group">
-                    <div class="bg-amber-400 text-blue-900 font-black text-[10px] py-2 px-4 rounded-xl min-w-[110px] text-center uppercase tracking-widest shadow-lg shadow-amber-400/10">Comp. 03</div>
-                    <p class="text-blue-50/90 text-[14px] leading-relaxed font-medium">Crea un clima propicio para el aprendizaje, la convivencia democrática y la vivencia de la diversidad en todas sus expresiones con miras a formar ciudadanos críticos e interculturales.</p>
-                </div>
-
-                <div class="p-6 rounded-[2rem] bg-blue-950/40 border border-white/5 hover:border-amber-400/50 hover:bg-blue-950/60 transition-all flex flex-col md:flex-row gap-6 items-start group">
-                    <div class="bg-amber-400 text-blue-900 font-black text-[10px] py-2 px-4 rounded-xl min-w-[110px] text-center uppercase tracking-widest shadow-lg shadow-amber-400/10">Comp. 04</div>
-                    <p class="text-blue-50/90 text-[14px] leading-relaxed font-medium">Conduce el proceso de enseñanza con dominio de los contenidos disciplinares y el uso de estrategias y recursos pertinentes para que todos los estudiantes aprendan de manera reflexiva y crítica lo que concierne a la solución de problemas relacionados con sus experiencias, intereses y contextos culturales.</p>
-                </div>
-
-                <div class="p-6 rounded-[2rem] bg-blue-950/40 border border-white/5 hover:border-amber-400/50 hover:bg-blue-950/60 transition-all flex flex-col md:flex-row gap-6 items-start group">
-                    <div class="bg-amber-400 text-blue-900 font-black text-[10px] py-2 px-4 rounded-xl min-w-[110px] text-center uppercase tracking-widest shadow-lg shadow-amber-400/10">Comp. 05</div>
-                    <p class="text-blue-50/90 text-[14px] leading-relaxed font-medium">Evalúa permanentemente el aprendizaje de acuerdo con los objetivos institucionales previstos para tomar decisiones y retroalimentar a sus estudiantes y a la comunidad educativa, teniendo en cuenta las diferencias individuales y los diversos contextos culturales.</p>
-                </div>
-
-                <div class="p-6 rounded-[2rem] bg-blue-950/40 border border-white/5 hover:border-amber-400/50 hover:bg-blue-950/60 transition-all flex flex-col md:flex-row gap-6 items-start group">
-                    <div class="bg-amber-400 text-blue-900 font-black text-[10px] py-2 px-4 rounded-xl min-w-[110px] text-center uppercase tracking-widest shadow-lg shadow-amber-400/10">Comp. 06</div>
-                    <p class="text-blue-50/90 text-[14px] leading-relaxed font-medium">Participa activamente, con actitud democrática, crítica y colaborativa, en la gestión de la escuela, contribuyendo a la construcción y mejora continua del Proyecto Educativo Institucional para que genere aprendizajes de calidad.</p>
-                </div>
-
-                <div class="p-6 rounded-[2rem] bg-blue-950/40 border border-white/5 hover:border-amber-400/50 hover:bg-blue-950/60 transition-all flex flex-col md:flex-row gap-6 items-start group">
-                    <div class="bg-amber-400 text-blue-900 font-black text-[10px] py-2 px-4 rounded-xl min-w-[110px] text-center uppercase tracking-widest shadow-lg shadow-amber-400/10">Comp. 07</div>
-                    <p class="text-blue-50/90 text-[14px] leading-relaxed font-medium">Establece relaciones de respeto, colaboración y corresponsabilidad con las familias, la comunidad y otras instituciones del Estado y la sociedad civil. Aprovecha sus saberes y recursos en los procesos educativos y da cuenta de los resultados.</p>
-                </div>
-
-                <div class="p-6 rounded-[2rem] bg-blue-950/40 border border-white/5 hover:border-amber-400/50 hover:bg-blue-950/60 transition-all flex flex-col md:flex-row gap-6 items-start group">
-                    <div class="bg-amber-400 text-blue-900 font-black text-[10px] py-2 px-4 rounded-xl min-w-[110px] text-center uppercase tracking-widest shadow-lg shadow-amber-400/10">Comp. 08</div>
-                    <p class="text-blue-50/90 text-[14px] leading-relaxed font-medium">Reflexiona sobre su práctica y experiencia institucional y desarrolla procesos de aprendizaje continuo de modo individual y colectivo para construir y afirmar su identidad y responsabilidad profesional.</p>
-                </div>
-
-                <div class="p-6 rounded-[2rem] bg-blue-950/40 border border-white/5 hover:border-amber-400/50 hover:bg-blue-950/60 transition-all flex flex-col md:flex-row gap-6 items-start group">
-                    <div class="bg-amber-400 text-blue-900 font-black text-[10px] py-2 px-4 rounded-xl min-w-[110px] text-center uppercase tracking-widest shadow-lg shadow-amber-400/10">Comp. 09</div>
-                    <p class="text-blue-50/90 text-[14px] leading-relaxed font-medium">Ejerce su profesión desde una ética de respeto de los derechos fundamentales de las personas, demostrando honestidad, justicia, responsabilidad y compromiso con su función social.</p>
-                </div>
-
-                <div class="p-6 rounded-[2rem] bg-blue-950/40 border border-white/5 hover:border-amber-400/50 hover:bg-blue-950/60 transition-all flex flex-col md:flex-row gap-6 items-start group">
-                    <div class="bg-amber-400 text-blue-900 font-black text-[10px] py-2 px-4 rounded-xl min-w-[110px] text-center uppercase tracking-widest shadow-lg shadow-amber-400/10">Comp. 10</div>
-                    <p class="text-blue-50/90 text-[14px] leading-relaxed font-medium">Gestiona su desarrollo personal demostrando autoconocimiento y autorregulación de emociones, interactuando asertiva y empáticamente para desarrollar vínculos positivos y trabajar colaborativamente en contextos caracterizados por la diversidad.</p>
-                </div>
-
-                <div class="p-6 rounded-[2rem] bg-blue-950/40 border border-white/5 hover:border-amber-400/50 hover:bg-blue-950/60 transition-all flex flex-col md:flex-row gap-6 items-start group">
-                    <div class="bg-amber-400 text-blue-900 font-black text-[10px] py-2 px-4 rounded-xl min-w-[110px] text-center uppercase tracking-widest shadow-lg shadow-amber-400/10">Comp. 11</div>
-                    <p class="text-blue-50/90 text-[14px] leading-relaxed font-medium">Gestiona los entornos digitales y los aprovecha para su desarrollo profesional y práctica pedagógica, respondiendo a las necesidades e intereses de aprendizaje de los estudiantes y los contextos socioculturales.</p>
-                </div>
-
-                <div class="p-8 rounded-[2.5rem] bg-gradient-to-br from-amber-400 to-amber-500 text-blue-950 shadow-xl shadow-amber-400/20 flex flex-col md:flex-row gap-6 items-start transform hover:scale-[1.01] transition-transform group">
-                    <div class="bg-blue-900 text-white font-black text-[10px] py-2 px-4 rounded-xl min-w-[110px] text-center uppercase tracking-widest border border-white/10">Comp. 12</div>
-                    <p class="text-blue-950 text-[15px] leading-relaxed font-black">Investiga aspectos críticos de la práctica docente utilizando diversos enfoques y metodologías para promover una cultura de investigación e innovación.</p>
-                </div>
-
-            </div>
-        </div>
-
-        <div class="p-6 bg-white border-t border-slate-100 flex flex-col sm:flex-row justify-between items-center gap-4">
-            <div class="flex items-center gap-3">
-                <div class="w-2.5 h-2.5 rounded-full bg-blue-600 animate-pulse"></div>
-                <p class="text-[10px] text-slate-500 font-black uppercase tracking-[0.3em]">IESPP "13 de Julio de 1882"</p>
-            </div>
-            
-            <div class="flex items-center gap-4">
-                 <div class="text-right">
-                    <p class="text-[9px] text-slate-400 font-bold uppercase leading-tight">Perfil de Egreso</p>
-                    <p class="text-[10px] text-slate-900 font-black uppercase leading-tight">Primaria</p>
-                 </div>
-                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Escudo_nacional_del_Per%C3%BA.svg/1200px-Escudo_nacional_del_Per%C3%BA.svg.png" 
-                      class="h-8 w-auto drop-shadow-sm" alt="Perú">
-            </div>
-        </div>
-    </div>
-</div>
-<div id="modal-perfil-secundaria" class="fixed inset-0 z-[150] hidden items-center justify-center p-4 bg-blue-950/60 backdrop-blur-xl animate-in fade-in duration-300">
-    
-    <div class="bg-blue-900 w-full max-w-4xl max-h-[90vh] rounded-[3rem] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.5)] overflow-hidden flex flex-col animate-in zoom-in-95 duration-300 border border-white/10">
-        
-        <div class="p-8 border-b border-white/10 flex justify-between items-center bg-white/5 backdrop-blur-md">
-            <div>
-                <h3 class="text-amber-400 font-black uppercase tracking-[0.3em] text-[11px] mb-1">Carrera Profesional</h3>
-                <p class="text-white font-medium text-xl italic tracking-tight">Educación Secundaria: <span class="text-blue-200">Competencias del Perfil de Egreso</span></p>
-            </div>
-            <button onclick="cerrarModalSecundaria()" class="w-12 h-12 rounded-2xl bg-white/10 text-white border border-white/20 flex items-center justify-center hover:bg-amber-400 hover:text-blue-900 transition-all duration-300">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-
-        <div class="p-8 overflow-y-auto custom-scrollbar bg-[radial-gradient(rgba(255,255,255,0.05)_1px,transparent_1px)] [background-size:24px_24px]">
-            <div class="flex flex-col gap-4">
-                
-                <div class="p-6 rounded-[2rem] bg-blue-950/40 border border-white/5 hover:border-amber-400/50 hover:bg-blue-950/60 transition-all flex flex-col md:flex-row gap-6 items-start group">
-                    <div class="bg-amber-400 text-blue-900 font-black text-[10px] py-2 px-4 rounded-xl min-w-[110px] text-center uppercase tracking-widest shadow-lg shadow-amber-400/10">Comp. 01</div>
-                    <p class="text-blue-50/90 text-[14px] leading-relaxed font-medium">Conoce y comprende las características de todos sus estudiantes y sus contextos, los contenidos disciplinares que enseña, los enfoques y procesos pedagógicos, con el propósito de promover capacidades de alto nivel y su formación integral.</p>
-                </div>
-
-                <div class="p-6 rounded-[2rem] bg-blue-950/40 border border-white/5 hover:border-amber-400/50 hover:bg-blue-950/60 transition-all flex flex-col md:flex-row gap-6 items-start group">
-                    <div class="bg-amber-400 text-blue-900 font-black text-[10px] py-2 px-4 rounded-xl min-w-[110px] text-center uppercase tracking-widest shadow-lg shadow-amber-400/10">Comp. 02</div>
-                    <p class="text-blue-50/90 text-[14px] leading-relaxed font-medium">Planifica la enseñanza de forma colegiada, lo que garantiza la coherencia entre los aprendizajes que quiere lograr en sus estudiantes, el proceso pedagógico, el uso de los recursos disponibles y la evaluación en una programación curricular en permanente revisión.</p>
-                </div>
-
-                <div class="p-6 rounded-[2rem] bg-blue-950/40 border border-white/5 hover:border-amber-400/50 hover:bg-blue-950/60 transition-all flex flex-col md:flex-row gap-6 items-start group">
-                    <div class="bg-amber-400 text-blue-900 font-black text-[10px] py-2 px-4 rounded-xl min-w-[110px] text-center uppercase tracking-widest shadow-lg shadow-amber-400/10">Comp. 03</div>
-                    <p class="text-blue-50/90 text-[14px] leading-relaxed font-medium">Crea un clima propicio para el aprendizaje, la convivencia democrática y la vivencia de la diversidad en todas sus expresiones con miras a formar ciudadanos críticos e interculturales.</p>
-                </div>
-
-                <div class="p-6 rounded-[2rem] bg-blue-950/40 border border-white/5 hover:border-amber-400/50 hover:bg-blue-950/60 transition-all flex flex-col md:flex-row gap-6 items-start group">
-                    <div class="bg-amber-400 text-blue-900 font-black text-[10px] py-2 px-4 rounded-xl min-w-[110px] text-center uppercase tracking-widest shadow-lg shadow-amber-400/10">Comp. 04</div>
-                    <p class="text-blue-50/90 text-[14px] leading-relaxed font-medium">Conduce el proceso de enseñanza con dominio de los contenidos disciplinares y el uso de estrategias y recursos pertinentes para que todos los estudiantes aprendan de manera reflexiva y crítica lo que concierne a la solución de problemas relacionados con sus experiencias, intereses y contextos culturales.</p>
-                </div>
-
-                <div class="p-6 rounded-[2rem] bg-blue-950/40 border border-white/5 hover:border-amber-400/50 hover:bg-blue-950/60 transition-all flex flex-col md:flex-row gap-6 items-start group">
-                    <div class="bg-amber-400 text-blue-900 font-black text-[10px] py-2 px-4 rounded-xl min-w-[110px] text-center uppercase tracking-widest shadow-lg shadow-amber-400/10">Comp. 05</div>
-                    <p class="text-blue-50/90 text-[14px] leading-relaxed font-medium">Evalúa permanentemente el aprendizaje de acuerdo con los objetivos institucionales previstos para tomar decisiones y retroalimentar a sus estudiantes y a la comunidad educativa, teniendo en cuenta las diferencias individuales y los diversos contextos culturales.</p>
-                </div>
-
-                <div class="p-6 rounded-[2rem] bg-blue-950/40 border border-white/5 hover:border-amber-400/50 hover:bg-blue-950/60 transition-all flex flex-col md:flex-row gap-6 items-start group">
-                    <div class="bg-amber-400 text-blue-900 font-black text-[10px] py-2 px-4 rounded-xl min-w-[110px] text-center uppercase tracking-widest shadow-lg shadow-amber-400/10">Comp. 06</div>
-                    <p class="text-blue-50/90 text-[14px] leading-relaxed font-medium">Participa activamente, con actitud democrática, crítica y colaborativa, en la gestión de la escuela, contribuyendo a la construcción y mejora continua del Proyecto Educativo Institucional para que genere aprendizajes de calidad.</p>
-                </div>
-
-                <div class="p-6 rounded-[2rem] bg-blue-950/40 border border-white/5 hover:border-amber-400/50 hover:bg-blue-950/60 transition-all flex flex-col md:flex-row gap-6 items-start group">
-                    <div class="bg-amber-400 text-blue-900 font-black text-[10px] py-2 px-4 rounded-xl min-w-[110px] text-center uppercase tracking-widest shadow-lg shadow-amber-400/10">Comp. 07</div>
-                    <p class="text-blue-50/90 text-[14px] leading-relaxed font-medium">Establece relaciones de respeto, colaboración y corresponsabilidad con las familias, la comunidad y otras instituciones del Estado y la sociedad civil. Aprovecha sus saberes y recursos en los procesos educativos y da cuenta de los resultados.</p>
-                </div>
-
-                <div class="p-6 rounded-[2rem] bg-blue-950/40 border border-white/5 hover:border-amber-400/50 hover:bg-blue-950/60 transition-all flex flex-col md:flex-row gap-6 items-start group">
-                    <div class="bg-amber-400 text-blue-900 font-black text-[10px] py-2 px-4 rounded-xl min-w-[110px] text-center uppercase tracking-widest shadow-lg shadow-amber-400/10">Comp. 08</div>
-                    <p class="text-blue-50/90 text-[14px] leading-relaxed font-medium">Reflexiona sobre su práctica y experiencia institucional y desarrolla procesos de aprendizaje continuo de modo individual y colectivo para construir y afirmar su identidad y responsabilidad profesional.</p>
-                </div>
-
-                <div class="p-6 rounded-[2rem] bg-blue-950/40 border border-white/5 hover:border-amber-400/50 hover:bg-blue-950/60 transition-all flex flex-col md:flex-row gap-6 items-start group">
-                    <div class="bg-amber-400 text-blue-900 font-black text-[10px] py-2 px-4 rounded-xl min-w-[110px] text-center uppercase tracking-widest shadow-lg shadow-amber-400/10">Comp. 09</div>
-                    <p class="text-blue-50/90 text-[14px] leading-relaxed font-medium">Ejerce su profesión desde una ética de respeto de los derechos fundamentales de las personas, demostrando honestidad, justicia, responsabilidad y compromiso con su función social.</p>
-                </div>
-
-                <div class="p-8 rounded-[2.5rem] bg-gradient-to-br from-amber-400 to-amber-500 text-blue-950 shadow-xl shadow-amber-400/20 flex flex-col md:flex-row gap-6 items-start transform hover:scale-[1.01] transition-transform group">
-                    <div class="bg-blue-900 text-white font-black text-[10px] py-2 px-4 rounded-xl min-w-[110px] text-center uppercase tracking-widest border border-white/10">Comp. 10</div>
-                    <p class="text-blue-950 text-[15px] leading-relaxed font-black">Gestiona su desarrollo personal demostrando autoconocimiento y autorregulación de emociones, interactuando asertiva y empáticamente para desarrollar vínculos positivos y trabajar colaborativamente.</p>
-                </div>
-
-            </div>
-        </div>
-
-        <div class="p-6 bg-white border-t border-slate-100 flex flex-col sm:flex-row justify-between items-center gap-4">
-            <div class="flex items-center gap-3">
-                <div class="w-2.5 h-2.5 rounded-full bg-blue-600 animate-pulse"></div>
-                <p class="text-[10px] text-slate-500 font-black uppercase tracking-[0.3em]">IESPP "13 de Julio de 1882"</p>
-            </div>
-            
-            <div class="flex items-center gap-4">
-                 <div class="text-right">
-                    <p class="text-[9px] text-slate-400 font-bold uppercase leading-tight">Perfil de Egreso</p>
-                    <p class="text-[10px] text-slate-900 font-black uppercase leading-tight">Secundaria</p>
-                 </div>
-                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Escudo_nacional_del_Per%C3%BA.svg/1200px-Escudo_nacional_del_Per%C3%BA.svg.png" 
-                      class="h-8 w-auto drop-shadow-sm" alt="Perú">
-            </div>
-        </div>
-    </div>
-</div>
-<style>
-    /* Control Universal de Modales */
-    .modal-universal {
-        visibility: hidden;
-        opacity: 0;
-        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .modal-universal.active {
-        visibility: visible;
-        opacity: 1;
-    }
-
-    .modal-universal.active .modal-container,
-    .modal-universal.active .transform {
-        transform: scale(1) !important;
-    }
-
-    /* Personalización de Scrollbar para los modales */
-    .custom-scrollbar::-webkit-scrollbar {
-        width: 6px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-track {
-        background: transparent;
-    }
-    .custom-scrollbar::-webkit-scrollbar-thumb {
-        background: #e2e8f0;
-        border-radius: 10px;
-        transition: background 0.3s;
-    }
-    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-        background: #10b981;
-    }
-
-    /* Prevenir saltos de escala al inicio */
-    .modal-container, .modal-universal .transform {
-        transform: scale(0.95);
-        transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-</style>
-<script>
-/**
- * SISTEMA UNIFICADO DE NAVEGACIÓN Y MODALES
- * IESPP "13 de Julio de 1882"
- */
-document.addEventListener('DOMContentLoaded', () => {
-    // --- 1. REFERENCIAS DEL MENÚ MÓVIL ---
-    const menuBtn = document.getElementById('btn-mobile-open');
-    const closeMenuBtn = document.getElementById('btn-mobile-close');
-    const menuOverlay = document.getElementById('mobile-menu-overlay');
-    const menuBackdrop = document.getElementById('mobile-menu-backdrop');
-    const menuPanel = document.getElementById('mobile-menu-panel');
-
-    // --- 2. LÓGICA DEL MENÚ MÓVIL ---
-    window.toggleMenu = function(show) {
-        if (!menuOverlay || !menuPanel) return;
-
-        if (show) {
-            menuOverlay.classList.remove('invisible');
-            setTimeout(() => {
-                menuBackdrop?.classList.add('opacity-100');
-                menuPanel.classList.remove('translate-x-full');
-            }, 10);
-            document.body.style.overflow = 'hidden';
-        } else {
-            menuBackdrop?.classList.remove('opacity-100');
-            menuPanel.classList.add('translate-x-full');
-            setTimeout(() => {
-                menuOverlay.classList.add('invisible');
-                // Solo devolvemos scroll si no hay modales abiertos
-                if (!document.querySelector('.modal-universal.active')) {
-                    document.body.style.overflow = 'auto';
-                }
-            }, 500);
-        }
-    };
-
-    if (menuBtn) menuBtn.addEventListener('click', () => toggleMenu(true));
-    if (closeMenuBtn) closeMenuBtn.addEventListener('click', () => toggleMenu(false));
-    if (menuBackdrop) menuBackdrop.addEventListener('click', () => toggleMenu(false));
-
-    // Cerrar menú al hacer clic en enlaces o botones internos
-    const menuActions = menuPanel ? menuPanel.querySelectorAll('a, button') : [];
-    menuActions.forEach(action => {
-        action.addEventListener('click', () => {
-            // Un retraso pequeño permite que el modal se dispare antes de que el menú desaparezca
-            setTimeout(() => toggleMenu(false), 350);
-        });
-    });
-
-
-    // --- 3. LÓGICA CORE DE MODALES ---
-    window.openModal = function(modalId) {
-        const modal = document.getElementById(modalId);
-        if (modal) {
-            // Forzamos el reset de clases de Tailwind para asegurar visibilidad en mobile
-            modal.classList.remove('hidden', 'invisible', 'opacity-0');
-            modal.classList.add('modal-universal', 'flex'); 
-            
-            // Prioridad absoluta de capa
-            modal.style.zIndex = "200";
-
-            setTimeout(() => {
-                modal.classList.add('active', 'opacity-100');
-                document.body.style.overflow = 'hidden';
-                
-                // Efecto de escala al contenido interno
-                const inner = modal.querySelector('div.bg-white, div.bg-blue-900, div.bg-blue-950');
-                if (inner) {
-                    inner.classList.remove('scale-95');
-                    inner.classList.add('scale-100');
-                }
-            }, 10);
-        }
-    };
-
-    window.closeModal = function(modalId) {
-        const modal = document.getElementById(modalId);
-        if (modal) {
-            modal.classList.remove('active', 'opacity-100');
-            
-            setTimeout(() => {
-                modal.classList.remove('flex');
-                modal.classList.add('hidden', 'invisible');
-                
-                // Si el menú móvil también está cerrado, devolvemos el scroll
-                const menuOpen = !menuOverlay?.classList.contains('invisible');
-                if (!document.querySelector('.modal-universal.active') && !menuOpen) {
-                    document.body.style.overflow = 'auto';
-                }
-            }, 300);
-        }
-    };
-
-    // --- 4. CONFIGURACIÓN DE BOTONES POR ID ---
-    const modalConfig = [
-        { btn: 'btn-mision-vision', modal: 'modal-mision' },
-        { btn: 'btn-historia', modal: 'modal-historia' },
-        { btn: 'btn-personal', modal: 'modal-personal' }
-    ];
-
-    modalConfig.forEach(config => {
-        const button = document.getElementById(config.btn);
-        if (button) {
-            button.addEventListener('click', (e) => {
-                e.preventDefault();
-                openModal(config.modal);
-            });
-        }
-    });
-
-    // --- 5. EVENTOS GLOBALES (ESCAPE Y CLIC FUERA) ---
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-            const activeModal = document.querySelector('.modal-universal.active');
-            if (activeModal) closeModal(activeModal.id);
-        }
-    });
-
-    window.addEventListener('click', (e) => {
-        // Si el click es en el fondo oscuro del modal
-        if (e.target.matches('.modal-universal') || e.target.id.startsWith('modal-perfil-')) {
-            closeModal(e.target.id);
-        }
-    });
-
-    // --- 6. ALIAS PARA ONCLICK EN HTML ---
-    window.abrirModalPerfil = (e) => { if(e) e.preventDefault(); openModal('modal-perfil-inicial'); };
-    window.cerrarModalPerfil = () => closeModal('modal-perfil-inicial');
-    
-    window.abrirModalPrimaria = (e) => { if(e) e.preventDefault(); openModal('modal-perfil-primaria'); };
-    window.cerrarModalPrimaria = () => closeModal('modal-perfil-primaria');
-    
-    window.abrirModalSecundaria = (e) => { if(e) e.preventDefault(); openModal('modal-perfil-secundaria'); };
-    window.cerrarModalSecundaria = () => closeModal('modal-perfil-secundaria');
-    
-    window.closeMisionModal = () => closeModal('modal-mision');
-    window.closeHistoriaModal = () => closeModal('modal-historia');
-    window.closePersonalModal = () => closeModal('modal-personal');
-});
-</script>
+<script src="{% static 'js/header-config.js' %}"></script>

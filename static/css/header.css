@@ -1,0 +1,38 @@
+/* Control Universal de Modales */
+.modal-universal {
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modal-universal.active {
+    visibility: visible;
+    opacity: 1;
+}
+
+.modal-universal.active .modal-container,
+.modal-universal.active .transform {
+    transform: scale(1) !important;
+}
+
+/* Personalización de Scrollbar para los modales */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #e2e8f0;
+    border-radius: 10px;
+    transition: background 0.3s;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #10b981;
+}
+
+/* Prevenir saltos de escala al inicio */
+.modal-container, .modal-universal .transform {
+    transform: scale(0.95);
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}

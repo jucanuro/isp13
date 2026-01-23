@@ -1,99 +1,172 @@
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Plus+Jakarta+Sans:wght@300;400;700&family=Playfair+Display:ital,wght@0,900;1,900&display=swap" rel="stylesheet">
+
 <style>
+    /* Tipografías unificadas */
+    .font-thesis-serif { font-family: 'Cinzel', serif; letter-spacing: -0.02em; }
+    .font-thesis-italic { font-family: 'Playfair Display', serif; }
+    .font-thesis-sans { font-family: 'Plus Jakarta Sans', sans-serif; }
+
     @keyframes float-aurora {
         0% { transform: translate(0, 0) scale(1); }
-        33% { transform: translate(30px, -50px) scale(1.1); }
-        66% { transform: translate(-20px, 20px) scale(0.9); }
+        33% { transform: translate(30px, -50px) scale(1.05); }
+        66% { transform: translate(-20px, 20px) scale(0.95); }
         100% { transform: translate(0, 0) scale(1); }
     }
     .animate-aurora {
-        animation: float-aurora 15s ease-in-out infinite;
+        animation: float-aurora 20s ease-in-out infinite;
+    }
+
+    /* Geometría de fondo inspirada en Imagen 1 y 3 */
+    .bg-geometry {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        pointer-events: none;
+        z-index: 0;
+    }
+    .trapezoid-1 {
+        position: absolute;
+        bottom: 0;
+        right: -5%;
+        width: 60%;
+        height: 100%;
+        background: linear-gradient(135deg, rgba(241, 245, 249, 0) 0%, rgba(30, 58, 138, 0.04) 100%);
+        clip-path: polygon(40% 0, 100% 0, 100% 100%, 0% 100%);
+    }
+
+    /* Card estilo Credencial/Tesis (Imagen 4) */
+    .card-credential {
+        background: #ffffff;
+        clip-path: polygon(0 0, 100% 0, 100% 92%, 92% 100%, 0 100%);
+        transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        border: 1px solid #f1f5f9;
+    }
+    
+    .card-credential:hover {
+        transform: translateY(-15px);
+        box-shadow: 0 40px 80px -20px rgba(30, 58, 138, 0.12);
+        border-color: #e2e8f0;
+    }
+
+    /* Detalle de "Lomo de Libro" lateral */
+    .card-credential::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 20%;
+        height: 60%;
+        width: 4px;
+        background: #1e3a8a;
+        border-radius: 0 4px 4px 0;
+        opacity: 0.3;
+        transition: all 0.4s ease;
+    }
+
+    .card-credential:hover::before {
+        height: 80%;
+        top: 10%;
+        opacity: 1;
+        background: #ef4444;
+    }
+
+    /* Buscador Estilo Técnico */
+    .search-container {
+        background: #f8fafc;
+        border-bottom: 2px solid #1e3a8a;
+        transition: all 0.3s ease;
+    }
+    .search-container:focus-within {
+        border-bottom-color: #ef4444;
+        background: #ffffff;
+        box-shadow: 0 10px 30px -10px rgba(0,0,0,0.05);
+    }
+
+    .cut-final {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 160px;
+        height: 30px;
+        background: #ff0015;
+        clip-path: polygon(15% 0%, 85% 0%, 100% 100%, 0% 100%);
+        z-index: 40;
     }
 </style>
 
-<section id="investigacion" class="relative -mt-32 pt-48 pb-48 bg-[#f8fafc] overflow-hidden">
+<section id="investigacion" class="relative pt-32 pb-48 bg-white overflow-hidden font-thesis-sans">
     
-    <div class="absolute top-0 left-0 w-full overflow-hidden pointer-events-none rotate-180">
-        <div class="absolute top-0 left-0 w-full h-32 bg-blue-900/5" 
-             style="clip-path: polygon(0% 100%, 0% 20%, 5% 0%, 15% 20%, 25% 0%, 35% 20%, 45% 0%, 55% 20%, 65% 0%, 75% 20%, 85% 0%, 95% 20%, 100% 0%, 100% 100%);">
-        </div>
-        <div class="absolute top-0 left-0 w-full h-20 bg-blue-900/10" 
-             style="clip-path: polygon(0% 100%, 0% 30%, 10% 0%, 20% 30%, 30% 0%, 40% 30%, 50% 0%, 60% 30%, 70% 0%, 80% 30%, 90% 0%, 100% 30%, 100% 100%);">
-        </div>
-        <div class="relative w-full h-12 bg-blue-950" 
-             style="clip-path: polygon(0% 100%, 0% 50%, 25% 0%, 50% 50%, 75% 0%, 100% 50%, 100% 100%);">
-        </div>
+    <div class="bg-geometry">
+        <div class="trapezoid-1"></div>
+        <div class="animate-aurora absolute top-0 right-0 w-[800px] h-[800px] bg-blue-50/40 rounded-full blur-[140px]"></div>
+        <div class="absolute inset-0 opacity-[0.03]" style="background-image: radial-gradient(#1e3a8a 1px, transparent 1px); background-size: 40px 40px;"></div>
     </div>
 
-    <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#1e3a8a 0.5px, transparent 0.5px); background-size: 24px 24px;"></div>
-    
-    <div class="absolute inset-0 pointer-events-none overflow-hidden">
-        <div class="animate-aurora absolute -top-20 -left-20 w-[600px] h-[600px] bg-blue-100/40 rounded-full blur-[120px]"></div>
-    </div>
-    
     <div class="container mx-auto px-6 relative z-10">
         
-        <div class="flex flex-col lg:flex-row lg:items-end justify-between mb-16 gap-10">
-            <div class="max-w-xl">
-                <div class="flex items-center gap-3 mb-6">
-                    <span class="w-10 h-[2px] bg-blue-600 rounded-full"></span>
-                    <h2 class="text-[10px] font-black text-blue-900/60 uppercase tracking-[0.6em]">Repositorio Científico</h2>
+        <div class="flex flex-col lg:flex-row lg:items-end justify-between mb-24 gap-12">
+            <div class="max-w-xl border-l-[4px] border-red-600 pl-8">
+                <div class="flex items-center gap-2 mb-4">
+                    <h2 class="text-[10px] font-black text-blue-900/60 uppercase tracking-[0.6em]">Repositorio Público</h2>
                 </div>
-                <h3 class="serif-font text-4xl lg:text-5xl font-light text-slate-900 tracking-tight leading-[1.1]">
-                    Investigación con <br>
-                    <span class="font-black italic text-blue-900">Excelencia Académica</span>
+                <h3 class="font-thesis-serif text-3xl lg:text-3xl font-black text-slate-900 leading-[0.95] uppercase">
+                    Investigación de <br>
+                    <span class="font-thesis-italic font-light text-blue-800 tracking-tight">Alto Impacto</span>
                 </h3>
             </div>
 
-            <div class="flex flex-col sm:flex-row items-center gap-3 bg-white/90 backdrop-blur-xl border border-blue-100 rounded-[2.5rem] p-2 shadow-xl shadow-blue-900/5">
-                <div class="relative group">
-                    <select class="appearance-none bg-transparent pl-8 pr-12 py-3 text-[11px] font-black tracking-widest text-blue-900 cursor-pointer focus:outline-none">
-                        <option>Nuestra Institución</option>
-                        <option>Otras Redes</option>
-                    </select>
-                    <i class="fas fa-chevron-down absolute right-6 top-1/2 -translate-y-1/2 text-[10px] text-amber-500"></i>
-                </div>
-                <div class="h-8 w-px bg-blue-200 hidden sm:block"></div>
-                <div class="relative w-full sm:w-64">
-                    <input type="text" placeholder="Buscar tesis..." 
-                           class="w-full bg-transparent py-3 pl-10 pr-6 text-[13px] text-slate-700 placeholder:text-slate-400 focus:outline-none">
-                    <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-blue-600 text-xs"></i>
-                </div>
+            <div class="flex items-center search-container p-1 group">
+                <select class="bg-transparent pl-4 pr-8 py-2 text-[10px] font-black uppercase tracking-widest text-slate-500 focus:outline-none appearance-none cursor-pointer font-thesis-sans">
+                    <option>Institución</option>
+                    <option>Redes Globales</option>
+                </select>
+                <div class="w-[1px] h-4 bg-slate-300"></div>
+                <input type="text" placeholder="BUSCAR TESIS..." 
+                       class="bg-transparent py-2 px-6 text-[11px] font-bold text-slate-600 w-48 lg:w-64 focus:outline-none placeholder:text-slate-300 tracking-widest uppercase">
+                <button class="w-12 h-10 flex items-center justify-center text-blue-900 hover:text-red-600 transition-colors">
+                    <i class="fas fa-search text-xs"></i>
+                </button>
             </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-16">
             {% for t in tesis %}
-            <article class="group relative bg-white rounded-[3rem] p-10 flex flex-col h-full border border-slate-100 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 overflow-hidden">
+            <article class="group relative card-credential p-10 flex flex-col h-full border border-slate-100">
                 
-                <div class="absolute bottom-0 right-0 w-full h-1/2 bg-blue-50/50 -mb-20 -mr-20 rotate-12 opacity-0 group-hover:opacity-100 transition-all duration-700 pointer-events-none"></div>
+                <div class="absolute top-0 left-0 w-full h-[4px] bg-slate-50 group-hover:bg-red-600 transition-colors duration-500"></div>
 
-                <div class="mb-10 flex items-center justify-between relative z-10">
-                    <div class="w-14 h-14 rounded-full bg-blue-50 flex items-center justify-center group-hover:bg-blue-900 transition-all duration-500 group-hover:rotate-[360deg]">
-                        <i class="fas fa-microscope text-blue-900 group-hover:text-amber-400 text-xl"></i>
+                <div class="mb-10 flex items-center justify-between">
+                    <div class="w-12 h-12 bg-slate-50 border border-slate-100 flex items-center justify-center group-hover:bg-blue-900 group-hover:border-blue-900 transition-all duration-500">
+                        <i class="fas fa-file-alt text-blue-900 group-hover:text-white text-lg"></i>
                     </div>
-                    <span class="text-[9px] font-black text-slate-300 uppercase tracking-widest border border-slate-100 px-3 py-1 rounded-full">Ref. 2025</span>
+                    <span class="text-[9px] font-black text-slate-300 uppercase tracking-[0.2em] font-thesis-sans">REF: {{ loop.index }}02-IESPP</span>
                 </div>
 
-                <div class="flex-grow relative z-10">
-                    <h4 class="serif-font text-xl font-bold text-slate-800 leading-[1.5] mb-6 group-hover:text-blue-900 transition-colors">
+                <div class="flex-grow">
+                    <h4 class="font-thesis-serif text-xl font-black text-slate-800 leading-tight mb-6 group-hover:text-blue-900 transition-colors uppercase tracking-tight">
                         {{ t.title|lower|capfirst }}
                     </h4>
                     <div class="flex items-center gap-2">
-                        <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
-                        <span class="text-[9px] font-black text-blue-800 uppercase tracking-tighter italic">Publicación Oficial</span>
+                        <span class="w-2 h-2 rounded-full bg-red-600/20 flex items-center justify-center">
+                            <span class="w-1 h-1 rounded-full bg-red-600 animate-pulse"></span>
+                        </span>
+                        <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest font-thesis-sans">Validado por Board Académico</span>
                     </div>
                 </div>
                 
-                <div class="mt-10 pt-8 border-t border-slate-50 flex items-center justify-between relative z-10">
+                <div class="mt-12 pt-8 border-t border-slate-50 flex items-center justify-between">
                     <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-full bg-blue-900 flex items-center justify-center text-[12px] font-black text-white shadow-lg shadow-blue-200">
+                        <div class="w-10 h-10 bg-slate-900 text-white flex items-center justify-center text-[11px] font-black font-thesis-serif border-2 border-white shadow-sm">
                             {{ t.author|slice:":1" }}
                         </div>
-                        <p class="text-[13px] font-bold text-slate-700 tracking-tight">{{ t.author }}</p>
+                        <div>
+                            <p class="text-[10px] font-black text-slate-900 uppercase tracking-tighter font-thesis-sans">{{ t.author }}</p>
+                            <p class="text-[8px] text-red-600 font-bold uppercase tracking-[0.2em]">Investigador Principal</p>
+                        </div>
                     </div>
                     
-                    <a href="{{ t.link }}" target="_blank" class="w-11 h-11 rounded-full bg-blue-50 text-blue-900 hover:bg-amber-500 hover:text-white transition-all duration-300 flex items-center justify-center shadow-sm">
-                        <i class="fas fa-arrow-right text-[11px]"></i>
+                    <a href="{{ t.link }}" target="_blank" class="w-10 h-10 rounded-full border border-slate-100 text-slate-400 hover:bg-slate-900 hover:text-white hover:border-slate-900 transition-all duration-300 flex items-center justify-center">
+                        <i class="fas fa-chevron-right text-[10px]"></i>
                     </a>
                 </div>
             </article>
@@ -101,6 +174,5 @@
         </div>
     </div>
 
-    <div class="absolute bottom-0 left-0 w-full h-32 bg-blue-900" style="clip-path: polygon(0 60%, 100% 0, 100% 100%, 0 100%);"></div>
-
+    <div class="cut-final"></div>
 </section>
