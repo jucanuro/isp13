@@ -4,9 +4,8 @@ db.sqlite3
 
 # Entornos virtuales
 venv/
-env/
 .venv/
-
+env/
 # Python caché
 __pycache__/
 *.pyc
@@ -15,3 +14,4 @@ __pycache__/
 *.log
 .DS_Store
 .env
+
