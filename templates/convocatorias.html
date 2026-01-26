@@ -1,13 +1,11 @@
+{% load static %}
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Plus+Jakarta+Sans:wght@300;400;700&family=Playfair+Display:ital,wght@0,900;1,900&display=swap" rel="stylesheet">
 
 <section id="convocatorias" class="relative -mt-32 pt-56 pb-64 bg-white overflow-hidden font-editorial">
     <div class="absolute inset-0 z-0 pointer-events-none">
         <div class="absolute inset-0 opacity-[0.03]" style="background-image: radial-gradient(#1e3a8a 0.5px, transparent 0.5px); background-size: 32px 32px;"></div>
-        
         <div class="absolute top-0 left-0 w-full h-[600px] bg-slate-50/50" style="clip-path: polygon(0 0, 100% 0, 100% 20%, 0 50%);"></div>
-        
         <div class="absolute top-1/4 right-0 w-1/3 h-full bg-blue-50/20" style="clip-path: polygon(30% 0, 100% 15%, 100% 85%, 0% 100%);"></div>
-
         <div class="absolute -top-24 -left-24 w-96 h-96 bg-blue-50 rounded-full blur-[120px] opacity-60"></div>
     </div>
 
@@ -34,14 +32,24 @@
                     </p>
                     
                     <div class="flex flex-wrap items-center gap-8">
-                        <a href="#" class="group relative px-10 py-5 bg-slate-900 text-white rounded-[2rem] text-[11px] font-black uppercase tracking-widest overflow-hidden transition-all shadow-2xl hover:shadow-blue-900/30 active:scale-95 font-sans">
-                            <span class="relative z-10">Postular Ahora</span>
-                            <div class="absolute inset-0 bg-blue-600 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></div>
-                        </a>
+                        {% if plazas_conteo and plazas_conteo > 0 %}
+                            <a href="{% url 'convocatoria:listar_convocatorias' %}" class="group relative px-10 py-5 bg-slate-900 text-white rounded-[2rem] text-[11px] font-black uppercase tracking-widest overflow-hidden transition-all shadow-2xl hover:shadow-blue-900/30 active:scale-95 font-sans">
+                                <span class="relative z-10">Ver Convocatorias</span>
+                                <div class="absolute inset-0 bg-blue-600 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></div>
+                            </a>
+                        {% else %}
+                            <div class="px-10 py-5 bg-slate-100 text-slate-400 rounded-[2rem] text-[11px] font-black uppercase tracking-widest font-sans border border-slate-200">
+                                Próximamente
+                            </div>
+                        {% endif %}
                         
                         <div class="group flex flex-col border-l border-slate-100 pl-8">
-                            <span class="text-[32px] font-black text-slate-900 leading-none tracking-tighter serif-editorial">{{ plazas_conteo|default:"0" }}+</span>
-                            <span class="text-[9px] font-bold text-blue-600 uppercase tracking-widest mt-1 font-sans">Plazas Abiertas</span>
+                            <span class="text-[32px] font-black text-slate-900 leading-none tracking-tighter serif-editorial">
+                                {{ plazas_conteo|default:"0" }}
+                            </span>
+                            <span class="text-[9px] font-bold text-blue-600 uppercase tracking-widest mt-1 font-sans">
+                                {% if plazas_conteo == 1 %}Convocatoria Abierta{% else %}Convocatorias Abiertas{% endif %}
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -49,13 +57,13 @@
 
             <div class="lg:w-1/2 relative h-[550px] w-full">
                 <div class="absolute right-0 top-0 w-[85%] h-[90%] rounded-[4rem] overflow-hidden shadow-[0_60px_100px_-20px_rgba(0,0,0,0.12)] group border-[16px] border-white z-10">
-                    <img src="static/img/2.jpeg" 
+                    <img src="{% static 'img/2.jpeg' %}" 
                          class="w-full h-full object-cover grayscale transition-all duration-[2s] group-hover:grayscale-0 group-hover:scale-105" alt="Talento IESPP">
                     <div class="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
                 </div>
 
                 <div class="absolute -left-4 bottom-4 w-60 h-[70%] rounded-[3rem] overflow-hidden shadow-[0_40px_80px_-15px_rgba(0,0,0,0.25)] border-[8px] border-white hidden md:block animate-float z-20">
-                    <img src="static/img/3.jpeg" 
+                    <img src="{% static 'img/3.jpeg' %}" 
                          class="w-full h-full object-cover" alt="Especialista">
                 </div>
 
@@ -74,7 +82,7 @@
     <div class="absolute bottom-0 left-0 w-full z-20">
         <div class="relative w-full h-32 flex items-center justify-center">
             <div class="absolute inset-0 bg-blue-900" 
-                 style="clip-path: polygon(0 60%, 100% 0, 100% 100%, 0 100%);">
+                  style="clip-path: polygon(0 60%, 100% 0, 100% 100%, 0 100%);">
             </div>
             
             <div class="relative z-30 mb-[-45px]">
@@ -87,7 +95,6 @@
 </section>
 
 <style>
-    /* Clases de fuente específicas para el estilo de la imagen */
     .font-editorial { font-family: 'Plus Jakarta Sans', sans-serif; }
     .serif-editorial { font-family: 'Cinzel', serif; letter-spacing: -0.05em; }
 
@@ -106,7 +113,6 @@
         to { transform: rotate(360deg); }
     }
 
-    /* Ajuste para que el título se vea como la imagen */
     .serif-editorial span {
         font-family: 'Playfair Display', serif;
         display: inline-block;

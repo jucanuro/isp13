@@ -1,0 +1,201 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block footer %}{% endblock %}
+
+{% block content %}
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Cinzel:wght@700&display=swap" rel="stylesheet">
+
+<style>
+    .font-cinzel { font-family: 'Cinzel', serif; }
+    .font-inter { font-family: 'Inter', sans-serif; }
+    
+    .bg-main {
+        background-color: #ffffff;
+        background-image: radial-gradient(#f1f5f9 1px, transparent 1px);
+        background-size: 40px 40px;
+    }
+
+    .table-container {
+        background: white;
+        border-radius: 1.25rem;
+        border: 1px solid #e2e8f0;
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.02);
+    }
+
+    .status-badge {
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 9px;
+        font-weight: 800;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+        .desktop-table { display: none; }
+        .mobile-cards { display: block; }
+    }
+    @media (min-width: 1025px) {
+        .desktop-table { display: table; }
+        .mobile-cards { display: none; }
+    }
+</style>
+
+<main class="min-h-screen bg-main font-inter pb-20">
+    <div class="max-w-[1500px] mx-auto px-6 pt-16">
+        
+        <div class="flex flex-col md:flex-row justify-between items-center gap-6 mb-12">
+            <div class="text-center md:text-left">
+                <div class="inline-flex items-center gap-2 mb-2">
+                    <span class="w-6 h-[2px] bg-blue-600"></span>
+                    <span class="text-[10px] font-extrabold uppercase tracking-[0.4em] text-blue-600">
+                        Portal de Transparencia e Innovación
+                    </span>
+                </div>
+                <h1 class="text-3xl md:text-4xl font-cinzel font-black text-slate-900 tracking-tight uppercase">
+                    Convocatorias <span class="text-blue-500 font-light italic text-2xl md:text-3xl ml-2 font-sans">Vigentes</span>
+                </h1>
+            </div>
+
+            {% if user.is_authenticated %}
+            <a href="{% url 'convocatoria:registrar_convocatoria' %}" 
+               class="w-full md:w-auto flex items-center justify-center gap-3 px-8 py-4 bg-slate-900 text-white rounded-2xl hover:bg-blue-600 transition-all duration-300 shadow-xl shadow-slate-200 group">
+                <i class="fa-solid fa-plus text-xs group-hover:rotate-90 transition-transform"></i>
+                <span class="text-[10px] font-black uppercase tracking-widest">Crear Proceso</span>
+            </a>
+            {% endif %}
+        </div>
+
+        <div class="table-container overflow-hidden">
+            <table class="desktop-table w-full">
+                <thead>
+                    <tr class="bg-slate-50/50 border-b border-slate-100">
+                        <th class="py-5 px-6 text-[9px] font-black uppercase tracking-widest text-slate-400 text-left w-32">Estado</th>
+                        <th class="py-5 px-6 text-[9px] font-black uppercase tracking-widest text-slate-400 text-left">Proceso / Título</th>
+                        <th class="py-5 px-6 text-[9px] font-black uppercase tracking-widest text-slate-400 text-left">Canales de Postulación</th>
+                        <th class="py-5 px-6 text-[9px] font-black uppercase tracking-widest text-slate-400 text-left">Documentación</th>
+                        {% if user.is_authenticated %}
+                        <th class="py-5 px-6 text-[9px] font-black uppercase tracking-widest text-slate-400 text-right">Gestión</th>
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 text-sm">
+                    {% for c in convocatorias %}
+                    <tr class="group hover:bg-slate-50/50 transition-all">
+                        <td class="px-6 py-8">
+                            <span class="status-badge {% if c.estado == 'PUBLICADO' %}bg-emerald-50 text-emerald-600 border border-emerald-100{% else %}bg-blue-50 text-blue-600 border border-blue-100{% endif %}">
+                                {{ c.get_estado_display }}
+                            </span>
+                        </td>
+
+                        <td class="px-6 py-8">
+                            <h3 class="text-[13px] font-bold text-slate-800 leading-snug uppercase tracking-tight">{{ c.titulo }}</h3>
+                        </td>
+
+                        <td class="px-6 py-8">
+                            <div class="flex flex-col gap-2">
+                                <div class="flex items-center gap-3 p-3 bg-blue-50/30 border border-blue-100/50 rounded-xl w-fit">
+                                    <div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white text-[10px]">
+                                        <i class="fa-solid fa-envelope-open-text"></i>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <span class="text-[8px] font-black text-blue-600 uppercase tracking-tighter">Enviar CV a:</span>
+                                        <span class="text-[11px] font-bold text-slate-700 lowercase">{{ c.info_correo|default:"mesa@institucion.edu" }}</span>
+                                    </div>
+                                </div>
+                                <span class="text-[9px] font-medium text-slate-400 italic px-1">
+                                    <i class="fa-solid fa-circle-info mr-1"></i> Indica el número de proceso en el asunto.
+                                </span>
+                            </div>
+                        </td>
+
+                        <td class="px-6 py-8">
+                            <div class="flex flex-wrap gap-2">
+                                {% for doc in c.documentos.all %}
+                                <a href="{{ doc.archivo.url }}" target="_blank" class="flex items-center gap-2 px-3 py-2 bg-white border border-slate-200 rounded-lg hover:border-blue-500 hover:shadow-sm transition-all">
+                                    <i class="fa-solid fa-file-pdf text-rose-500"></i>
+                                    <span class="text-[9px] font-bold text-slate-600 uppercase">{{ doc.nombre_documento }}</span>
+                                </a>
+                                {% endfor %}
+                            </div>
+                        </td>
+
+                        {% if user.is_authenticated %}
+                        <td class="px-6 py-8 text-right">
+                            <div class="flex justify-end gap-2">
+                                <a href="{% url 'convocatoria:editar_convocatoria' c.id %}" class="w-9 h-9 flex items-center justify-center text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all border border-transparent hover:border-blue-100"><i class="fa-solid fa-pen-to-square"></i></a>
+                                <button onclick="confirmarEliminar({{ c.id }})" class="w-9 h-9 flex items-center justify-center text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-xl transition-all border border-transparent hover:border-rose-100"><i class="fa-solid fa-trash-can"></i></button>
+                            </div>
+                        </td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="mobile-cards p-4 space-y-6">
+                {% for c in convocatorias %}
+                <div class="bg-white border border-slate-200 rounded-[2rem] p-6 shadow-sm">
+                    <div class="flex justify-between items-center mb-6">
+                        <span class="status-badge bg-blue-50 text-blue-600">{{ c.get_estado_display }}</span>
+                        {% if user.is_authenticated %}
+                        <div class="flex gap-2">
+                            <a href="{% url 'convocatoria:editar_convocatoria' c.id %}" class="p-2 text-slate-400"><i class="fa-solid fa-pen-to-square"></i></a>
+                            <button onclick="confirmarEliminar({{ c.id }})" class="p-2 text-rose-400"><i class="fa-solid fa-trash-can"></i></button>
+                        </div>
+                        {% endif %}
+                    </div>
+                    
+                    <h3 class="text-base font-black text-slate-900 mb-4 uppercase leading-tight">{{ c.titulo }}</h3>
+                    
+                    <div class="space-y-4">
+                        <div class="p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                            <p class="text-[9px] font-black text-blue-600 uppercase mb-1">Información de Postulación</p>
+                            <p class="text-xs font-bold text-slate-700"><i class="fa-solid fa-envelope mr-2"></i> {{ c.info_correo }}</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 gap-2">
+                            {% for doc in c.documentos.all %}
+                            <a href="{{ doc.archivo.url }}" class="flex items-center justify-between p-4 bg-white border border-slate-100 rounded-xl text-xs font-bold text-slate-600">
+                                <span><i class="fa-solid fa-file-pdf text-rose-500 mr-2"></i> {{ doc.nombre_documento }}</span>
+                                <i class="fa-solid fa-download text-slate-300"></i>
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            {% if not convocatorias %}
+            <div class="py-32 text-center">
+                <div class="inline-flex items-center justify-center w-20 h-20 bg-slate-50 rounded-full mb-6">
+                    <i class="fa-solid fa-folder-open text-slate-200 text-3xl"></i>
+                </div>
+                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">No hay procesos abiertos en este momento</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function confirmarEliminar(id) {
+        Swal.fire({
+            title: '¿Eliminar proceso?',
+            text: "Se borrará permanentemente de la lista pública.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#0f172a',
+            confirmButtonText: '<span class="text-[10px] font-black uppercase tracking-widest">Sí, eliminar</span>',
+            cancelButtonText: '<span class="text-[10px] font-black uppercase tracking-widest text-slate-900">Cancelar</span>',
+            reverseButtons: true,
+            customClass: { popup: 'rounded-[2rem] border-none shadow-2xl' }
+        }).then((result) => {
+            if (result.isConfirmed) { window.location.href = `/convocatorias/eliminar/${id}/`; }
+        })
+    }
+</script>
+{% endblock %}

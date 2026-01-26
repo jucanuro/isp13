@@ -1,62 +1,17 @@
 {% load static %}
-<div id="modal-noticias" class="fixed inset-0 z-[9999] hidden items-center justify-center p-4 bg-blue-950/80 backdrop-blur-xl">
-    <div id="modal-content" class="relative bg-blue-900 w-full max-w-3xl h-[90vh] rounded-[2.5rem] lg:rounded-[3rem] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col border border-white/10 transform transition-all scale-95 opacity-0 duration-500">
-        
-        <div class="bg-white/5 backdrop-blur-md px-8 py-5 flex justify-between items-center shrink-0 border-b border-white/10 relative z-10">
-            <div class="flex items-center gap-4">
-                <div class="w-10 h-10 bg-amber-400 rounded-xl flex items-center justify-center shadow-lg shadow-amber-400/20">
-                    <i class="fas fa-bullhorn text-blue-900 text-lg"></i>
-                </div>
-                <div>
-                    <h3 class="text-lg font-black text-white uppercase tracking-tighter leading-none">Comunicado Oficial</h3>
-                    <p class="text-[9px] text-amber-400 font-bold uppercase tracking-[0.2em] mt-1">Gestión Institucional 2026</p>
-                </div>
-            </div>
-            <button onclick="closeNewsModal()" class="w-10 h-10 flex items-center justify-center rounded-xl bg-white/10 text-white hover:bg-red-500 transition-all group border border-white/10">
-                <i class="fas fa-times group-hover:rotate-90 transition-transform text-sm"></i>
-            </button>
-        </div>
 
-        <div class="flex-grow bg-slate-900 overflow-y-auto custom-scrollbar relative">
-            <div class="w-full h-full flex items-start justify-center">
-                <img src="{% static 'img/publicidad.jpeg' %}" 
-                    class="w-full h-full object-contain" 
-                    alt="Publicidad">
-            </div>
-        </div>
-
-        <div class="bg-white py-4 px-8 flex justify-between items-center shrink-0 border-t border-slate-100">
-            <div class="flex items-center gap-3">
-                <div class="flex gap-1.5">
-                    <div class="w-2 h-2 rounded-full bg-blue-900"></div>
-                    <div class="w-2 h-2 rounded-full bg-amber-400"></div>
-                    <div class="w-2 h-2 rounded-full bg-blue-900"></div>
-                </div>
-                <span class="text-[10px] font-black text-slate-800 uppercase tracking-widest">Información Importante</span>
-            </div>
-            
-            <button onclick="closeNewsModal()" class="px-8 py-2.5 bg-blue-900 text-white text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-amber-500 transition-all shadow-lg active:scale-95">
-                Cerrar Anuncio
-            </button>
-        </div>
-    </div>
-</div>
 <style>
-    /* 1. Configuración del Carrusel */
-    .carousel-img {
+    /* Ajuste para que el video cubra todo sin deformarse */
+    .video-background {
         position: absolute;
-        inset: 0;
-        opacity: 0;
-        background-size: cover;
-        background-position: center;
-        transition: opacity 1.5s ease-in-out, transform 8s linear;
-        transform: scale(1.1);
-        z-index: 5;
-    }
-    .carousel-img.active {
-        opacity: 1;
-        transform: scale(1);
-        z-index: 10;
+        top: 50%;
+        left: 50%;
+        min-width: 100%;
+        min-height: 100%;
+        width: auto;
+        height: auto;
+        transform: translate(-50%, -50%);
+        object-fit: cover;
     }
 
     /* 2. Animación de Haces de Luz */
@@ -76,13 +31,11 @@
         100% { transform: rotate(-45deg) translateY(1500px); }
     }
 
-    /* 3. CORTE TIPO DIPLOMA (Pestaña Trapezoidal Profesional) */
-    /* Este diseño corta la base del carrusel en forma de trapecio hacia afuera */
+    /* 3. CORTE TIPO DIPLOMA */
     .diploma-cut-base {
         clip-path: polygon(0 0, 100% 0, 100% 85%, 55% 85%, 53% 95%, 47% 95%, 45% 85%, 0 85%);
     }
 
-    /* 4. Formas Elegantes Decorativas */
     .elegant-shape {
         position: absolute;
         background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
@@ -91,7 +44,6 @@
         z-index: 35;
     }
 
-    /* 5. Scrollbar Moderno para el Modal */
     .custom-scrollbar::-webkit-scrollbar { width: 6px; }
     .custom-scrollbar::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.1); }
     .custom-scrollbar::-webkit-scrollbar-thumb {
@@ -100,18 +52,33 @@
     }
 </style>
 
-<section id="inicio" class="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-[#f8fafc]">
+<section id="inicio" class="relative min-h-screen w-full flex items-center justify-start px-8 lg:px-24 overflow-hidden bg-[#f8fafc]">
     
     <div class="absolute inset-0 z-0 diploma-cut-base shadow-2xl overflow-hidden bg-[#0f172a]">
-        <div id="carousel-container" class="relative w-full h-full">
-            <div class="carousel-img active" style="background-image: url('https://images.unsplash.com/photo-1523050335392-93851179ae22?q=80&w=2070'); opacity: 1; z-index: 10;"></div>
-        </div>
+        <video autoplay muted loop playsinline class="video-background">
+            <source src="{% static 'videos/inicio.mp4' %}" type="video/mp4">
+            Tu navegador no soporta videos.
+        </video>
         
-        <div class="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-blue-900/80 z-10"></div>
-        <div class="absolute inset-0 z-20 opacity-20 mix-blend-overlay bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/20 to-transparent z-10"></div>
+        <div class="absolute inset-0 z-20 opacity-10 mix-blend-overlay bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
         
         <div class="light-beam-1 z-30"></div>
         <div class="light-beam-2 z-30"></div>
+    </div>
+
+    <div class="relative z-[50] text-left max-w-2xl">
+        <h2 class="text-amber-400 font-black text-xs lg:text-sm uppercase tracking-[0.4em] mb-4 drop-shadow-md">Admisión Institucional 2026</h2>
+        <h1 class="text-white font-black text-4xl lg:text-7xl uppercase tracking-tighter leading-none mb-6 drop-shadow-2xl">
+            Forjando el <br><span class="text-blue-400 italic font-light">Futuro</span> Pedagógico
+        </h1>
+        <p class="text-white/80 text-sm lg:text-lg font-medium mb-10 max-w-lg leading-relaxed drop-shadow-lg">
+            Inicia tu camino en la docencia con una formación de excelencia. Inscripciones abiertas para el proceso de admisión 2026.
+        </p>
+        <a href="#" class="inline-flex items-center gap-4 bg-amber-500 hover:bg-amber-400 text-blue-950 px-10 py-5 rounded-2xl font-black uppercase text-[10px] tracking-widest transition-all shadow-[0_20px_50px_-10px_rgba(245,158,11,0.5)] active:scale-95 group">
+            Empezar Admisión
+            <i class="fas fa-arrow-right group-hover:translate-x-2 transition-transform"></i>
+        </a>
     </div>
 
     <div class="absolute inset-0 z-40 pointer-events-none">
@@ -131,6 +98,14 @@
                 <i class="fas fa-database text-xl"></i>
             </div>
         </a>
+
+        <a href="#" class="group flex items-center justify-end gap-4">
+            <span class="opacity-0 group-hover:opacity-100 translate-x-4 group-hover:translate-x-0 transition-all bg-blue-900 text-white text-[10px] font-black uppercase tracking-widest py-2 px-4 rounded-lg">Biblioteca Virtual</span>
+            <div class="w-14 h-14 flex items-center justify-center bg-white shadow-xl rounded-2xl text-emerald-500 border border-slate-100 hover:bg-emerald-500 hover:text-white transition-all transform group-hover:scale-110">
+                <i class="fas fa-book text-xl"></i>
+            </div>
+        </a>
+
         <a href="#" class="group flex items-center justify-end gap-4">
             <span class="opacity-0 group-hover:opacity-100 translate-x-4 group-hover:translate-x-0 transition-all bg-blue-900 text-white text-[10px] font-black uppercase tracking-widest py-2 px-4 rounded-lg">Plataforma EVA</span>
             <div class="w-14 h-14 flex items-center justify-center bg-white shadow-xl rounded-2xl text-blue-600 border border-slate-100 hover:bg-blue-600 hover:text-white transition-all transform group-hover:scale-110">
@@ -171,34 +146,6 @@
 </section>
 
 <script>
-    const images = [
-        'https://images.unsplash.com/photo-1523050335392-93851179ae22?q=80&w=2070',
-        'https://images.unsplash.com/photo-1541339907198-e08756ebafe1?q=80&w=2070',
-        'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2071',
-        'https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=2070',
-        'https://images.unsplash.com/photo-1498243639159-00cd3e0ca9ec?q=80&w=2070',
-        'https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=2070'
-    ];
-
-    const container = document.getElementById('carousel-container');
-    for(let i = 1; i < images.length; i++) {
-        const img = document.createElement('div');
-        img.className = 'carousel-img';
-        img.style.backgroundImage = `url('${images[i]}')`;
-        container.appendChild(img);
-    }
-
-    let currentStep = 0;
-    const slides = document.querySelectorAll('.carousel-img');
-
-    function nextSlide() {
-        slides[currentStep].classList.remove('active');
-        currentStep = (currentStep + 1) % slides.length;
-        slides[currentStep].classList.add('active');
-    }
-    setInterval(nextSlide, 5000);
-
-    // Modal al cargar
     window.addEventListener('DOMContentLoaded', () => {
         const modal = document.getElementById('modal-noticias');
         const content = document.getElementById('modal-content');
