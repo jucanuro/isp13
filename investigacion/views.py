@@ -7,11 +7,11 @@ from django.contrib import messages
 from django.http import HttpResponse
 from django.http import JsonResponse
 from lxml import etree
+from django.db.models import Q
 
 @login_required
 def registrar_tesis(request):
     tesis = None
-    # Prioridad al ID que viene del campo oculto (inyectado por AJAX)
     id_hidden = request.POST.get('tesis_id_hidden')
     if id_hidden:
         tesis = Tesis.objects.filter(id=id_hidden).first()
@@ -20,7 +20,6 @@ def registrar_tesis(request):
         es_ajax = request.headers.get('x-requested-with') == 'XMLHttpRequest' or request.POST.get('ajax') == 'true'
         titulo = request.POST.get('titulo', '').strip()
 
-        # --- FLUJO AJAX: Sincronización de Título ---
         if es_ajax:
             if not titulo:
                 return JsonResponse({'status': 'error', 'message': 'Título vacío'}, status=400)
@@ -32,7 +31,6 @@ def registrar_tesis(request):
                 tesis = Tesis.objects.create(titulo=titulo, estado='pendiente')
             return JsonResponse({'status': 'success', 'id': tesis.id})
 
-        # --- FLUJO POST: Guardado Final ---
         if not tesis:
             messages.error(request, "Error: Inicie el registro con un título para activar el sistema.")
             return redirect('investigacion:registrar_tesis')
@@ -45,11 +43,9 @@ def registrar_tesis(request):
             tesis.ocde_nombre = request.POST.get('ocde_nombre', '').strip() or f"Área OCDE {tesis.ocde_codigo}"
             tesis.derechos_acceso = request.POST.get('derechos_acceso')
             
-            # TRATAMIENTO DE FECHA (Evita que explote si llega vacío)
             fecha = request.POST.get('fecha_publicacion')
             tesis.fecha_publicacion = fecha if (fecha and fecha.strip()) else None
 
-            # GUARDAR ARCHIVOS
             if 'archivo_pdf' in request.FILES: tesis.archivo_pdf = request.FILES['archivo_pdf']
             if 'constancia_originalidad' in request.FILES: tesis.constancia_originalidad = request.FILES['constancia_originalidad']
             if 'reporte_turnitin' in request.FILES: tesis.reporte_turnitin = request.FILES['reporte_turnitin']
@@ -66,7 +62,6 @@ def registrar_tesis(request):
         'tipos_grado': Tesis.TIPO_GRADO,
         'editando': False
     })
-
 
 @login_required
 def editar_tesis(request, tesis_id):
@@ -118,11 +113,9 @@ def lista_tesis(request):
     query = request.GET.get('q')
     estado_filtro = request.GET.get('estado')
     
-    # Mantengo tu lógica exacta
     tesis_queryset = Tesis.objects.all().prefetch_related('autores', 'asesores').order_by('-fecha_registro')
 
     if query:
-        # Ahora 'models.Q' funcionará porque ya importamos 'models' arriba
         tesis_queryset = tesis_queryset.filter(
             models.Q(titulo__icontains=query) | 
             models.Q(autores__nombre_completo__icontains=query) |
@@ -132,7 +125,6 @@ def lista_tesis(request):
     if estado_filtro and estado_filtro != 'todos':
         tesis_queryset = tesis_queryset.filter(estado=estado_filtro)
 
-    # Mantengo tu paginación de 5 elementos
     paginator = Paginator(tesis_queryset, 5) 
     page_number = request.GET.get('page')
     tesis_paginadas = paginator.get_page(page_number)
@@ -141,6 +133,25 @@ def lista_tesis(request):
         'tesis_locales': tesis_paginadas, 
         'estado_actual': estado_filtro or 'todos',
         'query_actual': query or ''
+    })
+
+
+def repositorio_publico(request):
+    query = request.GET.get('q')
+    tesis_queryset = Tesis.objects.filter(estado='publicado').prefetch_related('autores', 'asesores').order_by('-fecha_registro')
+
+    if query:
+        tesis_queryset = Tesis.objects.filter(estado='publicado').prefetch_related('autores')
+
+    paginator = Paginator(tesis_queryset, 9)
+    page_number = request.GET.get('page')
+    tesis_paginadas = paginator.get_page(page_number)
+
+    return render(request, 'investigacion/repositorio_web.html', {
+        'tesis_locales': tesis_paginadas,
+        'query': query or '',
+        'mostrar_boton_ver_mas': False, 
+        'template_base': 'base.html',
     })
 
 @login_required

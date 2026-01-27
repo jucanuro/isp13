@@ -1,0 +1,220 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{# Bloqueamos elementos innecesarios del sitio público #}
+{% block topbar %}{% endblock %}
+{% block verticalbar %}{% endblock %}
+{% block header %}{% endblock %}
+{% block footer %}{% endblock %}
+
+{% block content %}
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+    :root {
+        --glass-bg: rgba(255, 255, 255, 0.8);
+        --accent-blue: #2563eb;
+        --accent-purple: #7c3aed;
+        --accent-emerald: #059669;
+    }
+
+    body { 
+        background-color: #f1f5f9; 
+        background-image: radial-gradient(#cbd5e1 0.5px, transparent 0.5px);
+        background-size: 24px 24px;
+        font-family: 'Plus Jakarta Sans', sans-serif; 
+    }
+    
+    .glass-header {
+        background: var(--glass-bg);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+    }
+
+    .module-card {
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 32px;
+        transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .module-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 40px 80px -20px rgba(0,0,0,0.08);
+        border-color: #cbd5e1;
+    }
+
+    .btn-action {
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+    }
+
+    .btn-primary-action {
+        background: #0f172a;
+        color: white;
+    }
+
+    .btn-primary-action:hover {
+        background: var(--accent-blue);
+        transform: scale(1.02);
+    }
+
+    .btn-secondary-action {
+        background: #f8fafc;
+        color: #475569;
+        border: 1px solid #e2e8f0;
+    }
+
+    .btn-secondary-action:hover {
+        background: white;
+        border-color: #94a3b8;
+        color: #0f172a;
+    }
+
+    .stat-pill {
+        background: white;
+        border: 1px solid #e2e8f0;
+        padding: 1.5rem;
+        border-radius: 24px;
+    }
+</style>
+
+<div class="min-h-screen pb-20">
+    <nav class="glass-header sticky top-0 z-50 mb-12">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-blue-200">
+                    <i class="fas fa-th-large"></i>
+                </div>
+                <div>
+                    <h1 class="text-lg font-extrabold text-slate-900 leading-none">Console.Admin</h1>
+                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Gestión Institucional</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-4">
+                <a href="{% url 'home' %}" target="_blank" class="hidden md:flex items-center gap-2 text-xs font-bold text-slate-600 hover:text-blue-600 transition-colors">
+                    <i class="fas fa-external-link-alt"></i> Ver Sitio Público
+                </a>
+                <div class="h-6 w-px bg-slate-200 mx-2"></div>
+                <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="bg-red-50 text-red-600 px-5 py-2.5 rounded-xl text-xs font-bold hover:bg-red-600 hover:text-white transition-all">
+                        Salir <i class="fas fa-power-off ml-2"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="mb-12">
+            <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Hola, {{ user.first_name|default:user.username }}</h2>
+            <p class="text-slate-500 font-medium mt-1">Aquí tienes el resumen de tu plataforma hoy.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <div class="stat-pill flex items-center gap-5">
+                <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <div>
+                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Tesis Activas</p>
+                    <p class="text-2xl font-extrabold text-slate-900">{{ total_tesis }}</p>
+                </div>
+            </div>
+            <div class="stat-pill flex items-center gap-5">
+                <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center text-xl">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div>
+                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Por Validar</p>
+                    <p class="text-2xl font-extrabold text-slate-900">{{ tesis_pendientes }}</p>
+                </div>
+            </div>
+            <div class="stat-pill flex items-center gap-5">
+                <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div>
+                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Sistema</p>
+                    <p class="text-sm font-bold text-emerald-600">ONLINE</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <div class="module-card p-8">
+                <div class="flex items-start justify-between mb-8">
+                    <div class="w-14 h-14 bg-blue-600 rounded-2xl flex items-center justify-center text-white text-2xl shadow-lg shadow-blue-100">
+                        <i class="fas fa-microscope"></i>
+                    </div>
+                    <span class="px-3 py-1 bg-blue-50 text-blue-600 text-[10px] font-black rounded-full uppercase">Investigación</span>
+                </div>
+                <h3 class="text-xl font-bold text-slate-900 mb-2">Repositorio de Tesis</h3>
+                <p class="text-slate-500 text-sm mb-8 leading-relaxed">Administra la producción científica, carga archivos PDF y gestiona autores.</p>
+                
+                <div class="flex flex-col gap-3">
+                    <a href="{% url 'investigacion:registrar_tesis' %}" class="btn-action btn-primary-action py-4 rounded-2xl">
+                        <i class="fas fa-plus-circle"></i> Nueva Tesis
+                    </a>
+                    <a href="{% url 'investigacion:lista_tesis' %}" class="btn-action btn-secondary-action py-4 rounded-2xl">
+                        <i class="fas fa-layer-group"></i> Ver Catálogo
+                    </a>
+                </div>
+            </div>
+
+            <div class="module-card p-8">
+                <div class="flex items-start justify-between mb-8">
+                    <div class="w-14 h-14 bg-purple-600 rounded-2xl flex items-center justify-center text-white text-2xl shadow-lg shadow-purple-100">
+                        <i class="fas fa-bullhorn"></i>
+                    </div>
+                    <span class="px-3 py-1 bg-purple-50 text-purple-600 text-[10px] font-black rounded-full uppercase">Llamados</span>
+                </div>
+                <h3 class="text-xl font-bold text-slate-900 mb-2">Convocatorias</h3>
+                <p class="text-slate-500 text-sm mb-8 leading-relaxed">Publica oportunidades académicas y gestiona fechas de postulación.</p>
+                
+                <div class="flex flex-col gap-3">
+                    <a href="{% url 'convocatoria:registrar_convocatoria' %}" class="btn-action btn-primary-action py-4 rounded-2xl" style="background: #1e1b4b;">
+                        <i class="fas fa-calendar-plus"></i> Nueva Convocatoria
+                    </a>
+                    <a href="{% url 'convocatoria:listar_convocatorias' %}" class="btn-action btn-secondary-action py-4 rounded-2xl">
+                        <i class="fas fa-clipboard-list"></i> Gestionar Lista
+                    </a>
+                </div>
+            </div>
+
+            <div class="module-card p-8">
+                <div class="flex items-start justify-between mb-8">
+                    <div class="w-14 h-14 bg-emerald-600 rounded-2xl flex items-center justify-center text-white text-2xl shadow-lg shadow-emerald-100">
+                        <i class="fas fa-newspaper"></i>
+                    </div>
+                    <span class="px-3 py-1 bg-emerald-50 text-emerald-600 text-[10px] font-black rounded-full uppercase">Comunicación</span>
+                </div>
+                <h3 class="text-xl font-bold text-slate-900 mb-2">Blog & Publicaciones</h3>
+                <p class="text-slate-500 text-sm mb-8 leading-relaxed">Edita artículos de actualidad y noticias institucionales para el sitio.</p>
+                
+                <div class="flex flex-col gap-3">
+                    <a href="{% url 'blog:registrar_blog' %}" class="btn-action btn-primary-action py-4 rounded-2xl" style="background: #064e3b;">
+                        <i class="fas fa-pen-nib"></i> Escribir Post
+                    </a>
+                    <a href="{% url 'blog:listar_publicaciones' %}" class="btn-action btn-secondary-action py-4 rounded-2xl">
+                        <i class="fas fa-stream"></i> Ver Publicados
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

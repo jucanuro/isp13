@@ -2,153 +2,229 @@
 <div id="mobile-menu-overlay" class="fixed inset-0 z-[200] invisible h-[100dvh] w-full overflow-hidden">
 
     <div id="mobile-menu-backdrop" 
-        class="absolute inset-0 bg-blue-950/60 backdrop-blur-md opacity-0 transition-opacity duration-500">
+        class="absolute inset-0 bg-blue-950/40 backdrop-blur-xl opacity-0 transition-opacity duration-500">
     </div>
     
     <div id="mobile-menu-panel" 
-        class="absolute top-0 right-0 w-[88%] sm:w-[80%] max-w-[400px] h-full bg-slate-50 shadow-[-20px_0_60px_rgba(0,0,0,0.3)] translate-x-full transition-transform duration-500 cubic-bezier(0.16, 1, 0.3, 1) flex flex-col">
+        class="absolute top-0 right-0 w-[88%] sm:w-[80%] max-w-[420px] h-full bg-white shadow-[-25px_0_80px_rgba(0,0,0,0.4)] translate-x-full transition-transform duration-500 cubic-bezier(0.16, 1, 0.3, 1) flex flex-col border-l border-white/20">
         
-        <div class="p-6 flex justify-between items-center bg-white border-b border-slate-100 sticky top-0 z-30">
+        <div class="p-6 flex justify-between items-center bg-white/80 backdrop-blur-md border-b border-slate-100 sticky top-0 z-50">
             <div class="flex items-center gap-3">
-                <div class="w-1 h-8 bg-blue-600 rounded-full"></div>
+                <div class="w-1.5 h-8 bg-gradient-to-b from-blue-600 to-indigo-800 rounded-full"></div>
                 <div class="flex flex-col">
-                    <span class="text-[9px] font-black text-blue-600 uppercase tracking-[0.3em] leading-none mb-1">Explorar</span>
-                    <span class="text-blue-950 font-black uppercase tracking-widest text-xs">Menú Principal</span>
+                    <span class="text-[10px] font-black text-blue-600 uppercase tracking-[0.3em] leading-none mb-1">Navegación</span>
+                    <span class="text-blue-950 font-black uppercase tracking-tighter text-sm">Menú Institucional</span>
                 </div>
             </div>
             <button id="btn-mobile-close" 
-                    class="w-11 h-11 flex items-center justify-center rounded-2xl bg-slate-100 text-slate-500 hover:text-red-500 transition-all active:scale-90 shadow-inner">
-                <i class="fas fa-times text-lg"></i>
+                    class="w-12 h-12 flex items-center justify-center rounded-2xl bg-slate-50 text-slate-400 hover:text-red-500 transition-all active:scale-90 shadow-sm border border-slate-100">
+                <i class="fas fa-times text-xl"></i>
             </button>
         </div>
 
-        <div class="flex-1 overflow-y-auto overflow-x-hidden space-y-8 p-6 bg-slate-50/50">
+        <div class="flex-1 overflow-y-auto space-y-6 p-5 bg-gradient-to-b from-slate-50 to-white">
             
-            <a href="{% url 'home' %}" class="group relative flex items-center justify-between p-5 rounded-[2rem] bg-white shadow-sm border border-slate-100 active:scale-[0.97] transition-all">
+            <a href="{% url 'home' %}" class="group relative flex items-center justify-between p-4 rounded-[1.8rem] bg-white shadow-sm border border-slate-100 active:scale-[0.97] transition-all">
                 <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 rounded-2xl bg-blue-600 flex items-center justify-center text-white shadow-lg shadow-blue-200 group-hover:rotate-12 transition-transform">
-                        <i class="fas fa-home text-lg"></i>
+                    <div class="w-11 h-11 rounded-2xl bg-blue-600 flex items-center justify-center text-white shadow-lg shadow-blue-100">
+                        <i class="fas fa-home"></i>
                     </div>
                     <span class="text-blue-900 font-black uppercase text-xs tracking-widest">Inicio</span>
                 </div>
-                <i class="fas fa-chevron-right text-[10px] text-slate-300"></i>
+                <i class="fas fa-arrow-right text-[10px] text-blue-200"></i>
             </a>
 
             <section>
-                <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4 px-2">Institución</p>
+                <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4 px-2 flex items-center gap-2">
+                    <span class="w-4 h-[1px] bg-slate-200"></span> Institución
+                </p>
                 <div class="grid grid-cols-2 gap-3">
-                    <button id="btn-mision-vision-mob" class="flex flex-col gap-3 p-5 rounded-[1.5rem] bg-white border border-slate-100 hover:border-blue-200 transition-all text-left group">
-                        <div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-all">
-                            <i class="fas fa-bullseye"></i>
+                    <button id="btn-mision-vision-mob" class="flex flex-col gap-3 p-4 rounded-[1.5rem] bg-white border border-slate-100 hover:border-blue-200 transition-all text-left shadow-sm group">
+                        <div class="w-9 h-9 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 group-active:bg-blue-600 group-active:text-white transition-all">
+                            <i class="fas fa-bullseye text-sm"></i>
                         </div>
-                        <span class="text-slate-700 font-black text-[10px] uppercase leading-tight">Misión & Visión</span>
+                        <span class="text-slate-700 font-black text-[9px] uppercase leading-tight tracking-wide">Misión &<br>Visión</span>
                     </button>
                     
-                    <button id="btn-historia-mob" class="flex flex-col gap-3 p-5 rounded-[1.5rem] bg-white border border-slate-100 hover:border-blue-200 transition-all text-left group">
-                        <div class="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600 group-hover:bg-amber-600 group-hover:text-white transition-all">
-                            <i class="fas fa-history"></i>
+                    <button id="btn-historia-mob" class="flex flex-col gap-3 p-4 rounded-[1.5rem] bg-white border border-slate-100 transition-all text-left shadow-sm group">
+                        <div class="w-9 h-9 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600 group-active:bg-amber-600 group-active:text-white transition-all">
+                            <i class="fas fa-history text-sm"></i>
                         </div>
-                        <span class="text-slate-700 font-black text-[10px] uppercase leading-tight">Nuestra Historia</span>
+                        <span class="text-slate-700 font-black text-[9px] uppercase leading-tight tracking-wide">Nuestra<br>Historia</span>
                     </button>
 
-                    <button id="btn-organigrama-mob" class="flex flex-col gap-3 p-5 rounded-[1.5rem] bg-white border border-slate-100 hover:border-blue-200 transition-all text-left group">
-                        <div class="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-all">
-                            <i class="fas fa-sitemap"></i>
+                    <button id="btn-organigrama-mob" class="flex flex-col gap-3 p-4 rounded-[1.5rem] bg-white border border-slate-100 transition-all text-left shadow-sm group">
+                        <div class="w-9 h-9 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 group-active:bg-indigo-600 group-active:text-white transition-all">
+                            <i class="fas fa-sitemap text-sm"></i>
                         </div>
-                        <span class="text-slate-700 font-black text-[10px] uppercase leading-tight">Organigrama</span>
+                        <span class="text-slate-700 font-black text-[9px] uppercase leading-tight tracking-wide">Estructura<br>Orgánica</span>
                     </button>
 
-                    <button id="btn-docentes-mob" class="flex flex-col gap-3 p-5 rounded-[1.5rem] bg-white border border-slate-100 hover:border-blue-200 transition-all text-left group">
-                        <div class="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white transition-all">
-                            <i class="fas fa-user-graduate"></i>
+                    <button id="btn-docentes-mob" class="flex flex-col gap-3 p-4 rounded-[1.5rem] bg-white border border-slate-100 transition-all text-left shadow-sm group">
+                        <div class="w-9 h-9 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 group-active:bg-emerald-600 group-active:text-white transition-all">
+                            <i class="fas fa-user-graduate text-sm"></i>
                         </div>
-                        <span class="text-slate-700 font-black text-[10px] uppercase leading-tight">Docentes</span>
+                        <span class="text-slate-700 font-black text-[9px] uppercase leading-tight tracking-wide">Plana<br>Docente</span>
                     </button>
                 </div>
             </section>
 
-            <section class="relative p-6 rounded-[2.5rem] bg-slate-900 shadow-2xl overflow-hidden">
-                <div class="absolute -top-10 -right-10 w-32 h-32 bg-blue-500/20 rounded-full blur-3xl"></div>
+            <section class="relative p-6 rounded-[2.5rem] bg-blue-950 shadow-2xl shadow-blue-900/20 overflow-hidden">
+                <div class="absolute -top-12 -right-12 w-32 h-32 bg-blue-500/20 rounded-full blur-3xl"></div>
+                <div class="absolute -bottom-12 -left-12 w-32 h-32 bg-indigo-500/10 rounded-full blur-3xl"></div>
                 
-                <p class="relative z-10 text-[9px] font-black text-blue-400 uppercase tracking-[0.3em] mb-4 flex items-center gap-2">
+                <p class="relative z-10 text-[9px] font-black text-blue-400 uppercase tracking-[0.3em] mb-5 flex items-center gap-2">
                     <i class="fas fa-graduation-cap"></i> Gestión Académica
                 </p>
                 
-                <div class="relative z-10 space-y-2">
-                    <div class="bg-white/5 rounded-2xl p-1 border border-white/10">
-                        <button onclick="abrirModalPerfil(event)" class="w-full flex justify-between items-center p-4 text-[10px] font-black uppercase text-white hover:text-blue-400 transition-colors">
-                            <span>Ed. Inicial</span> <i class="fas fa-arrow-right text-[8px] opacity-40"></i>
+                <div class="relative z-10 space-y-3">
+                    <div class="space-y-1 bg-white/5 rounded-2xl p-1.5 border border-white/10 backdrop-blur-sm">
+                        <button onclick="abrirModalPerfil(event)" class="w-full flex justify-between items-center p-4 text-[10px] font-black uppercase text-white hover:bg-white/5 rounded-xl transition-all">
+                            <span class="flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span> Ed. Inicial</span> 
+                            <i class="fas fa-chevron-right text-[8px] text-blue-400"></i>
                         </button>
-                        <button onclick="abrirModalPrimaria(event)" class="w-full flex justify-between items-center p-4 text-[10px] font-black uppercase text-white hover:text-blue-400 transition-colors border-t border-white/5">
-                            <span>Ed. Primaria</span> <i class="fas fa-arrow-right text-[8px] opacity-40"></i>
+                        <button onclick="abrirModalPrimaria(event)" class="w-full flex justify-between items-center p-4 text-[10px] font-black uppercase text-white hover:bg-white/5 rounded-xl transition-all border-t border-white/5">
+                            <span class="flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span> Ed. Primaria</span> 
+                            <i class="fas fa-chevron-right text-[8px] text-blue-400"></i>
                         </button>
-                        <button onclick="abrirModalSecundaria(event)" class="w-full flex justify-between items-center p-4 text-[10px] font-black uppercase text-white hover:text-blue-400 transition-colors border-t border-white/5">
-                            <div class="text-left">
-                                <p>Ed. Secundaria</p>
-                                <p class="text-[7px] font-medium text-slate-400 lowercase">CC.SS y Comunicación</p>
+                        <button onclick="abrirModalSecundaria(event)" class="w-full flex justify-between items-center p-4 text-[10px] font-black uppercase text-white hover:bg-white/5 rounded-xl transition-all border-t border-white/5">
+                            <div class="text-left flex items-center gap-3">
+                                <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+                                <div>
+                                    <p>Ed. Secundaria</p>
+                                    <p class="text-[7px] font-medium text-blue-300/60 lowercase tracking-widest">CC.SS y Comunicación</p>
+                                </div>
                             </div>
-                            <i class="fas fa-arrow-right text-[8px] opacity-40"></i>
+                            <i class="fas fa-chevron-right text-[8px] text-blue-400"></i>
                         </button>
                     </div>
                     
-                    <div class="grid grid-cols-3 gap-2 pt-2">
-                        <a href="#" class="flex flex-col items-center gap-2 py-3 rounded-xl bg-white/5 text-[8px] font-bold text-slate-300 uppercase"><i class="fas fa-file-signature text-xs text-blue-400"></i> Matrícula</a>
-                        <a href="#" class="flex flex-col items-center gap-2 py-3 rounded-xl bg-white/5 text-[8px] font-bold text-slate-300 uppercase"><i class="fas fa-calendar-day text-xs text-blue-400"></i> Horarios</a>
-                        <a href="#" class="flex flex-col items-center gap-2 py-3 rounded-xl bg-white/5 text-[8px] font-bold text-slate-300 uppercase"><i class="fas fa-book text-xs text-blue-400"></i> Plan</a>
-                    </div>
-                </div>
-            </section>
-
-            <section class="space-y-2">
-                <p class="text-[10px] font-black text-amber-600 uppercase tracking-[0.2em] mb-4 px-2">Unidades Orgánicas</p>
-                
-                <details class="group bg-white rounded-2xl border border-slate-100 overflow-hidden transition-all shadow-sm">
-                    <summary class="list-none flex justify-between items-center p-4 font-black text-[10px] uppercase text-slate-700 cursor-pointer">
-                        <span class="flex items-center gap-3"><i class="fas fa-microscope text-blue-800 opacity-60"></i> U. Investigación</span>
-                        <div class="w-6 h-6 rounded-full bg-slate-50 flex items-center justify-center group-open:rotate-180 transition-transform">
-                            <i class="fas fa-chevron-down text-[8px]"></i>
-                        </div>
-                    </summary>
-                    <div class="px-6 pb-4 space-y-3 border-t border-slate-50 pt-3">
-                        <a href="#investigacion" class="flex items-center gap-2 text-[10px] font-bold text-slate-500 uppercase"><span class="w-1 h-1 rounded-full bg-blue-400"></span> Repositorio</a>
-                        <a href="{% url 'investigacion:lista_tesis' %}" class="flex items-center gap-2 text-[10px] font-bold text-slate-500 uppercase"><span class="w-1 h-1 rounded-full bg-blue-400"></span> Gestión de Tesis</a>
-                    </div>
-                </details>
-
-                <details class="group bg-white rounded-2xl border border-slate-100 overflow-hidden transition-all shadow-sm">
-                    <summary class="list-none flex justify-between items-center p-4 font-black text-[10px] uppercase text-slate-700 cursor-pointer">
-                        <span class="flex items-center gap-3"><i class="fas fa-chalkboard-teacher text-blue-800 opacity-60"></i> U. Formación</span>
-                        <div class="w-6 h-6 rounded-full bg-slate-50 flex items-center justify-center group-open:rotate-180 transition-transform">
-                            <i class="fas fa-chevron-down text-[8px]"></i>
-                        </div>
-                    </summary>
-                    <div class="px-6 pb-4 space-y-3 border-t border-slate-50 pt-3">
-                        <a href="#" class="flex items-center gap-2 text-[10px] font-bold text-slate-500 uppercase"><span class="w-1 h-1 rounded-full bg-blue-400"></span> Cursos y Talleres</a>
-                    </div>
-                </details>
-            </section>
-
-            <section class="space-y-4 pb-10">
-                <div class="p-5 rounded-[2rem] bg-white border-2 border-dashed border-slate-200">
-                    <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-4 text-center italic">Documentación PDF</p>
-                    <div class="flex flex-col gap-3">
-                        <a href="#" class="flex items-center gap-3 p-3 rounded-xl bg-red-50 text-red-700 font-bold text-[10px] uppercase">
-                            <i class="fas fa-file-pdf"></i> Reglamento Institucional
+                    <div class="grid grid-cols-3 gap-2">
+                        <a href="#" class="flex flex-col items-center gap-2 py-3 rounded-2xl bg-white/5 border border-white/5 text-[8px] font-black text-slate-300 uppercase hover:bg-blue-600 transition-colors">
+                            <i class="fas fa-file-signature text-xs text-blue-400"></i> Matrícula
+                        </a>
+                        <a href="#" class="flex flex-col items-center gap-2 py-3 rounded-2xl bg-white/5 border border-white/5 text-[8px] font-black text-slate-300 uppercase hover:bg-blue-600 transition-colors">
+                            <i class="fas fa-calendar-day text-xs text-blue-400"></i> Horarios
+                        </a>
+                        <a href="#" class="flex flex-col items-center gap-2 py-3 rounded-2xl bg-white/5 border border-white/5 text-[8px] font-black text-slate-300 uppercase hover:bg-blue-600 transition-colors">
+                            <i class="fas fa-book text-xs text-blue-400"></i> Plan
                         </a>
                     </div>
                 </div>
+            </section>
 
-                <a href="https://www.transparencia.gob.pe" target="_blank" class="block group">
-                    <div class="bg-white border border-slate-200 rounded-[2rem] p-4 flex items-center justify-center gap-4 group-active:scale-95 transition-all shadow-md">
-                        <img src="{% static 'img/portal.png' %}" alt="Portal" class="h-10 w-auto">
-                        <span class="text-[10px] font-black uppercase text-blue-900 leading-tight">Portal de<br>Transparencia</span>
+            <section class="space-y-3">
+                <p class="text-[10px] font-black text-amber-600 uppercase tracking-[0.2em] mb-4 px-2 flex items-center gap-2">
+                    <span class="w-4 h-[1px] bg-amber-100"></span> Unidades Orgánicas
+                </p>
+                
+                <details class="group bg-white rounded-[1.5rem] border border-slate-100 overflow-hidden shadow-sm">
+                    <summary class="list-none flex justify-between items-center p-4 font-black text-[10px] uppercase text-slate-700 cursor-pointer group-open:bg-slate-50 transition-colors">
+                        <span class="flex items-center gap-3"><i class="fas fa-university text-blue-600"></i> U. Académica</span>
+                        <i class="fas fa-chevron-down text-[8px] group-open:rotate-180 transition-transform"></i>
+                    </summary>
+                    <div class="p-2 grid grid-cols-1 gap-1 bg-slate-50/50">
+                        <button onclick="openDynamicModal('u_academica_funciones')" class="flex items-center gap-3 p-3 text-[9px] font-bold text-slate-600 uppercase hover:bg-white rounded-xl transition-all">
+                            <i class="fas fa-file-alt text-blue-400"></i> Funciones
+                        </button>
+                        <button onclick="openDynamicModal('u_academica_dependencias')" class="flex items-center gap-3 p-3 text-[9px] font-bold text-slate-600 uppercase hover:bg-white rounded-xl transition-all">
+                            <i class="fas fa-sitemap text-blue-400"></i> Dependencias
+                        </button>
+                        <button onclick="openDynamicModal('u_academica_jefes')" class="flex items-center gap-3 p-3 text-[9px] font-bold text-slate-600 uppercase hover:bg-white rounded-xl transition-all">
+                            <i class="fas fa-user-tie text-blue-400"></i> Jefes
+                        </button>
+                    </div>
+                </details>
+
+                <details class="group bg-white rounded-[1.5rem] border border-slate-100 overflow-hidden shadow-sm">
+                    <summary class="list-none flex justify-between items-center p-4 font-black text-[10px] uppercase text-slate-700 cursor-pointer group-open:bg-slate-50 transition-colors">
+                        <span class="flex items-center gap-3"><i class="fas fa-chalkboard-teacher text-blue-600"></i> U. Formación Continua</span>
+                        <i class="fas fa-chevron-down text-[8px] group-open:rotate-180 transition-transform"></i>
+                    </summary>
+                    <div class="p-2 space-y-1 bg-slate-50/50">
+                        <button onclick="openDynamicModal('u_formacion_funciones')" class="w-full text-left p-3 text-[9px] font-bold text-slate-600 uppercase hover:bg-white rounded-xl">Funciones</button>
+                        <button onclick="openDynamicModal('u_formacion_jefe')" class="w-full text-left p-3 text-[9px] font-bold text-slate-600 uppercase hover:bg-white rounded-xl">Jefe de Unidades</button>
+                        <button onclick="openDynamicModal('u_formacion_cursos')" class="w-full text-left p-3 text-[9px] font-bold text-slate-600 uppercase hover:bg-white rounded-xl">Cursos y Talleres</button>
+                        <button onclick="openDynamicModal('u_formacion_conferencias')" class="w-full text-left p-3 text-[9px] font-bold text-slate-600 uppercase hover:bg-white rounded-xl">Seminarios</button>
+                    </div>
+                </details>
+
+                <details class="group bg-white rounded-[1.5rem] border border-slate-100 overflow-hidden shadow-sm">
+                    <summary class="list-none flex justify-between items-center p-4 font-black text-[10px] uppercase text-slate-700 cursor-pointer group-open:bg-slate-50 transition-colors">
+                        <span class="flex items-center gap-3"><i class="fas fa-microscope text-blue-600"></i> U. Investigación</span>
+                        <i class="fas fa-chevron-down text-[8px] group-open:rotate-180 transition-transform"></i>
+                    </summary>
+                    <div class="p-2 space-y-1 bg-slate-50/50 text-slate-600">
+                        <button onclick="openDynamicModal('u_inv_funciones')" class="w-full text-left p-3 text-[9px] font-bold uppercase hover:bg-white rounded-xl">Funciones</button>
+                        <button onclick="openDynamicModal('u_inv_lineas')" class="w-full text-left p-3 text-[9px] font-bold uppercase hover:bg-white rounded-xl">Líneas de Inv.</button>
+                        <button onclick="openDynamicModal('u_inv_reglamento')" class="w-full text-left p-3 text-[9px] font-bold uppercase hover:bg-white rounded-xl">Reglamento</button>
+                        <a href="{% url 'investigacion:lista_tesis' %}" class="flex items-center justify-center gap-2 m-2 py-3 rounded-xl bg-amber-400 text-blue-900 font-black text-[9px] uppercase shadow-lg shadow-amber-200">
+                            <i class="fas fa-graduation-cap"></i> Gestión de Tesis
+                        </a>
+                    </div>
+                </details>
+
+                <details class="group bg-white rounded-[1.5rem] border border-slate-100 overflow-hidden shadow-sm">
+                    <summary class="list-none flex justify-between items-center p-4 font-black text-[10px] uppercase text-slate-700 cursor-pointer group-open:bg-slate-50 transition-colors">
+                        <span class="flex items-center gap-3"><i class="fas fa-hand-holding-heart text-blue-600"></i> Bienestar y Emp.</span>
+                        <i class="fas fa-chevron-down text-[8px] group-open:rotate-180 transition-transform"></i>
+                    </summary>
+                    <div class="p-2 grid grid-cols-2 gap-1 bg-slate-50/50">
+                        <button onclick="openDynamicModal('u_bienestar_servicios')" class="p-3 text-[9px] font-bold text-slate-600 uppercase hover:bg-white rounded-xl text-left italic border border-slate-100">Servicios</button>
+                        <button onclick="openDynamicModal('u_bienestar_bolsa')" class="p-3 text-[9px] font-bold text-slate-600 uppercase hover:bg-white rounded-xl text-left italic border border-slate-100">Bolsa Trabajo</button>
+                        <button onclick="openDynamicModal('u_bienestar_egresados')" class="p-3 text-[9px] font-bold text-slate-600 uppercase hover:bg-white rounded-xl text-left italic border border-slate-100">Egresados</button>
+                        <button onclick="openDynamicModal('u_bienestar_actividades')" class="p-3 text-[9px] font-bold text-slate-600 uppercase hover:bg-white rounded-xl text-left italic border border-slate-100">Actividades</button>
+                    </div>
+                </details>
+            </section>
+
+            <section class="space-y-4">
+                <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4 px-2">Documentos de Gestión</p>
+                <div class="grid grid-cols-1 gap-2">
+                    <button onclick="openDynamicModal('doc_reglamento')" class="group flex items-center gap-4 p-4 rounded-2xl bg-white border border-slate-100 shadow-sm active:bg-blue-600 transition-all">
+                        <div class="w-10 h-10 rounded-xl bg-red-50 text-red-500 flex items-center justify-center group-active:bg-white group-active:text-blue-600 transition-colors">
+                            <i class="fas fa-file-pdf"></i>
+                        </div>
+                        <div class="text-left">
+                            <p class="text-[9px] font-black text-slate-800 uppercase group-active:text-white">Reglamento Institucional</p>
+                            <p class="text-[7px] font-bold text-slate-400 uppercase group-active:text-blue-100 tracking-tighter">Vigencia 2023 - 2027</p>
+                        </div>
+                    </button>
+
+                    <button onclick="openDynamicModal('doc_pci')" class="group flex items-center gap-4 p-4 rounded-2xl bg-white border border-slate-100 shadow-sm active:bg-blue-600 transition-all">
+                        <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-500 flex items-center justify-center group-active:bg-white group-active:text-blue-600 transition-colors">
+                            <i class="fas fa-book-open"></i>
+                        </div>
+                        <div class="text-left">
+                            <p class="text-[9px] font-black text-slate-800 uppercase group-active:text-white">Proyecto Curricular (PCI)</p>
+                            <p class="text-[7px] font-bold text-slate-400 uppercase group-active:text-blue-100 tracking-tighter">Planificación Pedagógica</p>
+                        </div>
+                    </button>
+                </div>
+
+                <a href="https://www.transparencia.gob.pe" target="_blank" class="block group mt-6">
+                    <div class="relative overflow-hidden bg-gradient-to-r from-slate-900 to-blue-900 rounded-[2rem] p-5 flex items-center justify-between shadow-xl active:scale-95 transition-all border border-white/10">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-white/5 rounded-full -mr-10 -mt-10 blur-2xl"></div>
+                        <div class="flex items-center gap-4">
+                            <div class="bg-white p-2 rounded-xl">
+                                <img src="{% static 'img/portal.png' %}" alt="Portal" class="h-8 w-auto">
+                            </div>
+                            <span class="text-[10px] font-black uppercase text-white leading-tight tracking-widest">Portal de<br>Transparencia</span>
+                        </div>
+                        <i class="fas fa-external-link-alt text-blue-400 text-xs"></i>
                     </div>
                 </a>
             </section>
         </div>
 
-        <div class="p-6 bg-white border-t border-slate-100">
-            <p class="text-[8px] text-center text-slate-400 font-black uppercase tracking-[0.3em]">© 2026 Calidad Educativa IESPP</p>
+        <div class="p-8 bg-white border-t border-slate-100 flex flex-col items-center gap-3">
+            <div class="flex gap-2 mb-2">
+                <div class="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></div>
+                <div class="w-2 h-2 rounded-full bg-amber-400 animate-pulse delay-75"></div>
+                <div class="w-2 h-2 rounded-full bg-blue-200 animate-pulse delay-150"></div>
+            </div>
+            <p class="text-[9px] text-center text-slate-400 font-black uppercase tracking-[0.4em]">© 2026 CALIDAD EDUCATIVA</p>
+            <p class="text-[7px] text-blue-600/40 font-bold uppercase tracking-widest">IESPP "Nuestra Señora de Chota"</p>
         </div>
     </div>
 </div>
