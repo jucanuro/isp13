@@ -9,7 +9,7 @@ def oai_endpoint(request):
     verb = request.GET.get("verb")
 
     if verb == "Identify":
-    return oai_identify(request)
+        return oai_identify()
 
     if verb == "ListRecords":
         return oai_list_records(request)
@@ -21,15 +21,15 @@ def oai_endpoint(request):
     )
 
 
-def oai_identify(request):
+def oai_identify():
     root = etree.Element("OAI-PMH")
     etree.SubElement(root, "responseDate").text = now().strftime("%Y-%m-%dT%H:%M:%SZ")
 
     identify = etree.SubElement(root, "Identify")
     etree.SubElement(identify, "repositoryName").text = "Repositorio Institucional IESP 13 de Julio de 1882"
-    etree.SubElement(identify, "baseURL").text = request.build_absolute_uri("/oai/")
+    etree.SubElement(identify, "baseURL").text = "https://repositorio.13dejuliode1882sp.edu.pe/oai/"
     etree.SubElement(identify, "protocolVersion").text = "2.0"
-    etree.SubElement(identify, "adminEmail").text = "repositorio@isp13.edu.pe"
+    etree.SubElement(identify, "adminEmail").text = "repositorio@13dejuliode1882sp.edu.pe"
     etree.SubElement(identify, "earliestDatestamp").text = "2024-01-01"
     etree.SubElement(identify, "deletedRecord").text = "no"
     etree.SubElement(identify, "granularity").text = "YYYY-MM-DD"
