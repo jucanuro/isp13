@@ -42,6 +42,8 @@ def oai_identify():
 
 def oai_list_records(request):
     metadata_prefix = request.GET.get("metadataPrefix")
+
+    # ✅ ALICIA SOLO acepta oai_dc
     if metadata_prefix != "oai_dc":
         return HttpResponse(
             "<error code='cannotDisseminateFormat'>Formato no soportado</error>",
