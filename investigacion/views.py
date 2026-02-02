@@ -9,6 +9,7 @@ from django.http import JsonResponse
 from lxml import etree
 from django.db.models import Q
 
+
 @login_required
 def registrar_tesis(request):
     tesis = None
