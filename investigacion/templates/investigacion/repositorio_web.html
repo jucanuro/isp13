@@ -1,4 +1,3 @@
-{# 1. Si 'template_padre' no existe, por defecto usa 'base.html' #}
 {% extends template_padre|default:"base.html" %}
 
 {% block content %}
@@ -9,118 +8,164 @@
     .font-thesis-italic { font-family: 'Playfair Display', serif; }
     .font-thesis-sans { font-family: 'Plus Jakarta Sans', sans-serif; }
 
-    .card-credential {
-        background: #ffffff;
-        clip-path: polygon(0 0, 100% 0, 100% 95%, 95% 100%, 0 100%);
-        transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-        border: 1px solid #f1f5f9;
-        height: 100%;
+    /* Contenedor Estilo Repositorio */
+    .repo-container {
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
     }
-    .card-credential:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 30px 60px -15px rgba(30, 58, 138, 0.08);
-        border-color: #e2e8f0;
-    }
-    
-    .search-container { background: #f8fafc; border-bottom: 1.5px solid #1e3a8a; }
-    
-    .btn-view-more {
-        background: #1e3a8a;
-        clip-path: polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%);
+
+    .thesis-item {
         transition: all 0.3s ease;
+        border-bottom: 1px solid #f1f5f9;
+        display: flex; gap: 1.5rem; padding: 2rem;
+    }
+    .thesis-item:hover { background: #f8fafc; transform: translateX(5px); }
+
+    /* Miniatura Académica */
+    .thesis-thumbnail {
+        width: 100px; height: 135px; flex-shrink: 0;
+        background: #ffffff; border: 1px solid #e2e8f0;
+        box-shadow: 4px 4px 12px rgba(0,0,0,0.06);
+        display: flex; align-items: center; justify-content: center;
+        position: relative; transition: all 0.3s ease;
+    }
+    .thesis-item:hover .thesis-thumbnail { border-color: #3488ab; box-shadow: 4px 4px 15px rgba(52, 136, 171, 0.2); }
+
+    .badge-dspace {
+        background: #3488ab; color: white; padding: 2px 10px;
+        border-radius: 4px; font-size: 9px; font-weight: 800; text-transform: uppercase;
+    }
+
+    .title-link {
+        color: #3488ab; font-weight: 800; font-size: 1.1rem;
+        line-height: 1.3; text-decoration: none; transition: color 0.2s;
+    }
+    .title-link:hover { color: #1e3a8a; text-decoration: underline; }
+
+    /* Botón "Más Tesis" Estilo Premium */
+    .btn-more-research {
+        background: #1e3a8a;
+        color: white !important;
+        padding: 14px 32px;
+        border-radius: 50px;
+        font-size: 11px;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         display: inline-flex;
         align-items: center;
-        text-decoration: none !important;
-        color: white !important;
+        gap: 12px;
+        box-shadow: 0 10px 20px -5px rgba(30, 58, 138, 0.3);
     }
-    .btn-view-more:hover { background: #ef4444; transform: skewX(-2deg); color: white !important; }
+    .btn-more-research:hover {
+        background: #ef4444;
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 15px 25px -5px rgba(239, 68, 68, 0.4);
+    }
 
-    .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
     .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 </style>
 
-<section id="investigacion" class="relative py-20 bg-gray-50 overflow-hidden font-thesis-sans">
-    <div class="container mx-auto px-6 relative z-10">
-        <div class="flex flex-col lg:flex-row lg:items-center justify-between mb-16 gap-8">
-            <div class="max-w-md border-l-2 border-red-600 pl-6">
-                <h2 class="text-[9px] font-black text-blue-900/50 uppercase tracking-[0.5em] mb-2">Producción Científica</h2>
-                <h3 class="font-thesis-serif text-2xl font-black text-slate-900 leading-none uppercase">
-                    Repositorio <span class="font-thesis-italic font-light text-blue-800 lowercase italic">de</span> Impacto
-                </h3>
+<section id="investigacion" class="relative py-20 bg-slate-50 min-h-screen font-thesis-sans">
+    <div class="container mx-auto px-4 lg:px-4 relative z-10">
+        
+        <div class="mb-12 max-w-full mx-auto flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div>
+                <h2 class="font-thesis-serif text-3xl font-black text-slate-800 uppercase tracking-tighter leading-none">
+                    Investigación <span class="text-blue-700 italic font-thesis-italic lowercase font-light">y</span> <br>Producción Científica
+                </h2>
+                <div class="h-1 w-20 bg-red-600 mt-4"></div>
             </div>
 
-            <form method="GET" action="{% url 'investigacion:repositorio_publico' %}" class="flex items-center search-container p-0.5">
-                <input type="text" name="q" value="{{ query|default:'' }}" placeholder="TÍTULO O AUTOR..." 
-                       class="bg-transparent py-2 px-4 text-[10px] font-bold text-slate-600 w-40 lg:w-64 focus:outline-none uppercase tracking-widest">
-                <button type="submit" class="w-10 h-8 flex items-center justify-center text-blue-900 hover:text-red-600">
-                    <i class="fas fa-search text-[10px]"></i>
+            <form method="GET" action="{% url 'investigacion:repositorio_publico' %}" class="flex shadow-sm w-full md:w-96">
+                <input type="text" name="q" value="{{ query|default:'' }}" placeholder="Buscar tesis..." 
+                       class="border border-slate-200 flex-grow py-3 px-5 text-sm rounded-l-lg focus:outline-none focus:border-blue-500">
+                <button type="submit" class="bg-[#3488ab] text-white px-5 rounded-r-lg hover:bg-blue-800 transition-colors">
+                    <i class="fas fa-search"></i>
                 </button>
             </form>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            {% for t in tesis_locales %}
-            <article class="group card-credential p-7 flex flex-col">
-                <div class="mb-6 flex items-center justify-between">
-                    <span class="text-[8px] font-black px-2 py-1 bg-slate-900 text-white uppercase tracking-tighter">ID: {{ t.id }}</span>
-                    <span class="text-[9px] font-black text-blue-600 uppercase">{{ t.fecha_registro|date:"Y" }}</span>
-                </div>
+        <div class="max-w-full mx-auto repo-container">
+            <div class="bg-slate-50/80 px-8 py-4 border-b border-slate-100 flex justify-between items-center">
+                <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Publicaciones Recientes</h4>
+                <span class="text-[9px] font-bold text-blue-600 bg-blue-50 px-3 py-1 rounded-full">Mostrando 5 últimos registros</span>
+            </div>
 
-                <div class="flex-grow">
-                    <span class="text-[7px] font-bold text-red-600 uppercase tracking-widest mb-2 block">
-                        Área OCDE: {{ t.ocde_nombre|default:"Sin asignar" }}
-                    </span>
-                    <h4 class="font-thesis-serif text-sm font-black text-slate-800 leading-snug mb-3 group-hover:text-blue-900 transition-colors uppercase line-clamp-3">
-                        {{ t.titulo }}
-                    </h4>
-                    <p class="text-[9px] text-slate-400 font-normal leading-relaxed mb-6 line-clamp-2">
-                        {{ t.resumen|default:'Documento académico oficial.' }}
-                    </p>
-                </div>
-                
-                <div class="mt-4 pt-4 border-t border-slate-50">
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        {% if t.archivo_pdf %}<a href="{{ t.archivo_pdf.url }}" target="_blank" class="text-[7px] font-black uppercase px-2 py-1 bg-blue-50 text-blue-700 hover:bg-blue-700 hover:text-white transition-all">PDF</a>{% endif %}
-                        {% if t.reporte_turnitin %}<a href="{{ t.reporte_turnitin.url }}" target="_blank" class="text-[7px] font-black uppercase px-2 py-1 bg-emerald-50 text-emerald-700 hover:bg-emerald-700 hover:text-white transition-all">Turnitin</a>{% endif %}
-                    </div>
-
-                    <div class="flex flex-col gap-3">
-                        {% for autor in t.autores.all %}
-                        <div class="flex items-center gap-2">
-                            <div class="w-7 h-7 bg-slate-100 flex items-center justify-center text-[9px] font-black text-slate-400 border border-slate-200">
-                                {{ autor.nombre_completo|slice:":1" }}
-                            </div>
-                            <div class="leading-none">
-                                <p class="text-[8px] font-black text-slate-800 uppercase tracking-tighter">{{ autor.nombre_completo }}</p>
-                                <p class="text-[6px] text-slate-400 font-bold uppercase tracking-widest">Investigador</p>
-                            </div>
+            <div class="divide-y divide-slate-100">
+                {% for t in tesis_locales|slice:":5" %}
+                <article class="thesis-item group">
+                    <div class="thesis-thumbnail">
+                        <div class="flex flex-col items-center gap-1">
+                            <i class="fas fa-graduation-cap text-2xl text-slate-300"></i>
+                            <i class="fas fa-book text-3xl text-slate-200"></i>
                         </div>
-                        {% endfor %}
                     </div>
-                </div>
-            </article>
-            {% endfor %}
-        </div>
 
-        {% if mostrar_boton_ver_mas %}
-            <div class="mt-16 flex justify-center">
-                <a href="{% url 'investigacion:repositorio_publico' %}" class="btn-view-more px-10 py-3.5 text-white text-[9px] font-black uppercase tracking-[0.3em] gap-3">
-                    Explorar Repositorio Completo <i class="fas fa-arrow-right text-[8px]"></i>
+                    <div class="flex-grow">
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="badge-dspace">Documento</span>
+                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                                {{ t.fecha_registro|date:"Y" }} | ID: {{ t.id }}
+                            </span>
+                        </div>
+
+                        <a href="{% if t.archivo_pdf %}{{ t.archivo_pdf.url }}{% else %}#{% endif %}" target="_blank">
+                            <h4 class="title-link mb-2 uppercase tracking-tight">
+                                {{ t.titulo }}
+                            </h4>
+                        </a>
+
+                        <p class="text-[11px] text-slate-500 mb-3">
+                            <span class="italic text-slate-400 font-normal">(IESPP "13 de Julio")</span>
+                            <span class="font-bold text-slate-700 ml-1">
+                                {% for autor in t.autores.all %}
+                                    {{ autor.nombre_completo }}{% if not forloop.last %}; {% endif %}
+                                {% endfor %}
+                            </span>
+                        </p>
+
+                        <div class="text-[12.5px] text-slate-500 leading-relaxed line-clamp-3 font-normal mb-4 italic">
+                            "{{ t.resumen|default:'Sin resumen detallado en la base de datos institucional.' }}"
+                        </div>
+
+                        <div class="flex items-center gap-6">
+                            {% if t.archivo_pdf %}
+                            <a href="{{ t.archivo_pdf.url }}" target="_blank" class="text-[10px] font-black text-[#3488ab] hover:text-blue-900 uppercase flex items-center gap-2">
+                                <i class="fas fa-file-download"></i> Descargar PDF
+                            </a>
+                            {% endif %}
+                            <span class="text-[9px] font-bold text-slate-300 uppercase">Aprobado por comité</span>
+                        </div>
+                    </div>
+                </article>
+                {% empty %}
+                <div class="p-20 text-center bg-white">
+                    <i class="fas fa-search text-4xl text-slate-100 mb-4"></i>
+                    <p class="text-slate-400 text-xs font-bold uppercase tracking-widest">No hay tesis disponibles en este momento.</p>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="p-12 bg-white flex flex-col items-center border-t border-slate-50">
+                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em] mb-6">¿Buscas una investigación específica?</p>
+                
+                <a href="{% url 'investigacion:repositorio_publico' %}" class="btn-more-research">
+                    Explorar Repositorio Completo
+                    <i class="fas fa-arrow-right"></i>
                 </a>
+                
+                <div class="mt-8 flex items-center gap-4 opacity-30">
+                    <div class="h-[1px] w-12 bg-slate-300"></div>
+                    <i class="fas fa-microscope text-xs text-slate-400"></i>
+                    <div class="h-[1px] w-12 bg-slate-300"></div>
+                </div>
             </div>
-        {% else %}
-            {% if tesis_locales.has_other_pages %}
-            <div class="mt-16 flex justify-center gap-2">
-                {% if tesis_locales.has_previous %}
-                    <a href="?page={{ tesis_locales.previous_page_number }}{% if query %}&q={{ query }}{% endif %}" class="px-4 py-2 border border-slate-100 text-[9px] font-black uppercase hover:bg-slate-900 hover:text-white">Anterior</a>
-                {% endif %}
-                <span class="px-4 py-2 bg-slate-900 text-white text-[9px] font-black">{{ tesis_locales.number }}</span>
-                {% if tesis_locales.has_next %}
-                    <a href="?page={{ tesis_locales.next_page_number }}{% if query %}&q={{ query }}{% endif %}" class="px-4 py-2 border border-slate-100 text-[9px] font-black uppercase hover:bg-slate-900 hover:text-white">Siguiente</a>
-                {% endif %}
-            </div>
-            {% endif %}
-        {% endif %}
+        </div>
     </div>
 </section>
 {% endblock content %}
