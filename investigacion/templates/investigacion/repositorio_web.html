@@ -1,4 +1,8 @@
 {% extends template_padre|default:"base.html" %}
+{% load static %}
+{% block topbar %}{% endblock %}
+{% block verticalbar %}{% endblock %}
+{% block footer %}{% endblock %}
 
 {% block content %}
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Plus+Jakarta+Sans:wght@300;400;700&family=Playfair+Display:ital,wght@0,900;1,900&display=swap" rel="stylesheet">
@@ -24,7 +28,6 @@
     }
     .thesis-item:hover { background: #f8fafc; transform: translateX(5px); }
 
-    /* Miniatura Académica */
     .thesis-thumbnail {
         width: 100px; height: 135px; flex-shrink: 0;
         background: #ffffff; border: 1px solid #e2e8f0;
@@ -45,7 +48,6 @@
     }
     .title-link:hover { color: #1e3a8a; text-decoration: underline; }
 
-    /* Botón "Más Tesis" Estilo Premium */
     .btn-more-research {
         background: #1e3a8a;
         color: white !important;
@@ -70,9 +72,8 @@
     .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 </style>
 
-<section id="investigacion" class="relative py-20 bg-slate-50 min-h-screen font-thesis-sans">
+<section id="investigacion" class="relative pt-20 pb-10 bg-slate-50 font-thesis-sans">
     <div class="container mx-auto px-4 lg:px-4 relative z-10">
-        
         <div class="mb-12 max-w-full mx-auto flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div>
                 <h2 class="font-thesis-serif text-3xl font-black text-slate-800 uppercase tracking-tighter leading-none">
@@ -90,10 +91,10 @@
             </form>
         </div>
 
-        <div class="max-w-full mx-auto repo-container">
+        <div class="max-w-full mx-auto repo-container mb-20">
             <div class="bg-slate-50/80 px-8 py-4 border-b border-slate-100 flex justify-between items-center">
                 <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Publicaciones Recientes</h4>
-                <span class="text-[9px] font-bold text-blue-600 bg-blue-50 px-3 py-1 rounded-full">Mostrando 5 últimos registros</span>
+                <span class="text-[9px] font-bold text-blue-600 bg-blue-50 px-3 py-1 rounded-full">Mostrando últimos registros</span>
             </div>
 
             <div class="divide-y divide-slate-100">
@@ -139,33 +140,47 @@
                                 <i class="fas fa-file-download"></i> Descargar PDF
                             </a>
                             {% endif %}
-                            <span class="text-[9px] font-bold text-slate-300 uppercase">Aprobado por comité</span>
                         </div>
                     </div>
                 </article>
                 {% empty %}
                 <div class="p-20 text-center bg-white">
-                    <i class="fas fa-search text-4xl text-slate-100 mb-4"></i>
-                    <p class="text-slate-400 text-xs font-bold uppercase tracking-widest">No hay tesis disponibles en este momento.</p>
+                    <p class="text-slate-400 text-xs font-bold uppercase tracking-widest">No hay tesis disponibles.</p>
                 </div>
                 {% endfor %}
             </div>
 
             <div class="p-12 bg-white flex flex-col items-center border-t border-slate-50">
-                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em] mb-6">¿Buscas una investigación específica?</p>
-                
                 <a href="{% url 'investigacion:repositorio_publico' %}" class="btn-more-research">
-                    Explorar Repositorio Completo
-                    <i class="fas fa-arrow-right"></i>
+                    Explorar Repositorio Completo <i class="fas fa-arrow-right"></i>
                 </a>
-                
-                <div class="mt-8 flex items-center gap-4 opacity-30">
-                    <div class="h-[1px] w-12 bg-slate-300"></div>
-                    <i class="fas fa-microscope text-xs text-slate-400"></i>
-                    <div class="h-[1px] w-12 bg-slate-300"></div>
-                </div>
             </div>
         </div>
     </div>
 </section>
+
+<footer class="w-full bg-white font-thesis-sans">
+    <div class="bg-slate-100/50 py-12 px-8 border-t border-slate-200">
+        <div class="max-w-[1500px] mx-auto flex flex-col md:flex-row items-center justify-between gap-10">
+            <div class="text-center md:text-left">
+                <p class="text-slate-800 font-black text-[11px] uppercase tracking-widest mb-2">Repositorio Institucional EESPP "13 de Julio"</p>
+                <div class="flex gap-4 justify-center md:justify-start">
+                    <a href="#" class="text-blue-600 text-[10px] font-bold hover:underline uppercase">Políticas</a>
+                </div>
+            </div>
+            
+            <div class="flex flex-wrap justify-center items-center gap-8 grayscale opacity-70 hover:grayscale-0 transition-all duration-500">
+                <a href="https://renati.sunedu.gob.pe/" target="_blank"><img src="{% static 'img/renati.png' %}" alt="RENATI" class="h-8 md:h-20 object-contain"></a>
+                <a href="https://alicia.concytec.gob.pe/" target="_blank"><img src="{% static 'img/alicia.png' %}" alt="ALICIA" class="h-8 md:h-20 object-contain"></a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="bg-blue-900 py-5 text-center">
+        <p class="text-white text-[10px] font-bold uppercase tracking-[0.2em]">
+            IESPP 13 de julio San Pablo <br class="md:hidden"> 
+            <span class="opacity-70 font-normal">San Pablo - Cajamarca | Copyright © 2026</span>
+        </p>
+    </div>
+</footer>
 {% endblock content %}
