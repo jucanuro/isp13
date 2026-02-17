@@ -3,6 +3,6 @@
 {% block content %}
 {% include 'inicio.html' %}
 {% include 'carreras.html' %}
-{% include 'investigacion/repositorio_web.html' %}
+{% include 'investigacion/repositorio_web.html' with ocultar_footer_repo=True %}
 {% include "convocatorias.html" %}
 {% endblock %}

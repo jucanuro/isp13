@@ -1,8 +1,8 @@
 {% extends template_padre|default:"base.html" %}
 {% load static %}
+
 {% block topbar %}{% endblock %}
 {% block verticalbar %}{% endblock %}
-{% block footer %}{% endblock %}
 
 {% block content %}
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Plus+Jakarta+Sans:wght@300;400;700&family=Playfair+Display:ital,wght@0,900;1,900&display=swap" rel="stylesheet">
@@ -150,15 +150,19 @@
                 {% endfor %}
             </div>
 
-            <div class="p-12 bg-white flex flex-col items-center border-t border-slate-50">
-                <a href="{% url 'investigacion:repositorio_publico' %}" class="btn-more-research">
+           <div class="p-12 bg-white flex flex-col items-center border-t border-slate-50">
+                <a href="https://repositorio.13dejuliode1882sp.edu.pe/repositorio/" 
+                target="_blank" 
+                class="btn-more-research">
                     Explorar Repositorio Completo <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
         </div>
     </div>
 </section>
+{% endblock content %}
 
+{% block footer %}
 <footer class="w-full bg-white font-thesis-sans">
     <div class="bg-slate-100/50 py-12 px-8 border-t border-slate-200">
         <div class="max-w-[1500px] mx-auto flex flex-col md:flex-row items-center justify-between gap-10">
@@ -183,4 +187,4 @@
         </p>
     </div>
 </footer>
-{% endblock content %}
+{% endblock footer %}
