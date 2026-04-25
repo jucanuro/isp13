@@ -17,7 +17,13 @@ async function openDynamicModal(modalId) {
     `;
 
     try {
-        const response = await fetch(`/modals/${modalId}/`); 
+        const modalRoutes = {
+            resultados_admision: '/admision/resultados-admision/',
+        };
+
+const modalUrl = modalRoutes[modalId] || `/modals/${modalId}/`;
+
+const response = await fetch(modalUrl);
         
         if (!response.ok) throw new Error('No se encontró el contenido');
         

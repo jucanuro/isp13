@@ -1,0 +1,155 @@
+<div class="relative bg-[#102a73] w-full max-w-6xl h-[92vh] rounded-[2.5rem] lg:rounded-[3rem] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.55)] overflow-hidden flex flex-col border border-white/10 animate-in fade-in zoom-in duration-300">
+
+    <div class="absolute inset-0 pointer-events-none overflow-hidden">
+        <div class="absolute -top-24 -right-24 w-72 h-72 bg-amber-400/20 blur-[90px] rounded-full"></div>
+        <div class="absolute -bottom-32 -left-24 w-80 h-80 bg-blue-400/20 blur-[100px] rounded-full"></div>
+        <div class="absolute inset-0 opacity-[0.07]" style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 26px 26px;"></div>
+    </div>
+
+    <div class="relative bg-white/8 border-b border-white/10 px-6 lg:px-8 py-5 flex justify-between items-center shrink-0 backdrop-blur-md">
+        <div class="flex items-center gap-4">
+            <div class="w-11 h-11 lg:w-13 lg:h-13 bg-gradient-to-br from-amber-300 to-amber-500 rounded-2xl flex items-center justify-center shadow-lg shadow-amber-400/20">
+                <i class="fas fa-square-poll-vertical text-blue-950 text-lg lg:text-xl"></i>
+            </div>
+            <div>
+                <h3 class="text-sm lg:text-base font-black text-white uppercase tracking-widest leading-none">
+                    Resultados de Admisión
+                </h3>
+                <p class="text-[9px] lg:text-[10px] text-amber-300 font-black uppercase mt-1 tracking-[0.18em]">
+                    IESPP “13 de Julio de 1882” San Pablo
+                </p>
+            </div>
+        </div>
+
+        <button onclick="closeDynamicModal()" class="w-10 h-10 flex items-center justify-center rounded-xl bg-white/10 text-white hover:bg-amber-400 hover:text-blue-950 transition-all border border-white/10">
+            <i class="fas fa-times text-xs"></i>
+        </button>
+    </div>
+
+    <div class="relative flex-grow overflow-y-auto p-5 lg:p-10 custom-scrollbar text-blue-50/90">
+        <div class="max-w-5xl mx-auto space-y-7">
+
+            <section class="relative overflow-hidden rounded-[2rem] bg-blue-950/55 border border-white/10 p-6 lg:p-8 shadow-2xl">
+                <div class="absolute top-0 right-0 w-48 h-48 bg-amber-400/10 blur-3xl rounded-full"></div>
+
+                <div class="relative flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+                    <div>
+                        <p class="text-[10px] font-black text-amber-300 uppercase tracking-[0.3em] mb-3">
+                            Publicaciones oficiales
+                        </p>
+                        <h4 class="text-2xl lg:text-3xl font-black text-white tracking-tight leading-tight">
+                            Consulta los resultados publicados
+                        </h4>
+                        <p class="text-sm text-blue-100/75 mt-3 leading-relaxed max-w-2xl">
+                            Accede a los documentos oficiales de admisión. Puedes visualizar el archivo en línea o descargarlo para conservar una copia.
+                        </p>
+                    </div>
+
+                    <div class="flex items-center gap-3 bg-white/10 border border-white/10 rounded-2xl px-5 py-4">
+                        <div class="w-10 h-10 rounded-xl bg-amber-400 flex items-center justify-center text-blue-950">
+                            <i class="fas fa-file-circle-check"></i>
+                        </div>
+                        <div>
+                            <p class="text-[9px] font-black text-blue-100/60 uppercase tracking-widest">Disponibles</p>
+                            <p class="text-xl font-black text-white leading-none">{{ resultados|length }}</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {% if resultados %}
+                <div class="space-y-4">
+                    {% for resultado in resultados %}
+                        <article class="group relative overflow-hidden bg-white rounded-[2rem] p-5 lg:p-6 shadow-xl border border-white/70 hover:shadow-2xl hover:-translate-y-0.5 transition-all duration-300">
+
+                            <div class="absolute inset-y-0 left-0 w-1.5 bg-gradient-to-b from-amber-400 via-blue-600 to-blue-900"></div>
+
+                            {% if resultado.es_destacado %}
+                                <div class="absolute top-5 right-5 bg-amber-400 text-blue-950 px-3 py-1.5 rounded-full text-[8px] font-black uppercase tracking-widest shadow-sm">
+                                    Destacado
+                                </div>
+                            {% endif %}
+
+                            <div class="flex flex-col lg:flex-row lg:items-center gap-5 lg:gap-6">
+                                <div class="flex items-start gap-4 flex-1 min-w-0">
+                                    <div class="w-14 h-14 rounded-2xl bg-blue-50 flex items-center justify-center border border-blue-100 shrink-0 group-hover:bg-blue-700 transition-colors">
+                                        <i class="fas fa-file-lines text-blue-700 text-xl group-hover:text-white transition-colors"></i>
+                                    </div>
+
+                                    <div class="min-w-0 flex-1">
+                                        <div class="flex flex-wrap items-center gap-2 mb-2">
+                                            <span class="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-3 py-1 text-[9px] font-black uppercase tracking-widest text-blue-800">
+                                                <i class="fas fa-graduation-cap text-amber-500"></i>
+                                                {{ resultado.tipo_examen.nombre }}
+                                            </span>
+
+                                            <span class="inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-3 py-1 text-[9px] font-black uppercase tracking-widest text-slate-500">
+                                                <i class="fas fa-calendar-day text-blue-500"></i>
+                                                {{ resultado.fecha_examen|date:"d/m/Y" }}
+                                            </span>
+                                        </div>
+
+                                        <h5 class="text-base lg:text-lg font-black text-slate-900 uppercase tracking-tight leading-snug pr-0 lg:pr-24">
+                                            {{ resultado.titulo }}
+                                        </h5>
+
+                                        {% if resultado.descripcion %}
+                                            <p class="mt-2 text-xs lg:text-sm text-slate-500 leading-relaxed">
+                                                {{ resultado.descripcion|truncatechars:180 }}
+                                            </p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="flex lg:flex-col gap-3 lg:w-40 shrink-0">
+                                    <a href="{{ resultado.archivo.url }}"
+                                       target="_blank"
+                                       class="flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 rounded-2xl bg-blue-700 text-white hover:bg-blue-800 transition-all text-[10px] font-black uppercase tracking-widest shadow-lg shadow-blue-700/20">
+                                        <i class="fas fa-eye"></i>
+                                        Ver
+                                    </a>
+
+                                    <a href="{{ resultado.archivo.url }}"
+                                       download
+                                       class="flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 rounded-2xl bg-amber-400 text-blue-950 hover:bg-amber-300 transition-all text-[10px] font-black uppercase tracking-widest shadow-lg shadow-amber-400/20">
+                                        <i class="fas fa-download"></i>
+                                        Descargar
+                                    </a>
+                                </div>
+                            </div>
+                        </article>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="bg-white rounded-[2rem] p-10 text-center shadow-xl">
+                    <div class="w-16 h-16 mx-auto rounded-2xl bg-blue-50 flex items-center justify-center mb-5">
+                        <i class="fas fa-folder-open text-blue-700 text-2xl"></i>
+                    </div>
+                    <h4 class="text-sm font-black text-slate-900 uppercase tracking-widest">
+                        No hay resultados publicados
+                    </h4>
+                    <p class="text-xs text-slate-500 mt-2">
+                        Los resultados de admisión serán publicados próximamente.
+                    </p>
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
+
+    <div class="relative bg-white py-5 px-6 lg:px-10 flex flex-col sm:flex-row justify-between items-center gap-4 shrink-0">
+        <div class="flex items-center gap-3">
+            <div class="w-2.5 h-2.5 rounded-full bg-blue-600 animate-pulse"></div>
+            <p class="text-[9px] text-slate-400 font-black uppercase tracking-[0.2em]">
+                Información oficial de admisión
+            </p>
+        </div>
+
+        <div class="flex items-center gap-3 text-blue-900">
+            <i class="fas fa-building-columns text-amber-500"></i>
+            <span class="text-[10px] font-black uppercase tracking-widest">
+                Admisión IESPP
+            </span>
+        </div>
+    </div>
+</div>

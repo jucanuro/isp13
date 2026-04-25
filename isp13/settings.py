@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'blog',
     'soporte',
     'convocatorias',
+    'admision',
 ]
 
 MIDDLEWARE = [

@@ -138,6 +138,69 @@
 
             <div class="nav-item relative group px-3 py-2">
                 <button class="text-[11px] font-black uppercase tracking-widest text-slate-600 hover:text-blue-800 flex items-center gap-2 transition-all">
+                    Admisión 
+                    <i class="fas fa-chevron-down text-[9px] opacity-50 group-hover:rotate-180 transition-transform duration-300"></i>
+                </button>
+
+                <div class="megamenu invisible opacity-0 absolute top-full left-0 w-80 pt-5 transition-all duration-500 ease-out group-hover:visible group-hover:opacity-100 group-hover:translate-y-1 z-[110]">
+                    <div class="relative overflow-hidden bg-white rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-blue-50 p-4 ring-1 ring-black/5">
+                        <div class="absolute -top-10 -right-10 w-32 h-32 bg-blue-50 blur-3xl rounded-full"></div>
+
+                        <ul class="relative space-y-1.5">
+                            <li>
+                                <button onclick="openDynamicModal('admision')" class="group/item w-full hidden flex items-center gap-4 p-3 rounded-2xl transition-all duration-300 hover:bg-blue-600 hover:shadow-lg hover:shadow-blue-500/30 text-left">
+                                    <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-xl bg-slate-50 group-hover/item:bg-white/20 transition-colors border border-blue-100">
+                                        <i class="fas fa-user-graduate text-blue-600 group-hover/item:text-white text-sm"></i>
+                                    </div>
+                                    <span class="font-black text-[11px] uppercase tracking-[0.1em] text-slate-700 group-hover/item:text-white">
+                                        Proceso de Admisión
+                                    </span>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button onclick="openDynamicModal('cronograma_admision')" class="group/item w-full hidden flex items-center gap-4 p-3 rounded-2xl transition-all duration-300 hover:bg-blue-600 hover:shadow-lg hover:shadow-blue-500/30 text-left">
+                                    <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-xl bg-slate-50 group-hover/item:bg-white/20 transition-colors border border-blue-100">
+                                        <i class="fas fa-calendar-check text-blue-600 group-hover/item:text-white text-sm"></i>
+                                    </div>
+                                    <span class="font-black text-[11px] uppercase tracking-[0.1em] text-slate-700 group-hover/item:text-white">
+                                        Cronograma
+                                    </span>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button onclick="openDynamicModal('requisitos_admision')" class="group/item hidden w-full flex items-center gap-4 p-3 rounded-2xl transition-all duration-300 hover:bg-blue-600 hover:shadow-lg hover:shadow-blue-500/30 text-left">
+                                    <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-xl bg-slate-50 group-hover/item:bg-white/20 transition-colors border border-blue-100">
+                                        <i class="fas fa-clipboard-list text-blue-600 group-hover/item:text-white text-sm"></i>
+                                    </div>
+                                    <span class="font-black text-[11px] uppercase tracking-[0.1em] text-slate-700 group-hover/item:text-white">
+                                        Requisitos
+                                    </span>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button onclick="openDynamicModal('resultados_admision')" class="group/item w-full flex items-center gap-4 p-3 rounded-2xl transition-all duration-300 hover:bg-blue-600 hover:shadow-lg hover:shadow-blue-500/30 text-left">
+                                    <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-xl bg-slate-50 group-hover/item:bg-white/20 transition-colors border border-blue-100">
+                                        <i class="fas fa-square-poll-vertical text-blue-600 group-hover/item:text-white text-sm"></i>
+                                    </div>
+                                    <span class="font-black text-[11px] uppercase tracking-[0.1em] text-slate-700 group-hover/item:text-white">
+                                        Resultados de Admisión
+                                    </span>
+                                </button>
+                            </li>
+                        </ul>
+
+                        <div class="mt-3 pt-3 border-t border-blue-50 flex justify-center">
+                            <div class="h-1 w-12 bg-amber-400 rounded-full opacity-50 shadow-sm"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-item relative group px-3 py-2">
+                <button class="text-[11px] font-black uppercase tracking-widest text-slate-600 hover:text-blue-800 flex items-center gap-2 transition-all">
                     Gestión Académica <i class="fas fa-chevron-down text-[9px] opacity-50 group-hover:rotate-180 transition-transform duration-300"></i>
                 </button>
 
