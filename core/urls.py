@@ -7,4 +7,6 @@ urlpatterns = [
     path('login/', views.auth_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
     path('modals/<str:modal_id>/', views.modal_content, name='modal_content'),
+    path('portal-transparencia/', views.portal_transparencia, name='portal_transparencia'),
+
 ]

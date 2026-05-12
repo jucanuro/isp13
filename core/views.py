@@ -63,3 +63,6 @@ def modal_content(request, modal_id):
     """
     template_name = f'modals/{modal_id}.html'
     return render(request, template_name)
+
+def portal_transparencia(request):
+    return render(request, 'portal.html')
