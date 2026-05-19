@@ -1,17 +1,89 @@
-# Bases de datos
-*.sqlite3
-db.sqlite3
+# =========================
+# PYTHON
+# =========================
 
-# Entornos virtuales
+__pycache__/
+*.py[cod]
+*$py.class
+
+# =========================
+# ENTORNOS VIRTUALES
+# =========================
+
 venv/
 .venv/
 env/
-# Python caché
-__pycache__/
-*.pyc
+ENV/
 
-# Archivos de sistema y logs
-*.log
-.DS_Store
+# =========================
+# VARIABLES DE ENTORNO
+# =========================
+
 .env
+.env.*
+!.env.example
 
+# =========================
+# DJANGO
+# =========================
+
+db.sqlite3
+*.sqlite3
+
+media/
+staticfiles/
+
+# =========================
+# LOGS
+# =========================
+
+*.log
+logs/
+
+# =========================
+# IDEs Y EDITORES
+# =========================
+
+.vscode/
+.idea/
+
+# =========================
+# SISTEMA OPERATIVO
+# =========================
+
+.DS_Store
+Thumbs.db
+
+# =========================
+# TESTS Y CACHE
+# =========================
+
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+
+# =========================
+# NODE / FRONTEND
+# =========================
+
+node_modules/
+
+# =========================
+# BUILD
+# =========================
+
+dist/
+build/
+
+# =========================
+# AWS / DEPLOY
+# =========================
+
+*.pem
+
+# =========================
+# NGROK
+# =========================
+
+.ngrok2/
