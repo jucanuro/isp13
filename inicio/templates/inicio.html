@@ -121,7 +121,7 @@
     </div>
 
     <div id="modal-noticias" class="fixed inset-0 z-[9999] hidden items-center justify-center p-4 bg-blue-950/80 backdrop-blur-xl">
-        <div id="modal-content" class="relative bg-blue-900 w-full max-w-3xl h-[85vh] rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col border border-white/10 transform transition-all scale-95 opacity-0 duration-500">
+        <div id="modal-content" class="relative bg-blue-900 w-full max-w-3xl rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col border border-white/10 transform transition-all scale-95 opacity-0 duration-500">
             <div class="bg-white/5 px-8 py-5 flex justify-between items-center shrink-0 border-b border-white/10">
                 <div class="flex items-center gap-4">
                     <div class="w-10 h-10 bg-amber-400 rounded-xl flex items-center justify-center shadow-lg">
@@ -137,10 +137,13 @@
                 </button>
             </div>
 
-            <div class="flex-grow bg-slate-900 overflow-y-auto custom-scrollbar">
-                <img src="{% static 'img/admision.jpeg' %}" class="w-full h-auto" alt="Publicidad">
+            <div class="bg-slate-900 overflow-hidden">
+                <img 
+                    src="{% static 'img/aniversario.jpeg' %}" 
+                    class="block w-full h-auto" 
+                    alt="Publicidad"
+                >
             </div>
-
             <div class="bg-white py-4 px-8 flex justify-between items-center shrink-0">
                 <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Información 2026</span>
                 <button onclick="closeNewsModal()" class="px-8 py-2.5 bg-blue-900 text-white text-[10px] font-black uppercase rounded-xl hover:bg-amber-500 transition-all">
