@@ -1,0 +1,593 @@
+{% extends template_base|default:"base.html" %}
+{% load static %}
+
+{% block title %}
+{{ tesis.titulo }} | Repositorio Institucional
+{% endblock title %}
+
+{% block topbar %}{% endblock %}
+{% block verticalbar %}{% endblock %}
+
+{% block content %}
+<link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap"
+    rel="stylesheet"
+>
+
+<style>
+    .repo-sans {
+        font-family: "Plus Jakarta Sans", sans-serif;
+    }
+
+    .repo-serif {
+        font-family: "Cinzel", serif;
+    }
+
+    .repo-italic {
+        font-family: "Playfair Display", serif;
+    }
+
+    .metadata-row {
+        display: grid;
+        grid-template-columns: minmax(150px, 220px) minmax(0, 1fr);
+        gap: 1.5rem;
+        padding: 1rem 0;
+        border-bottom: 1px solid #f1f5f9;
+    }
+
+    .metadata-row:last-child {
+        border-bottom: 0;
+    }
+
+    .document-panel {
+        background:
+            linear-gradient(
+                145deg,
+                rgba(15, 23, 42, 0.98),
+                rgba(30, 58, 138, 0.94)
+            );
+    }
+
+    .word-break {
+        overflow-wrap: anywhere;
+        word-break: break-word;
+    }
+
+    @media (max-width: 768px) {
+        .metadata-row {
+            grid-template-columns: 1fr;
+            gap: 0.4rem;
+        }
+    }
+</style>
+
+<main class="repo-sans min-h-screen bg-slate-50">
+    <section class="relative overflow-hidden bg-slate-950">
+        <div class="absolute inset-0 opacity-20">
+            <div class="absolute -top-24 -right-20 w-96 h-96 rounded-full bg-blue-500 blur-3xl"></div>
+            <div class="absolute -bottom-32 -left-20 w-96 h-96 rounded-full bg-cyan-400 blur-3xl"></div>
+        </div>
+
+        <div class="relative max-w-[1400px] mx-auto px-5 sm:px-8 lg:px-12 pt-16 pb-24">
+            <a
+                href="{% url 'investigacion:repositorio_publico' %}"
+                class="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.22em] text-blue-300 hover:text-white transition-colors"
+            >
+                <i class="fa-solid fa-arrow-left"></i>
+                Volver al repositorio
+            </a>
+
+            <div class="mt-10 max-w-5xl">
+                <div class="flex flex-wrap items-center gap-3 mb-5">
+                    <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-500/15 border border-blue-400/20 text-blue-200 text-[9px] font-black uppercase tracking-widest">
+                        <i class="fa-solid fa-book-open"></i>
+                        Registro institucional
+                    </span>
+
+                    {% if tesis.fecha_publicacion %}
+                        <span class="text-[9px] font-bold uppercase tracking-[0.2em] text-slate-400">
+                            {{ tesis.fecha_publicacion|date:"Y" }}
+                        </span>
+                    {% endif %}
+
+                    <span class="text-[9px] font-mono text-slate-500">
+                        ID {{ tesis.id }}
+                    </span>
+                </div>
+
+                <h1 class="repo-serif text-2xl sm:text-3xl lg:text-4xl font-black uppercase leading-tight tracking-tight text-white">
+                    {{ tesis.titulo }}
+                </h1>
+
+                <div class="mt-7 flex flex-wrap gap-x-8 gap-y-4">
+                    {% for autor in tesis.autores.all %}
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-xl bg-white/10 border border-white/10 flex items-center justify-center text-blue-300">
+                                <i class="fa-solid fa-user-graduate text-xs"></i>
+                            </div>
+
+                            <div>
+                                <p class="text-[8px] font-black uppercase tracking-[0.2em] text-slate-500">
+                                    Autor
+                                </p>
+
+                                <p class="text-xs font-bold text-slate-200">
+                                    {{ autor.nombre_completo }}
+                                </p>
+                            </div>
+                        </div>
+                    {% empty %}
+                        <p class="text-xs text-slate-400">
+                            Autor no registrado
+                        </p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="max-w-[1400px] mx-auto px-5 sm:px-8 lg:px-12 -mt-12 pb-20 relative z-10">
+        <div class="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_340px] gap-8">
+
+            <article class="bg-white rounded-[2rem] border border-slate-200 shadow-xl shadow-slate-200/40 overflow-hidden">
+                <header class="px-6 sm:px-10 py-7 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <div>
+                        <p class="text-[8px] font-black uppercase tracking-[0.3em] text-blue-600 mb-2">
+                            Ficha bibliográfica
+                        </p>
+
+                        <h2 class="text-lg font-black text-slate-900">
+                            Metadatos del registro
+                        </h2>
+                    </div>
+
+                    <span class="inline-flex self-start items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-700 text-[8px] font-black uppercase tracking-widest">
+                        <i class="fa-solid fa-circle-check"></i>
+                        Publicado
+                    </span>
+                </header>
+
+                <div class="px-6 sm:px-10 py-3">
+                    <div class="metadata-row">
+                        <div class="text-[9px] font-black uppercase tracking-[0.18em] text-slate-400">
+                            Título
+                        </div>
+
+                        <div class="text-sm font-bold text-slate-800 leading-relaxed">
+                            {{ tesis.titulo }}
+                        </div>
+                    </div>
+
+                    <div class="metadata-row">
+                        <div class="text-[9px] font-black uppercase tracking-[0.18em] text-slate-400">
+                            Autoría
+                        </div>
+
+                        <div class="space-y-2">
+                            {% for autor in tesis.autores.all %}
+                                <div>
+                                    <p class="text-sm font-bold text-slate-800">
+                                        {{ autor.nombre_completo }}
+                                    </p>
+
+                                    {% if autor.orcid %}
+                                        <a
+                                            href="{{ autor.orcid }}"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            class="inline-flex items-center gap-1.5 mt-1 text-[9px] font-bold text-emerald-600 hover:underline"
+                                        >
+                                            <i class="fa-brands fa-orcid"></i>
+                                            {{ autor.orcid }}
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            {% empty %}
+                                <span class="text-sm text-slate-400">
+                                    No registrado
+                                </span>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="metadata-row">
+                        <div class="text-[9px] font-black uppercase tracking-[0.18em] text-slate-400">
+                            Asesoría
+                        </div>
+
+                        <div class="space-y-2">
+                            {% for asesor in tesis.asesores.all %}
+                                <div>
+                                    <p class="text-sm font-semibold text-slate-700">
+                                        {{ asesor.nombre_completo }}
+                                    </p>
+
+                                    {% if asesor.orcid %}
+                                        <a
+                                            href="{{ asesor.orcid }}"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            class="inline-flex items-center gap-1.5 mt-1 text-[9px] font-bold text-emerald-600 hover:underline"
+                                        >
+                                            <i class="fa-brands fa-orcid"></i>
+                                            {{ asesor.orcid }}
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            {% empty %}
+                                <span class="text-sm text-slate-400">
+                                    No registrado
+                                </span>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    {% if tesis.jurados.all %}
+                        <div class="metadata-row">
+                            <div class="text-[9px] font-black uppercase tracking-[0.18em] text-slate-400">
+                                Jurado
+                            </div>
+
+                            <div class="space-y-1">
+                                {% for jurado in tesis.jurados.all %}
+                                    <p class="text-sm text-slate-700">
+                                        {{ jurado.nombre_completo }}
+                                    </p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <div class="metadata-row">
+                        <div class="text-[9px] font-black uppercase tracking-[0.18em] text-slate-400">
+                            Resumen
+                        </div>
+
+                        <div class="text-sm text-slate-600 leading-7 text-justify">
+                            {{ tesis.resumen|linebreaksbr }}
+                        </div>
+                    </div>
+
+                    <div class="metadata-row">
+                        <div class="text-[9px] font-black uppercase tracking-[0.18em] text-slate-400">
+                            Palabras clave
+                        </div>
+
+                        <div class="flex flex-wrap gap-2">
+                            {% for palabra in tesis.palabras_clave.all %}
+                                <span class="px-3 py-1.5 rounded-lg bg-blue-50 border border-blue-100 text-[9px] font-bold text-blue-700">
+                                    {{ palabra.nombre }}
+                                </span>
+                            {% empty %}
+                                <span class="text-sm text-slate-400">
+                                    No registradas
+                                </span>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="metadata-row">
+                        <div class="text-[9px] font-black uppercase tracking-[0.18em] text-slate-400">
+                            Tipo de documento
+                        </div>
+
+                        <div class="text-sm font-semibold text-slate-700">
+                            {{ tesis.get_tipo_tesis_display }}
+                        </div>
+                    </div>
+
+                    <div class="metadata-row">
+                        <div class="text-[9px] font-black uppercase tracking-[0.18em] text-slate-400">
+                            Grado o título
+                        </div>
+
+                        <div class="text-sm text-slate-700">
+                            {{ tesis.grado_academico|default:"No registrado" }}
+                        </div>
+                    </div>
+
+                    <div class="metadata-row">
+                        <div class="text-[9px] font-black uppercase tracking-[0.18em] text-slate-400">
+                            Programa académico
+                        </div>
+
+                        <div class="text-sm text-slate-700">
+                            {{ tesis.programa_academico|default:"No registrado" }}
+                        </div>
+                    </div>
+
+                    {% if tesis.disciplina_academica %}
+                        <div class="metadata-row">
+                            <div class="text-[9px] font-black uppercase tracking-[0.18em] text-slate-400">
+                                Disciplina
+                            </div>
+
+                            <div class="text-sm text-slate-700">
+                                {{ tesis.disciplina_academica }}
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <div class="metadata-row">
+                        <div class="text-[9px] font-black uppercase tracking-[0.18em] text-slate-400">
+                            Clasificación OCDE
+                        </div>
+
+                        <div class="space-y-1">
+                            <p class="text-sm font-semibold text-slate-700">
+                                {{ tesis.ocde_nombre|default:"No registrada" }}
+                            </p>
+
+                            {% if tesis.ocde_codigo %}
+                                <a
+                                    href="{{ tesis.ocde_uri }}"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="text-[9px] font-mono text-blue-600 hover:underline word-break"
+                                >
+                                    {{ tesis.ocde_codigo }} — {{ tesis.ocde_uri }}
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="metadata-row">
+                        <div class="text-[9px] font-black uppercase tracking-[0.18em] text-slate-400">
+                            Institución
+                        </div>
+
+                        <div class="space-y-1">
+                            <p class="text-sm font-semibold text-slate-700">
+                                {{ tesis.institucion_nombre }}
+                            </p>
+
+                            <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400">
+                                {{ tesis.institucion_pais }}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="metadata-row">
+                        <div class="text-[9px] font-black uppercase tracking-[0.18em] text-slate-400">
+                            Fecha de publicación
+                        </div>
+
+                        <div class="text-sm text-slate-700">
+                            {% if tesis.fecha_publicacion %}
+                                {{ tesis.fecha_publicacion|date:"d/m/Y" }}
+                            {% else %}
+                                No registrada
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="metadata-row">
+                        <div class="text-[9px] font-black uppercase tracking-[0.18em] text-slate-400">
+                            Idioma
+                        </div>
+
+                        <div class="text-sm text-slate-700">
+                            {{ tesis.get_idioma_display }}
+                        </div>
+                    </div>
+
+                    <div class="metadata-row">
+                        <div class="text-[9px] font-black uppercase tracking-[0.18em] text-slate-400">
+                            Versión
+                        </div>
+
+                        <div class="text-sm text-slate-700">
+                            {{ tesis.get_version_publicacion_display }}
+                        </div>
+                    </div>
+
+                    <div class="metadata-row">
+                        <div class="text-[9px] font-black uppercase tracking-[0.18em] text-slate-400">
+                            Derechos de acceso
+                        </div>
+
+                        <div class="space-y-2">
+                            <p class="text-sm font-semibold text-slate-700">
+                                {{ tesis.get_derechos_acceso_display }}
+                            </p>
+
+                            <p class="text-[9px] font-mono text-slate-400 word-break">
+                                {{ tesis.derechos_acceso }}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="metadata-row">
+                        <div class="text-[9px] font-black uppercase tracking-[0.18em] text-slate-400">
+                            Licencia
+                        </div>
+
+                        <div>
+                            {% if tesis.licencia_uri %}
+                                <a
+                                    href="{{ tesis.licencia_uri }}"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="text-sm font-semibold text-blue-600 hover:underline word-break"
+                                >
+                                    {{ tesis.licencia_uri }}
+                                </a>
+                            {% else %}
+                                <span class="text-sm text-slate-400">
+                                    No registrada
+                                </span>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="metadata-row">
+                        <div class="text-[9px] font-black uppercase tracking-[0.18em] text-slate-400">
+                            Identificador persistente
+                        </div>
+
+                        <div>
+                            <a
+                                href="{{ tesis.identificador_persistente }}"
+                                class="text-sm font-semibold text-blue-600 hover:underline word-break"
+                            >
+                                {{ tesis.identificador_persistente }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <aside class="space-y-6">
+                <div class="document-panel rounded-[2rem] p-7 text-white shadow-xl">
+                    <div class="w-14 h-14 rounded-2xl bg-white/10 border border-white/10 flex items-center justify-center mb-6">
+                        <i class="fa-solid fa-file-pdf text-2xl text-rose-300"></i>
+                    </div>
+
+                    <p class="text-[8px] font-black uppercase tracking-[0.25em] text-blue-300 mb-2">
+                        Documento principal
+                    </p>
+
+                    <h3 class="text-lg font-black leading-tight">
+                        Texto completo de la investigación
+                    </h3>
+
+                    <div class="mt-6 space-y-3 text-[10px] text-slate-300">
+                        <div class="flex items-center justify-between gap-4">
+                            <span>Formato</span>
+                            <span class="font-bold text-white">
+                                {{ tesis.formato_mime|default:"application/pdf" }}
+                            </span>
+                        </div>
+
+                        {% if tesis.tamano_archivo %}
+                            <div class="flex items-center justify-between gap-4">
+                                <span>Tamaño</span>
+                                <span class="font-bold text-white">
+                                    {{ tesis.tamano_archivo|filesizeformat }}
+                                </span>
+                            </div>
+                        {% endif %}
+
+                        {% if tesis.numero_paginas %}
+                            <div class="flex items-center justify-between gap-4">
+                                <span>Páginas</span>
+                                <span class="font-bold text-white">
+                                    {{ tesis.numero_paginas }}
+                                </span>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    {% if tesis.archivo_pdf %}
+                        <a
+                            href="{{ tesis.archivo_pdf.url }}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="mt-7 w-full inline-flex items-center justify-center gap-3 py-4 px-5 rounded-2xl bg-white text-slate-900 text-[9px] font-black uppercase tracking-[0.18em] hover:bg-rose-500 hover:text-white transition-all"
+                        >
+                            <i class="fa-solid fa-download"></i>
+                            Descargar PDF
+                        </a>
+                    {% endif %}
+                </div>
+
+                <div class="bg-white rounded-[2rem] p-7 border border-slate-200 shadow-lg shadow-slate-200/40">
+                    <p class="text-[8px] font-black uppercase tracking-[0.25em] text-slate-400 mb-5">
+                        Interoperabilidad
+                    </p>
+
+                    <div class="space-y-4">
+                        <a
+                            href="{% url 'investigacion:oai_repository' tesis.id %}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="flex items-center justify-between gap-4 p-4 rounded-2xl bg-violet-50 border border-violet-100 hover:border-violet-300 transition-colors"
+                        >
+                            <div>
+                                <p class="text-[9px] font-black uppercase tracking-widest text-violet-700">
+                                    Dublin Core
+                                </p>
+
+                                <p class="text-[9px] text-violet-500 mt-1">
+                                    Ver metadatos XML
+                                </p>
+                            </div>
+
+                            <i class="fa-solid fa-code text-violet-500"></i>
+                        </a>
+
+                        <a
+                            href="{% url 'investigacion:oai_endpoint' %}?verb=GetRecord&metadataPrefix=oai_dc&identifier=oai:repositorio.13dejuliode1882sp.edu.pe:tesis/{{ tesis.id }}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="flex items-center justify-between gap-4 p-4 rounded-2xl bg-blue-50 border border-blue-100 hover:border-blue-300 transition-colors"
+                        >
+                            <div>
+                                <p class="text-[9px] font-black uppercase tracking-widest text-blue-700">
+                                    OAI-PMH
+                                </p>
+
+                                <p class="text-[9px] text-blue-500 mt-1">
+                                    Consultar GetRecord
+                                </p>
+                            </div>
+
+                            <i class="fa-solid fa-network-wired text-blue-500"></i>
+                        </a>
+                    </div>
+                </div>
+
+                {% if tesis.checksum_sha256 %}
+                    <div class="bg-white rounded-[2rem] p-7 border border-slate-200">
+                        <p class="text-[8px] font-black uppercase tracking-[0.25em] text-slate-400 mb-3">
+                            Integridad digital SHA-256
+                        </p>
+
+                        <p class="font-mono text-[8px] leading-relaxed text-slate-500 word-break">
+                            {{ tesis.checksum_sha256 }}
+                        </p>
+                    </div>
+                {% endif %}
+            </aside>
+        </div>
+    </section>
+</main>
+{% endblock content %}
+
+{% block footer %}
+<footer class="w-full bg-white repo-sans">
+    <div class="border-t border-slate-200 py-8 px-5">
+        <div class="max-w-[1400px] mx-auto flex flex-col md:flex-row items-center justify-between gap-5">
+            <div class="text-center md:text-left">
+                <p class="text-[10px] font-black uppercase tracking-widest text-slate-800">
+                    Repositorio Institucional IESPP “13 de Julio de 1882”
+                </p>
+
+                <p class="mt-1 text-[9px] text-slate-400">
+                    San Pablo, Cajamarca, Perú
+                </p>
+            </div>
+
+            <div class="flex items-center gap-5">
+                <a
+                    href="https://alicia.concytec.gob.pe/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-[9px] font-black uppercase tracking-widest text-blue-700 hover:underline"
+                >
+                    ALICIA
+                </a>
+
+                <a
+                    href="https://renati.sunedu.gob.pe/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-[9px] font-black uppercase tracking-widest text-blue-700 hover:underline"
+                >
+                    RENATI
+                </a>
+            </div>
+        </div>
+    </div>
+</footer>
+{% endblock footer %}
