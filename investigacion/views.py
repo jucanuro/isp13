@@ -1,360 +1,1213 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.db import models
-from django.core.paginator import Paginator
-from .models import Tesis, Autor, Asesor
-from django.contrib.auth.decorators import login_required
+import re
+
 from django.contrib import messages
-from django.http import HttpResponse
-from django.http import JsonResponse
-from lxml import etree
+from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ValidationError
+from django.core.paginator import Paginator
+from django.db import IntegrityError, transaction
 from django.db.models import Q
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import get_object_or_404, redirect, render
+from django.utils import timezone
+from django.utils.dateparse import parse_date
+from django.views.decorators.http import require_POST
+from lxml import etree
+
+from .models import Asesor, Autor, PalabraClave, Tesis
+from .oai import build_oai_dc
+
+
+M2M_FIELDS = [
+    "autores",
+    "asesores",
+    "jurados",
+    "palabras_clave",
+]
+
+
+def _es_ajax(request):
+    return (
+        request.headers.get("x-requested-with") == "XMLHttpRequest"
+        or request.POST.get("ajax") == "true"
+    )
+
+
+def _texto(request, field_name):
+    return request.POST.get(field_name, "").strip()
+
+
+def _obtener_fecha(request, field_name):
+    if field_name not in request.POST:
+        return None, False
+
+    value = _texto(request, field_name)
+
+    if not value:
+        return None, True
+
+    parsed_value = parse_date(value)
+
+    if parsed_value is None:
+        raise ValidationError(
+            {
+                field_name: (
+                    "La fecha ingresada no tiene un formato válido."
+                )
+            }
+        )
+
+    return parsed_value, True
+
+
+def _obtener_entero(request, field_name):
+    if field_name not in request.POST:
+        return None, False
+
+    value = _texto(request, field_name)
+
+    if not value:
+        return None, True
+
+    try:
+        parsed_value = int(value)
+    except (TypeError, ValueError) as error:
+        raise ValidationError(
+            {
+                field_name: (
+                    "Debe ingresar un número entero válido."
+                )
+            }
+        ) from error
+
+    if parsed_value < 0:
+        raise ValidationError(
+            {
+                field_name: (
+                    "El valor no puede ser negativo."
+                )
+            }
+        )
+
+    return parsed_value, True
+
+
+def _formatear_error_validacion(error):
+    if hasattr(error, "message_dict"):
+        errores = []
+
+        for field_name, field_errors in error.message_dict.items():
+            for field_error in field_errors:
+                errores.append(
+                    f"{field_name}: {field_error}"
+                )
+
+        return " | ".join(errores)
+
+    if hasattr(error, "messages"):
+        return " | ".join(error.messages)
+
+    return str(error)
+
+
+def _actualizar_campos_tesis(tesis, request):
+    text_fields = [
+        "titulo",
+        "resumen",
+        "tipo_tesis",
+        "ocde_codigo",
+        "ocde_nombre",
+        "derechos_acceso",
+        "idioma",
+        "pais_publicacion",
+        "version_publicacion",
+        "grado_academico",
+        "programa_academico",
+        "disciplina_academica",
+        "licencia_uri",
+        "tipo_autorizacion",
+    ]
+
+    for field_name in text_fields:
+        if field_name in request.POST:
+            setattr(
+                tesis,
+                field_name,
+                _texto(request, field_name),
+            )
+
+    if (
+        not tesis.ocde_nombre
+        and tesis.ocde_codigo
+    ):
+        tesis.ocde_nombre = (
+            f"Área OCDE {tesis.ocde_codigo}"
+        )
+
+    date_fields = [
+        "fecha_publicacion",
+        "fecha_disponibilidad",
+        "fecha_embargo_fin",
+        "fecha_autorizacion",
+    ]
+
+    for field_name in date_fields:
+        parsed_value, was_sent = _obtener_fecha(
+            request,
+            field_name,
+        )
+
+        if was_sent:
+            setattr(
+                tesis,
+                field_name,
+                parsed_value,
+            )
+
+    numero_paginas, was_sent = _obtener_entero(
+        request,
+        "numero_paginas",
+    )
+
+    if was_sent:
+        tesis.numero_paginas = numero_paginas
+
+    authorization_fields_sent = any(
+        field_name in request.POST
+        for field_name in [
+            "acepta_publicacion",
+            "tipo_autorizacion",
+            "fecha_autorizacion",
+        ]
+    )
+
+    if authorization_fields_sent:
+        tesis.acepta_publicacion = (
+            request.POST.get("acepta_publicacion")
+            in {"1", "true", "on", "yes", "si", "sí"}
+        )
+
+    file_fields = [
+        "archivo_pdf",
+        "constancia_originalidad",
+        "reporte_turnitin",
+        "autorizacion_publicacion",
+    ]
+
+    for field_name in file_fields:
+        uploaded_file = request.FILES.get(field_name)
+
+        if uploaded_file:
+            setattr(
+                tesis,
+                field_name,
+                uploaded_file,
+            )
+
+
+def _sincronizar_palabras_clave(tesis, request):
+    if "palabras_clave" not in request.POST:
+        return
+
+    raw_keywords = _texto(
+        request,
+        "palabras_clave",
+    )
+
+    keyword_names = [
+        keyword.strip()
+        for keyword in re.split(
+            r"[,;\n]+",
+            raw_keywords,
+        )
+        if keyword.strip()
+    ]
+
+    keyword_objects = []
+    normalized_names = set()
+
+    for keyword_name in keyword_names:
+        normalized_name = keyword_name.casefold()
+
+        if normalized_name in normalized_names:
+            continue
+
+        keyword = PalabraClave.objects.filter(
+            nombre__iexact=keyword_name
+        ).first()
+
+        if keyword is None:
+            keyword = PalabraClave.objects.create(
+                nombre=keyword_name
+            )
+
+        keyword_objects.append(keyword)
+        normalized_names.add(normalized_name)
+
+    tesis.palabras_clave.set(keyword_objects)
+
+
+def _contexto_formulario(tesis, editando):
+    return {
+        "tesis": tesis,
+        "editando": editando,
+        "tipos_grado": Tesis.TIPO_GRADO,
+        "idiomas": Tesis.IDIOMAS,
+        "versiones_publicacion": Tesis.VERSIONES,
+        "derechos_acceso": Tesis.DERECHOS,
+        "tipos_autorizacion": Tesis.TIPOS_AUTORIZACION,
+        "autores_actuales": (
+            tesis.autores.all()
+            if tesis and tesis.pk
+            else []
+        ),
+        "asesores_actuales": (
+            tesis.asesores.all()
+            if tesis and tesis.pk
+            else []
+        ),
+        "jurados_actuales": (
+            tesis.jurados.all()
+            if tesis and tesis.pk
+            else []
+        ),
+        "palabras_clave_actuales": (
+            tesis.palabras_clave.all()
+            if tesis and tesis.pk
+            else []
+        ),
+    }
+
+
+def _faltantes_validacion(tesis):
+    faltantes = []
+
+    if not tesis.titulo.strip():
+        faltantes.append("Título")
+
+    if not tesis.resumen.strip():
+        faltantes.append("Resumen")
+
+    if not tesis.tipo_tesis:
+        faltantes.append("Tipo de documento")
+
+    if not tesis.fecha_publicacion:
+        faltantes.append("Fecha de publicación o sustentación")
+
+    if not tesis.ocde_codigo:
+        faltantes.append("Código OCDE")
+
+    if not tesis.ocde_nombre:
+        faltantes.append("Nombre del área OCDE")
+
+    if not tesis.archivo_pdf:
+        faltantes.append("Archivo PDF de la tesis")
+
+    if not tesis.constancia_originalidad:
+        faltantes.append("Constancia de originalidad")
+
+    if not tesis.reporte_turnitin:
+        faltantes.append("Reporte Turnitin")
+
+    if not tesis.autores.exists():
+        faltantes.append("Al menos un autor")
+
+    if not tesis.asesores.exists():
+        faltantes.append("Al menos un asesor")
+
+    return faltantes
+
+
+def _faltantes_publicacion(tesis):
+    faltantes = _faltantes_validacion(tesis)
+
+    if not tesis.institucion_nombre:
+        faltantes.append("Institución responsable")
+
+    if not tesis.institucion_pais:
+        faltantes.append("País de la institución")
+
+    if not tesis.idioma:
+        faltantes.append("Idioma")
+
+    if not tesis.pais_publicacion:
+        faltantes.append("País de publicación")
+
+    if not tesis.version_publicacion:
+        faltantes.append("Versión de la publicación")
+
+    if not tesis.derechos_acceso:
+        faltantes.append("Nivel de acceso")
+
+    if (
+        tesis.derechos_acceso
+        == "info:eu-repo/semantics/openAccess"
+        and not tesis.licencia_uri
+    ):
+        faltantes.append(
+            "Licencia de publicación para acceso abierto"
+        )
+
+    if not tesis.grado_academico:
+        faltantes.append("Grado o título obtenido")
+
+    if not tesis.programa_academico:
+        faltantes.append("Programa académico")
+
+    if not tesis.palabras_clave.exists():
+        faltantes.append("Palabras clave")
+
+    if not tesis.acepta_publicacion:
+        faltantes.append(
+            "Confirmación de autorización de publicación"
+        )
+
+    if not tesis.autorizacion_publicacion:
+        faltantes.append(
+            "Documento de autorización de publicación"
+        )
+
+    return list(dict.fromkeys(faltantes))
 
 
 @login_required
 def registrar_tesis(request):
     tesis = None
-    id_hidden = request.POST.get('tesis_id_hidden')
-    if id_hidden:
-        tesis = Tesis.objects.filter(id=id_hidden).first()
 
-    if request.method == 'POST':
-        es_ajax = request.headers.get('x-requested-with') == 'XMLHttpRequest' or request.POST.get('ajax') == 'true'
-        titulo = request.POST.get('titulo', '').strip()
+    tesis_id = (
+        request.POST.get("tesis_id_hidden")
+        or request.GET.get("tesis_id")
+    )
 
-        if es_ajax:
+    if tesis_id:
+        tesis = Tesis.objects.filter(
+            pk=tesis_id
+        ).first()
+
+    if request.method == "POST":
+        titulo = _texto(request, "titulo")
+
+        if _es_ajax(request):
             if not titulo:
-                return JsonResponse({'status': 'error', 'message': 'Título vacío'}, status=400)
-            
-            if tesis:
-                tesis.titulo = titulo
-                tesis.save()
-            else:
-                tesis = Tesis.objects.create(titulo=titulo, estado='pendiente')
-            return JsonResponse({'status': 'success', 'id': tesis.id})
+                return JsonResponse(
+                    {
+                        "status": "error",
+                        "message": "Debe ingresar el título.",
+                    },
+                    status=400,
+                )
 
-        if not tesis:
-            messages.error(request, "Error: Inicie el registro con un título para activar el sistema.")
-            return redirect('investigacion:registrar_tesis')
+            try:
+                with transaction.atomic():
+                    if tesis:
+                        tesis.titulo = titulo
+                        tesis.save(
+                            update_fields=[
+                                "titulo",
+                                "fecha_actualizacion",
+                            ]
+                        )
+                    else:
+                        tesis = Tesis.objects.create(
+                            titulo=titulo,
+                            estado="pendiente",
+                        )
+
+                return JsonResponse(
+                    {
+                        "status": "success",
+                        "id": tesis.pk,
+                        "uuid": str(tesis.uuid),
+                    }
+                )
+
+            except Exception as error:
+                return JsonResponse(
+                    {
+                        "status": "error",
+                        "message": str(error),
+                    },
+                    status=500,
+                )
+
+        if tesis is None:
+            messages.error(
+                request,
+                (
+                    "Primero debe ingresar el título para "
+                    "iniciar el registro."
+                ),
+            )
+            return redirect(
+                "investigacion:registrar_tesis"
+            )
 
         try:
-            tesis.titulo = titulo or tesis.titulo
-            tesis.resumen = request.POST.get('resumen', '').strip()
-            tesis.tipo_tesis = request.POST.get('tipo_tesis')
-            tesis.ocde_codigo = request.POST.get('ocde_codigo', '').strip()
-            tesis.ocde_nombre = request.POST.get('ocde_nombre', '').strip() or f"Área OCDE {tesis.ocde_codigo}"
-            tesis.derechos_acceso = request.POST.get('derechos_acceso')
-            
-            fecha = request.POST.get('fecha_publicacion')
-            tesis.fecha_publicacion = fecha if (fecha and fecha.strip()) else None
+            with transaction.atomic():
+                _actualizar_campos_tesis(
+                    tesis,
+                    request,
+                )
 
-            if 'archivo_pdf' in request.FILES: tesis.archivo_pdf = request.FILES['archivo_pdf']
-            if 'constancia_originalidad' in request.FILES: tesis.constancia_originalidad = request.FILES['constancia_originalidad']
-            if 'reporte_turnitin' in request.FILES: tesis.reporte_turnitin = request.FILES['reporte_turnitin']
-            
-            tesis.save()
-            messages.success(request, "Registro completado con éxito.")
-            return redirect('investigacion:lista_tesis')
+                tesis.estado = "pendiente"
 
-        except Exception as e:
-            messages.error(request, f"Error al registrar: {e}")
-            
-    return render(request, 'investigacion/registro.html', {
-        'tesis': tesis,
-        'tipos_grado': Tesis.TIPO_GRADO,
-        'editando': False
-    })
+                tesis.full_clean(
+                    exclude=M2M_FIELDS
+                )
+                tesis.save()
+
+                _sincronizar_palabras_clave(
+                    tesis,
+                    request,
+                )
+
+            messages.success(
+                request,
+                "La investigación fue registrada correctamente.",
+            )
+            return redirect(
+                "investigacion:lista_tesis"
+            )
+
+        except ValidationError as error:
+            messages.error(
+                request,
+                _formatear_error_validacion(error),
+            )
+
+        except Exception as error:
+            messages.error(
+                request,
+                f"Error al registrar: {error}",
+            )
+
+    return render(
+        request,
+        "investigacion/registro.html",
+        _contexto_formulario(
+            tesis,
+            editando=False,
+        ),
+    )
+
 
 @login_required
 def editar_tesis(request, tesis_id):
-    tesis = get_object_or_404(Tesis.objects.prefetch_related('autores', 'asesores'), id=tesis_id)
-    
-    if request.method == 'POST':
+    tesis = get_object_or_404(
+        Tesis.objects.prefetch_related(
+            "autores",
+            "asesores",
+            "jurados",
+            "palabras_clave",
+        ),
+        pk=tesis_id,
+    )
+
+    if request.method == "POST":
         try:
-            # 1. Metadatos básicos
-            tesis.titulo = request.POST.get('titulo')
-            tesis.resumen = request.POST.get('resumen')
-            tesis.tipo_tesis = request.POST.get('tipo_tesis')
-            tesis.ocde_codigo = request.POST.get('ocde_codigo')
-            tesis.ocde_nombre = request.POST.get('ocde_nombre') or f"Área OCDE {tesis.ocde_codigo}"
-            tesis.derechos_acceso = request.POST.get('derechos_acceso')
-            
-            # 2. Fecha (Formato ISO para evitar errores de base de datos)
-            fecha = request.POST.get('fecha_publicacion')
-            tesis.fecha_publicacion = fecha if (fecha and fecha.strip()) else None
+            with transaction.atomic():
+                estado_anterior = tesis.estado
 
-            # 3. Archivos (Solo se actualizan si se cargan nuevos)
-            if 'archivo_pdf' in request.FILES:
-                tesis.archivo_pdf = request.FILES['archivo_pdf']
-            if 'constancia_originalidad' in request.FILES:
-                tesis.constancia_originalidad = request.FILES['constancia_originalidad']
-            if 'reporte_turnitin' in request.FILES:
-                tesis.reporte_turnitin = request.FILES['reporte_turnitin']
+                _actualizar_campos_tesis(
+                    tesis,
+                    request,
+                )
 
-            # 4. Estado: Si no está publicado, vuelve a pendiente para revisión
-            if tesis.estado != 'publicado':
-                tesis.estado = 'pendiente'
-            
-            tesis.save()
-            messages.success(request, f"Tesis '{tesis.titulo[:50]}' actualizada.")
-            return redirect('investigacion:lista_tesis')
+                if estado_anterior in {
+                    "pendiente",
+                    "validado",
+                }:
+                    tesis.estado = "pendiente"
 
-        except Exception as e:
-            messages.error(request, f"Error al actualizar: {e}")
-        
-    return render(request, 'investigacion/registro.html', {
-        'tesis': tesis, 
-        'editando': True, 
-        'tipos_grado': Tesis.TIPO_GRADO,
-        'autores_actuales': tesis.autores.all(),
-        'asesores_actuales': tesis.asesores.all()
-    })
+                tesis.full_clean(
+                    exclude=M2M_FIELDS
+                )
+                tesis.save()
+
+                _sincronizar_palabras_clave(
+                    tesis,
+                    request,
+                )
+
+            messages.success(
+                request,
+                (
+                    f"La tesis '{tesis.titulo[:60]}' "
+                    "fue actualizada correctamente."
+                ),
+            )
+            return redirect(
+                "investigacion:lista_tesis"
+            )
+
+        except ValidationError as error:
+            messages.error(
+                request,
+                _formatear_error_validacion(error),
+            )
+
+        except Exception as error:
+            messages.error(
+                request,
+                f"Error al actualizar: {error}",
+            )
+
+    return render(
+        request,
+        "investigacion/registro.html",
+        _contexto_formulario(
+            tesis,
+            editando=True,
+        ),
+    )
+
 
 @login_required
 def lista_tesis(request):
-    query = request.GET.get('q')
-    estado_filtro = request.GET.get('estado')
-    
-    tesis_queryset = Tesis.objects.all().prefetch_related('autores', 'asesores').order_by('-fecha_registro')
+    query = request.GET.get("q", "").strip()
+    estado_filtro = request.GET.get(
+        "estado",
+        "",
+    ).strip()
+
+    tesis_queryset = (
+        Tesis.objects
+        .prefetch_related(
+            "autores",
+            "asesores",
+            "palabras_clave",
+        )
+        .order_by("-fecha_registro")
+    )
 
     if query:
         tesis_queryset = tesis_queryset.filter(
-            models.Q(titulo__icontains=query) | 
-            models.Q(autores__nombre_completo__icontains=query) |
-            models.Q(autores__dni__icontains=query)
-        ).distinct() 
+            Q(titulo__icontains=query)
+            | Q(resumen__icontains=query)
+            | Q(autores__nombre_completo__icontains=query)
+            | Q(autores__dni__icontains=query)
+            | Q(asesores__nombre_completo__icontains=query)
+            | Q(programa_academico__icontains=query)
+            | Q(grado_academico__icontains=query)
+            | Q(palabras_clave__nombre__icontains=query)
+        ).distinct()
 
-    if estado_filtro and estado_filtro != 'todos':
-        tesis_queryset = tesis_queryset.filter(estado=estado_filtro)
+    valid_states = {
+        state_value
+        for state_value, _ in Tesis.ESTADOS
+    }
 
-    paginator = Paginator(tesis_queryset, 5) 
-    page_number = request.GET.get('page')
-    tesis_paginadas = paginator.get_page(page_number)
+    if estado_filtro in valid_states:
+        tesis_queryset = tesis_queryset.filter(
+            estado=estado_filtro
+        )
 
-    return render(request, 'investigacion/lista.html', {
-        'tesis_locales': tesis_paginadas, 
-        'estado_actual': estado_filtro or 'todos',
-        'query_actual': query or ''
-    })
+    paginator = Paginator(
+        tesis_queryset,
+        5,
+    )
+
+    tesis_paginadas = paginator.get_page(
+        request.GET.get("page")
+    )
+
+    return render(
+        request,
+        "investigacion/lista.html",
+        {
+            "tesis_locales": tesis_paginadas,
+            "estado_actual": (
+                estado_filtro or "todos"
+            ),
+            "query_actual": query,
+        },
+    )
 
 
 def repositorio_publico(request):
-    query = request.GET.get('q')
-    tesis_queryset = Tesis.objects.filter(estado='publicado').prefetch_related('autores', 'asesores').order_by('-fecha_registro')
+    query = request.GET.get("q", "").strip()
+
+    tesis_queryset = (
+        Tesis.objects
+        .filter(
+            estado="publicado",
+            retirado=False,
+        )
+        .prefetch_related(
+            "autores",
+            "asesores",
+            "palabras_clave",
+        )
+        .order_by(
+            "-fecha_publicacion",
+            "-fecha_registro",
+        )
+    )
 
     if query:
-        tesis_queryset = Tesis.objects.filter(estado='publicado').prefetch_related('autores')
+        tesis_queryset = tesis_queryset.filter(
+            Q(titulo__icontains=query)
+            | Q(resumen__icontains=query)
+            | Q(autores__nombre_completo__icontains=query)
+            | Q(asesores__nombre_completo__icontains=query)
+            | Q(programa_academico__icontains=query)
+            | Q(grado_academico__icontains=query)
+            | Q(ocde_nombre__icontains=query)
+            | Q(palabras_clave__nombre__icontains=query)
+        ).distinct()
 
-    paginator = Paginator(tesis_queryset, 9)
-    page_number = request.GET.get('page')
-    tesis_paginadas = paginator.get_page(page_number)
+    paginator = Paginator(
+        tesis_queryset,
+        9,
+    )
 
-    return render(request, 'investigacion/repositorio_web.html', {
-        'tesis_locales': tesis_paginadas,
-        'query': query or '',
-        'mostrar_boton_ver_mas': False, 
-        'template_base': 'base.html',
-    })
+    tesis_paginadas = paginator.get_page(
+        request.GET.get("page")
+    )
+
+    return render(
+        request,
+        "investigacion/repositorio_web.html",
+        {
+            "tesis_locales": tesis_paginadas,
+            "query": query,
+            "mostrar_boton_ver_mas": False,
+            "template_base": "base.html",
+        },
+    )
+
+
+def detalle_tesis(request, tesis_uuid):
+    tesis = get_object_or_404(
+        Tesis.objects.prefetch_related(
+            "autores",
+            "asesores",
+            "jurados",
+            "palabras_clave",
+        ),
+        uuid=tesis_uuid,
+        estado="publicado",
+        retirado=False,
+    )
+
+    return render(
+        request,
+        "investigacion/detalle_tesis.html",
+        {
+            "tesis": tesis,
+            "template_base": "base.html",
+        },
+    )
+
 
 @login_required
+@require_POST
 def validar_tesis(request, tesis_id):
-    # 1. Obtenemos la tesis
-    tesis = get_object_or_404(Tesis, id=tesis_id)
-    
-    if request.method == 'POST':
-        errores = []
+    tesis = get_object_or_404(
+        Tesis.objects.prefetch_related(
+            "autores",
+            "asesores",
+        ),
+        pk=tesis_id,
+    )
 
-        if not tesis.archivo_pdf: 
-            errores.append("Falta el archivo PDF.")
-        
-        if not tesis.autores.exists():
-            errores.append("Debe tener al menos un autor.")
+    if tesis.estado == "publicado":
+        messages.info(
+            request,
+            "La investigación ya está publicada.",
+        )
+        return redirect(
+            "investigacion:lista_tesis"
+        )
 
-        if not tesis.ocde_codigo:
-            errores.append("Falta el código OCDE.")
+    if tesis.estado == "retirado":
+        messages.error(
+            request,
+            "Una investigación retirada no puede validarse.",
+        )
+        return redirect(
+            "investigacion:lista_tesis"
+        )
 
-        if errores:
-            for error in errores:
-                messages.error(request, f"ID #({tesis_id}): {error}")
-            return redirect('investigacion:lista_tesis')
-
-        try:
-            tesis.estado = 'validado' 
-            tesis.save()
-            messages.success(request, f"¡Tesis #{tesis_id} validada correctamente!")
-        except Exception as e:
-            messages.error(request, f"Error al guardar en base de datos: {e}")
-            
-    return redirect('investigacion:lista_tesis')
-
-@login_required
-def enviar_alicia(request, tesis_id):
-    tesis = get_object_or_404(Tesis.objects.prefetch_related('autores', 'asesores'), id=tesis_id)
-    
-    if tesis.estado == 'pendiente':
-        messages.warning(request, f"La tesis '{tesis.titulo[:30]}' primero debe ser validada por un revisor.")
-        return redirect('investigacion:lista_tesis')
-    
-    if tesis.estado == 'publicado':
-        messages.info(request, "Esta tesis ya se encuentra publicada.")
-        return redirect('investigacion:lista_tesis')
-
-    faltantes = []
-
-    if not tesis.titulo:
-        faltantes.append("Título (dc:title)")
-    if not tesis.resumen:
-        faltantes.append("Resumen (dc:description)")
-    if not tesis.tipo_tesis:
-        faltantes.append("Tipo de Tesis (dc:type)")
-    if not tesis.ocde_codigo:
-        faltantes.append("Código OCDE (dc:subject)")
-    
-    if not tesis.archivo_pdf:
-        faltantes.append("Archivo PDF de la Tesis")
-    if not tesis.constancia_originalidad:
-        faltantes.append("Constancia de Originalidad")
-    if not tesis.reporte_turnitin:
-        faltantes.append("Reporte Turnitin")
-
-    autores = tesis.autores.all()
-    if not autores.exists():
-        faltantes.append("Al menos un Autor (dc:creator)")
-    else:
-        for autor in autores:
-            if not autor.dni:
-                faltantes.append(f"DNI del autor {autor.nombre_completo}")
+    faltantes = _faltantes_validacion(tesis)
 
     if faltantes:
-        messages.error(request, f"No se puede publicar. Faltan requisitos de la Guía ALICIA: {', '.join(faltantes)}")
-        return redirect('investigacion:lista_tesis')
+        messages.error(
+            request,
+            (
+                "No se puede validar. Faltan: "
+                + ", ".join(faltantes)
+                + "."
+            ),
+        )
+        return redirect(
+            "investigacion:lista_tesis"
+        )
 
     try:
-        tesis.estado = 'publicado' 
+        tesis.full_clean(
+            exclude=M2M_FIELDS
+        )
+        tesis.estado = "validado"
         tesis.save()
-        
-        messages.success(request, (
-            f"¡Publicación Exitosa! La tesis '{tesis.titulo[:50]}...' con sus {autores.count()} "
-            f"autor(es) ya está disponible para el recolector nacional de CONCYTEC."
-        ))
-    except Exception as e:
-        messages.error(request, f"Error técnico al guardar: {e}")
 
-    return redirect('investigacion:lista_tesis')
+        messages.success(
+            request,
+            (
+                f"La investigación #{tesis.pk} "
+                "fue validada correctamente."
+            ),
+        )
 
-def oai_repository(request, tesis_id):
-    tesis = get_object_or_404(Tesis.objects.prefetch_related('autores', 'asesores'), id=tesis_id, estado='publicado')
-    
-    NS_MAP = {
-        'oai_dc': "http://www.openarchives.org/OAI/2.0/oai_dc/",
-        'dc': "http://purl.org/dc/elements/1.1/",
-        'xsi': "http://www.w3.org/2001/XMLSchema-instance"
-    }
+    except ValidationError as error:
+        messages.error(
+            request,
+            _formatear_error_validacion(error),
+        )
 
-    schema_location = "http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd"
-    
-    root = etree.Element(
-        "{%s}dc" % NS_MAP['oai_dc'], 
-        nsmap=NS_MAP,
-        attrib={"{%s}schemaLocation" % NS_MAP['xsi']: schema_location}
+    except Exception as error:
+        messages.error(
+            request,
+            f"Error al validar: {error}",
+        )
+
+    return redirect(
+        "investigacion:lista_tesis"
     )
-    
-    clean_tipo = tesis.tipo_tesis.split('_')[0]
-    
-    # 1. Título
-    etree.SubElement(root, "{%s}title" % NS_MAP['dc']).text = tesis.titulo
-    
-    # 2. AUTORES (Múltiples dc:creator e identifiers)
-    for autor in tesis.autores.all():
-        etree.SubElement(root, "{%s}creator" % NS_MAP['dc']).text = autor.nombre_completo
-        # ALICIA exige el DNI como identifier
-        etree.SubElement(root, "{%s}identifier" % NS_MAP['dc']).text = f"DNI:{autor.dni}"
-        if autor.orcid:
-            etree.SubElement(root, "{%s}identifier" % NS_MAP['dc']).text = autor.orcid
 
-    # 3. ASESORES (Múltiples dc:contributor)
-    for asesor in tesis.asesores.all():
-        etree.SubElement(root, "{%s}contributor" % NS_MAP['dc']).text = asesor.nombre_completo
-
-    # 4. Metadatos Descriptivos
-    etree.SubElement(root, "{%s}description" % NS_MAP['dc']).text = tesis.resumen
-    etree.SubElement(root, "{%s}publisher" % NS_MAP['dc']).text = tesis.institucion_nombre
-    etree.SubElement(root, "{%s}identifier" % NS_MAP['dc']).text = f"RUC:{tesis.institucion_ruc}"
-    
-    if tesis.fecha_publicacion:
-        etree.SubElement(root, "{%s}date" % NS_MAP['dc']).text = tesis.fecha_publicacion.strftime('%Y-%m-%d')
-    
-    # 5. Clasificación Técnica (Guía ALICIA 2.0)
-    etree.SubElement(root, "{%s}type" % NS_MAP['dc']).text = clean_tipo
-    etree.SubElement(root, "{%s}subject" % NS_MAP['dc']).text = f"OCDE:{tesis.ocde_codigo}"
-    etree.SubElement(root, "{%s}subject" % NS_MAP['dc']).text = tesis.ocde_nombre
-    etree.SubElement(root, "{%s}rights" % NS_MAP['dc']).text = tesis.derechos_acceso
-    etree.SubElement(root, "{%s}language" % NS_MAP['dc']).text = "spa"
-    etree.SubElement(root, "{%s}publisher" % NS_MAP['dc']).text = tesis.institucion_pais
-    
-    # 6. Enlace al archivo PDF principal
-    if tesis.archivo_pdf:
-        full_url = request.build_absolute_uri(tesis.archivo_pdf.url)
-        etree.SubElement(root, "{%s}identifier" % NS_MAP['dc']).text = full_url
-
-    xml_output = etree.tostring(root, pretty_print=True, xml_declaration=True, encoding='UTF-8')
-    return HttpResponse(xml_output, content_type="application/xml")
 
 @login_required
-def eliminar_tesis(request, tesis_id):
-    tesis = get_object_or_404(Tesis, id=tesis_id)
-    titulo_eliminado = tesis.titulo[:50]
+@require_POST
+def enviar_alicia(request, tesis_id):
+    tesis = get_object_or_404(
+        Tesis.objects.prefetch_related(
+            "autores",
+            "asesores",
+            "palabras_clave",
+        ),
+        pk=tesis_id,
+    )
 
-    if tesis.estado == 'publicado':
-        messages.error(request, f"No se puede eliminar la tesis '{titulo_eliminado}' porque ya está publicada en el repositorio nacional.")
-        return redirect('investigacion:lista_tesis')
+    if tesis.estado == "pendiente":
+        messages.warning(
+            request,
+            (
+                "La investigación primero debe "
+                "ser validada por Biblioteca."
+            ),
+        )
+        return redirect(
+            "investigacion:lista_tesis"
+        )
+
+    if tesis.estado == "publicado":
+        messages.info(
+            request,
+            "La investigación ya está publicada.",
+        )
+        return redirect(
+            "investigacion:lista_tesis"
+        )
+
+    if tesis.estado == "retirado":
+        messages.error(
+            request,
+            "Una investigación retirada no puede publicarse.",
+        )
+        return redirect(
+            "investigacion:lista_tesis"
+        )
+
+    faltantes = _faltantes_publicacion(tesis)
+
+    if faltantes:
+        messages.error(
+            request,
+            (
+                "No se puede publicar. Faltan: "
+                + ", ".join(faltantes)
+                + "."
+            ),
+        )
+        return redirect(
+            "investigacion:lista_tesis"
+        )
+
+    try:
+        with transaction.atomic():
+            if not tesis.fecha_disponibilidad:
+                tesis.fecha_disponibilidad = (
+                    timezone.localdate()
+                )
+
+            tesis.full_clean(
+                exclude=M2M_FIELDS
+            )
+            tesis.estado = "publicado"
+            tesis.retirado = False
+            tesis.save()
+
+        messages.success(
+            request,
+            (
+                f"La investigación '{tesis.titulo[:60]}' "
+                "fue publicada en el repositorio y quedó "
+                "disponible en el endpoint institucional "
+                "para su cosecha."
+            ),
+        )
+
+    except ValidationError as error:
+        messages.error(
+            request,
+            _formatear_error_validacion(error),
+        )
+
+    except Exception as error:
+        messages.error(
+            request,
+            f"Error técnico al publicar: {error}",
+        )
+
+    return redirect(
+        "investigacion:lista_tesis"
+    )
+
+
+def oai_repository(request, tesis_id):
+    tesis = get_object_or_404(
+        Tesis.objects.prefetch_related(
+            "autores",
+            "asesores",
+            "palabras_clave",
+        ),
+        pk=tesis_id,
+        estado="publicado",
+        retirado=False,
+    )
+
+    root = build_oai_dc(
+        tesis,
+        request,
+    )
+
+    xml_output = etree.tostring(
+        root,
+        pretty_print=True,
+        xml_declaration=True,
+        encoding="UTF-8",
+    )
+
+    return HttpResponse(
+        xml_output,
+        content_type="application/xml; charset=utf-8",
+    )
+
+
+@login_required
+@require_POST
+def eliminar_tesis(request, tesis_id):
+    tesis = get_object_or_404(
+        Tesis,
+        pk=tesis_id,
+    )
+
+    if tesis.estado in {
+        "publicado",
+        "retirado",
+    }:
+        messages.error(
+            request,
+            (
+                "No se puede eliminar una investigación "
+                "publicada o retirada. Debe conservarse "
+                "su trazabilidad institucional."
+            ),
+        )
+        return redirect(
+            "investigacion:lista_tesis"
+        )
+
+    titulo_eliminado = tesis.titulo[:60]
 
     try:
         tesis.delete()
-        
-        messages.warning(request, f"La investigación '{titulo_eliminado}...' ha sido eliminada del registro local.")
-    except Exception as e:
-        messages.error(request, f"Error técnico al intentar eliminar: {e}")
 
-    return redirect('investigacion:lista_tesis')
+        messages.warning(
+            request,
+            (
+                f"La investigación '{titulo_eliminado}' "
+                "fue eliminada del registro local."
+            ),
+        )
+
+    except Exception as error:
+        messages.error(
+            request,
+            f"Error al eliminar: {error}",
+        )
+
+    return redirect(
+        "investigacion:lista_tesis"
+    )
+
 
 @login_required
+@require_POST
 def agregar_autor_ajax(request, tesis_id):
-    if request.method == 'POST':
-        tesis = get_object_or_404(Tesis, id=tesis_id)
-        nombre = request.POST.get('nombre')
-        dni = request.POST.get('dni')
-        try:
-            autor, _ = Autor.objects.get_or_create(dni=dni, defaults={'nombre_completo': nombre})
-            tesis.autores.add(autor)
-            return JsonResponse({'status': 'success', 'id': autor.id, 'nombre': autor.nombre_completo, 'dni': autor.dni})
-        except Exception as e:
-            return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
+    tesis = get_object_or_404(
+        Tesis,
+        pk=tesis_id,
+    )
 
-@login_required
-def agregar_asesor_ajax(request, tesis_id):
-    if request.method == 'POST':
-        tesis = get_object_or_404(Tesis, id=tesis_id)
-        nombre = request.POST.get('nombre')
-        try:
-            asesor, _ = Asesor.objects.get_or_create(nombre_completo=nombre)
-            tesis.asesores.add(asesor)
-            return JsonResponse({'status': 'success', 'id': asesor.id, 'nombre': asesor.nombre_completo})
-        except Exception as e:
-            return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
+    nombre = _texto(request, "nombre")
+    dni = _texto(request, "dni")
+    orcid = _texto(request, "orcid")
 
-@login_required
-def eliminar_relacion_ajax(request, tesis_id):
-    if request.method == 'POST':
-        tesis = get_object_or_404(Tesis, id=tesis_id)
-        tipo = request.POST.get('tipo')
-        p_id = request.POST.get('persona_id')
-        try:
-            if tipo == 'autor':
-                p = get_object_or_404(Autor, id=p_id)
-                tesis.autores.remove(p)
+    if not nombre:
+        return JsonResponse(
+            {
+                "status": "error",
+                "message": "Debe ingresar el nombre del autor.",
+            },
+            status=400,
+        )
+
+    if not dni:
+        return JsonResponse(
+            {
+                "status": "error",
+                "message": (
+                    "Debe ingresar el documento del autor."
+                ),
+            },
+            status=400,
+        )
+
+    try:
+        with transaction.atomic():
+            autor = Autor.objects.filter(
+                dni=dni
+            ).first()
+
+            if autor is None:
+                autor = Autor(
+                    nombre_completo=nombre,
+                    dni=dni,
+                    orcid=orcid or None,
+                )
             else:
-                p = get_object_or_404(Asesor, id=p_id)
-                tesis.asesores.remove(p)
-            return JsonResponse({'status': 'success'})
-        except Exception as e:
-            return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
+                autor.nombre_completo = nombre
+
+                if orcid:
+                    autor.orcid = orcid
+
+            autor.full_clean()
+            autor.save()
+            tesis.autores.add(autor)
+
+        return JsonResponse(
+            {
+                "status": "success",
+                "id": autor.pk,
+                "nombre": autor.nombre_completo,
+                "dni": autor.dni,
+                "orcid": autor.orcid or "",
+            }
+        )
+
+    except ValidationError as error:
+        return JsonResponse(
+            {
+                "status": "error",
+                "message": _formatear_error_validacion(
+                    error
+                ),
+            },
+            status=400,
+        )
+
+    except IntegrityError:
+        return JsonResponse(
+            {
+                "status": "error",
+                "message": (
+                    "Ya existe un autor con ese documento."
+                ),
+            },
+            status=409,
+        )
+
+    except Exception as error:
+        return JsonResponse(
+            {
+                "status": "error",
+                "message": str(error),
+            },
+            status=500,
+        )
+
+
+@login_required
+@require_POST
+def agregar_asesor_ajax(request, tesis_id):
+    tesis = get_object_or_404(
+        Tesis,
+        pk=tesis_id,
+    )
+
+    nombre = _texto(request, "nombre")
+    dni = _texto(request, "dni")
+    orcid = _texto(request, "orcid")
+
+    if not nombre:
+        return JsonResponse(
+            {
+                "status": "error",
+                "message": "Debe ingresar el nombre del asesor.",
+            },
+            status=400,
+        )
+
+    try:
+        with transaction.atomic():
+            asesor = None
+
+            if dni:
+                asesor = Asesor.objects.filter(
+                    dni=dni
+                ).first()
+
+            if asesor is None:
+                asesor = Asesor.objects.filter(
+                    nombre_completo__iexact=nombre
+                ).first()
+
+            if asesor is None:
+                asesor = Asesor(
+                    nombre_completo=nombre,
+                    dni=dni or None,
+                    orcid=orcid or None,
+                )
+            else:
+                asesor.nombre_completo = nombre
+
+                if dni:
+                    asesor.dni = dni
+
+                if orcid:
+                    asesor.orcid = orcid
+
+            asesor.full_clean()
+            asesor.save()
+            tesis.asesores.add(asesor)
+
+        return JsonResponse(
+            {
+                "status": "success",
+                "id": asesor.pk,
+                "nombre": asesor.nombre_completo,
+                "dni": asesor.dni or "",
+                "orcid": asesor.orcid or "",
+            }
+        )
+
+    except ValidationError as error:
+        return JsonResponse(
+            {
+                "status": "error",
+                "message": _formatear_error_validacion(
+                    error
+                ),
+            },
+            status=400,
+        )
+
+    except IntegrityError:
+        return JsonResponse(
+            {
+                "status": "error",
+                "message": (
+                    "Ya existe un asesor con ese documento."
+                ),
+            },
+            status=409,
+        )
+
+    except Exception as error:
+        return JsonResponse(
+            {
+                "status": "error",
+                "message": str(error),
+            },
+            status=500,
+        )
+
+
+@login_required
+@require_POST
+def eliminar_relacion_ajax(request, tesis_id):
+    tesis = get_object_or_404(
+        Tesis,
+        pk=tesis_id,
+    )
+
+    relation_type = _texto(
+        request,
+        "tipo",
+    )
+
+    person_id = _texto(
+        request,
+        "persona_id",
+    )
+
+    if relation_type not in {
+        "autor",
+        "asesor",
+    }:
+        return JsonResponse(
+            {
+                "status": "error",
+                "message": "Tipo de relación no válido.",
+            },
+            status=400,
+        )
+
+    if not person_id:
+        return JsonResponse(
+            {
+                "status": "error",
+                "message": "No se recibió el identificador.",
+            },
+            status=400,
+        )
+
+    try:
+        if relation_type == "autor":
+            person = get_object_or_404(
+                Autor,
+                pk=person_id,
+            )
+            tesis.autores.remove(person)
+
+        else:
+            person = get_object_or_404(
+                Asesor,
+                pk=person_id,
+            )
+            tesis.asesores.remove(person)
+
+        return JsonResponse(
+            {
+                "status": "success",
+            }
+        )
+
+    except Exception as error:
+        return JsonResponse(
+            {
+                "status": "error",
+                "message": str(error),
+            },
+            status=500,
+        )
