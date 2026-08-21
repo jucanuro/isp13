@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'soporte',
     'convocatorias',
     'admision',
+    'originalidad',
 ]
 
 MIDDLEWARE = [

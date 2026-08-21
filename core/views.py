@@ -139,7 +139,8 @@ ARTICULO_42_ITEMS = [
     {
         "titulo": "Vigencia del licenciamiento",
         "icono": "🏛️",
-        "url": "https://drive.google.com/drive/folders/1Ms-Am9PGeB1ZYOQFJ0gp681DJ3rfZmrM?usp=sharing",
+        "en_proceso": True,
+        "mensaje": "El proceso de licenciamiento institucional se encuentra en trámite ante el MINEDU. El documento se publicará en esta sección una vez otorgado.",
     },
     {
         "titulo": "Reglamento institucional",
