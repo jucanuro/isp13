@@ -87,3 +87,12 @@ build/
 # =========================
 
 .ngrok2/
+
+# =========================
+# METADATOS NTFS / WSL (Mark of the Web)
+# Rompen el clonado en Windows: ":" es carácter ilegal
+# =========================
+*:Zone.Identifier
+*Zone.Identifier
+*#Uf03aZone.Identifier
+*:Zone.Identifier:$DATA
