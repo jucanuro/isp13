@@ -1,6 +1,7 @@
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+from django.core.exceptions import ImproperlyConfigured
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -12,6 +13,18 @@ SECRET_KEY = os.getenv(
 )
 
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
+
+if not DEBUG and (
+    len(SECRET_KEY) < 50
+    or len(set(SECRET_KEY)) < 5
+    or SECRET_KEY.startswith('django-insecure-')
+):
+    raise ImproperlyConfigured(
+        "SECRET_KEY inseguro o de desarrollo detectado con DEBUG=False. "
+        "Define un SECRET_KEY real, largo y aleatorio en el archivo .env "
+        "antes de desplegar a producción (mismo criterio que "
+        "'manage.py check --deploy', regla security.W009)."
+    )
 
 ALLOWED_HOSTS = os.getenv(
     'ALLOWED_HOSTS',
@@ -139,5 +152,13 @@ if not DEBUG:
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
     SECURE_SSL_REDIRECT = True
+
+    # El proyecto corre detrás de un proxy (túnel de Cloudflare u otro) que
+    # termina TLS y le reenvía la petición a Django como HTTP plano. Sin esto,
+    # Django nunca ve la conexión como segura y SECURE_SSL_REDIRECT la manda
+    # a HTTPS una y otra vez -> bucle infinito de redirecciones 301.
+    # Solo es seguro si Django NO es alcanzable directamente sin pasar por
+    # ese proxy (aquí escucha en 127.0.0.1, no en una IP pública).
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

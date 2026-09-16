@@ -1,0 +1,42 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+{% block branding %}
+<div id="site-name">
+    <a href="{% url 'admin:index' %}" style="display:flex;align-items:center;gap:10px;color:inherit;text-decoration:none;">
+        <img src="{% static 'img/Insignia.jpeg' %}" alt="" style="height:32px;width:32px;border-radius:6px;object-fit:cover;">
+        <span>{{ site_header|default:_('Django administration') }}</span>
+    </a>
+</div>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
+
+{% block extrastyle %}
+{{ block.super }}
+<style>
+    :root {
+        --primary: #1e3a8a;
+        --primary-fg: #fff;
+        --body-quiet-color: #475569;
+        --link-fg: #1e3a8a;
+        --link-hover-color: #f59e0b;
+        --link-selected-fg: #f59e0b;
+        --accent: #f59e0b;
+        --header-color: #fff;
+        --header-branding-color: #fff;
+        --header-bg: #1e3a8a;
+        --header-link-color: #fff;
+        --selected-bg: #eef2ff;
+        --selected-row: #eef2ff;
+        --button-bg: #1e3a8a;
+        --button-hover-bg: #16306e;
+        --default-button-bg: #1e3a8a;
+        --default-button-hover-bg: #16306e;
+        --object-tools-bg: #f59e0b;
+        --object-tools-hover-bg: #d98c00;
+    }
+</style>
+{% endblock %}

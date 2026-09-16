@@ -11,8 +11,18 @@ Registro de cambios de código relevantes para el dueño del proyecto `isp13`.
 - Paginación real en `/repositorios/` (9 tesis por página, con controles anterior/siguiente y números de página), con recorte de la lista de páginas (`1 … 10 11 12 13 14 … 23`) para que no se listen cientos de números si hay muchos resultados.
 - Comando de administración `seed_repositorio` para generar tesis de prueba publicadas (uso interno/desarrollo, no afecta producción).
 - Contador de caracteres (`0/500`) en el campo "Título de la obra" del formulario de registro de tesis, y mensaje de error al salir del campo si queda vacío o con menos de 10 caracteres.
+- Vista previa del archivo seleccionado en los 4 campos de documento de "Registrar/Editar Tesis" (PDF de tesis, constancia de originalidad, reporte Turnitin, autorización): ahora muestra nombre, tipo y tamaño (ej. "PDF · 2.3 MB"), no solo el nombre.
+- Marca institucional en `/admin/`: nombre de la institución, logo y colores propios en vez de la apariencia genérica de Django (cero cambios funcionales, solo visual).
+- Páginas de error propias (403, 404, 500) con la identidad del sitio en vez de la página en blanco por defecto de Django.
+- Favicon del sitio (la insignia institucional) en todas las páginas, incluidas las de error — antes ninguna página tenía ícono en la pestaña del navegador.
+- Verificación de seguridad al arrancar: si `DEBUG=False` y el `SECRET_KEY` sigue siendo el de desarrollo (inseguro o corto), el proyecto ya no arranca — obliga a configurar una clave real antes de poder desplegar a producción, en vez de arrancar en silencio con una clave débil.
+
+### Corregido (crítico para producción)
+- **Los archivos de `/media/` (PDF de tesis, convocatorias, resultados de admisión) no se servían en absoluto con `DEBUG=False`** — cualquier botón "Descargar PDF" del sitio habría dado 404 en producción, porque el helper de Django usado (`static()`) es un no-op fuera de modo debug y el proyecto no tenía un servidor externo configurado para `/media/`. Ahora se sirve siempre, sin depender de `DEBUG`. Verificado con `DEBUG=False` real: antes 404, ahora 200.
+- **Bucle infinito de redirecciones 301 al acceder detrás de un proxy/túnel (ej. Cloudflare) con `DEBUG=False`**: Django no sabía que la conexión ya era HTTPS (el túnel le entrega HTTP plano) y `SECURE_SSL_REDIRECT` la mandaba a HTTPS una y otra vez. Se agregó `SECURE_PROXY_SSL_HEADER` para que confíe en el encabezado `X-Forwarded-Proto` que pone el proxy.
 
 ### Cambiado
+- Los mensajes de error (rojos) ya no desaparecen solos a los 6 segundos — se quedan hasta que el usuario los cierra con la "×", para no perderse un error importante. Los de éxito siguen desapareciendo solos.
 - La página del repositorio institucional ahora vive en `/repositorios/` (antes `/repositorio/`).
 - El botón "Explorar Repositorio Completo" ya no aparece dentro de la propia página `/repositorios/` (antes se mostraba ahí mismo, redirigiendo a sí misma); sigue apareciendo en la página de inicio para llevar al repositorio completo.
 

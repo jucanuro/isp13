@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceso no permitido | IESPP "13 de Julio de 1882"</title>
+    <link rel="icon" type="image/jpeg" href="{% static 'img/Insignia.jpeg' %}">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="min-h-screen flex items-center justify-center bg-slate-50 px-6 font-sans">
+    <div class="max-w-md w-full text-center">
+        <img src="{% static 'img/Insignia.jpeg' %}" alt="IESPP 13 de Julio de 1882" class="w-16 h-16 mx-auto rounded-xl object-cover mb-6">
+        <p class="text-[11px] font-black uppercase tracking-widest text-amber-500 mb-2">Error 403</p>
+        <h1 class="text-2xl font-black text-slate-800 mb-3">No tienes permiso para ver esta página</h1>
+        <p class="text-sm text-slate-500 mb-8">
+            Si crees que deberías tener acceso, contacta al administrador del sistema.
+        </p>
+        <a href="/" class="inline-flex items-center gap-2 bg-blue-900 hover:bg-blue-800 text-white text-[11px] font-black uppercase tracking-widest py-3 px-6 rounded-full transition-colors">
+            Volver al inicio
+        </a>
+        <p class="text-[10px] text-slate-300 uppercase tracking-widest mt-10">IESPP "13 de Julio de 1882" &middot; San Pablo, Cajamarca</p>
+    </div>
+</body>
+</html>

@@ -1394,6 +1394,18 @@
         }
     }
 
+    function formatearTamanoArchivo(bytes) {
+        if (bytes < 1024) {
+            return bytes + ' B';
+        }
+
+        if (bytes < 1024 * 1024) {
+            return (bytes / 1024).toFixed(1) + ' KB';
+        }
+
+        return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+    }
+
     function updateFileLabel(input, labelId) {
         const label = document.getElementById(labelId);
 
@@ -1402,10 +1414,14 @@
         }
 
         const file = input.files[0];
+        const tipo = file.type === 'application/pdf' ? 'PDF' : (file.type || 'Desconocido');
 
         label.innerHTML = `
-            <span class="text-blue-700 font-black">
+            <span class="text-blue-700 font-black block truncate">
                 NUEVO: ${escapeHtml(file.name)}
+            </span>
+            <span class="text-blue-500 font-bold normal-case tracking-normal text-[9px] block">
+                ${escapeHtml(tipo)} &middot; ${formatearTamanoArchivo(file.size)}
             </span>
         `;
 
@@ -1483,17 +1499,26 @@
         toast.className =
             'toast-mensaje flex items-start gap-3 p-4 rounded-xl shadow-lg border text-[11px] font-bold leading-snug ' +
             (estilos[tipo] || estilos.info);
+        toast.setAttribute('role', 'alert');
+        toast.setAttribute('aria-live', 'polite');
         toast.innerHTML =
-            '<i class="fas ' + (iconos[tipo] || iconos.info) + ' mt-0.5"></i><span>' +
-            escapeHtml(mensaje) + '</span>';
+            '<i class="fas ' + (iconos[tipo] || iconos.info) + ' mt-0.5"></i><span class="flex-grow">' +
+            escapeHtml(mensaje) + '</span>' +
+            '<button type="button" aria-label="Cerrar" class="opacity-50 hover:opacity-100 transition-opacity leading-none text-sm">&times;</button>';
+
+        toast.querySelector('button').addEventListener('click', function () {
+            toast.remove();
+        });
 
         contenedor.appendChild(toast);
 
-        setTimeout(function () {
-            toast.style.transition = 'opacity 0.5s ease';
-            toast.style.opacity = '0';
-            setTimeout(function () { toast.remove(); }, 500);
-        }, 6000);
+        if (tipo !== 'error') {
+            setTimeout(function () {
+                toast.style.transition = 'opacity 0.5s ease';
+                toast.style.opacity = '0';
+                setTimeout(function () { toast.remove(); }, 500);
+            }, 6000);
+        }
     }
 
     document

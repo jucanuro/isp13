@@ -5,7 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}ISEP 13 de Julio | Excelencia Pedagógica{% endblock %}</title>
-    
+
+    <link rel="icon" type="image/jpeg" href="{% static 'img/Insignia.jpeg' %}">
+    <link rel="apple-touch-icon" href="{% static 'img/Insignia.jpeg' %}">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="{% static 'js/config.js' %}" defer></script>
     
@@ -22,24 +25,29 @@
                 {% if message.tags == 'error' %}bg-rose-50 text-rose-700 border-rose-200
                 {% elif message.tags == 'success' %}bg-emerald-50 text-emerald-700 border-emerald-200
                 {% elif message.tags == 'warning' %}bg-amber-50 text-amber-700 border-amber-200
-                {% else %}bg-blue-50 text-blue-700 border-blue-200{% endif %}">
+                {% else %}bg-blue-50 text-blue-700 border-blue-200{% endif %}"
+         role="alert" aria-live="polite" data-tipo="{{ message.tags|default:'info' }}">
         <i class="fas
                   {% if message.tags == 'error' %}fa-circle-exclamation
                   {% elif message.tags == 'success' %}fa-circle-check
                   {% elif message.tags == 'warning' %}fa-triangle-exclamation
                   {% else %}fa-circle-info{% endif %} mt-0.5"></i>
-        <span>{{ message }}</span>
+        <span class="flex-grow">{{ message }}</span>
+        <button type="button" onclick="this.closest('.toast-mensaje').remove()" aria-label="Cerrar" class="opacity-50 hover:opacity-100 transition-opacity leading-none text-sm">&times;</button>
     </div>
     {% endfor %}
 </div>
 <script>
-    setTimeout(function () {
-        document.querySelectorAll('#toast-mensajes-global .toast-mensaje').forEach(function (el) {
+    document.querySelectorAll('#toast-mensajes-global .toast-mensaje').forEach(function (el) {
+        if (el.dataset.tipo === 'error') {
+            return;
+        }
+        setTimeout(function () {
             el.style.transition = 'opacity 0.5s ease';
             el.style.opacity = '0';
             setTimeout(function () { el.remove(); }, 500);
-        });
-    }, 6000);
+        }, 6000);
+    });
 </script>
 {% endif %}
 
