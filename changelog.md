@@ -2,6 +2,12 @@
 
 Registro de cambios de código relevantes para el dueño del proyecto `isp13`.
 
+## [2026-09-16]
+
+### Añadido
+- El comunicado/publicidad que aparece en el modal de la página de inicio ahora es administrable desde `/admin/` (modelo "Comunicado del modal de inicio" en la app `core`): título, subtítulo, imagen y texto del pie se editan sin tocar código. Si no hay ningún comunicado activo, el modal simplemente no aparece (antes la imagen estaba fija en la plantilla).
+- Al subir la imagen de ese comunicado en el admin, se abre un recorte fijo en proporción 2:1 (como en la librería de medios de WordPress) antes de guardar — coincide con la proporción real de la imagen usada hasta ahora (1600×800), así todas las imágenes del modal quedan con el mismo encuadre sin depender de que quien la suba la recorte a mano de antemano.
+
 ## [2026-09-15]
 
 ### Añadido

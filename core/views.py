@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
 
 from investigacion.models import Tesis
+from .models import ComunicadoModal
 
 import requests
 import re
@@ -168,10 +169,13 @@ def home(request):
         .order_by('-fecha_registro')[:6]
     )
 
+    comunicado = ComunicadoModal.objects.filter(activo=True).first()
+
     return render(request, 'index.html', {
         'tesis_locales': tesis_locales,
         'mostrar_boton_ver_mas': True,
-        'template_padre': 'investigacion/vacio.html'
+        'template_padre': 'investigacion/vacio.html',
+        'comunicado': comunicado,
     })
 
 

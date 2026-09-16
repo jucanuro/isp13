@@ -127,6 +127,7 @@
         </a>
     </div>
 
+    {% if comunicado %}
     <div id="modal-noticias" class="fixed inset-0 z-[9999] hidden items-center justify-center p-4 bg-blue-950/80 backdrop-blur-xl">
         <div id="modal-content" class="relative bg-blue-900 w-full max-w-3xl rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col border border-white/10 transform transition-all scale-95 opacity-0 duration-500">
             <div class="bg-white/5 px-8 py-5 flex justify-between items-center shrink-0 border-b border-white/10">
@@ -135,8 +136,10 @@
                         <i class="fas fa-bullhorn text-blue-900"></i>
                     </div>
                     <div>
-                        <h3 class="text-lg font-black text-white uppercase tracking-tighter">Comunicado Oficial</h3>
-                        <p class="text-[9px] text-amber-400 font-bold uppercase tracking-widest mt-1">IESPP 13 DE JULIO</p>
+                        <h3 class="text-lg font-black text-white uppercase tracking-tighter">{{ comunicado.titulo }}</h3>
+                        {% if comunicado.subtitulo %}
+                        <p class="text-[9px] text-amber-400 font-bold uppercase tracking-widest mt-1">{{ comunicado.subtitulo }}</p>
+                        {% endif %}
                     </div>
                 </div>
                 <button onclick="closeNewsModal()" class="w-10 h-10 flex items-center justify-center rounded-xl bg-white/10 text-white hover:bg-red-500 transition-all">
@@ -145,26 +148,32 @@
             </div>
 
             <div class="bg-slate-900 overflow-hidden">
-                <img 
-                    src="{% static 'img/aniversario.jpeg' %}" 
-                    class="block w-full h-auto" 
-                    alt="Publicidad"
+                <img
+                    src="{{ comunicado.imagen.url }}"
+                    class="block w-full h-auto"
+                    alt="{{ comunicado.titulo }}"
                 >
             </div>
             <div class="bg-white py-4 px-8 flex justify-between items-center shrink-0">
-                <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Información 2026</span>
+                <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">{{ comunicado.texto_pie }}</span>
                 <button onclick="closeNewsModal()" class="px-8 py-2.5 bg-blue-900 text-white text-[10px] font-black uppercase rounded-xl hover:bg-amber-500 transition-all">
                     Entendido
                 </button>
             </div>
         </div>
     </div>
+    {% endif %}
 </section>
 
 <script>
     window.addEventListener('DOMContentLoaded', () => {
         const modal = document.getElementById('modal-noticias');
         const content = document.getElementById('modal-content');
+
+        if (!modal || !content) {
+            return;
+        }
+
         modal.classList.replace('hidden', 'flex');
         setTimeout(() => {
             content.classList.remove('scale-95', 'opacity-0');
@@ -175,6 +184,11 @@
     function closeNewsModal() {
         const modal = document.getElementById('modal-noticias');
         const content = document.getElementById('modal-content');
+
+        if (!modal || !content) {
+            return;
+        }
+
         content.classList.add('scale-95', 'opacity-0');
         setTimeout(() => { modal.classList.replace('flex', 'hidden'); }, 400);
     }
