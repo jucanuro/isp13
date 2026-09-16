@@ -143,6 +143,12 @@
                 value="{{ tesis.id|default:'' }}"
             >
 
+            <input
+                type="hidden"
+                name="finalizar_registro"
+                value="1"
+            >
+
             <div class="xl:col-span-7 space-y-5">
 
                 <section class="bg-white p-5 sm:p-7 rounded-[2rem] border border-slate-100 shadow-xl shadow-slate-200/30">
@@ -162,15 +168,23 @@
 
                     <div class="space-y-5">
                         <div>
-                            <label class="text-[9px] font-black uppercase tracking-widest text-slate-500 mb-2 block">
-                                Título de la obra
-                            </label>
+                            <div class="flex items-center justify-between mb-2">
+                                <label class="text-[9px] font-black uppercase tracking-widest text-slate-500">
+                                    Título de la obra
+                                </label>
+                                <span
+                                    id="contador-titulo"
+                                    class="text-[9px] font-bold text-slate-400"
+                                >0/500</span>
+                            </div>
 
                             <textarea
                                 id="tesis_titulo_input"
                                 name="titulo"
                                 rows="3"
-                                oninput="verificarYCrearTesis()"
+                                maxlength="500"
+                                oninput="verificarYCrearTesis(); actualizarContadorTitulo();"
+                                onblur="validarTituloBlur()"
                                 class="input-futuristic w-full px-5 py-4 text-[11px] font-extrabold text-slate-800 uppercase leading-snug resize-none"
                                 required
                                 placeholder="ESCRIBA EL TÍTULO PARA ACTIVAR PARTICIPANTES..."
@@ -964,6 +978,11 @@
     let tesisIdGlobal = document.getElementById('tesis_id_hidden').value;
     let debounceTimer;
 
+    const TITULO_MIN_LENGTH = 10;
+    const TITULO_MAX_LENGTH = 500;
+
+    actualizarContadorTitulo();
+
     function getCsrfToken() {
         const input = document.querySelector(
             '#mainForm input[name="csrfmiddlewaretoken"]'
@@ -976,6 +995,54 @@
         const div = document.createElement('div');
         div.textContent = value || '';
         return div.innerHTML;
+    }
+
+    function actualizarContadorTitulo() {
+        const titulo = document
+            .getElementById('tesis_titulo_input')
+            .value;
+
+        const contador = document.getElementById(
+            'contador-titulo'
+        );
+
+        contador.innerText =
+            titulo.length + '/' + TITULO_MAX_LENGTH;
+
+        contador.className = titulo.length >= TITULO_MAX_LENGTH
+            ? 'text-[9px] font-bold text-rose-500'
+            : 'text-[9px] font-bold text-slate-400';
+    }
+
+    function validarTituloBlur() {
+        const titulo = document
+            .getElementById('tesis_titulo_input')
+            .value
+            .trim();
+
+        const msgElement = document.getElementById(
+            'msg-titulo'
+        );
+
+        if (titulo.length === 0) {
+            msgElement.innerText =
+                'Este campo es obligatorio.';
+
+            msgElement.className =
+                'text-[8px] mt-1 text-rose-500 font-bold italic';
+
+            return;
+        }
+
+        if (titulo.length < TITULO_MIN_LENGTH) {
+            msgElement.innerText =
+                'El título debe tener al menos ' +
+                TITULO_MIN_LENGTH +
+                ' caracteres.';
+
+            msgElement.className =
+                'text-[8px] mt-1 text-rose-500 font-bold italic';
+        }
     }
 
     async function verificarYCrearTesis() {
@@ -997,7 +1064,15 @@
                 .classList.remove('btn-disabled');
         }
 
-        if (titulo.length < 10) {
+        if (titulo.length < TITULO_MIN_LENGTH) {
+            msgElement.innerText =
+                'Faltan ' +
+                (TITULO_MIN_LENGTH - titulo.length) +
+                ' caracteres para activar la sincronización.';
+
+            msgElement.className =
+                'text-[8px] mt-1 text-amber-500 font-bold italic';
+
             return;
         }
 
@@ -1377,22 +1452,113 @@
             : 'none';
     }
 
+    function mostrarToast(tipo, mensaje) {
+        let contenedor = document.getElementById(
+            'toast-mensajes-global'
+        );
+
+        if (!contenedor) {
+            contenedor = document.createElement('div');
+            contenedor.id = 'toast-mensajes-global';
+            contenedor.className =
+                'fixed top-4 right-4 z-[9999] flex flex-col gap-2 w-full max-w-sm px-4 sm:px-0';
+            document.body.appendChild(contenedor);
+        }
+
+        const estilos = {
+            error: 'bg-rose-50 text-rose-700 border-rose-200',
+            success: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+            warning: 'bg-amber-50 text-amber-700 border-amber-200',
+            info: 'bg-blue-50 text-blue-700 border-blue-200',
+        };
+
+        const iconos = {
+            error: 'fa-circle-exclamation',
+            success: 'fa-circle-check',
+            warning: 'fa-triangle-exclamation',
+            info: 'fa-circle-info',
+        };
+
+        const toast = document.createElement('div');
+        toast.className =
+            'toast-mensaje flex items-start gap-3 p-4 rounded-xl shadow-lg border text-[11px] font-bold leading-snug ' +
+            (estilos[tipo] || estilos.info);
+        toast.innerHTML =
+            '<i class="fas ' + (iconos[tipo] || iconos.info) + ' mt-0.5"></i><span>' +
+            escapeHtml(mensaje) + '</span>';
+
+        contenedor.appendChild(toast);
+
+        setTimeout(function () {
+            toast.style.transition = 'opacity 0.5s ease';
+            toast.style.opacity = '0';
+            setTimeout(function () { toast.remove(); }, 500);
+        }, 6000);
+    }
+
     document
         .getElementById('mainForm')
         .addEventListener(
             'submit',
             function(event) {
+                event.preventDefault();
+
+                const form = event.target;
+
                 const hiddenId = document
                     .getElementById('tesis_id_hidden')
                     .value;
 
                 if (!hiddenId) {
-                    event.preventDefault();
-
-                    alert(
+                    mostrarToast(
+                        'error',
                         'No se detectó el ID del registro. Escriba el título y espere la confirmación de sincronización.'
                     );
+                    return;
                 }
+
+                const submitBtn = form.querySelector(
+                    'button[type="submit"]'
+                );
+
+                if (submitBtn) {
+                    submitBtn.disabled = true;
+                }
+
+                const formData = new FormData(form);
+
+                fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                    .then(async function (response) {
+                        const data = await response.json();
+
+                        if (!response.ok || data.status !== 'success') {
+                            throw new Error(
+                                data.message || 'No fue posible guardar el registro.'
+                            );
+                        }
+
+                        mostrarToast('success', data.message);
+
+                        setTimeout(function () {
+                            window.location.href = data.redirect;
+                        }, 600);
+                    })
+                    .catch(function (error) {
+                        mostrarToast(
+                            'error',
+                            error.message || 'Error de conexión al guardar.'
+                        );
+
+                        if (submitBtn) {
+                            submitBtn.disabled = false;
+                        }
+                    });
             }
         );
 

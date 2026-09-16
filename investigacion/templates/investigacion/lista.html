@@ -576,8 +576,10 @@
                             </a>
                         {% endif %}
 
-                        {% for i in tesis_locales.paginator.page_range %}
-                            {% if tesis_locales.number == i %}
+                        {% for i in page_range %}
+                            {% if i == paginator_ellipsis %}
+                                <span class="w-8 h-8 flex items-center justify-center text-slate-300 text-[8px] font-black">…</span>
+                            {% elif tesis_locales.number == i %}
                                 <span class="w-8 h-8 flex items-center justify-center rounded-lg bg-blue-600 text-white text-[8px] font-black">
                                     {{ i }}
                                 </span>

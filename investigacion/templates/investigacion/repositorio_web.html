@@ -82,23 +82,54 @@
                 <div class="h-1 w-20 bg-red-600 mt-4"></div>
             </div>
 
-            <form method="GET" action="{% url 'investigacion:repositorio_publico' %}" class="flex shadow-sm w-full md:w-96">
-                <input type="text" name="q" value="{{ query|default:'' }}" placeholder="Buscar tesis..." 
-                       class="border border-slate-200 flex-grow py-3 px-5 text-sm rounded-l-lg focus:outline-none focus:border-blue-500">
-                <button type="submit" class="bg-[#3488ab] text-white px-5 rounded-r-lg hover:bg-blue-800 transition-colors">
-                    <i class="fas fa-search"></i>
-                </button>
+            <form method="GET" action="{% url 'investigacion:repositorio_publico' %}" class="flex flex-col md:flex-row gap-3 w-full md:w-auto">
+                <div class="flex shadow-sm w-full md:w-96">
+                    <input type="text" name="q" value="{{ query|default:'' }}" placeholder="Buscar tesis..."
+                           class="border border-slate-200 flex-grow py-3 px-5 text-sm rounded-l-lg focus:outline-none focus:border-blue-500">
+                    <button type="submit" class="bg-[#3488ab] text-white px-5 rounded-r-lg hover:bg-blue-800 transition-colors">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+
+                {% if not mostrar_boton_ver_mas %}
+                <select name="programa" onchange="this.form.submit()"
+                        class="border border-slate-200 rounded-lg py-3 px-4 text-sm text-slate-600 focus:outline-none focus:border-blue-500">
+                    <option value="">Todos los programas</option>
+                    {% for programa in programas_disponibles %}
+                    <option value="{{ programa }}" {% if programa == programa_filtro %}selected{% endif %}>{{ programa }}</option>
+                    {% endfor %}
+                </select>
+
+                <select name="anio" onchange="this.form.submit()"
+                        class="border border-slate-200 rounded-lg py-3 px-4 text-sm text-slate-600 focus:outline-none focus:border-blue-500">
+                    <option value="">Todos los años</option>
+                    {% for anio in anios_disponibles %}
+                    <option value="{{ anio }}" {% if anio|stringformat:"s" == anio_filtro %}selected{% endif %}>{{ anio }}</option>
+                    {% endfor %}
+                </select>
+
+                {% if query or programa_filtro or anio_filtro %}
+                <a href="{% url 'investigacion:repositorio_publico' %}"
+                   class="flex items-center justify-center text-[11px] font-bold text-slate-400 hover:text-red-500 uppercase tracking-widest px-2">
+                    Limpiar
+                </a>
+                {% endif %}
+                {% endif %}
             </form>
         </div>
 
         <div class="max-w-full mx-auto repo-container mb-20">
             <div class="bg-slate-50/80 px-8 py-4 border-b border-slate-100 flex justify-between items-center">
                 <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Publicaciones Recientes</h4>
+                {% if mostrar_boton_ver_mas %}
                 <span class="text-[9px] font-bold text-blue-600 bg-blue-50 px-3 py-1 rounded-full">Mostrando últimos registros</span>
+                {% else %}
+                <span class="text-[9px] font-bold text-blue-600 bg-blue-50 px-3 py-1 rounded-full">{{ tesis_locales.paginator.count }} resultado{{ tesis_locales.paginator.count|pluralize }}</span>
+                {% endif %}
             </div>
 
             <div class="divide-y divide-slate-100">
-                {% for t in tesis_locales|slice:":5" %}
+                {% for t in tesis_locales %}
                 <article class="thesis-item group">
                     <div class="thesis-thumbnail">
                         <div class="flex flex-col items-center gap-1">
@@ -150,13 +181,42 @@
                 {% endfor %}
             </div>
 
+           {% if mostrar_boton_ver_mas %}
            <div class="p-12 bg-white flex flex-col items-center border-t border-slate-50">
-                <a href="https://repositorio.13dejuliode1882sp.edu.pe/repositorio/" 
-                target="_blank" 
+                <a href="{% url 'investigacion:repositorio_publico' %}"
                 class="btn-more-research">
                     Explorar Repositorio Completo <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
+            {% elif tesis_locales.paginator.num_pages > 1 %}
+            <div class="p-8 bg-white flex items-center justify-center gap-2 border-t border-slate-50">
+                {% if tesis_locales.has_previous %}
+                <a href="?q={{ query|urlencode }}&programa={{ programa_filtro|urlencode }}&anio={{ anio_filtro|urlencode }}&page={{ tesis_locales.previous_page_number }}"
+                   class="w-10 h-10 flex items-center justify-center rounded-lg border border-slate-200 text-slate-500 hover:bg-slate-900 hover:text-white transition-all">
+                    <i class="fas fa-chevron-left text-xs"></i>
+                </a>
+                {% endif %}
+
+                {% for numero in page_range %}
+                {% if numero == paginator_ellipsis %}
+                <span class="w-10 h-10 flex items-center justify-center text-slate-300 text-xs font-black">…</span>
+                {% else %}
+                <a href="?q={{ query|urlencode }}&programa={{ programa_filtro|urlencode }}&anio={{ anio_filtro|urlencode }}&page={{ numero }}"
+                   class="w-10 h-10 flex items-center justify-center rounded-lg text-xs font-black transition-all
+                          {% if numero == tesis_locales.number %}bg-blue-900 text-white{% else %}border border-slate-200 text-slate-500 hover:bg-slate-100{% endif %}">
+                    {{ numero }}
+                </a>
+                {% endif %}
+                {% endfor %}
+
+                {% if tesis_locales.has_next %}
+                <a href="?q={{ query|urlencode }}&programa={{ programa_filtro|urlencode }}&anio={{ anio_filtro|urlencode }}&page={{ tesis_locales.next_page_number }}"
+                   class="w-10 h-10 flex items-center justify-center rounded-lg border border-slate-200 text-slate-500 hover:bg-slate-900 hover:text-white transition-all">
+                    <i class="fas fa-chevron-right text-xs"></i>
+                </a>
+                {% endif %}
+            </div>
+            {% endif %}
         </div>
     </div>
 </section>

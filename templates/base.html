@@ -15,6 +15,34 @@
 </head>
 <body class="antialiased selection:bg-emerald-200 selection:text-emerald-900">
 
+{% if messages %}
+<div id="toast-mensajes-global" class="fixed top-4 right-4 z-[9999] flex flex-col gap-2 w-full max-w-sm px-4 sm:px-0">
+    {% for message in messages %}
+    <div class="toast-mensaje flex items-start gap-3 p-4 rounded-xl shadow-lg border text-[11px] font-bold leading-snug
+                {% if message.tags == 'error' %}bg-rose-50 text-rose-700 border-rose-200
+                {% elif message.tags == 'success' %}bg-emerald-50 text-emerald-700 border-emerald-200
+                {% elif message.tags == 'warning' %}bg-amber-50 text-amber-700 border-amber-200
+                {% else %}bg-blue-50 text-blue-700 border-blue-200{% endif %}">
+        <i class="fas
+                  {% if message.tags == 'error' %}fa-circle-exclamation
+                  {% elif message.tags == 'success' %}fa-circle-check
+                  {% elif message.tags == 'warning' %}fa-triangle-exclamation
+                  {% else %}fa-circle-info{% endif %} mt-0.5"></i>
+        <span>{{ message }}</span>
+    </div>
+    {% endfor %}
+</div>
+<script>
+    setTimeout(function () {
+        document.querySelectorAll('#toast-mensajes-global .toast-mensaje').forEach(function (el) {
+            el.style.transition = 'opacity 0.5s ease';
+            el.style.opacity = '0';
+            setTimeout(function () { el.remove(); }, 500);
+        });
+    }, 6000);
+</script>
+{% endif %}
+
 {% block topbar %}
 <div id="topBarOriginal" class="block bg-blue-900 pt-3 pb-8 lg:pt-2.5 lg:pb-7 px-4 lg:px-12 overflow-hidden relative border-b border-amber-400 transition-all duration-500 z-[999]" 
      style="clip-path: ellipse(120% 100% at 50% 0%);">

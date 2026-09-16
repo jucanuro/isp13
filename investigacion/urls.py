@@ -44,7 +44,7 @@ urlpatterns = [
         name="detalle_tesis",
     ),
     path(
-        "repositorio/",
+        "repositorios/",
         views.repositorio_publico,
         name="repositorio_publico",
     ),

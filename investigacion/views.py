@@ -8,6 +8,7 @@ from django.db import IntegrityError, transaction
 from django.db.models import Q
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
 from django.utils import timezone
 from django.utils.dateparse import parse_date
 from django.views.decorators.http import require_POST
@@ -385,8 +386,13 @@ def registrar_tesis(request):
 
     if request.method == "POST":
         titulo = _texto(request, "titulo")
+        ajax = _es_ajax(request)
+        es_sincronizacion_titulo = (
+            ajax
+            and not _texto(request, "finalizar_registro")
+        )
 
-        if _es_ajax(request):
+        if es_sincronizacion_titulo:
             if not titulo:
                 return JsonResponse(
                     {
@@ -430,13 +436,21 @@ def registrar_tesis(request):
                 )
 
         if tesis is None:
-            messages.error(
-                request,
-                (
-                    "Primero debe ingresar el título para "
-                    "iniciar el registro."
-                ),
+            mensaje = (
+                "Primero debe ingresar el título para "
+                "iniciar el registro."
             )
+
+            if ajax:
+                return JsonResponse(
+                    {
+                        "status": "error",
+                        "message": mensaje,
+                    },
+                    status=400,
+                )
+
+            messages.error(request, mensaje)
             return redirect(
                 "investigacion:registrar_tesis"
             )
@@ -460,25 +474,54 @@ def registrar_tesis(request):
                     request,
                 )
 
-            messages.success(
-                request,
-                "La investigación fue registrada correctamente.",
+            mensaje = (
+                "La investigación fue registrada correctamente."
             )
+
+            if ajax:
+                messages.success(request, mensaje)
+                return JsonResponse(
+                    {
+                        "status": "success",
+                        "message": mensaje,
+                        "redirect": reverse(
+                            "investigacion:lista_tesis"
+                        ),
+                    }
+                )
+
+            messages.success(request, mensaje)
             return redirect(
                 "investigacion:lista_tesis"
             )
 
         except ValidationError as error:
-            messages.error(
-                request,
-                _formatear_error_validacion(error),
-            )
+            mensaje = _formatear_error_validacion(error)
+
+            if ajax:
+                return JsonResponse(
+                    {
+                        "status": "error",
+                        "message": mensaje,
+                    },
+                    status=400,
+                )
+
+            messages.error(request, mensaje)
 
         except Exception as error:
-            messages.error(
-                request,
-                f"Error al registrar: {error}",
-            )
+            mensaje = f"Error al registrar: {error}"
+
+            if ajax:
+                return JsonResponse(
+                    {
+                        "status": "error",
+                        "message": mensaje,
+                    },
+                    status=500,
+                )
+
+            messages.error(request, mensaje)
 
     return render(
         request,
@@ -503,6 +546,8 @@ def editar_tesis(request, tesis_id):
     )
 
     if request.method == "POST":
+        ajax = _es_ajax(request)
+
         try:
             with transaction.atomic():
                 estado_anterior = tesis.estado
@@ -528,28 +573,55 @@ def editar_tesis(request, tesis_id):
                     request,
                 )
 
-            messages.success(
-                request,
-                (
-                    f"La tesis '{tesis.titulo[:60]}' "
-                    "fue actualizada correctamente."
-                ),
+            mensaje = (
+                f"La tesis '{tesis.titulo[:60]}' "
+                "fue actualizada correctamente."
             )
+
+            messages.success(request, mensaje)
+
+            if ajax:
+                return JsonResponse(
+                    {
+                        "status": "success",
+                        "message": mensaje,
+                        "redirect": reverse(
+                            "investigacion:lista_tesis"
+                        ),
+                    }
+                )
+
             return redirect(
                 "investigacion:lista_tesis"
             )
 
         except ValidationError as error:
-            messages.error(
-                request,
-                _formatear_error_validacion(error),
-            )
+            mensaje = _formatear_error_validacion(error)
+
+            if ajax:
+                return JsonResponse(
+                    {
+                        "status": "error",
+                        "message": mensaje,
+                    },
+                    status=400,
+                )
+
+            messages.error(request, mensaje)
 
         except Exception as error:
-            messages.error(
-                request,
-                f"Error al actualizar: {error}",
-            )
+            mensaje = f"Error al actualizar: {error}"
+
+            if ajax:
+                return JsonResponse(
+                    {
+                        "status": "error",
+                        "message": mensaje,
+                    },
+                    status=500,
+                )
+
+            messages.error(request, mensaje)
 
     return render(
         request,
@@ -610,11 +682,19 @@ def lista_tesis(request):
         request.GET.get("page")
     )
 
+    page_range = paginator.get_elided_page_range(
+        tesis_paginadas.number,
+        on_each_side=2,
+        on_ends=1,
+    )
+
     return render(
         request,
         "investigacion/lista.html",
         {
             "tesis_locales": tesis_paginadas,
+            "page_range": page_range,
+            "paginator_ellipsis": str(Paginator.ELLIPSIS),
             "estado_actual": (
                 estado_filtro or "todos"
             ),
@@ -625,6 +705,8 @@ def lista_tesis(request):
 
 def repositorio_publico(request):
     query = request.GET.get("q", "").strip()
+    programa_filtro = request.GET.get("programa", "").strip()
+    anio_filtro = request.GET.get("anio", "").strip()
 
     tesis_queryset = (
         Tesis.objects
@@ -655,6 +737,34 @@ def repositorio_publico(request):
             | Q(palabras_clave__nombre__icontains=query)
         ).distinct()
 
+    if programa_filtro:
+        tesis_queryset = tesis_queryset.filter(
+            programa_academico=programa_filtro
+        )
+
+    if anio_filtro.isdigit():
+        tesis_queryset = tesis_queryset.filter(
+            fecha_publicacion__year=anio_filtro
+        )
+
+    programas_disponibles = (
+        Tesis.objects
+        .filter(estado="publicado", retirado=False)
+        .exclude(programa_academico="")
+        .order_by("programa_academico")
+        .values_list("programa_academico", flat=True)
+        .distinct()
+    )
+
+    anios_disponibles = (
+        Tesis.objects
+        .filter(estado="publicado", retirado=False)
+        .exclude(fecha_publicacion__isnull=True)
+        .order_by("-fecha_publicacion__year")
+        .values_list("fecha_publicacion__year", flat=True)
+        .distinct()
+    )
+
     paginator = Paginator(
         tesis_queryset,
         9,
@@ -664,12 +774,24 @@ def repositorio_publico(request):
         request.GET.get("page")
     )
 
+    page_range = paginator.get_elided_page_range(
+        tesis_paginadas.number,
+        on_each_side=2,
+        on_ends=1,
+    )
+
     return render(
         request,
         "investigacion/repositorio_web.html",
         {
             "tesis_locales": tesis_paginadas,
+            "page_range": page_range,
+            "paginator_ellipsis": str(Paginator.ELLIPSIS),
             "query": query,
+            "programa_filtro": programa_filtro,
+            "anio_filtro": anio_filtro,
+            "programas_disponibles": programas_disponibles,
+            "anios_disponibles": anios_disponibles,
             "mostrar_boton_ver_mas": False,
             "template_base": "base.html",
         },
