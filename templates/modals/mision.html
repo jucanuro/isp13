@@ -13,10 +13,12 @@
             </div>
             <h2 class="text-[10px] font-black text-amber-400 uppercase tracking-[0.4em] mb-3">Nuestra</h2>
             <h3 class="text-4xl font-black text-white leading-none mb-6 italic tracking-tighter">Misión</h3>
-            <p class="text-blue-50/90 leading-relaxed text-[15px] font-medium italic relative">
+            <div class="text-blue-50/90 leading-relaxed text-[15px] font-medium italic relative">
                 <span class="text-5xl absolute -top-6 -left-3 opacity-20 font-serif text-amber-400">“</span>
+                {% if contenido and contenido.texto_1 %}{{ contenido.texto_1|safe }}{% else %}
                 El IESPP <strong class="text-white font-bold border-b-2 border-amber-400/50">“13 de Julio de 1882”</strong>, es una institución que brinda formación inicial docente a la comunidad educativa local, regional y nacional de manera transparente, inclusiva, intercultural, humanista y de calidad.
-            </p>
+                {% endif %}
+            </div>
         </div>
 
         <div class="p-10 lg:p-16 bg-blue-950/40 group">
@@ -25,9 +27,11 @@
             </div>
             <h2 class="text-[10px] font-black text-blue-300 uppercase tracking-[0.4em] mb-3">Nuestra</h2>
             <h3 class="text-4xl font-black text-white leading-none mb-6 italic tracking-tighter">Visión</h3>
-            <p class="text-blue-50/90 leading-relaxed text-[15px] font-medium">
+            <div class="text-blue-50/90 leading-relaxed text-[15px] font-medium">
+                {% if contenido and contenido.texto_2 %}{{ contenido.texto_2|safe }}{% else %}
                 Aspiramos al <strong class="text-blue-900 font-black px-2 py-0.5 bg-amber-400 rounded shadow-sm">2027</strong>, ser una Institución Licenciada, líder nacional en educación superior pedagógica, competitiva, innovadora y democrática; comprometida en brindar una educación acorde a las exigencias de calidad.
-            </p>
+                {% endif %}
+            </div>
         </div>
     </div>
     

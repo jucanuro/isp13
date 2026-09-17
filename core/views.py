@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
 
 from investigacion.models import Tesis
-from .models import ComunicadoModal, DocumentoGestion
+from .models import ComunicadoModal, ContenidoModal, DocumentoGestion
 
 import requests
 import re
@@ -219,10 +219,11 @@ def logout_view(request):
 
 def modal_content(request, modal_id):
     documento = DocumentoGestion.objects.filter(slug=modal_id).first()
+    contenido = ContenidoModal.objects.filter(slug=modal_id).first()
     return render(
         request,
         f'modals/{modal_id}.html',
-        {'documento': documento},
+        {'documento': documento, 'contenido': contenido},
     )
 
 

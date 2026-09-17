@@ -34,6 +34,49 @@ class DocumentoGestion(models.Model):
         return self.titulo
 
 
+class ContenidoModal(models.Model):
+    slug = models.SlugField(
+        unique=True,
+        verbose_name="Identificador",
+        help_text="Debe coincidir exactamente con el modal (ej. 'mision', 'historia', 'organigrama', 'personal').",
+    )
+    titulo_1 = models.CharField(
+        max_length=150,
+        blank=True,
+        verbose_name="Título del primer bloque",
+        help_text="Ej. para 'Misión y Visión', este sería el bloque de Misión.",
+    )
+    texto_1 = models.TextField(
+        blank=True,
+        verbose_name="Texto del primer bloque",
+        help_text="Admite HTML básico (<strong>, <em>, <p>, <br>). Se muestra tal cual, sin escapar.",
+    )
+    titulo_2 = models.CharField(
+        max_length=150,
+        blank=True,
+        verbose_name="Título del segundo bloque (opcional)",
+    )
+    texto_2 = models.TextField(
+        blank=True,
+        verbose_name="Texto del segundo bloque (opcional)",
+    )
+    imagen = models.ImageField(
+        upload_to="modales/",
+        blank=True,
+        null=True,
+        verbose_name="Imagen (opcional)",
+    )
+    actualizado = models.DateTimeField(auto_now=True, verbose_name="Actualizado")
+
+    class Meta:
+        verbose_name = "Contenido de modal (texto/imagen)"
+        verbose_name_plural = "Contenidos de modales (texto/imagen)"
+        ordering = ["slug"]
+
+    def __str__(self):
+        return self.slug
+
+
 class ComunicadoModal(models.Model):
     titulo = models.CharField(
         max_length=200,

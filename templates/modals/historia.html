@@ -17,7 +17,11 @@
 
     <div class="flex-grow overflow-y-auto p-6 lg:p-12 custom-scrollbar text-blue-50/90 bg-gradient-to-b from-transparent to-blue-950/30">
         <div class="max-w-4xl mx-auto space-y-12">
-            
+            {% if contenido and contenido.texto_1 %}
+            <div class="prose prose-invert prose-sm max-w-none leading-relaxed">
+                {{ contenido.texto_1|safe }}
+            </div>
+            {% else %}
             <section class="relative pl-8 lg:pl-10 border-l-2 border-amber-400/30">
                 <div class="absolute -left-[11px] top-0 w-5 h-5 rounded-full bg-amber-400 border-4 border-blue-900 shadow-lg"></div>
                 <h4 class="text-[11px] font-black text-amber-400 uppercase tracking-widest mb-4">I. Creación y Etapa Tecnológica (1981 - 1988)</h4>
@@ -60,6 +64,7 @@
                     </p>
                 </div>
             </section>
+            {% endif %}
 
         </div>
     </div>
