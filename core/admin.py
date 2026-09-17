@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib import admin
 
-from .models import ComunicadoModal, MenuItem, MenuPrincipal
+from .models import ComunicadoModal, DocumentoGestion, MenuItem, MenuPrincipal
 from .widgets import RecorteImagenWidget
 
 
@@ -20,6 +20,11 @@ class ComunicadoModalAdmin(admin.ModelAdmin):
     list_display = ("titulo", "activo", "fecha_creacion")
     list_editable = ("activo",)
     list_filter = ("activo",)
+
+
+@admin.register(DocumentoGestion)
+class DocumentoGestionAdmin(admin.ModelAdmin):
+    list_display = ("titulo", "slug", "actualizado")
 
 
 class MenuItemInline(admin.TabularInline):

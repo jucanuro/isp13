@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
 
 from investigacion.models import Tesis
-from .models import ComunicadoModal
+from .models import ComunicadoModal, DocumentoGestion
 
 import requests
 import re
@@ -218,7 +218,12 @@ def logout_view(request):
 
 
 def modal_content(request, modal_id):
-    return render(request, f'modals/{modal_id}.html')
+    documento = DocumentoGestion.objects.filter(slug=modal_id).first()
+    return render(
+        request,
+        f'modals/{modal_id}.html',
+        {'documento': documento},
+    )
 
 
 def construir_url_pte_tema(config):

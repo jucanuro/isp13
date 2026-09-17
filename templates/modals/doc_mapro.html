@@ -22,7 +22,7 @@
         </div>
         
         <iframe 
-            src="/media/documentos/MANUAL_DE_PROCESOS_INSTITUCIONALES_2023_2027.pdf" 
+            src="{% if documento %}{{ documento.archivo.url }}{% else %}/media/documentos/MANUAL_DE_PROCESOS_INSTITUCIONALES_2023_2027.pdf{% endif %}" 
             class="w-full h-full border-none shadow-inner"
             title="Manual de Procesos Institucionales">
         </iframe>
@@ -39,7 +39,7 @@
         </div>
         
         <div class="flex items-center gap-6">
-             <a href="/media/documentos/MANUAL_DE_PROCESOS_INSTITUCIONALES_2023_2027.pdf" download="MAPRO_INSTITUCIONAL_2023_2027.pdf" class="hidden md:flex items-center gap-2 text-[10px] font-black text-blue-600 border border-blue-100 px-4 py-2 rounded-xl hover:bg-blue-50 transition-colors uppercase">
+             <a href="{% if documento %}{{ documento.archivo.url }}{% else %}/media/documentos/MANUAL_DE_PROCESOS_INSTITUCIONALES_2023_2027.pdf{% endif %}" download="MAPRO_INSTITUCIONAL_2023_2027.pdf" class="hidden md:flex items-center gap-2 text-[10px] font-black text-blue-600 border border-blue-100 px-4 py-2 rounded-xl hover:bg-blue-50 transition-colors uppercase">
                 <i class="fas fa-download"></i>
                 Descargar MAPRO
              </a>

@@ -1,4 +1,37 @@
+from django.core.validators import FileExtensionValidator
 from django.db import models
+
+
+class DocumentoGestion(models.Model):
+    slug = models.SlugField(
+        unique=True,
+        verbose_name="Identificador",
+        help_text=(
+            "Debe coincidir exactamente con el ítem de menú que abre este "
+            "documento (ej. 'doc_reglamento', 'doc_pci', 'doc_mapro')."
+        ),
+    )
+    titulo = models.CharField(max_length=200, verbose_name="Título")
+    subtitulo = models.CharField(
+        max_length=200,
+        blank=True,
+        verbose_name="Subtítulo",
+        help_text="Ej. 'Vigencia 2023 - 2028'.",
+    )
+    archivo = models.FileField(
+        upload_to="documentos/",
+        validators=[FileExtensionValidator(["pdf"])],
+        verbose_name="Archivo PDF",
+    )
+    actualizado = models.DateTimeField(auto_now=True, verbose_name="Actualizado")
+
+    class Meta:
+        verbose_name = "Documento de gestión (PDF)"
+        verbose_name_plural = "Documentos de gestión (PDF)"
+        ordering = ["titulo"]
+
+    def __str__(self):
+        return self.titulo
 
 
 class ComunicadoModal(models.Model):
