@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.core.validators import FileExtensionValidator
 from django.db import models
 
@@ -76,6 +77,13 @@ class ContenidoModal(models.Model):
     def __str__(self):
         return self.slug
 
+    def clean(self):
+        if not (self.texto_1 or self.texto_2 or self.imagen):
+            raise ValidationError(
+                "Debe completar al menos el texto del primer bloque o "
+                "una imagen — un registro vacío no tiene efecto."
+            )
+
 
 class ComunicadoModal(models.Model):
     titulo = models.CharField(
@@ -149,6 +157,12 @@ class MenuPrincipal(models.Model):
     def __str__(self):
         return self.titulo
 
+    def clean(self):
+        if self.tipo == "enlace" and not self.url:
+            raise ValidationError(
+                {"url": "Un 'Enlace directo' necesita una URL."}
+            )
+
 
 class MenuItem(models.Model):
     TIPO_DESTINO_CHOICES = [
@@ -214,3 +228,14 @@ class MenuItem(models.Model):
 
     def __str__(self):
         return f"{self.menu.titulo} → {self.titulo}"
+
+    def clean(self):
+        if self.tipo_destino == "modal" and not self.modal_slug:
+            raise ValidationError(
+                {"modal_slug": "Un destino 'Contenido interno (modal)' necesita el slug del modal."}
+            )
+
+        if self.tipo_destino == "url" and not self.url:
+            raise ValidationError(
+                {"url": "Un destino 'Enlace / URL' necesita una URL."}
+            )

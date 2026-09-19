@@ -2,6 +2,16 @@
 
 Registro de cambios de código relevantes para el dueño del proyecto `isp13`.
 
+## [2026-09-18]
+
+### Añadido
+- Validaciones nuevas en el panel de administración para los modelos de `core` (Menú principal, Ítem de menú, Contenido de modal), para que no se puedan guardar combinaciones inconsistentes:
+  - Un "Menú principal" de tipo **Enlace directo** ahora exige una URL (antes se podía guardar vacío y el botón quedaba sin destino).
+  - Un "Ítem de menú" con destino **Contenido interno (modal)** exige el slug del modal; con destino **Enlace / URL** exige la URL.
+  - Un "Contenido de modal" no se puede guardar completamente vacío (sin texto ni imagen).
+  - Se muestran como errores claros junto al campo correspondiente, no como un error genérico.
+  - **Alcance**: por ahora cubre los modelos de `core` agregados esta semana (menú, modales, comunicado, documentos). El resto de apps (`admision`, `blog`, `convocatorias`, `investigacion`, `originalidad`) ya tenían sus propias validaciones previas (`investigacion.Tesis` ya validaba fechas y motivo de retiro, por ejemplo) y no se tocaron en esta pasada.
+
 ## [2026-09-16]
 
 ### Añadido
