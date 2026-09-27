@@ -39,13 +39,12 @@
         background: #ffffff;
         clip-path: polygon(0 0, 100% 0, 100% 92%, 92% 100%, 0 100%);
         transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        border: 1px solid #f1f5f9;
+        border: 1px solid #E3DCCC; /* crema-300 */
     }
     
     .card-credential:hover {
         transform: translateY(-15px);
         box-shadow: 0 40px 80px -20px rgba(30, 58, 138, 0.12);
-        border-color: #e2e8f0;
     }
 
     /* Detalle de "Lomo de Libro" lateral */
@@ -71,7 +70,7 @@
 
     /* Buscador Estilo Técnico */
     .search-container {
-        background: #f8fafc;
+        background: #ffffff;
         border-bottom: 2px solid #1e3a8a;
         transition: all 0.3s ease;
     }
@@ -94,7 +93,7 @@
     }
 </style>
 
-<section id="investigacion" class="relative pt-32 pb-48 bg-white overflow-hidden font-thesis-sans">
+<section id="investigacion" class="relative pt-32 pb-48 bg-crema-100 overflow-hidden font-thesis-sans">
     
     <div class="bg-geometry">
         <div class="trapezoid-1"></div>
@@ -131,7 +130,7 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-16">
             {% for t in tesis %}
-            <article class="group relative card-credential p-10 flex flex-col h-full border border-slate-100">
+            <article class="group relative card-credential p-10 flex flex-col h-full border border-crema-300">
                 
                 <div class="absolute top-0 left-0 w-full h-[4px] bg-slate-50 group-hover:bg-red-600 transition-colors duration-500"></div>
 

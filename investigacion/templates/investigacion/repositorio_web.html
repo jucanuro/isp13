@@ -15,9 +15,9 @@
     /* Contenedor Estilo Repositorio */
     .repo-container {
         background: white;
-        border: 1px solid #e2e8f0;
+        border: 1px solid #E3DCCC; /* crema-300 */
         border-radius: 12px;
-        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+        box-shadow: 0 1px 2px rgba(90,74,48,0.04), 0 10px 30px -12px rgba(90,74,48,0.16);
         overflow: hidden;
     }
 
@@ -72,7 +72,7 @@
     .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 </style>
 
-<section id="investigacion" class="relative pt-20 pb-10 bg-slate-50 font-thesis-sans">
+<section id="investigacion" class="relative pt-20 pb-10 bg-crema-100 font-thesis-sans">
     <div class="container mx-auto px-4 lg:px-4 relative z-10">
         <div class="mb-12 max-w-full mx-auto flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div>
@@ -85,7 +85,7 @@
             <form method="GET" action="{% url 'investigacion:repositorio_publico' %}" class="flex flex-col md:flex-row gap-3 w-full md:w-auto">
                 <div class="flex shadow-sm w-full md:w-96">
                     <input type="text" name="q" value="{{ query|default:'' }}" placeholder="Buscar tesis..."
-                           class="border border-slate-200 flex-grow py-3 px-5 text-sm rounded-l-lg focus:outline-none focus:border-blue-500">
+                           class="border border-crema-300 flex-grow py-3 px-5 text-sm rounded-l-lg focus:outline-none focus:border-blue-500">
                     <button type="submit" class="bg-[#3488ab] text-white px-5 rounded-r-lg hover:bg-blue-800 transition-colors">
                         <i class="fas fa-search"></i>
                     </button>
@@ -93,7 +93,7 @@
 
                 {% if not mostrar_boton_ver_mas %}
                 <select name="programa" onchange="this.form.submit()"
-                        class="border border-slate-200 rounded-lg py-3 px-4 text-sm text-slate-600 focus:outline-none focus:border-blue-500">
+                        class="border border-crema-300 rounded-lg py-3 px-4 text-sm text-slate-600 focus:outline-none focus:border-blue-500">
                     <option value="">Todos los programas</option>
                     {% for programa in programas_disponibles %}
                     <option value="{{ programa }}" {% if programa == programa_filtro %}selected{% endif %}>{{ programa }}</option>
@@ -101,7 +101,7 @@
                 </select>
 
                 <select name="anio" onchange="this.form.submit()"
-                        class="border border-slate-200 rounded-lg py-3 px-4 text-sm text-slate-600 focus:outline-none focus:border-blue-500">
+                        class="border border-crema-300 rounded-lg py-3 px-4 text-sm text-slate-600 focus:outline-none focus:border-blue-500">
                     <option value="">Todos los años</option>
                     {% for anio in anios_disponibles %}
                     <option value="{{ anio }}" {% if anio|stringformat:"s" == anio_filtro %}selected{% endif %}>{{ anio }}</option>
@@ -110,7 +110,7 @@
 
                 {% if query or programa_filtro or anio_filtro %}
                 <a href="{% url 'investigacion:repositorio_publico' %}"
-                   class="flex items-center justify-center text-[11px] font-bold text-slate-400 hover:text-red-500 uppercase tracking-widest px-2">
+                   class="flex items-center justify-center text-[11px] font-bold text-slate-500 hover:text-red-500 uppercase tracking-widest px-2">
                     Limpiar
                 </a>
                 {% endif %}
@@ -223,8 +223,8 @@
 {% endblock content %}
 
 {% block footer %}
-<footer class="w-full bg-white font-thesis-sans">
-    <div class="bg-slate-100/50 py-12 px-8 border-t border-slate-200">
+<footer class="w-full bg-crema-100 font-thesis-sans">
+    <div class="bg-crema-200 py-12 px-8 border-t border-crema-300">
         <div class="max-w-[1500px] mx-auto flex flex-col md:flex-row items-center justify-between gap-10">
             <div class="text-center md:text-left">
                 <p class="text-slate-800 font-black text-[11px] uppercase tracking-widest mb-2">Repositorio Institucional EESPP "13 de Julio"</p>

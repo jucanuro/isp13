@@ -9,6 +9,9 @@ tailwind.config = {
                     800: '#065f46', 900: '#064e3b', 950: '#022c22'
                 },
                 accent: '#FBB03B',
+                crema: {
+                    50: '#FAF8F3', 100: '#F4F0E7', 200: '#EDE8DE', 300: '#E3DCCC'
+                },
             },
             fontFamily: {
                 sans: ['Plus Jakarta Sans', 'sans-serif'],

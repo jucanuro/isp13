@@ -8,7 +8,6 @@
 
     /* 2. FONDO CON TRAPECIOS (Inspirado en Imagen 1 y 3) */
     .section-diploma-bg {
-        background-color: #ffffff;
         position: relative;
         overflow: hidden;
         z-index: 1;
@@ -32,7 +31,7 @@
     .card-modern {
         background: #ffffff;
         position: relative;
-        border: 1px solid #f1f5f9;
+        border: 1px solid #E3DCCC; /* crema-300: borde sobre el suelo crema */
         /* Corte diagonal sutil */
         clip-path: polygon(0 0, 100% 0, 100% 92%, 92% 100%, 0 100%);
         transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
@@ -57,7 +56,6 @@
     .card-modern:hover {
         transform: translateY(-12px);
         box-shadow: 0 40px 70px -20px rgba(30, 58, 138, 0.12);
-        border-color: #e2e8f0;
     }
 
     .card-modern:hover::after {
@@ -97,7 +95,7 @@
     .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
 </style>
 
-<section id="carreras" class="section-diploma-bg pt-16 pb-20">
+<section id="carreras" class="section-diploma-bg bg-crema-100 pt-16 pb-20">
     <div class="container mx-auto px-6 relative z-10">
         <div class="max-w-3xl mb-20 text-center mx-auto lg:text-left lg:mx-0">
             <div class="flex items-center justify-center lg:justify-start gap-4 mb-4">
