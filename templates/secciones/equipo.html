@@ -1,0 +1,122 @@
+{% load equipo_tags %}
+{% with grupos=equipo|agrupar_por_area %}
+{% if grupos %}
+{% comment %}
+Banda blanca: el repositorio de arriba es la banda crema, así que aquí el cambio de tono
+marca el corte y hace falta aire propio arriba (pt).
+pb extra: footer.html se monta 6rem (-mt-24) sobre la última sección del home.
+{% endcomment %}
+<section id="equipo" lang="es" class="bg-white pt-16 md:pt-24 pb-40 md:pb-48">
+    <div class="container mx-auto px-6">
+
+        <p class="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-amber-500 mb-4">
+            <span class="block w-8 h-0.5 bg-amber-500 shrink-0"></span>
+            Nuestro equipo
+        </p>
+
+        <h2 class="font-serif text-3xl md:text-4xl leading-tight text-blue-900">Quienes forman a los maestros del mañana</h2>
+
+        {# Pestañas: mismo tratamiento que el ítem activo del menú de la cabecera (header.html). #}
+        <div role="tablist" aria-label="Áreas del equipo institucional" class="mt-10 mb-10 flex flex-wrap gap-x-2 gap-y-1 border-b border-[#ECE7DC]">
+            {% for grupo in grupos %}
+            <button type="button" role="tab"
+                    id="equipo-tab-{{ grupo.clave }}"
+                    aria-controls="equipo-panel-{{ grupo.clave }}"
+                    aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+                    tabindex="{% if forloop.first %}0{% else %}-1{% endif %}"
+                    data-equipo-tab
+                    class="relative px-3 sm:px-4 py-3 text-[11px] font-black uppercase tracking-widest transition-all {% if forloop.first %}text-blue-900{% else %}text-slate-600 hover:text-blue-800{% endif %}">
+                <span class="relative z-10">
+                    {% if grupo.clave == 'directiva' %}<span class="sm:hidden">Directiva</span><span class="hidden sm:inline">Plana Directiva</span>{% elif grupo.clave == 'docente' %}<span class="sm:hidden">Docentes</span><span class="hidden sm:inline">Plana Docente</span>{% else %}<span class="sm:hidden">Administrativos</span><span class="hidden sm:inline">Personal Administrativo</span>{% endif %}
+                </span>
+                <span data-equipo-subrayado class="absolute bottom-0 left-0 w-full h-0.5 bg-amber-500 transform origin-left transition {% if forloop.first %}scale-x-100{% else %}scale-x-0{% endif %}"></span>
+            </button>
+            {% endfor %}
+        </div>
+
+        {% for grupo in grupos %}
+        <div role="tabpanel"
+             id="equipo-panel-{{ grupo.clave }}"
+             aria-labelledby="equipo-tab-{{ grupo.clave }}"
+             class="{% if not forloop.first %}hidden{% endif %}">
+            <ul class="grid {% if grupo.clave == 'directiva' %}grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8{% else %}grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6{% endif %}">
+                {% for miembro in grupo.miembros %}
+                <li class="min-w-0">
+                    <article class="h-full flex flex-col bg-white border border-[#ECE7DC] rounded-2xl shadow-[0_1px_2px_rgba(90,74,48,0.03),0_8px_24px_-14px_rgba(90,74,48,0.14)] overflow-hidden">
+                        <div class="h-1 bg-amber-400"></div>
+
+                        <div class="{% if grupo.clave == 'directiva' %}p-3{% else %}p-2 sm:p-3{% endif %} pb-0">
+                            <div class="aspect-[4/5] rounded-lg overflow-hidden">
+                                {% if miembro.foto %}
+                                <img src="{{ miembro.foto.url }}"
+                                     alt="Fotografía de {{ miembro.nombre_con_grado }}, {{ miembro.cargo }}"
+                                     width="800" height="1000"
+                                     loading="lazy" decoding="async"
+                                     class="block w-full h-full object-cover">
+                                {% else %}
+                                <div class="w-full h-full flex flex-col items-center justify-center bg-crema-100 ring-1 ring-inset ring-crema-300 rounded-lg" aria-hidden="true">
+                                    <span class="font-serif {% if grupo.clave == 'directiva' %}text-6xl md:text-7xl{% else %}text-4xl md:text-5xl{% endif %} leading-none tracking-wide text-blue-900/85">{{ miembro.iniciales }}</span>
+                                    <span class="block {% if grupo.clave == 'directiva' %}mt-5 w-10{% else %}mt-3 w-6{% endif %} h-0.5 bg-amber-400"></span>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="flex-1 {% if grupo.clave == 'directiva' %}px-5 py-5{% else %}px-3 sm:px-4 py-4{% endif %}">
+                            <h3 class="font-serif font-semibold {% if grupo.clave == 'directiva' %}text-lg md:text-xl{% else %}text-base{% endif %} leading-snug text-blue-900 break-words">{{ miembro.nombre_con_grado }}</h3>
+                            <p class="mt-1.5 text-xs uppercase {% if grupo.clave == 'directiva' %}tracking-[0.2em]{% else %}tracking-widest{% endif %} leading-relaxed text-slate-500 break-words">{{ miembro.cargo }}</p>
+                        </div>
+                    </article>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endfor %}
+
+    </div>
+
+    <script>
+        (function () {
+            const seccion = document.getElementById('equipo');
+            if (!seccion) return;
+
+            const pestanas = Array.from(seccion.querySelectorAll('[data-equipo-tab]'));
+
+            function activar(pestanaActiva) {
+                pestanas.forEach(function (pestana) {
+                    const activa = pestana === pestanaActiva;
+                    const panel = document.getElementById(pestana.getAttribute('aria-controls'));
+                    const subrayado = pestana.querySelector('[data-equipo-subrayado]');
+
+                    pestana.setAttribute('aria-selected', activa ? 'true' : 'false');
+                    pestana.tabIndex = activa ? 0 : -1;
+                    pestana.classList.toggle('text-blue-900', activa);
+                    pestana.classList.toggle('text-slate-600', !activa);
+                    pestana.classList.toggle('hover:text-blue-800', !activa);
+                    subrayado.classList.toggle('scale-x-100', activa);
+                    subrayado.classList.toggle('scale-x-0', !activa);
+                    panel.classList.toggle('hidden', !activa);
+                });
+            }
+
+            pestanas.forEach(function (pestana, indice) {
+                pestana.addEventListener('click', function () {
+                    activar(pestana);
+                });
+
+                // Flechas izquierda/derecha entre pestañas (patrón ARIA de tabs).
+                pestana.addEventListener('keydown', function (evento) {
+                    let destino = null;
+                    if (evento.key === 'ArrowRight') destino = pestanas[(indice + 1) % pestanas.length];
+                    if (evento.key === 'ArrowLeft') destino = pestanas[(indice - 1 + pestanas.length) % pestanas.length];
+                    if (!destino) return;
+                    evento.preventDefault();
+                    activar(destino);
+                    destino.focus();
+                });
+            });
+        })();
+    </script>
+</section>
+{% endif %}
+{% endwith %}

@@ -10,7 +10,10 @@ tailwind.config = {
                 },
                 accent: '#FBB03B',
                 crema: {
-                    50: '#FAF8F3', 100: '#F4F0E7', 200: '#EDE8DE', 300: '#E3DCCC'
+                    50:  '#FCFAF6',   // apenas tintado: cajas internas sobre banda blanca
+                    100: '#F7F4EC',   // la banda que alterna con el blanco
+                    200: '#F0EBE0',   // hovers y recuadros insertos
+                    300: '#E3DBCB'    // bordes y divisores sobre crema
                 },
             },
             fontFamily: {

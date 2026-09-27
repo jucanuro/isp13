@@ -7,6 +7,7 @@ from .models import (
     DocumentoGestion,
     MenuItem,
     MenuPrincipal,
+    MiembroEquipo,
 )
 from .widgets import RecorteImagenWidget
 
@@ -67,3 +68,21 @@ class MenuPrincipalAdmin(admin.ModelAdmin):
     list_display = ("titulo", "tipo", "orden", "activo")
     list_editable = ("orden", "activo")
     inlines = [MenuItemInline]
+
+
+class MiembroEquipoForm(forms.ModelForm):
+    class Meta:
+        model = MiembroEquipo
+        fields = "__all__"
+        widgets = {
+            "foto": RecorteImagenWidget(aspecto="4/5"),
+        }
+
+
+@admin.register(MiembroEquipo)
+class MiembroEquipoAdmin(admin.ModelAdmin):
+    form = MiembroEquipoForm
+    list_display = ("nombre_completo", "cargo", "area", "activo", "orden")
+    list_editable = ("activo", "orden")
+    list_filter = ("area", "activo")
+    search_fields = ("nombre_completo", "cargo")

@@ -16,7 +16,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
-<body class="bg-crema-100 antialiased selection:bg-emerald-200 selection:text-emerald-900">
+<body class="bg-white antialiased selection:bg-emerald-200 selection:text-emerald-900">
 
 {% if messages %}
 <div id="toast-mensajes-global" class="fixed top-4 right-4 z-[9999] flex flex-col gap-2 w-full max-w-sm px-4 sm:px-0">
@@ -75,15 +75,19 @@
                 </button>
             </div>
 
-            <div class="flex items-center justify-start lg:justify-center order-3 lg:order-2 col-span-1 lg:col-span-1">
-                <a href="#convocatorias" class="flex items-center gap-2 group">
+            {% if plazas_conteo %}
+            <div class="flex items-center justify-center order-3 lg:order-2 col-span-2 lg:col-span-1">
+                <a href="{% url 'convocatoria:listar_convocatorias' %}"
+                   aria-label="Ver {{ plazas_conteo }} convocatoria{{ plazas_conteo|pluralize }} abierta{{ plazas_conteo|pluralize }}"
+                   class="flex items-center gap-2 bg-white/5 border border-white/20 px-3 lg:px-6 py-1.5 rounded-full text-white hover:bg-amber-500 hover:text-blue-950 transition-all duration-500 group shadow-lg shadow-black/10 whitespace-nowrap">
                     <span class="flex h-2 w-2 rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.8)]"></span>
-                    <div class="text-[9px] lg:text-[11px] uppercase tracking-wider">
-                        <span class="text-white/80 hidden sm:inline">Convocatorias: </span>
-                        <span class="text-amber-400 font-black">{{ plazas_conteo|default:"0" }} Convocatorias</span>
-                    </div>
+                    <span class="text-[9px] lg:text-[10px] font-black uppercase tracking-widest">
+                        <span class="text-amber-400 group-hover:text-blue-950 transition-colors duration-500">{{ plazas_conteo }}</span>
+                        Convocatoria{{ plazas_conteo|pluralize }} abierta{{ plazas_conteo|pluralize }}
+                    </span>
                 </a>
             </div>
+            {% endif %}
 
             <div class="flex items-center justify-end gap-4 order-2 lg:order-3 col-span-1 lg:col-span-1">
                   <a href="https://forms.cloud.microsoft/r/Uhkyr2DJcc"
@@ -126,6 +130,17 @@
     <a href="{% url 'blog:listar_publicaciones' %}" class="w-12 h-12 bg-white rounded-2xl shadow-2xl flex items-center justify-center text-blue-900 hover:bg-blue-900 hover:text-white transition-all group relative">
         <i class="fas fa-feather-pointed text-lg"></i>
         <span class="absolute left-14 bg-blue-900 text-white text-[9px] font-black px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity uppercase tracking-widest shadow-xl pointer-events-none">Blog</span>
+    </a>
+
+    <a href="{% url 'convocatoria:listar_convocatorias' %}"
+       title="Convocatorias{% if plazas_conteo %}: {{ plazas_conteo }} abierta{{ plazas_conteo|pluralize }}{% endif %}"
+       aria-label="Ver convocatorias{% if plazas_conteo %} ({{ plazas_conteo }} abierta{{ plazas_conteo|pluralize }}){% endif %}"
+       class="w-12 h-12 bg-white rounded-2xl shadow-2xl flex items-center justify-center text-blue-900 hover:bg-blue-900 hover:text-white transition-all group relative">
+        <i class="fa-solid fa-bullhorn text-lg" aria-hidden="true"></i>
+        {% if plazas_conteo > 0 %}
+        <span class="absolute -top-1.5 -right-1.5 min-w-[1.25rem] h-5 px-1 flex items-center justify-center rounded-full bg-amber-400 text-blue-900 text-[10px] font-black leading-none ring-2 ring-white" aria-hidden="true">{{ plazas_conteo }}</span>
+        {% endif %}
+        <span class="absolute left-14 bg-blue-900 text-white text-[9px] font-black px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity uppercase tracking-widest shadow-xl pointer-events-none text-nowrap">Convocatorias</span>
     </a>
 
     <button onclick="document.getElementById('modalSoporte').classList.remove('hidden')" 

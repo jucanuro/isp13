@@ -9,16 +9,9 @@
     .font-cinzel { font-family: 'Cinzel', serif; }
     .font-inter { font-family: 'Inter', sans-serif; }
     
-    .bg-main {
-        background-color: #ffffff;
-        background-image: radial-gradient(#f1f5f9 1px, transparent 1px);
-        background-size: 40px 40px;
-    }
-
     .table-container {
         background: white;
         border-radius: 1.25rem;
-        border: 1px solid #e2e8f0;
         box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.02);
     }
 
@@ -42,7 +35,7 @@
     }
 </style>
 
-<main class="min-h-screen bg-main font-inter pb-20">
+<main class="min-h-screen bg-white bg-[radial-gradient(rgba(227,219,203,0.55)_1px,transparent_1px)] bg-[length:40px_40px] font-inter pb-20">
     <div class="max-w-[1500px] mx-auto px-6 pt-16">
         
         <div class="flex flex-col md:flex-row justify-between items-center gap-6 mb-12">
@@ -67,10 +60,10 @@
             {% endif %}
         </div>
 
-        <div class="table-container overflow-hidden">
+        <div class="table-container border border-[#ECE7DC] overflow-hidden">
             <table class="desktop-table w-full">
                 <thead>
-                    <tr class="bg-slate-50/50 border-b border-slate-100">
+                    <tr class="bg-white border-b border-[#ECE7DC]">
                         <th class="py-5 px-6 text-[9px] font-black uppercase tracking-widest text-slate-400 text-left w-32">Estado</th>
                         <th class="py-5 px-6 text-[9px] font-black uppercase tracking-widest text-slate-400 text-left">Proceso / Título</th>
                         <th class="py-5 px-6 text-[9px] font-black uppercase tracking-widest text-slate-400 text-left">Canales de Postulación</th>
@@ -80,9 +73,9 @@
                         {% endif %}
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-slate-100 text-sm">
+                <tbody class="divide-y divide-[#ECE7DC] text-sm">
                     {% for c in convocatorias %}
-                    <tr class="group hover:bg-slate-50/50 transition-all">
+                    <tr class="group hover:bg-crema-50 transition-all">
                         <td class="px-6 py-8">
                             <span class="status-badge {% if c.estado == 'PUBLICADO' %}bg-emerald-50 text-emerald-600 border border-emerald-100{% else %}bg-blue-50 text-blue-600 border border-blue-100{% endif %}">
                                 {{ c.get_estado_display }}
@@ -113,7 +106,7 @@
                         <td class="px-6 py-8">
                             <div class="flex flex-wrap gap-2">
                                 {% for doc in c.documentos.all %}
-                                <a href="{{ doc.archivo.url }}" target="_blank" class="flex items-center gap-2 px-3 py-2 bg-white border border-slate-200 rounded-lg hover:border-blue-500 hover:shadow-sm transition-all">
+                                <a href="{{ doc.archivo.url }}" target="_blank" class="flex items-center gap-2 px-3 py-2 bg-white border border-[#ECE7DC] rounded-lg hover:border-blue-500 hover:shadow-sm transition-all">
                                     <i class="fa-solid fa-file-pdf text-rose-500"></i>
                                     <span class="text-[9px] font-bold text-slate-600 uppercase">{{ doc.nombre_documento }}</span>
                                 </a>
@@ -136,7 +129,7 @@
 
             <div class="mobile-cards p-4 space-y-6">
                 {% for c in convocatorias %}
-                <div class="bg-white border border-slate-200 rounded-[2rem] p-6 shadow-sm">
+                <div class="bg-white border border-[#ECE7DC] rounded-[2rem] p-6 shadow-sm">
                     <div class="flex justify-between items-center mb-6">
                         <span class="status-badge bg-blue-50 text-blue-600">{{ c.get_estado_display }}</span>
                         {% if user.is_authenticated %}
@@ -150,14 +143,14 @@
                     <h3 class="text-base font-black text-slate-900 mb-4 uppercase leading-tight">{{ c.titulo }}</h3>
                     
                     <div class="space-y-4">
-                        <div class="p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                        <div class="p-4 bg-crema-100 rounded-2xl border border-crema-300">
                             <p class="text-[9px] font-black text-blue-600 uppercase mb-1">Información de Postulación</p>
                             <p class="text-xs font-bold text-slate-700"><i class="fa-solid fa-envelope mr-2"></i> {{ c.info_correo }}</p>
                         </div>
 
                         <div class="grid grid-cols-1 gap-2">
                             {% for doc in c.documentos.all %}
-                            <a href="{{ doc.archivo.url }}" class="flex items-center justify-between p-4 bg-white border border-slate-100 rounded-xl text-xs font-bold text-slate-600">
+                            <a href="{{ doc.archivo.url }}" class="flex items-center justify-between p-4 bg-white border border-[#ECE7DC] rounded-xl text-xs font-bold text-slate-600">
                                 <span><i class="fa-solid fa-file-pdf text-rose-500 mr-2"></i> {{ doc.nombre_documento }}</span>
                                 <i class="fa-solid fa-download text-slate-300"></i>
                             </a>
@@ -170,7 +163,7 @@
 
             {% if not convocatorias %}
             <div class="py-32 text-center">
-                <div class="inline-flex items-center justify-center w-20 h-20 bg-slate-50 rounded-full mb-6">
+                <div class="inline-flex items-center justify-center w-20 h-20 bg-crema-100 rounded-full mb-6">
                     <i class="fa-solid fa-folder-open text-slate-200 text-3xl"></i>
                 </div>
                 <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">No hay procesos abiertos en este momento</p>
