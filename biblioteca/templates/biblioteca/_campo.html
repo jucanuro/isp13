@@ -1,0 +1,11 @@
+{# Un campo del LibroForm: etiqueta, input, ayuda y su propio contenedor de error. #}
+<div class="min-w-0 {{ clases|default:'' }}" data-campo="{{ campo.name }}">
+    <label for="{{ campo.id_for_label }}" class="mb-2 block text-[10px] font-black uppercase tracking-widest text-slate-600">
+        {{ campo.label }}{% if campo.field.required %} <span class="text-amber-500" aria-hidden="true">*</span>{% endif %}
+    </label>
+    {{ campo }}
+    <p id="error-{{ campo.name }}" data-error-para="{{ campo.name }}" class="mt-1.5 hidden text-xs font-bold text-rose-700" role="alert"></p>
+    {% if campo.help_text %}
+    <p class="mt-1.5 text-[11px] leading-relaxed text-slate-500">{{ campo.help_text }}</p>
+    {% endif %}
+</div>

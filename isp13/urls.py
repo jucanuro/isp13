@@ -20,6 +20,7 @@ urlpatterns = [
     path('soporte/', include('soporte.urls', namespace='soporte')),
     path('convocatorias/', include('convocatorias.urls', namespace='convocatoria')),
     path('admision/', include('admision.urls')),
+    path('biblioteca/', include('biblioteca.urls', namespace='biblioteca')),
 
     # django.conf.urls.static.static() es un no-op cuando DEBUG=False, y este
     # proyecto no tiene todavía un servidor (nginx u otro) configurado para

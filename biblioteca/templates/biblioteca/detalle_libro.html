@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}{{ libro.titulo }} | Biblioteca ISEP 13 de Julio{% endblock %}
+
+{% block topbar %}{% endblock %}
+{% block verticalbar %}{% endblock %}
+
+{% block content %}
+<section lang="es" class="bg-crema-100 pt-10 md:pt-16 pb-40 md:pb-48">
+    <div class="container mx-auto max-w-5xl px-4 sm:px-6">
+
+        <a href="{% url 'biblioteca:catalogo' %}" class="mb-8 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-slate-500 hover:text-blue-900">
+            <i class="fas fa-arrow-left text-[10px]" aria-hidden="true"></i> Volver al catálogo
+        </a>
+
+        <article class="flex flex-col md:flex-row gap-8 rounded-2xl border border-crema-300 bg-white p-5 sm:p-8 shadow-[0_1px_2px_rgba(90,74,48,0.03),0_8px_24px_-14px_rgba(90,74,48,0.14)]">
+            <div class="w-40 sm:w-48 shrink-0 self-center md:self-start">
+                <div class="aspect-[3/4] overflow-hidden rounded-lg">
+                    {% if libro.portada %}
+                    <img src="{{ libro.portada.url }}" alt="Portada de {{ libro.titulo }}" class="block h-full w-full object-cover">
+                    {% else %}
+                    <div class="flex h-full w-full flex-col items-center justify-center rounded-lg bg-crema-100 ring-1 ring-inset ring-crema-300" aria-hidden="true">
+                        <span class="font-serif text-6xl leading-none text-blue-900/85">{{ libro.titulo|slice:":1"|upper }}</span>
+                        <span class="mt-5 block h-0.5 w-10 bg-amber-400"></span>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="min-w-0 flex-1">
+                <span class="inline-flex items-center gap-1.5 rounded-full bg-amber-400 px-2.5 py-1 text-[10px] font-black uppercase tracking-widest text-blue-900">
+                    <i class="fas fa-book text-[9px]" aria-hidden="true"></i> {{ libro.get_tipo_display }}
+                </span>
+
+                <h1 class="mt-4 font-serif text-2xl md:text-3xl leading-tight text-blue-900 break-words">{{ libro.titulo }}</h1>
+                <p class="mt-2 text-sm text-slate-600 break-words">{{ libro.autores }}</p>
+
+                {% if libro.descripcion %}
+                <p class="mt-6 text-sm leading-relaxed text-slate-600 break-words">{{ libro.descripcion|linebreaksbr }}</p>
+                {% endif %}
+
+                <dl class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 border-t border-crema-300 pt-6 text-sm">
+                    {% if libro.categoria %}
+                    <div><dt class="text-[10px] font-black uppercase tracking-widest text-slate-500">Categoría</dt><dd class="mt-1 text-slate-800">{{ libro.categoria }}</dd></div>
+                    {% endif %}
+                    {% if libro.editorial %}
+                    <div><dt class="text-[10px] font-black uppercase tracking-widest text-slate-500">Editorial</dt><dd class="mt-1 text-slate-800 break-words">{{ libro.editorial }}</dd></div>
+                    {% endif %}
+                    {% if libro.anio_publicacion %}
+                    <div><dt class="text-[10px] font-black uppercase tracking-widest text-slate-500">Año</dt><dd class="mt-1 text-slate-800">{{ libro.anio_publicacion }}</dd></div>
+                    {% endif %}
+                    {% if libro.isbn %}
+                    <div><dt class="text-[10px] font-black uppercase tracking-widest text-slate-500">ISBN</dt><dd class="mt-1 font-mono text-slate-800">{{ libro.isbn }}</dd></div>
+                    {% endif %}
+                    <div><dt class="text-[10px] font-black uppercase tracking-widest text-slate-500">Ejemplares</dt><dd class="mt-1 text-slate-800">{{ libro.ejemplares }}</dd></div>
+                    {% if libro.ubicacion %}
+                    <div><dt class="text-[10px] font-black uppercase tracking-widest text-slate-500">Ubicación</dt><dd class="mt-1 text-slate-800">{{ libro.ubicacion }}</dd></div>
+                    {% endif %}
+                </dl>
+
+                <p class="mt-8 text-xs leading-relaxed text-slate-500">
+                    Consulta este material en la biblioteca del instituto.
+                </p>
+            </div>
+        </article>
+    </div>
+</section>
+{% endblock content %}

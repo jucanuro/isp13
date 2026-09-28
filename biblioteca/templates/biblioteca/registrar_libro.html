@@ -1,0 +1,279 @@
+{% extends "base.html" %}
+
+{% block title %}Registrar libro | Biblioteca ISEP 13 de Julio{% endblock %}
+
+{% block topbar %}{% endblock %}
+{% block verticalbar %}{% endblock %}
+
+{% block content %}
+<section lang="es" class="bg-crema-100 pt-10 md:pt-16 pb-40 md:pb-48">
+    <div class="container mx-auto max-w-4xl px-4 sm:px-6">
+
+        <div class="mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+            <div>
+                <p class="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-amber-500 mb-3">
+                    <span class="block w-8 h-0.5 bg-amber-500 shrink-0"></span>
+                    Biblioteca institucional
+                </p>
+                <h1 class="font-serif text-3xl leading-tight text-blue-900">Registrar un libro</h1>
+            </div>
+            <a href="{% url 'biblioteca:catalogo' %}" class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-slate-500 hover:text-blue-900">
+                <i class="fas fa-arrow-left text-[10px]" aria-hidden="true"></i> Volver al catálogo
+            </a>
+        </div>
+
+        <form id="form-libro" method="POST" action="{% url 'biblioteca:registrar_libro' %}" enctype="multipart/form-data" novalidate
+              class="rounded-2xl border border-crema-300 bg-white p-5 sm:p-8 shadow-[0_1px_2px_rgba(90,74,48,0.03),0_8px_24px_-14px_rgba(90,74,48,0.14)]">
+            {% csrf_token %}
+
+            <div id="errores-generales" class="mb-6 hidden rounded-lg border border-rose-200 bg-rose-50 p-4 text-xs font-bold text-rose-700" role="alert"></div>
+
+            <fieldset class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <legend class="mb-5 text-[11px] font-black uppercase tracking-widest text-blue-900">Datos de la obra</legend>
+                {% include "biblioteca/_campo.html" with campo=form.titulo clases="sm:col-span-2" %}
+                {% include "biblioteca/_campo.html" with campo=form.autores clases="sm:col-span-2" %}
+                {% include "biblioteca/_campo.html" with campo=form.tipo %}
+                {% include "biblioteca/_campo.html" with campo=form.categoria %}
+                {% include "biblioteca/_campo.html" with campo=form.descripcion clases="sm:col-span-2" %}
+            </fieldset>
+
+            <fieldset class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-5 border-t border-crema-300 pt-8">
+                <legend class="sr-only">Publicación</legend>
+                <p class="sm:col-span-2 text-[11px] font-black uppercase tracking-widest text-blue-900" aria-hidden="true">Publicación</p>
+                {% include "biblioteca/_campo.html" with campo=form.editorial clases="sm:col-span-2" %}
+                {% include "biblioteca/_campo.html" with campo=form.anio_publicacion %}
+                {% include "biblioteca/_campo.html" with campo=form.isbn %}
+
+                {# Portada: mismo patrón de tarjeta + updateFileLabel del formulario de tesis. #}
+                <div class="min-w-0 sm:col-span-2" data-campo="portada">
+                    <span class="mb-2 block text-[10px] font-black uppercase tracking-widest text-slate-600">{{ form.portada.label }}</span>
+                    <div id="tarjeta-portada" class="relative flex items-center gap-4 overflow-hidden rounded-xl border-2 border-dashed border-crema-300 px-4 py-3 transition hover:border-amber-400">
+                        <input id="{{ form.portada.id_for_label }}" type="file" name="portada" accept="image/*"
+                               aria-describedby="label-portada error-portada"
+                               onchange="updateFileLabel(this, 'label-portada')"
+                               class="absolute inset-0 z-10 h-full w-full cursor-pointer opacity-0">
+                        <div class="flex h-16 w-12 shrink-0 items-center justify-center overflow-hidden rounded bg-crema-100 ring-1 ring-inset ring-crema-300 text-blue-900/60" aria-hidden="true">
+                            <img id="vista-portada" alt="" class="hidden h-full w-full object-cover">
+                            <i id="icono-portada" class="fas fa-image"></i>
+                        </div>
+                        <div id="label-portada" class="min-w-0 text-xs font-bold text-slate-600">
+                            Seleccionar imagen de portada (opcional, máx. 5 MB)
+                        </div>
+                    </div>
+                    <p id="error-portada" data-error-para="portada" class="mt-1.5 hidden text-xs font-bold text-rose-700" role="alert"></p>
+                </div>
+            </fieldset>
+
+            <fieldset class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-5 border-t border-crema-300 pt-8">
+                <legend class="sr-only">Ejemplares físicos</legend>
+                <p class="sm:col-span-2 text-[11px] font-black uppercase tracking-widest text-blue-900" aria-hidden="true">Ejemplares físicos</p>
+                {% include "biblioteca/_campo.html" with campo=form.ejemplares %}
+                {% include "biblioteca/_campo.html" with campo=form.ubicacion %}
+            </fieldset>
+
+            <div class="mt-10 flex flex-col-reverse sm:flex-row sm:items-center sm:justify-end gap-3 border-t border-crema-300 pt-6">
+                <a href="{% url 'biblioteca:catalogo' %}" class="text-center rounded-full px-5 py-3 text-[11px] font-black uppercase tracking-widest text-slate-500 hover:text-blue-900">Cancelar</a>
+                <button type="submit" class="inline-flex items-center justify-center gap-2 rounded-full bg-blue-900 px-6 py-3 text-[11px] font-black uppercase tracking-widest text-white shadow-lg shadow-blue-900/20 hover:bg-amber-500 hover:text-blue-900 transition-colors disabled:cursor-not-allowed disabled:opacity-50">
+                    <i class="fas fa-floppy-disk text-[10px]" aria-hidden="true"></i>
+                    Guardar libro
+                </button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<script>
+    // Envío en un solo paso (sin autoguardado): preventDefault + FormData + fetch,
+    // respuesta JSON. Los errores llegan por campo y se pintan junto a cada input.
+    const CLASES_ERROR = ['border-rose-400', 'ring-2', 'ring-rose-100'];
+
+    function escapeHtml(value) {
+        const div = document.createElement('div');
+        div.textContent = value || '';
+        return div.innerHTML;
+    }
+
+    function formatearTamanoArchivo(bytes) {
+        if (bytes < 1024) {
+            return bytes + ' B';
+        }
+        if (bytes < 1024 * 1024) {
+            return (bytes / 1024).toFixed(1) + ' KB';
+        }
+        return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+    }
+
+    function updateFileLabel(input, labelId) {
+        const label = document.getElementById(labelId);
+        const tarjeta = document.getElementById('tarjeta-portada');
+        const vista = document.getElementById('vista-portada');
+        const icono = document.getElementById('icono-portada');
+
+        if (!input.files || !input.files[0]) {
+            return;
+        }
+
+        const file = input.files[0];
+
+        label.innerHTML = `
+            <span class="text-blue-900 font-black block truncate">
+                NUEVO: ${escapeHtml(file.name)}
+            </span>
+            <span class="text-slate-500 font-bold text-[11px] block">
+                ${escapeHtml(file.type || 'Desconocido')} &middot; ${formatearTamanoArchivo(file.size)}
+            </span>
+        `;
+
+        tarjeta.classList.remove('border-crema-300');
+        tarjeta.classList.add('border-amber-400', 'bg-crema-50');
+
+        if (file.type.startsWith('image/')) {
+            if (vista.src) {
+                URL.revokeObjectURL(vista.src);
+            }
+            vista.src = URL.createObjectURL(file);
+            vista.classList.remove('hidden');
+            icono.classList.add('hidden');
+        }
+    }
+
+    function mostrarToast(tipo, mensaje) {
+        let contenedor = document.getElementById('toast-mensajes-global');
+
+        if (!contenedor) {
+            contenedor = document.createElement('div');
+            contenedor.id = 'toast-mensajes-global';
+            contenedor.className =
+                'fixed top-4 right-4 z-[9999] flex flex-col gap-2 w-full max-w-sm px-4 sm:px-0';
+            document.body.appendChild(contenedor);
+        }
+
+        const estilos = {
+            error: 'bg-rose-50 text-rose-700 border-rose-200',
+            success: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+            warning: 'bg-amber-50 text-amber-700 border-amber-200',
+            info: 'bg-blue-50 text-blue-700 border-blue-200',
+        };
+
+        const iconos = {
+            error: 'fa-circle-exclamation',
+            success: 'fa-circle-check',
+            warning: 'fa-triangle-exclamation',
+            info: 'fa-circle-info',
+        };
+
+        const toast = document.createElement('div');
+        toast.className =
+            'toast-mensaje flex items-start gap-3 p-4 rounded-xl shadow-lg border text-[11px] font-bold leading-snug ' +
+            (estilos[tipo] || estilos.info);
+        toast.setAttribute('role', 'alert');
+        toast.setAttribute('aria-live', 'polite');
+        toast.innerHTML =
+            '<i class="fas ' + (iconos[tipo] || iconos.info) + ' mt-0.5"></i><span class="flex-grow">' +
+            escapeHtml(mensaje) + '</span>' +
+            '<button type="button" aria-label="Cerrar" class="opacity-50 hover:opacity-100 transition-opacity leading-none text-sm">&times;</button>';
+
+        toast.querySelector('button').addEventListener('click', function () {
+            toast.remove();
+        });
+
+        contenedor.appendChild(toast);
+
+        if (tipo !== 'error') {
+            setTimeout(function () {
+                toast.style.transition = 'opacity 0.5s ease';
+                toast.style.opacity = '0';
+                setTimeout(function () { toast.remove(); }, 500);
+            }, 6000);
+        }
+    }
+
+    function limpiarErrores(form) {
+        form.querySelectorAll('[data-error-para]').forEach(function (p) {
+            p.textContent = '';
+            p.classList.add('hidden');
+        });
+        form.querySelectorAll('[aria-invalid="true"]').forEach(function (input) {
+            input.removeAttribute('aria-invalid');
+            input.classList.remove(...CLASES_ERROR);
+        });
+        const generales = document.getElementById('errores-generales');
+        generales.textContent = '';
+        generales.classList.add('hidden');
+    }
+
+    function pintarErrores(form, errores) {
+        let primero = null;
+
+        Object.keys(errores).forEach(function (campo) {
+            const mensajes = errores[campo].map(function (e) { return e.message; }).join(' ');
+            const destino = form.querySelector('[data-error-para="' + campo + '"]');
+
+            if (!destino) {
+                const generales = document.getElementById('errores-generales');
+                generales.textContent = mensajes;
+                generales.classList.remove('hidden');
+                return;
+            }
+
+            destino.textContent = mensajes;
+            destino.classList.remove('hidden');
+
+            const input = form.elements[campo];
+            if (input) {
+                input.setAttribute('aria-invalid', 'true');
+                if (campo !== 'portada') {
+                    input.classList.add(...CLASES_ERROR);
+                }
+                primero = primero || input;
+            }
+        });
+
+        if (primero) {
+            primero.focus();
+        }
+    }
+
+    document.getElementById('form-libro').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const form = event.target;
+        const boton = form.querySelector('button[type="submit"]');
+
+        limpiarErrores(form);
+        boton.disabled = true;
+
+        fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: { 'X-Requested-With': 'XMLHttpRequest' },
+        })
+            .then(async function (response) {
+                let data;
+                try {
+                    data = await response.json();
+                } catch (e) {
+                    throw new Error('Respuesta inesperada del servidor (' + response.status + ').');
+                }
+
+                if (response.ok && data.status === 'success') {
+                    mostrarToast('success', data.message);
+                    setTimeout(function () {
+                        window.location.href = data.redirect;
+                    }, 600);
+                    return;
+                }
+
+                if (data.errors) {
+                    pintarErrores(form, data.errors);
+                }
+                mostrarToast('error', data.message || 'No fue posible guardar el libro.');
+                boton.disabled = false;
+            })
+            .catch(function (error) {
+                mostrarToast('error', error.message || 'Error de conexión al guardar.');
+                boton.disabled = false;
+            });
+    });
+</script>
+{% endblock content %}
