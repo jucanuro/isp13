@@ -239,3 +239,60 @@ class MenuItem(models.Model):
             raise ValidationError(
                 {"url": "Un destino 'Enlace / URL' necesita una URL."}
             )
+
+
+class MiembroEquipo(models.Model):
+    AREA_CHOICES = [
+        ("directiva", "Directiva"),
+        ("docente", "Docente"),
+        ("administrativo", "Administrativo"),
+    ]
+
+    nombre_completo = models.CharField(max_length=200, verbose_name="Nombre completo")
+    grado_academico = models.CharField(
+        max_length=20,
+        blank=True,
+        verbose_name="Grado académico",
+        help_text='Opcional. Ej. "Mg.", "Dr.", "Lic.".',
+    )
+    cargo = models.CharField(
+        max_length=150,
+        verbose_name="Cargo",
+        help_text='Ej. "Directora General", "Docente de Matemática".',
+    )
+    area = models.CharField(max_length=20, choices=AREA_CHOICES, verbose_name="Área")
+    foto = models.ImageField(
+        upload_to="equipo/",
+        blank=True,
+        null=True,
+        verbose_name="Foto (opcional)",
+        help_text="Si no se sube, se muestran las iniciales del nombre.",
+    )
+    orden = models.PositiveIntegerField(default=0, verbose_name="Orden")
+    activo = models.BooleanField(default=True, verbose_name="Activo")
+
+    class Meta:
+        verbose_name = "Miembro del equipo"
+        verbose_name_plural = "Miembros del equipo"
+        ordering = ["area", "orden", "nombre_completo"]
+
+    def __str__(self):
+        return self.nombre_con_grado
+
+    @property
+    def iniciales(self):
+        # Primer nombre + primer apellido ("Oscar Orlando Soriano Palomino" → "OS").
+        # Se asume la convención peruana de dos apellidos al final del nombre.
+        palabras = self.nombre_completo.split()
+        if not palabras:
+            return ""
+        if len(palabras) == 1:
+            return palabras[0][0].upper()
+        apellido = palabras[-2] if len(palabras) >= 3 else palabras[-1]
+        return (palabras[0][0] + apellido[0]).upper()
+
+    @property
+    def nombre_con_grado(self):
+        if self.grado_academico:
+            return f"{self.grado_academico} {self.nombre_completo}"
+        return self.nombre_completo

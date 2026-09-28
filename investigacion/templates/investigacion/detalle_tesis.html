@@ -32,11 +32,6 @@
         grid-template-columns: minmax(150px, 220px) minmax(0, 1fr);
         gap: 1.5rem;
         padding: 1rem 0;
-        border-bottom: 1px solid #f1f5f9;
-    }
-
-    .metadata-row:last-child {
-        border-bottom: 0;
     }
 
     .document-panel {
@@ -61,7 +56,7 @@
     }
 </style>
 
-<main class="repo-sans min-h-screen bg-crema-100">
+<main class="repo-sans min-h-screen bg-white">
     <section class="relative overflow-hidden bg-slate-950">
         <div class="absolute inset-0 opacity-20">
             <div class="absolute -top-24 -right-20 w-96 h-96 rounded-full bg-blue-500 blur-3xl"></div>
@@ -129,8 +124,8 @@
     <section class="max-w-[1400px] mx-auto px-5 sm:px-8 lg:px-12 -mt-12 pb-20 relative z-10">
         <div class="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_340px] gap-8">
 
-            <article class="bg-white rounded-[2rem] border border-crema-300 shadow-[0_1px_2px_rgba(90,74,48,0.04),0_10px_30px_-12px_rgba(90,74,48,0.16)] overflow-hidden">
-                <header class="px-6 sm:px-10 py-7 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <article class="bg-white rounded-[2rem] border border-[#ECE7DC] shadow-[0_1px_2px_rgba(90,74,48,0.03),0_8px_24px_-14px_rgba(90,74,48,0.14)] overflow-hidden">
+                <header class="px-6 sm:px-10 py-7 border-b border-[#ECE7DC] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                     <div>
                         <p class="text-[8px] font-black uppercase tracking-[0.3em] text-blue-600 mb-2">
                             Ficha bibliográfica
@@ -148,7 +143,7 @@
                 </header>
 
                 <div class="px-6 sm:px-10 py-3">
-                    <div class="metadata-row">
+                    <div class="metadata-row border-b border-[#ECE7DC] last:border-b-0">
                         <div class="text-[9px] font-black uppercase tracking-[0.18em] text-slate-400">
                             Título
                         </div>
@@ -158,7 +153,7 @@
                         </div>
                     </div>
 
-                    <div class="metadata-row">
+                    <div class="metadata-row border-b border-[#ECE7DC] last:border-b-0">
                         <div class="text-[9px] font-black uppercase tracking-[0.18em] text-slate-400">
                             Autoría
                         </div>
@@ -190,7 +185,7 @@
                         </div>
                     </div>
 
-                    <div class="metadata-row">
+                    <div class="metadata-row border-b border-[#ECE7DC] last:border-b-0">
                         <div class="text-[9px] font-black uppercase tracking-[0.18em] text-slate-400">
                             Asesoría
                         </div>
@@ -223,7 +218,7 @@
                     </div>
 
                     {% if tesis.jurados.all %}
-                        <div class="metadata-row">
+                        <div class="metadata-row border-b border-[#ECE7DC] last:border-b-0">
                             <div class="text-[9px] font-black uppercase tracking-[0.18em] text-slate-400">
                                 Jurado
                             </div>
@@ -238,7 +233,7 @@
                         </div>
                     {% endif %}
 
-                    <div class="metadata-row">
+                    <div class="metadata-row border-b border-[#ECE7DC] last:border-b-0">
                         <div class="text-[9px] font-black uppercase tracking-[0.18em] text-slate-400">
                             Resumen
                         </div>
@@ -248,7 +243,7 @@
                         </div>
                     </div>
 
-                    <div class="metadata-row">
+                    <div class="metadata-row border-b border-[#ECE7DC] last:border-b-0">
                         <div class="text-[9px] font-black uppercase tracking-[0.18em] text-slate-400">
                             Palabras clave
                         </div>
@@ -266,7 +261,7 @@
                         </div>
                     </div>
 
-                    <div class="metadata-row">
+                    <div class="metadata-row border-b border-[#ECE7DC] last:border-b-0">
                         <div class="text-[9px] font-black uppercase tracking-[0.18em] text-slate-400">
                             Tipo de documento
                         </div>
@@ -276,7 +271,7 @@
                         </div>
                     </div>
 
-                    <div class="metadata-row">
+                    <div class="metadata-row border-b border-[#ECE7DC] last:border-b-0">
                         <div class="text-[9px] font-black uppercase tracking-[0.18em] text-slate-400">
                             Grado o título
                         </div>
@@ -286,7 +281,7 @@
                         </div>
                     </div>
 
-                    <div class="metadata-row">
+                    <div class="metadata-row border-b border-[#ECE7DC] last:border-b-0">
                         <div class="text-[9px] font-black uppercase tracking-[0.18em] text-slate-400">
                             Programa académico
                         </div>
@@ -297,7 +292,7 @@
                     </div>
 
                     {% if tesis.disciplina_academica %}
-                        <div class="metadata-row">
+                        <div class="metadata-row border-b border-[#ECE7DC] last:border-b-0">
                             <div class="text-[9px] font-black uppercase tracking-[0.18em] text-slate-400">
                                 Disciplina
                             </div>
@@ -308,7 +303,7 @@
                         </div>
                     {% endif %}
 
-                    <div class="metadata-row">
+                    <div class="metadata-row border-b border-[#ECE7DC] last:border-b-0">
                         <div class="text-[9px] font-black uppercase tracking-[0.18em] text-slate-400">
                             Clasificación OCDE
                         </div>
@@ -331,7 +326,7 @@
                         </div>
                     </div>
 
-                    <div class="metadata-row">
+                    <div class="metadata-row border-b border-[#ECE7DC] last:border-b-0">
                         <div class="text-[9px] font-black uppercase tracking-[0.18em] text-slate-400">
                             Institución
                         </div>
@@ -347,7 +342,7 @@
                         </div>
                     </div>
 
-                    <div class="metadata-row">
+                    <div class="metadata-row border-b border-[#ECE7DC] last:border-b-0">
                         <div class="text-[9px] font-black uppercase tracking-[0.18em] text-slate-400">
                             Fecha de publicación
                         </div>
@@ -361,7 +356,7 @@
                         </div>
                     </div>
 
-                    <div class="metadata-row">
+                    <div class="metadata-row border-b border-[#ECE7DC] last:border-b-0">
                         <div class="text-[9px] font-black uppercase tracking-[0.18em] text-slate-400">
                             Idioma
                         </div>
@@ -371,7 +366,7 @@
                         </div>
                     </div>
 
-                    <div class="metadata-row">
+                    <div class="metadata-row border-b border-[#ECE7DC] last:border-b-0">
                         <div class="text-[9px] font-black uppercase tracking-[0.18em] text-slate-400">
                             Versión
                         </div>
@@ -381,7 +376,7 @@
                         </div>
                     </div>
 
-                    <div class="metadata-row">
+                    <div class="metadata-row border-b border-[#ECE7DC] last:border-b-0">
                         <div class="text-[9px] font-black uppercase tracking-[0.18em] text-slate-400">
                             Derechos de acceso
                         </div>
@@ -397,7 +392,7 @@
                         </div>
                     </div>
 
-                    <div class="metadata-row">
+                    <div class="metadata-row border-b border-[#ECE7DC] last:border-b-0">
                         <div class="text-[9px] font-black uppercase tracking-[0.18em] text-slate-400">
                             Licencia
                         </div>
@@ -420,7 +415,7 @@
                         </div>
                     </div>
 
-                    <div class="metadata-row">
+                    <div class="metadata-row border-b border-[#ECE7DC] last:border-b-0">
                         <div class="text-[9px] font-black uppercase tracking-[0.18em] text-slate-400">
                             Identificador persistente
                         </div>
@@ -491,7 +486,7 @@
                     {% endif %}
                 </div>
 
-                <div class="bg-white rounded-[2rem] p-7 border border-crema-300 shadow-[0_1px_2px_rgba(90,74,48,0.04),0_10px_30px_-12px_rgba(90,74,48,0.16)]">
+                <div class="bg-white rounded-[2rem] p-7 border border-[#ECE7DC] shadow-[0_1px_2px_rgba(90,74,48,0.03),0_8px_24px_-14px_rgba(90,74,48,0.14)]">
                     <p class="text-[8px] font-black uppercase tracking-[0.25em] text-slate-400 mb-5">
                         Interoperabilidad
                     </p>
@@ -538,7 +533,7 @@
                 </div>
 
                 {% if tesis.checksum_sha256 %}
-                    <div class="bg-white rounded-[2rem] p-7 border border-crema-300">
+                    <div class="bg-white rounded-[2rem] p-7 border border-[#ECE7DC]">
                         <p class="text-[8px] font-black uppercase tracking-[0.25em] text-slate-400 mb-3">
                             Integridad digital SHA-256
                         </p>
@@ -556,14 +551,14 @@
 
 {% block footer %}
 <footer class="w-full bg-crema-100 repo-sans">
-    <div class="border-t border-crema-300 py-8 px-5">
+    <div class="py-8 px-5">
         <div class="max-w-[1400px] mx-auto flex flex-col md:flex-row items-center justify-between gap-5">
             <div class="text-center md:text-left">
                 <p class="text-[10px] font-black uppercase tracking-widest text-slate-800">
                     Repositorio Institucional IESPP “13 de Julio de 1882”
                 </p>
 
-                <p class="mt-1 text-[9px] text-slate-500">
+                <p class="mt-1 text-[9px] text-slate-600">
                     San Pablo, Cajamarca, Perú
                 </p>
             </div>

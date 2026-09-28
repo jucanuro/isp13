@@ -1,4 +1,4 @@
-<div class="recorte-imagen-widget" data-aspecto="2/1">
+<div class="recorte-imagen-widget" data-aspecto="{{ widget.aspecto }}">
     {% if widget.is_initial %}<p class="file-upload">{{ widget.initial_text }}: <a href="{{ widget.value.url }}">{{ widget.value }}</a>{% if not widget.required %}
     <span class="clearable-file-input">
     <input type="checkbox" name="{{ widget.checkbox_name }}" id="{{ widget.checkbox_id }}"{% if widget.attrs.disabled %} disabled{% endif %}>
@@ -7,7 +7,7 @@
     <input type="{{ widget.type }}" name="{{ widget.name }}"{% include "django/forms/widgets/attrs.html" %}>{% if widget.is_initial %}</p>{% endif %}
 
     <p class="help" style="margin-top: 6px;">
-        Al elegir una imagen nueva se abre un recorte fijo en proporción 2:1. Ajusta el encuadre y presiona "Aplicar recorte". Tamaño recomendado: 1600x800 píxeles.
+        Al elegir una imagen nueva se abre un recorte fijo en proporción {{ widget.etiqueta_aspecto }}. Ajusta el encuadre y presiona "Aplicar recorte". Tamaño recomendado: {{ widget.ancho_salida }}x{{ widget.alto_salida }} píxeles.
     </p>
 
     <style>

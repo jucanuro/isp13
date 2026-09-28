@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
 
 from investigacion.models import Tesis
-from .models import ComunicadoModal, ContenidoModal, DocumentoGestion
+from .models import ComunicadoModal, ContenidoModal, DocumentoGestion, MiembroEquipo
 
 import requests
 import re
@@ -171,11 +171,14 @@ def home(request):
 
     comunicado = ComunicadoModal.objects.filter(activo=True).first()
 
+    equipo = MiembroEquipo.objects.filter(activo=True)
+
     return render(request, 'index.html', {
         'tesis_locales': tesis_locales,
         'mostrar_boton_ver_mas': True,
         'template_padre': 'investigacion/vacio.html',
         'comunicado': comunicado,
+        'equipo': equipo,
     })
 
 

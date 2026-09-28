@@ -5,6 +5,10 @@
 {% block verticalbar %}{% endblock %}
 
 {% block content %}
+{% comment %}
+En el home (ocultar_footer_repo) esta sección es la banda crema entre programas y equipo.
+Como página propia (/repositorios/) va sobre blanco y la banda crema la pone su footer.
+{% endcomment %}
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Plus+Jakarta+Sans:wght@300;400;700&family=Playfair+Display:ital,wght@0,900;1,900&display=swap" rel="stylesheet">
 
 <style>
@@ -13,24 +17,22 @@
     .font-thesis-sans { font-family: 'Plus Jakarta Sans', sans-serif; }
 
     /* Contenedor Estilo Repositorio */
+    /* Borde y sombra van en el markup: dependen de la banda (crema en el home, blanca en /repositorios/). */
     .repo-container {
         background: white;
-        border: 1px solid #E3DCCC; /* crema-300 */
         border-radius: 12px;
-        box-shadow: 0 1px 2px rgba(90,74,48,0.04), 0 10px 30px -12px rgba(90,74,48,0.16);
         overflow: hidden;
     }
 
     .thesis-item {
         transition: all 0.3s ease;
-        border-bottom: 1px solid #f1f5f9;
         display: flex; gap: 1.5rem; padding: 2rem;
     }
-    .thesis-item:hover { background: #f8fafc; transform: translateX(5px); }
+    .thesis-item:hover { transform: translateX(5px); }
 
     .thesis-thumbnail {
         width: 100px; height: 135px; flex-shrink: 0;
-        background: #ffffff; border: 1px solid #e2e8f0;
+        background: #ffffff;
         box-shadow: 4px 4px 12px rgba(0,0,0,0.06);
         display: flex; align-items: center; justify-content: center;
         position: relative; transition: all 0.3s ease;
@@ -72,7 +74,7 @@
     .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 </style>
 
-<section id="investigacion" class="relative pt-20 pb-10 bg-crema-100 font-thesis-sans">
+<section id="investigacion" class="relative pt-20 pb-10 {% if ocultar_footer_repo %}bg-crema-100{% else %}bg-white{% endif %} font-thesis-sans">
     <div class="container mx-auto px-4 lg:px-4 relative z-10">
         <div class="mb-12 max-w-full mx-auto flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div>
@@ -85,7 +87,7 @@
             <form method="GET" action="{% url 'investigacion:repositorio_publico' %}" class="flex flex-col md:flex-row gap-3 w-full md:w-auto">
                 <div class="flex shadow-sm w-full md:w-96">
                     <input type="text" name="q" value="{{ query|default:'' }}" placeholder="Buscar tesis..."
-                           class="border border-crema-300 flex-grow py-3 px-5 text-sm rounded-l-lg focus:outline-none focus:border-blue-500">
+                           class="border {% if ocultar_footer_repo %}border-crema-300{% else %}border-[#ECE7DC]{% endif %} bg-white flex-grow py-3 px-5 text-sm rounded-l-lg focus:outline-none focus:border-blue-500">
                     <button type="submit" class="bg-[#3488ab] text-white px-5 rounded-r-lg hover:bg-blue-800 transition-colors">
                         <i class="fas fa-search"></i>
                     </button>
@@ -93,7 +95,7 @@
 
                 {% if not mostrar_boton_ver_mas %}
                 <select name="programa" onchange="this.form.submit()"
-                        class="border border-crema-300 rounded-lg py-3 px-4 text-sm text-slate-600 focus:outline-none focus:border-blue-500">
+                        class="border {% if ocultar_footer_repo %}border-crema-300{% else %}border-[#ECE7DC]{% endif %} bg-white rounded-lg py-3 px-4 text-sm text-slate-600 focus:outline-none focus:border-blue-500">
                     <option value="">Todos los programas</option>
                     {% for programa in programas_disponibles %}
                     <option value="{{ programa }}" {% if programa == programa_filtro %}selected{% endif %}>{{ programa }}</option>
@@ -101,7 +103,7 @@
                 </select>
 
                 <select name="anio" onchange="this.form.submit()"
-                        class="border border-crema-300 rounded-lg py-3 px-4 text-sm text-slate-600 focus:outline-none focus:border-blue-500">
+                        class="border {% if ocultar_footer_repo %}border-crema-300{% else %}border-[#ECE7DC]{% endif %} bg-white rounded-lg py-3 px-4 text-sm text-slate-600 focus:outline-none focus:border-blue-500">
                     <option value="">Todos los años</option>
                     {% for anio in anios_disponibles %}
                     <option value="{{ anio }}" {% if anio|stringformat:"s" == anio_filtro %}selected{% endif %}>{{ anio }}</option>
@@ -118,9 +120,9 @@
             </form>
         </div>
 
-        <div class="max-w-full mx-auto repo-container mb-20">
-            <div class="bg-slate-50/80 px-8 py-4 border-b border-slate-100 flex justify-between items-center">
-                <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Publicaciones Recientes</h4>
+        <div class="max-w-full mx-auto repo-container mb-20 {% if ocultar_footer_repo %}shadow-[0_1px_2px_rgba(90,74,48,0.04),0_10px_30px_-12px_rgba(90,74,48,0.18)]{% else %}border border-[#ECE7DC] shadow-[0_1px_2px_rgba(90,74,48,0.03),0_8px_24px_-14px_rgba(90,74,48,0.14)]{% endif %}">
+            <div class="bg-crema-50 px-8 py-4 border-b border-crema-200 flex justify-between items-center">
+                <h4 class="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">Publicaciones Recientes</h4>
                 {% if mostrar_boton_ver_mas %}
                 <span class="text-[9px] font-bold text-blue-600 bg-blue-50 px-3 py-1 rounded-full">Mostrando últimos registros</span>
                 {% else %}
@@ -128,10 +130,10 @@
                 {% endif %}
             </div>
 
-            <div class="divide-y divide-slate-100">
+            <div class="divide-y divide-[#ECE7DC]">
                 {% for t in tesis_locales %}
-                <article class="thesis-item group">
-                    <div class="thesis-thumbnail">
+                <article class="thesis-item group hover:bg-crema-50">
+                    <div class="thesis-thumbnail border border-[#ECE7DC]">
                         <div class="flex flex-col items-center gap-1">
                             <i class="fas fa-graduation-cap text-2xl text-slate-300"></i>
                             <i class="fas fa-book text-3xl text-slate-200"></i>
@@ -182,17 +184,17 @@
             </div>
 
            {% if mostrar_boton_ver_mas %}
-           <div class="p-12 bg-white flex flex-col items-center border-t border-slate-50">
+           <div class="p-12 bg-white flex flex-col items-center border-t border-[#ECE7DC]">
                 <a href="{% url 'investigacion:repositorio_publico' %}"
                 class="btn-more-research">
                     Explorar Repositorio Completo <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
             {% elif tesis_locales.paginator.num_pages > 1 %}
-            <div class="p-8 bg-white flex items-center justify-center gap-2 border-t border-slate-50">
+            <div class="p-8 bg-white flex items-center justify-center gap-2 border-t border-[#ECE7DC]">
                 {% if tesis_locales.has_previous %}
                 <a href="?q={{ query|urlencode }}&programa={{ programa_filtro|urlencode }}&anio={{ anio_filtro|urlencode }}&page={{ tesis_locales.previous_page_number }}"
-                   class="w-10 h-10 flex items-center justify-center rounded-lg border border-slate-200 text-slate-500 hover:bg-slate-900 hover:text-white transition-all">
+                   class="w-10 h-10 flex items-center justify-center rounded-lg border border-[#ECE7DC] text-slate-500 hover:bg-slate-900 hover:text-white transition-all">
                     <i class="fas fa-chevron-left text-xs"></i>
                 </a>
                 {% endif %}
@@ -203,7 +205,7 @@
                 {% else %}
                 <a href="?q={{ query|urlencode }}&programa={{ programa_filtro|urlencode }}&anio={{ anio_filtro|urlencode }}&page={{ numero }}"
                    class="w-10 h-10 flex items-center justify-center rounded-lg text-xs font-black transition-all
-                          {% if numero == tesis_locales.number %}bg-blue-900 text-white{% else %}border border-slate-200 text-slate-500 hover:bg-slate-100{% endif %}">
+                          {% if numero == tesis_locales.number %}bg-blue-900 text-white{% else %}border border-[#ECE7DC] text-slate-500 hover:bg-crema-100{% endif %}">
                     {{ numero }}
                 </a>
                 {% endif %}
@@ -211,7 +213,7 @@
 
                 {% if tesis_locales.has_next %}
                 <a href="?q={{ query|urlencode }}&programa={{ programa_filtro|urlencode }}&anio={{ anio_filtro|urlencode }}&page={{ tesis_locales.next_page_number }}"
-                   class="w-10 h-10 flex items-center justify-center rounded-lg border border-slate-200 text-slate-500 hover:bg-slate-900 hover:text-white transition-all">
+                   class="w-10 h-10 flex items-center justify-center rounded-lg border border-[#ECE7DC] text-slate-500 hover:bg-slate-900 hover:text-white transition-all">
                     <i class="fas fa-chevron-right text-xs"></i>
                 </a>
                 {% endif %}
@@ -224,7 +226,7 @@
 
 {% block footer %}
 <footer class="w-full bg-crema-100 font-thesis-sans">
-    <div class="bg-crema-200 py-12 px-8 border-t border-crema-300">
+    <div class="py-12 px-8">
         <div class="max-w-[1500px] mx-auto flex flex-col md:flex-row items-center justify-between gap-10">
             <div class="text-center md:text-left">
                 <p class="text-slate-800 font-black text-[11px] uppercase tracking-widest mb-2">Repositorio Institucional EESPP "13 de Julio"</p>
