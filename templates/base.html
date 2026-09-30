@@ -127,7 +127,7 @@
 
 {% block verticalbar %}
 <div id="stickyVerticalBarLeft" class="fixed left-4 top-1/2 -translate-y-1/2 flex flex-col items-center gap-4 z-[10000] opacity-0 -translate-x-20 pointer-events-none transition-all duration-500 ease-out">
-    <a href="{% url 'blog:listar_publicaciones' %}" class="w-12 h-12 bg-white rounded-2xl shadow-2xl flex items-center justify-center text-blue-900 hover:bg-blue-900 hover:text-white transition-all group relative">
+    <a href="{% url 'blog:listar_publicaciones' %}" class="w-12 h-12 bg-white rounded-2xl ring-1 ring-slate-900/10 shadow-[0_2px_8px_rgba(15,23,42,0.08),0_8px_24px_-8px_rgba(15,23,42,0.18)] flex items-center justify-center text-blue-900 hover:bg-blue-900 hover:text-white transition-all duration-300 motion-reduce:transition-none [.sobre-oscuro_&]:ring-white/25 [.sobre-claro_&]:ring-blue-900/20 [.sobre-claro_&]:bg-blue-900 [.sobre-claro_&]:text-white [.sobre-claro_&]:hover:bg-blue-800 [.sobre-claro_&]:hover:text-white group relative">
         <i class="fas fa-feather-pointed text-lg"></i>
         <span class="absolute left-14 bg-blue-900 text-white text-[9px] font-black px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity uppercase tracking-widest shadow-xl pointer-events-none">Blog</span>
     </a>
@@ -135,7 +135,7 @@
     <a href="{% url 'convocatoria:listar_convocatorias' %}"
        title="Convocatorias{% if plazas_conteo %}: {{ plazas_conteo }} abierta{{ plazas_conteo|pluralize }}{% endif %}"
        aria-label="Ver convocatorias{% if plazas_conteo %} ({{ plazas_conteo }} abierta{{ plazas_conteo|pluralize }}){% endif %}"
-       class="w-12 h-12 bg-white rounded-2xl shadow-2xl flex items-center justify-center text-blue-900 hover:bg-blue-900 hover:text-white transition-all group relative">
+       class="w-12 h-12 bg-white rounded-2xl ring-1 ring-slate-900/10 shadow-[0_2px_8px_rgba(15,23,42,0.08),0_8px_24px_-8px_rgba(15,23,42,0.18)] flex items-center justify-center text-blue-900 hover:bg-blue-900 hover:text-white transition-all duration-300 motion-reduce:transition-none [.sobre-oscuro_&]:ring-white/25 [.sobre-claro_&]:ring-blue-900/20 [.sobre-claro_&]:bg-blue-900 [.sobre-claro_&]:text-white [.sobre-claro_&]:hover:bg-blue-800 [.sobre-claro_&]:hover:text-white group relative">
         <i class="fa-solid fa-bullhorn text-lg" aria-hidden="true"></i>
         {% if plazas_conteo > 0 %}
         <span class="absolute -top-1.5 -right-1.5 min-w-[1.25rem] h-5 px-1 flex items-center justify-center rounded-full bg-amber-400 text-blue-900 text-[10px] font-black leading-none ring-2 ring-white" aria-hidden="true">{{ plazas_conteo }}</span>
@@ -144,12 +144,12 @@
     </a>
 
     <button onclick="document.getElementById('modalSoporte').classList.remove('hidden')" 
-            class="w-12 h-12 bg-white rounded-2xl shadow-2xl flex items-center justify-center text-emerald-600 hover:bg-emerald-600 hover:text-white transition-all group relative border-2 border-emerald-50">
+            class="w-12 h-12 bg-white rounded-2xl ring-1 ring-slate-900/10 shadow-[0_2px_8px_rgba(15,23,42,0.08),0_8px_24px_-8px_rgba(15,23,42,0.18)] flex items-center justify-center text-emerald-600 hover:bg-emerald-600 hover:text-white transition-all duration-300 motion-reduce:transition-none [.sobre-oscuro_&]:ring-white/25 [.sobre-claro_&]:ring-blue-900/20 [.sobre-claro_&]:bg-blue-900 [.sobre-claro_&]:text-emerald-400 [.sobre-claro_&]:hover:bg-emerald-600 [.sobre-claro_&]:hover:text-white group relative">
         <i class="fa-solid fa-headset text-lg"></i>
         <span class="absolute left-14 bg-emerald-600 text-white text-[9px] font-black px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity uppercase tracking-widest shadow-xl pointer-events-none text-nowrap">Asistencia</span>
     </button>
 
-    <div class="flex flex-col gap-3 p-2 bg-blue-900/90 backdrop-blur-md rounded-full shadow-2xl border border-white/20">
+    <div class="flex flex-col gap-3 p-2 bg-blue-900/90 backdrop-blur-md rounded-full ring-1 ring-slate-900/10 shadow-[0_2px_8px_rgba(15,23,42,0.08),0_8px_24px_-8px_rgba(15,23,42,0.18)] border border-white/20">
         <a href="https://www.facebook.com/profile.php?id=61581385856917&locale=es_LA" target="_blank" rel="noopener noreferrer" class="w-8 h-8 flex items-center justify-center text-white/80 hover:text-amber-400 transition-colors">
             <i class="fab fa-facebook-f text-sm"></i>
         </a>
@@ -307,6 +307,44 @@
             btn.innerHTML = 'Procesar Solicitud <i class="fa-solid fa-paper-plane text-[10px] group-hover:translate-x-2 transition-transform"></i>';
         });
     });
+</script>
+
+<script>
+    // Invierte las barras flotantes según el tono (data-tono) de la sección que cruza el centro de la pantalla
+    (function() {
+        const barras = ['stickyVerticalBarLeft', 'barraFlotanteDerecha']
+            .map(id => document.getElementById(id))
+            .filter(Boolean);
+        const secciones = Array.from(document.querySelectorAll('[data-tono]'));
+        if (!barras.length || !secciones.length) return;
+
+        function aplicarTono(tono) {
+            barras.forEach(barra => {
+                barra.classList.toggle('sobre-oscuro', tono === 'oscuro');
+                barra.classList.toggle('sobre-claro', tono === 'claro');
+            });
+        }
+
+        // Estado inicial síncrono: evita el parpadeo al recargar a media página
+        const centro = window.innerHeight / 2;
+        const inicial = secciones.filter(s => {
+            const r = s.getBoundingClientRect();
+            return r.top <= centro && r.bottom >= centro;
+        }).pop();
+        if (inicial) aplicarTono(inicial.dataset.tono);
+
+        // Si dos se solapan (el footer sube con -mt-24), manda la última en el DOM, que es la que se pinta encima
+        const visibles = new Set();
+        const observador = new IntersectionObserver(entradas => {
+            entradas.forEach(e => e.isIntersecting ? visibles.add(e.target) : visibles.delete(e.target));
+            const actual = secciones.filter(s => visibles.has(s)).pop();
+            if (actual) aplicarTono(actual.dataset.tono);
+        }, {
+            rootMargin: '-50% 0px -50% 0px',
+            threshold: 0
+        });
+        secciones.forEach(s => observador.observe(s));
+    })();
 </script>
 </body>
 </html>
