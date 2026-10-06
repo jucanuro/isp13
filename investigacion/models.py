@@ -350,7 +350,7 @@ class Tesis(models.Model):
     institucion_nombre = models.CharField(
         max_length=255,
         default=(
-            'INSTITUTO DE EDUCACIÓN SUPERIOR PEDAGÓGICO '
+            'ESCUELA DE EDUCACIÓN SUPERIOR PEDAGÓGICA PÚBLICA '
             '"13 DE JULIO DE 1882"'
         ),
         verbose_name="Entidad responsable (dc.publisher)",
@@ -370,7 +370,7 @@ class Tesis(models.Model):
         max_length=255,
         blank=True,
         default=(
-            'INSTITUTO DE EDUCACIÓN SUPERIOR PEDAGÓGICO '
+            'ESCUELA DE EDUCACIÓN SUPERIOR PEDAGÓGICA PÚBLICA '
             '"13 DE JULIO DE 1882"'
         ),
     )

@@ -52,7 +52,7 @@
     }
 </style>
 
-<section data-tono="oscuro" id="inicio" class="relative min-h-screen w-full flex items-center justify-start px-8 lg:px-24 overflow-hidden bg-crema-100">
+<section data-tono="oscuro" id="inicio" class="relative min-h-screen w-full flex items-center justify-start px-8 lg:px-24 pt-16 pb-56 overflow-hidden bg-crema-100">
     
     <div class="absolute inset-0 z-0 diploma-cut-base shadow-2xl overflow-hidden bg-[#0f172a]">
         <video autoplay muted loop playsinline class="video-background">
@@ -67,18 +67,47 @@
         <div class="light-beam-2 z-30"></div>
     </div>
 
-    <div class="relative z-[50] text-left max-w-2xl">
-        <h2 class="text-amber-400 font-black text-xs lg:text-sm uppercase tracking-[0.4em] mb-4 drop-shadow-md">Admisión Institucional 2026</h2>
-        <h1 class="text-white font-black text-4xl lg:text-7xl uppercase tracking-tighter leading-none mb-6 drop-shadow-2xl">
-            Forjando el <br><span class="text-blue-400 italic font-light">Futuro</span> Pedagógico
-        </h1>
-        <p class="text-white/80 text-sm lg:text-lg font-medium mb-10 max-w-lg leading-relaxed drop-shadow-lg">
-            Inicia tu camino en la docencia con una formación de excelencia. Inscripciones abiertas para el proceso de admisión 2026.
+    <div class="relative z-[50] text-left max-w-2xl xl:max-w-4xl">
+        <p class="inline-flex items-center gap-3 mb-6 py-1.5 pl-1.5 pr-4 rounded-full border border-amber-400/40 bg-blue-950/50 backdrop-blur-sm">
+            <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-amber-400 text-blue-950" aria-hidden="true">
+                <i class="fas fa-check text-[11px]"></i>
+            </span>
+            <span class="text-amber-300 font-black text-[10px] uppercase tracking-[0.2em] leading-tight">Licenciada por el MINEDU</span>
         </p>
-        <a href="#" class="inline-flex items-center gap-4 bg-amber-500 hover:bg-amber-400 text-blue-950 px-10 py-5 rounded-2xl font-black uppercase text-[10px] tracking-widest transition-all shadow-[0_20px_50px_-10px_rgba(245,158,11,0.5)] active:scale-95 group">
-            Empezar Admisión
-            <i class="fas fa-arrow-right group-hover:translate-x-2 transition-transform"></i>
-        </a>
+        <p class="text-amber-400 font-black text-xs lg:text-sm uppercase tracking-[0.2em] sm:tracking-[0.3em] lg:tracking-[0.4em] mb-4 drop-shadow-md">Licenciamiento otorgado · <span class="whitespace-nowrap">R.M. N° 588-2026-MINEDU</span></p>
+        <h1 class="text-white font-black text-2xl min-[380px]:text-[1.75rem] sm:text-5xl lg:text-6xl xl:text-7xl uppercase tracking-tighter leading-none mb-6 drop-shadow-2xl">
+            Formación docente<br><span class="text-blue-400 italic font-light">Licenciada</span><br>por el MINEDU
+        </h1>
+        <p class="text-white/80 text-sm lg:text-lg font-medium mb-8 max-w-lg leading-relaxed drop-shadow-lg">
+            El Ministerio de Educación certificó que cumplimos las Condiciones Básicas de Calidad establecidas por ley. Cinco programas de estudios con licencia vigente y 144 años formando a los maestros que el Perú necesita.
+        </p>
+        <dl class="grid grid-cols-3 sm:flex sm:w-fit divide-x divide-white/20 mb-10 drop-shadow-lg">
+            <div class="flex flex-col-reverse pr-3 sm:pr-8">
+                <dt class="mt-2 text-white/60 font-bold text-[9px] sm:text-[10px] uppercase tracking-[0.2em] leading-snug">Años de historia</dt>
+                <dd class="font-serif font-black text-amber-400 text-3xl sm:text-5xl leading-none tabular-nums">144</dd>
+            </div>
+            <div class="flex flex-col-reverse px-3 sm:px-8">
+                <dt class="mt-2 text-white/60 font-bold text-[9px] sm:text-[10px] uppercase tracking-[0.2em] leading-snug">Programas licenciados</dt>
+                <dd class="font-serif font-black text-amber-400 text-3xl sm:text-5xl leading-none tabular-nums">5</dd>
+            </div>
+            <div class="flex flex-col-reverse pl-3 sm:pl-8">
+                <dt class="mt-2 text-white/60 font-bold text-[9px] sm:text-[10px] uppercase tracking-[0.2em] leading-snug">Años de vigencia</dt>
+                <dd class="font-serif font-black text-amber-400 text-3xl sm:text-5xl leading-none tabular-nums">6</dd>
+            </div>
+        </dl>
+        <div class="flex flex-col-reverse sm:flex-row sm:items-center gap-3 sm:gap-4">
+            <a href="{% static 'docs/RM-588-2026-MINEDU-licenciamiento.pdf' %}"
+               target="_blank" rel="noopener noreferrer"
+               aria-label="Resolución de licenciamiento, R.M. N° 588-2026-MINEDU (PDF, se abre en una pestaña nueva)"
+               class="inline-flex items-center justify-center gap-3 border border-white/40 bg-white/5 hover:bg-white/15 hover:border-white/70 text-white px-6 sm:px-8 py-5 rounded-2xl font-black uppercase text-[10px] tracking-widest backdrop-blur-sm transition-all active:scale-95">
+                <i class="fas fa-file-pdf text-amber-300" aria-hidden="true"></i>
+                Resolución de licenciamiento
+            </a>
+            <a href="#" class="inline-flex items-center justify-center gap-4 border border-transparent bg-amber-500 hover:bg-amber-400 text-blue-950 px-10 py-5 rounded-2xl font-black uppercase text-[10px] tracking-widest transition-all shadow-[0_20px_50px_-10px_rgba(245,158,11,0.5)] active:scale-95 group">
+                Empezar Admisión
+                <i class="fas fa-arrow-right group-hover:translate-x-2 transition-transform"></i>
+            </a>
+        </div>
     </div>
 
     <div class="absolute inset-0 z-40 pointer-events-none">

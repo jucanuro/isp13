@@ -24,7 +24,7 @@ OAI_DC_SCHEMA = (
 )
 
 REPOSITORY_NAME = (
-    "Repositorio Institucional IESPP 13 de Julio de 1882"
+    'Repositorio Institucional EESPP "13 de Julio de 1882"'
 )
 
 ADMIN_EMAIL = "repositorio@13dejuliode1882sp.edu.pe"

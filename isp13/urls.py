@@ -6,7 +6,7 @@ from django.conf import settings
 from django.views.static import serve
 from convocatorias.views import home
 
-admin.site.site_header = 'IESPP "13 de Julio de 1882"'
+admin.site.site_header = 'EESPP "13 de Julio de 1882"'
 admin.site.site_title = "Panel de administración"
 admin.site.index_title = "Gestión institucional"
 

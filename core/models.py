@@ -94,7 +94,7 @@ class ComunicadoModal(models.Model):
     subtitulo = models.CharField(
         max_length=200,
         blank=True,
-        default='IESPP "13 de Julio de 1882"',
+        default='Escuela de Educación Superior Pedagógica Pública "13 de Julio de 1882"',
         verbose_name="Subtítulo",
     )
     imagen = models.ImageField(

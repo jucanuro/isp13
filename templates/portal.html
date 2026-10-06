@@ -122,7 +122,7 @@
 
                 {% for item in articulo_42_items %}
 
-                    {% if item.en_proceso %}
+                    {% if item.licenciamiento %}
 
                         <button type="button"
                         onclick="document.getElementById('modalLicenciamiento').classList.remove('hidden')"
@@ -138,8 +138,8 @@
                                         {{ item.titulo }}
                                     </h3>
 
-                                    <p class="mt-1 text-[11px] font-bold text-slate-400 group-hover:text-sky-500 transition">
-                                        En proceso →
+                                    <p class="mt-1 text-[11px] font-bold text-emerald-600 group-hover:text-sky-500 transition">
+                                        Otorgado →
                                     </p>
                                 </div>
                             </div>
@@ -197,8 +197,8 @@
                         </div>
                         <div>
                             <h3 class="text-xl font-black text-slate-900 tracking-tight">Vigencia del licenciamiento</h3>
-                            <span class="mt-1 inline-flex items-center rounded-full bg-amber-50 px-3 py-1 text-[10px] font-black uppercase tracking-widest text-amber-700 border border-amber-100">
-                                En proceso
+                            <span class="mt-1 inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1 text-[10px] font-black uppercase tracking-widest text-emerald-700 border border-emerald-100">
+                                <i class="fas fa-check" aria-hidden="true"></i> Otorgado
                             </span>
                         </div>
                     </div>
@@ -210,8 +210,29 @@
 
                 <div class="p-8 lg:p-10">
                     <p class="text-sm text-slate-600 leading-relaxed">
-                        El proceso de licenciamiento institucional se encuentra en trámite ante el MINEDU. El documento se publicará en esta sección una vez otorgado.
+                        El MINEDU otorgó el licenciamiento institucional a la Escuela de Educación Superior Pedagógica Pública "13 de Julio de 1882" mediante la R.M. N° 588-2026-MINEDU.
                     </p>
+                    <dl class="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
+                        <div class="rounded-2xl border border-slate-100 bg-slate-50 p-4">
+                            <dt class="text-[10px] font-black uppercase tracking-widest text-slate-400">Resolución</dt>
+                            <dd class="mt-1 font-bold text-slate-800">R.M. N° 588-2026-MINEDU</dd>
+                        </div>
+                        <div class="rounded-2xl border border-slate-100 bg-slate-50 p-4">
+                            <dt class="text-[10px] font-black uppercase tracking-widest text-slate-400">Fecha</dt>
+                            <dd class="mt-1 font-bold text-slate-800">25 de setiembre de 2026</dd>
+                        </div>
+                        <div class="rounded-2xl border border-slate-100 bg-slate-50 p-4">
+                            <dt class="text-[10px] font-black uppercase tracking-widest text-slate-400">Vigencia</dt>
+                            <dd class="mt-1 font-bold text-slate-800">6 años renovables, desde el 26 de setiembre de 2026</dd>
+                        </div>
+                    </dl>
+                    <a href="{% static 'docs/RM-588-2026-MINEDU-licenciamiento.pdf' %}"
+                       target="_blank" rel="noopener noreferrer"
+                       aria-label="Ver la resolución de licenciamiento, R.M. N° 588-2026-MINEDU (PDF, se abre en una pestaña nueva)"
+                       class="mt-6 inline-flex items-center gap-3 rounded-2xl bg-blue-900 hover:bg-blue-800 text-white px-6 py-4 text-[10px] font-black uppercase tracking-widest transition-all">
+                        <i class="fas fa-file-pdf text-amber-300" aria-hidden="true"></i>
+                        Ver resolución (PDF)
+                    </a>
                 </div>
             </div>
         </div>

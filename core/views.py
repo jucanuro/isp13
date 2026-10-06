@@ -140,8 +140,7 @@ ARTICULO_42_ITEMS = [
     {
         "titulo": "Vigencia del licenciamiento",
         "icono": "🏛️",
-        "en_proceso": True,
-        "mensaje": "El proceso de licenciamiento institucional se encuentra en trámite ante el MINEDU. El documento se publicará en esta sección una vez otorgado.",
+        "licenciamiento": True,
     },
     {
         "titulo": "Reglamento institucional",
@@ -441,8 +440,8 @@ def obtener_links_pte_por_tema(config):
 
 def portal_transparencia(request):
     responsable = {
-        "institucion": "INSTITUTO DE EDUCACIÓN SUPERIOR PEDAGÓGICO PÚBLICO 13 DE JULIO DE 1882",
-        "siglas": "IESPP 13 JULIO 1882",
+        "institucion": 'ESCUELA DE EDUCACIÓN SUPERIOR PEDAGÓGICA PÚBLICA "13 DE JULIO DE 1882"',
+        "siglas": "EESPP 13 JULIO 1882",
         "responsable_portal": "OSCAR ORLANDO SORIANO PALOMINO",
         "nombramiento_portal": "RD N° 043 - 2022 - DRECAJ/DG - IESPP",
         "correo_portal": "osoriano@13dejuliode1882sp.edu.pe",
@@ -506,7 +505,7 @@ def portal_transparencia(request):
                 "origen": "Respaldo manual",
             },
             {
-                "titulo": "Directorio del personal docente nombrado del IESPP 13 de Julio de 1882",
+                "titulo": "Directorio del personal docente nombrado de la EESPP 13 de Julio de 1882",
                 "url": "https://www.gob.pe/institucion/20202096582/funcionarios/",
                 "grupo": "Servidores civiles y datos de contacto",
                 "origen": "Respaldo manual",
